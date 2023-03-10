@@ -29,14 +29,5 @@ public class JoinService {
             userRepository.save(user);
             return true;
         }
-
-
-
-
-
-       // User savedUser = userRepository.findByName("test123");
-
-
-
     }
 }

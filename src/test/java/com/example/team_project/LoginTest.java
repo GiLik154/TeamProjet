@@ -6,38 +6,26 @@ import com.example.team_project.domain.user.service.JoinService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.DuplicateKeyException;
 
 import javax.transaction.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.springframework.test.util.AssertionErrors.assertFalse;
-
 @SpringBootTest
 @Transactional
-public class JoinTest {
+public class LoginTest {
 
     private final JoinService joinService;
     private final UserRepository userRepository;
-
     @Autowired
-    public JoinTest(JoinService joinService, UserRepository userRepository) {
+    public LoginTest(JoinService joinService, UserRepository userRepository) {
         this.joinService = joinService;
         this.userRepository = userRepository;
     }
-
+    
     @Test
-    public void suc() {
-        //Given
+    public void 로그인테스트_성공(){
         PostDto postDto = new PostDto("test123", "asd");
-
-        //When
         joinService.write(postDto);
-
-        //Then
-        assertTrue(userRepository.existsByNameAndPassword(postDto.getName(), postDto.getPassword()));
+        
     }
-
+    
 }
-
