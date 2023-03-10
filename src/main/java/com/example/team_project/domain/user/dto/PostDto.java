@@ -16,4 +16,9 @@ public class PostDto {
     private Long id;
     private String name; // 아이디 : test123
     private String password;
+
+    public PostDto(String name, String password) {
+        this.name = name;
+        this.password = password;
+    }
 }
