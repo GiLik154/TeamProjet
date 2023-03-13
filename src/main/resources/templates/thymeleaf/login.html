@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body>
+<form action="/teamlogin/login" method="post">
+  <input name="name">
+  <input name="password">
+  <input type="submit" value="ok">
+    <p th:text="${loginError}" style="color:red;"></p>
+</form>
+
+
+
+</body>
+</html>
