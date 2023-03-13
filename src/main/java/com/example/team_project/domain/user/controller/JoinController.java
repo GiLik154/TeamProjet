@@ -19,25 +19,19 @@ public class JoinController {
     private final JoinService joinService;
 
     @GetMapping("/joinuser")
-    public String writer(){
+    public String joinForm(){
         return "thymeleaf/joinuser";
     }
 
     @PostMapping("/joinuser")
-    public String write(@ModelAttribute PostDto postDto, Model model,String name,String password){
-        try {
-            boolean isJoine = joinService.write(postDto);
-            if (isJoine) {
-                return "thymeleaf/index";
-            } else {
-                model.addAttribute("errorMsg","이름이 중복되었습니다");
-                return "thymeleaf/joinuser";
-            }
-        } catch (DuplicateKeyException e) {
-            model.addAttribute("errorMsg","이름이 중복되었습니다");
-            return "thymeleaf/joinuser";
+    public String join(@ModelAttribute PostDto postDto, Model model) {
+        boolean joined = joinService.join(postDto);
+        if (joined) {
+            return "thymeleaf/index";
+        } else {
+            throw new DuplicateKeyException("이름이중복되었습니다.");
         }
-
     }
+
 
 }

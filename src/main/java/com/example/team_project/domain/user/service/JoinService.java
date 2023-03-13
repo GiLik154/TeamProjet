@@ -17,17 +17,24 @@ public class JoinService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
-    public boolean write(PostDto postDto){
+    public boolean join(PostDto postDto){
         long count = userRepository.countByName(postDto.getName());
 
         if(count==1){
-            System.out.println("중복됨");
             return false;
-        }else{
-            String encodePassword = passwordEncoder.encode(postDto.getPassword());
-            User user = new User(postDto.getName(), postDto.getPassword());
+        }
+            User user = new User(postDto.getName(), passwordEncoder.encode(postDto.getPassword()));
             userRepository.save(user);
             return true;
-        }
+
+                /*
+            String encodePassword = passwordEncoder.encode(postDto.getPassword());
+            User user = new User(postDto.getName(), postDto.getPassword());
+            */
+
+
     }
+
+
+
 }
