@@ -6,8 +6,6 @@ import lombok.Getter;
 @Getter
 public class ProductStockDto {
    
-    //productStock 고유번호
-    private Long stockId;
     //product 고유번호
     private Product productId;
     //품목 가격

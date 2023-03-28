@@ -9,13 +9,13 @@ import javax.persistence.*;
 @Table(name="ProductLike")
 @Getter
 public class ProductLike {
-    @Id
-    private Long likeId;
 
     //product 고유번호
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Id
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product productId;
+
 
     @Column
     private String likeCount;

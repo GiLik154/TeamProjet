@@ -1,5 +1,8 @@
 package com.example.team_project.domain.domain.product.domain;
 
+import com.example.team_project.domain.domain.product.domain.category.ProductCategory;
+import com.example.team_project.domain.domain.product.domain.likecount.ProductLike;
+import com.example.team_project.domain.domain.product.domain.sales.ProductSales;
 import com.example.team_project.domain.domain.product.domain.stock.ProductStock;
 import com.example.team_project.domain.domain.shop.shop.domain.Shop;
 import lombok.Getter;
@@ -31,10 +34,20 @@ public class Product {
     @Column
     private String productDescription;
 
+
+    //정규화 1:1연결
     @OneToOne(fetch = FetchType.LAZY)
     private ProductStock productStock;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private ProductSales productSales;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    private ProductLike productLike;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    private ProductCategory productCategory;
+    //
     public Product(){
 
     }

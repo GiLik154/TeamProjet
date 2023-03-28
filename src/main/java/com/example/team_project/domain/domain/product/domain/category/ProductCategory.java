@@ -9,13 +9,13 @@ import javax.persistence.*;
 @Table(name="productCategory")
 @Getter
 public class ProductCategory {
-    @Id
-    private Long categoryId;
 
     //product 고유번호
+    @Id
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product productId;
+
 
     //품목 카테고리
     @Column

@@ -9,13 +9,16 @@ import javax.persistence.*;
 @Table(name="productSales")
 @Getter
 public class ProductSales {
-    @Id
-    private Long salesId;
+
 
     //product 고유번호
-    @ManyToOne(fetch = FetchType.LAZY)
+    @Id
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product productId;
+
+
+
 
     //판매량
     @Column

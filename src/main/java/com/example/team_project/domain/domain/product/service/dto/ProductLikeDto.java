@@ -6,8 +6,6 @@ import lombok.Getter;
 @Getter
 public class ProductLikeDto {
 
-    //productLike 고유번호
-    private Long likeId;
     //product 고유번호
     private Product productId;
     //좋아요 수
