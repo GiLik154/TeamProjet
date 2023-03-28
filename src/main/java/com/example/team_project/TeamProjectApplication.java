@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class TeamProjectApplication {
 
     public static void main(String[] args) {
-     //asdasdasd
         SpringApplication.run(TeamProjectApplication.class, args);
     }
 
