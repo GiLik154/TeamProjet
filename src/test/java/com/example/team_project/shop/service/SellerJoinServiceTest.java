@@ -1,9 +1,9 @@
 package com.example.team_project.shop.service;
 
-import com.example.team_project.domain.shop.domain.Seller;
-import com.example.team_project.domain.shop.domain.SellerRepository;
-import com.example.team_project.domain.shop.service.SellerJoinService;
-import com.example.team_project.domain.shop.service.dto.SellerJoinDto;
+import com.example.team_project.domain.domain.shop.seller.domain.Seller;
+import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
+import com.example.team_project.domain.domain.shop.seller.service.SellerJoinService;
+import com.example.team_project.domain.domain.shop.seller.service.dto.SellerJoinDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
