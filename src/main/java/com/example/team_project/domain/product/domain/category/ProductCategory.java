@@ -1,26 +1,30 @@
-package com.example.team_project.domain.product.domain.sales;
+package com.example.team_project.domain.product.domain.category;
 
 import com.example.team_project.domain.product.domain.Product;
-import com.example.team_project.domain.shop.domain.Shop;
 import lombok.Getter;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="productSales")
+@Table(name="productCategory")
 @Getter
-public class productSales {
+public class ProductCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long salesId;
+    private Long categoryId;
 
     //product 고유번호
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product productId;
 
-    //판매량
+    //품목 카테고리
     @Column
-    private int productSales;
+    private String productCategory;
+
+    public ProductCategory(){
+
+    }
+
 
 }
