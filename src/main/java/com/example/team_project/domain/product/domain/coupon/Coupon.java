@@ -17,6 +17,9 @@ public class Coupon {
     @Column
     private String coupon;
 
+    public Coupon(){
+
+    }
 
 
 }

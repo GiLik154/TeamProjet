@@ -31,7 +31,9 @@ public class Product {
     private String productDescription;
 
 
+    public Product(){
 
+    }
 
 
 

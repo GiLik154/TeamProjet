@@ -29,6 +29,8 @@ public class Shop {
     //사업자번호
     @Column
     private String businessRegistrationNumber;
+
+
     public Shop() {
     }
 
