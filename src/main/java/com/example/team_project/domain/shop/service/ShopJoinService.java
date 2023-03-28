@@ -22,6 +22,7 @@ public class ShopJoinService {
 
     public void shopJoin(Long sellerId, ShopJoinDto shopJoinDto) {
         Optional<Seller> sellerOptional = sellerRepository.findById(sellerId);
+
         if (sellerOptional.isPresent()) {
             Shop shop = new Shop(
                     sellerOptional.get(),

@@ -22,5 +22,10 @@ public class ProductLike {
     @Column
     private String likeCount;
 
+    public ProductLike(){
+
+    }
+
+
 }
 

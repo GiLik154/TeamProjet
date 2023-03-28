@@ -30,6 +30,9 @@ public class ProductStock {
     private int productStock;
 
 
+    public ProductStock(){
+
+    }
 
 }
 
