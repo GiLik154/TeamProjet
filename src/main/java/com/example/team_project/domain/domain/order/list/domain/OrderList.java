@@ -34,8 +34,6 @@ public class OrderList {
     @JoinColumn(name = "order_status")
     private OrderStatus status;
 
-    @OneToMany(mappedBy = "order_list")
-    private List<Order> orders = new ArrayList<>();
 
     private double totalPrice;
 
@@ -55,13 +53,7 @@ public class OrderList {
         this.status = OrderStatus.CANCELED;
     }
 
-    public double getTotalPrice() {
-        double totalPrice = 0.0;
-        for (Order order : orders) {
-            totalPrice += order.getTotalPrice();
-        }
-        return totalPrice;
-    }
+
 
 
 

@@ -2,7 +2,7 @@ package com.example.team_project.shop.service;
 
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
-import com.example.team_project.domain.domain.shop.seller.service.SellerJoinService;
+import com.example.team_project.domain.domain.shop.seller.service.join.SellerJoinService;
 import com.example.team_project.domain.domain.shop.shop.domain.Shop;
 import com.example.team_project.domain.domain.shop.shop.domain.ShopRepository;
 import com.example.team_project.domain.domain.shop.shop.service.ShopJoinService;

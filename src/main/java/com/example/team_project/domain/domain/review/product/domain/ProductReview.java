@@ -1,6 +1,6 @@
 package com.example.team_project.domain.domain.review.product.domain;
 
-import com.example.team_project.domain.domain.product.domain.Product;
+import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.review.base.domain.BaseReview;
 import lombok.Getter;
 
@@ -13,6 +13,7 @@ public class ProductReview extends BaseReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     private Product product;

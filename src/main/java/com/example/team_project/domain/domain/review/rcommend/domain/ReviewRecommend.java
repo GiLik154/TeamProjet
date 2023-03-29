@@ -11,6 +11,7 @@ import javax.persistence.*;
 public class ReviewRecommend {
     //리뷰의 고유번호
     @Id
+    private Long base_review;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "review_id")
     private BaseReview baseReview;
