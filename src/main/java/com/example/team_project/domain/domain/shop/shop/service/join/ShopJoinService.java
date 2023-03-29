@@ -1,4 +1,4 @@
-package com.example.team_project.domain.domain.shop.shop.service;
+package com.example.team_project.domain.domain.shop.shop.service.join;
 
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;

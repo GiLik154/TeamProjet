@@ -1,11 +1,11 @@
-package com.example.team_project.shop.service;
+package com.example.team_project.shop.service.shop.join;
 
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.domain.domain.shop.seller.service.join.SellerJoinService;
 import com.example.team_project.domain.domain.shop.shop.domain.Shop;
 import com.example.team_project.domain.domain.shop.shop.domain.ShopRepository;
-import com.example.team_project.domain.domain.shop.shop.service.ShopJoinService;
+import com.example.team_project.domain.domain.shop.shop.service.join.ShopJoinService;
 import com.example.team_project.domain.domain.shop.shop.service.dto.ShopJoinDto;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

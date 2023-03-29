@@ -2,14 +2,10 @@ package com.example.team_project.domain.domain.shop.seller.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 public interface SellerRepository extends JpaRepository<Seller,Long> {
-
-
-
 
     Seller findByOwnerName(String name);
 
@@ -26,7 +22,12 @@ public interface SellerRepository extends JpaRepository<Seller,Long> {
         return optionalSeller.orElseThrow(() ->
                 new UsernameNotFoundException("Invalid seller")
         );
+
     }
+
+    void deleteByOwnerId(String ownerId);
+
+
 
 
 

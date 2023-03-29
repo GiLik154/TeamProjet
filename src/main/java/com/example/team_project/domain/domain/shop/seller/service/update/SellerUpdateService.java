@@ -28,6 +28,7 @@ public class SellerUpdateService {
                         throw new BadCredentialsException("Invalid password");
                 }
 
+                //판매자 이름, 판매자 번호 수정
                 seller.update(ownerName,phoneNumber);
 
         }
