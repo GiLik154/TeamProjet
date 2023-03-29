@@ -3,7 +3,6 @@ package com.example.team_project.domain.domain.shop.seller.service.login;
 
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
-import com.example.team_project.domain.domain.shop.seller.service.dto.SellerJoinDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;

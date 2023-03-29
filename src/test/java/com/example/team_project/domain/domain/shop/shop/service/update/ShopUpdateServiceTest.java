@@ -1,4 +1,4 @@
-package com.example.team_project.shop.service.shop.update;
+package com.example.team_project.domain.domain.shop.shop.service.update;
 
 
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
