@@ -7,7 +7,6 @@ import lombok.Getter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="product")
 @Getter
 public class Product {
     @Id
@@ -16,7 +15,6 @@ public class Product {
 
     //판매자 고유번호
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "shop_id")
     private Shop shopId;
 
     //품목이름
@@ -36,7 +34,6 @@ public class Product {
 
 
     public Product(){
-
     }
 
 

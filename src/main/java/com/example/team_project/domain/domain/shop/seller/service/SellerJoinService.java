@@ -24,7 +24,6 @@ public class SellerJoinService {
                 sellerJoinDto.getPhoneNumber());
 
         sellerRepository.save(seller);
-
     }
 
 

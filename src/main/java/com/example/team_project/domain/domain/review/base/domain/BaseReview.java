@@ -25,5 +25,5 @@ public class BaseReview {
     //리뷰 삭제 여부
     private String situation;
 
-    public BaseReview(){}
+    protected BaseReview(){}
 }
