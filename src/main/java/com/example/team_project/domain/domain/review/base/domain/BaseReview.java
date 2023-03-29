@@ -15,7 +15,6 @@ public class BaseReview {
 
     //유저
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     private User user;
     private String content;
     //리뷰 작성 시간
@@ -24,6 +23,28 @@ public class BaseReview {
     private String imagePath;
     //리뷰 삭제 여부
     private String situation;
+    //리뷰의 카테고리 종류
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private ReviewToKinds reviewToKinds;
 
     public BaseReview(){}
+
+    public BaseReview(User user,String content,String time,String imagePath,ReviewToKinds reviewToKinds){
+        this.user=user;
+        this.content=content;
+        this.time=time;
+        this.situation="create";
+        this.imagePath=imagePath;
+    }
+
+    public void delete(){
+        this.situation="delete";
+    }
+
+    public void update(String content,String time,String imagePath,ReviewToKinds reviewToKinds) {
+        this.content=content;
+        this.time=time;
+        this.imagePath=imagePath;
+        this.reviewToKinds=reviewToKinds;
+    }
 }

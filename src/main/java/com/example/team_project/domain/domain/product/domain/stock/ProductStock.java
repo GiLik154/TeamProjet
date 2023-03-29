@@ -11,9 +11,10 @@ import javax.persistence.*;
 public class ProductStock {
 
     @Id    //product 고유번호
+    private Long productId;
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
-    private Product productId;
+    private Product product;
 
     //품목 가격
     @Column
