@@ -4,10 +4,10 @@ import com.example.team_project.domain.domain.coupons.domain.CouponInCategory;
 import com.example.team_project.domain.domain.coupons.domain.CouponInCategoryRepository;
 import com.example.team_project.domain.domain.coupons.domain.CouponKinds;
 import com.example.team_project.domain.domain.coupons.domain.CouponKindsRepository;
-import com.example.team_project.domain.domain.product.domain.Product;
-import com.example.team_project.domain.domain.product.domain.ProductRepository;
-import com.example.team_project.domain.domain.product.domain.category.ProductCategory;
-import com.example.team_project.domain.domain.product.domain.category.ProductCategoryRepository;
+import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
+import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
+import com.example.team_project.domain.domain.product.product.domain.Product;
+import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -43,7 +43,7 @@ class CouponInCategoryDeleteServiceImplTest {
         Product product = new Product();
         productRepository.save(product);
 
-        ProductCategory productCategory = new ProductCategory(product, "testCategory");
+        ProductCategory productCategory = new ProductCategory("testCategory");
         productCategoryRepository.save(productCategory);
 
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
@@ -62,7 +62,7 @@ class CouponInCategoryDeleteServiceImplTest {
         Product product = new Product();
         productRepository.save(product);
 
-        ProductCategory productCategory = new ProductCategory(product, "testCategory");
+        ProductCategory productCategory = new ProductCategory("testCategory");
         productCategoryRepository.save(productCategory);
 
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
@@ -90,7 +90,7 @@ class CouponInCategoryDeleteServiceImplTest {
         Product product = new Product();
         productRepository.save(product);
 
-        ProductCategory productCategory = new ProductCategory(product, "testCategory");
+        ProductCategory productCategory = new ProductCategory("testCategory");
         productCategoryRepository.save(productCategory);
 
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
