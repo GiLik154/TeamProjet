@@ -8,7 +8,9 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-public class ProductReview extends BaseReview {
+public class
+
+ProductReview extends BaseReview {
     //리뷰의 고유번호
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

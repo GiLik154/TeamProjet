@@ -34,10 +34,7 @@ public class OrderList {
     @JoinColumn(name = "order_status")
     private OrderStatus status;
 
-
     private double totalPrice;
-
-
 
     public OrderList(){}
 
@@ -52,13 +49,4 @@ public class OrderList {
         this.user = user;
         this.status = OrderStatus.CANCELED;
     }
-
-
-
-
-
-
-
-
-
 }

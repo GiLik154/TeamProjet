@@ -27,8 +27,7 @@ public class ProductRegistrationService {
                 productDto.getProductDescription()
         );
 
-        productRepository.save(product);
-
         productRegistrationStockService.insertStock(product,productDto.getStockDto());
+        productRepository.save(product);
     }
 }

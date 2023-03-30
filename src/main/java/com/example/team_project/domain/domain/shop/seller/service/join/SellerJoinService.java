@@ -31,7 +31,6 @@ public class SellerJoinService {
         checkEncodingPw(seller,sellerJoinDto.getPassword());
 
         sellerRepository.save(seller);
-
     }
 
     //password
