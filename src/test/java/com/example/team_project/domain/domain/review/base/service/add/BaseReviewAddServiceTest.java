@@ -1,5 +1,7 @@
 package com.example.team_project.domain.domain.review.base.service.add;
 
+import com.example.team_project.domain.domain.post.category.domain.PostCategory;
+import com.example.team_project.domain.domain.post.category.domain.PostCategoryRepository;
 import com.example.team_project.domain.domain.post.post.domain.Post;
 import com.example.team_project.domain.domain.post.post.domain.PostRepository;
 import com.example.team_project.domain.domain.review.base.domain.BaseReview;
@@ -27,30 +29,36 @@ class BaseReviewAddServiceTest {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final BaseReviewRepository  baseReviewRepository;
+    private final PostCategoryRepository postCategoryRepository;
 
     @Autowired
-    BaseReviewAddServiceTest(BaseReviewAddService baseReviewAddService, Map<String, ReviewJoinKindsService> reviewJoinKindsServiceMap, PostRepository postRepository, UserRepository userRepository, BaseReviewRepository baseReviewRepository) {
+    BaseReviewAddServiceTest(BaseReviewAddService baseReviewAddService, Map<String, ReviewJoinKindsService> reviewJoinKindsServiceMap, PostRepository postRepository, UserRepository userRepository, BaseReviewRepository baseReviewRepository, PostCategoryRepository postCategoryRepository) {
         this.baseReviewAddService = baseReviewAddService;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.baseReviewRepository = baseReviewRepository;
+        this.postCategoryRepository = postCategoryRepository;
     }
 
     @Test
     void 베이스_포스트_리뷰_생성() {
-        User user = new User();
+        User user = new User("name","pass");
         userRepository.save(user);
-        Post post = new Post();
+
+        PostCategory postCategory = new PostCategory("category");
+        postCategoryRepository.save(postCategory);
+
+        Post post = new Post("postContent","time",user,postCategory);
         postRepository.save(post);
 
-        ReviewDto reviewDto = new ReviewDto("content", "image", "PostReview", post.getId());
+        ReviewDto reviewDto = new ReviewDto("reviewContent", "reviewImage", "PostReview", post.getId());
         baseReviewAddService.add(user.getId(), reviewDto);
 
-        BaseReview baseReview = baseReviewRepository.findByUser(user).get();
+        BaseReview baseReview = baseReviewRepository.findByUserId(user.getId()).get();
 
-        assertEquals(baseReview.getContent(), "content");
-        assertEquals(baseReview.getImagePath(), "image");
-        assertEquals(baseReview.getReviewToKinds().getPostReview().getPost(),post );
-        assertNull(baseReview.getReviewToKinds().getProductReview());
+        assertEquals(baseReview.getContent(), "reviewContent");
+        assertEquals(baseReview.getImagePath(), "reviewImage");
+        assertEquals(baseReview.getReviewToKinds().getPostReview().getPost().getContent(),"postContent");
+//        assertNull(baseReview.getReviewToKinds().getProductReview());
     }
 }

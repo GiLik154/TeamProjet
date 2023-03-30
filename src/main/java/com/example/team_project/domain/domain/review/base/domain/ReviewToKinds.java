@@ -13,10 +13,10 @@ public class ReviewToKinds {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private PostReview postReview;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private ProductReview productReview;
 
     public ReviewToKinds(){}

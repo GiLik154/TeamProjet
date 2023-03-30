@@ -22,6 +22,7 @@ public class PostReviewAddServiceImpl implements ReviewJoinKindsService {
 
     @Override
     public ReviewToKinds returnReviewToKindsEntity(Long postId) {
+        System.out.println("여기오냐???");
         return new ReviewToKinds(add(postId));
     }
 

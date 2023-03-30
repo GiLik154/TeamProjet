@@ -32,7 +32,6 @@ public class BaseReviewAddServiceImpl<T> implements BaseReviewAddService {
                     getTime(),
                     reviewDto.getImagePath(),
                     getType(reviewDto));
-
             baseReviewRepository.save(baseReview);
         });
     }

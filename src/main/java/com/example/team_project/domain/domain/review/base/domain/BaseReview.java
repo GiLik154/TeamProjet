@@ -35,6 +35,7 @@ public class BaseReview {
         this.time=time;
         this.situation="create";
         this.imagePath=imagePath;
+        this.reviewToKinds=reviewToKinds;
     }
 
     public void delete(){

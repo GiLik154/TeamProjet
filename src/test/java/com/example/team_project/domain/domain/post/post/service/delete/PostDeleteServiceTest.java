@@ -43,8 +43,7 @@ class PostDeleteServiceTest {
         Post post = new Post("testContent","testTime",user,postCategory);
         postRepository.save(post);
 
-
-        boolean isDel = postDeleteService.delete(user.getId(),"testPass");
+        boolean isDel = postDeleteService.delete(user.getId(), post.getId(),"testPass");
 
         assertTrue(isDel);
         assertEquals(post.getSituation(),"delete");

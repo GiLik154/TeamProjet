@@ -2,10 +2,7 @@ package com.example.team_project.domain.domain.post.post.service.delete;
 
 import com.example.team_project.domain.domain.post.post.domain.Post;
 import com.example.team_project.domain.domain.post.post.domain.PostRepository;
-import com.example.team_project.domain.domain.user.domain.User;
-import com.example.team_project.domain.domain.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -18,7 +15,7 @@ public class PostDeleteServiceImpl implements PostDeleteService {
     private final PostRepository postRepository;
 
     @Override
-    public boolean delete(Long postId, String password) {
+    public boolean delete(Long userId, Long postId, String password) {
         Optional<Post> postOptional = postRepository.findById(postId);
         if (postOptional.isPresent()) {
             Post post = postOptional.get();
