@@ -5,10 +5,10 @@ import com.example.team_project.domain.domain.coupons.domain.CouponInCategoryRep
 import com.example.team_project.domain.domain.coupons.domain.CouponKinds;
 import com.example.team_project.domain.domain.coupons.domain.CouponKindsRepository;
 import com.example.team_project.domain.domain.coupons.service.delete.couponincategory.CouponInCategoryDeleteService;
-import com.example.team_project.domain.domain.product.domain.Product;
-import com.example.team_project.domain.domain.product.domain.ProductRepository;
-import com.example.team_project.domain.domain.product.domain.category.ProductCategory;
-import com.example.team_project.domain.domain.product.domain.category.ProductCategoryRepository;
+import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
+import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
+import com.example.team_project.domain.domain.product.product.domain.Product;
+import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
