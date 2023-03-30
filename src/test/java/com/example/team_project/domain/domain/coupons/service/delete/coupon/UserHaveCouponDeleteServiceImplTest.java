@@ -1,9 +1,9 @@
 package com.example.team_project.domain.domain.coupons.service.delete.coupon;
 
-import com.example.team_project.domain.domain.coupons.domain.Coupon;
+import com.example.team_project.domain.domain.coupons.domain.UserHaveCoupon;
 import com.example.team_project.domain.domain.coupons.domain.CouponKinds;
 import com.example.team_project.domain.domain.coupons.domain.CouponKindsRepository;
-import com.example.team_project.domain.domain.coupons.domain.CouponRepository;
+import com.example.team_project.domain.domain.coupons.domain.UserHaveCouponRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -18,16 +18,16 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 @SpringBootTest
 @Transactional
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class CouponDeleteServiceImplTest {
-    private final CouponDeleteService couponDeleteService;
-    private final CouponRepository couponRepository;
+class UserHaveCouponDeleteServiceImplTest {
+    private final UserHaveCouponDeleteService couponDeleteService;
+    private final UserHaveCouponRepository userHaveCouponRepository;
     private final CouponKindsRepository couponKindsRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    CouponDeleteServiceImplTest(CouponDeleteService couponDeleteService, CouponRepository couponRepository, CouponKindsRepository couponKindsRepository, UserRepository userRepository) {
+    UserHaveCouponDeleteServiceImplTest(UserHaveCouponDeleteService couponDeleteService, UserHaveCouponRepository userHaveCouponRepository, CouponKindsRepository couponKindsRepository, UserRepository userRepository) {
         this.couponDeleteService = couponDeleteService;
-        this.couponRepository = couponRepository;
+        this.userHaveCouponRepository = userHaveCouponRepository;
         this.couponKindsRepository = couponKindsRepository;
         this.userRepository = userRepository;
     }
@@ -40,12 +40,12 @@ class CouponDeleteServiceImplTest {
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        Coupon coupon = new Coupon(user, couponKinds);
-        couponRepository.save(coupon);
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
+        userHaveCouponRepository.save(userHaveCoupon);
 
-        couponDeleteService.delete(user.getId(), coupon.getId());
+        couponDeleteService.delete(user.getId(), userHaveCoupon.getId());
 
-        assertFalse(couponRepository.findById(coupon.getId()).isPresent());
+        assertFalse(userHaveCouponRepository.findById(userHaveCoupon.getId()).isPresent());
     }
 
     @Test
@@ -57,13 +57,13 @@ class CouponDeleteServiceImplTest {
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        Coupon coupon = new Coupon(user, couponKinds);
-        couponRepository.save(coupon);
-        Long couponId = coupon.getId();
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
+        userHaveCouponRepository.save(userHaveCoupon);
+        Long couponId = userHaveCoupon.getId();
 
         couponDeleteService.delete(userId + 1L, couponId);
 
-        assertTrue(couponRepository.findById(coupon.getId()).isPresent());
+        assertTrue(userHaveCouponRepository.findById(userHaveCoupon.getId()).isPresent());
     }
 
     @Test
@@ -75,12 +75,12 @@ class CouponDeleteServiceImplTest {
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        Coupon coupon = new Coupon(user, couponKinds);
-        couponRepository.save(coupon);
-        Long couponId = coupon.getId();
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
+        userHaveCouponRepository.save(userHaveCoupon);
+        Long couponId = userHaveCoupon.getId();
 
         couponDeleteService.delete(userId, couponId + 1L);
 
-        assertTrue(couponRepository.findById(coupon.getId()).isPresent());
+        assertTrue(userHaveCouponRepository.findById(userHaveCoupon.getId()).isPresent());
     }
 }

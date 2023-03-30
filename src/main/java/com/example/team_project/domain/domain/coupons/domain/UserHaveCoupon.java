@@ -4,10 +4,12 @@ import com.example.team_project.domain.domain.user.domain.User;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
-public class Coupon {
+public class UserHaveCoupon {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -18,12 +20,17 @@ public class Coupon {
     @OneToOne(fetch = FetchType.LAZY)
     private CouponKinds couponKinds;
 
-    protected Coupon() {
+    private LocalDate expirationDate;
+
+    protected UserHaveCoupon() {
     }
 
-    public Coupon(User user, CouponKinds couponKinds) {
+    public UserHaveCoupon(User user, CouponKinds couponKinds) {
         this.user = user;
         this.couponKinds = couponKinds;
     }
 
+    public void setExpirationDate(LocalDate expirationDate) {
+        this.expirationDate = expirationDate;
+    }
 }

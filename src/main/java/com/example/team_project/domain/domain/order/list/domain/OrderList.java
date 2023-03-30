@@ -38,9 +38,8 @@ public class OrderList {
 
     public OrderList(){}
 
-    public OrderList(User user, Address address, String paymentMethod){
+    public OrderList(User user, String paymentMethod){
         this.user = user;
-        this.address = address;
         this.paymentMethod = paymentMethod;
         this.status = OrderStatus.ORDERED;
     }

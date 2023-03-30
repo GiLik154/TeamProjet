@@ -1,5 +1,6 @@
 package com.example.team_project.domain.domain.product.product.service;
 
+import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import com.example.team_project.domain.domain.product.product.service.dto.ProductDto;
@@ -24,7 +25,9 @@ public class ProductRegistrationService {
         Product product = new Product(
                 productDto.getProductName(),
                 productDto.getProductImage(),
-                productDto.getProductDescription()
+                productDto.getProductDescription(),
+                new ProductCategory(),
+                5000
         );
 
         productRegistrationStockService.insertStock(product,productDto.getStockDto());

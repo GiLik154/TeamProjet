@@ -2,6 +2,7 @@ package com.example.team_project.domain.domain.address.domain;
 
 import com.example.team_project.domain.domain.user.domain.User;
 import lombok.Getter;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 
@@ -17,4 +18,16 @@ public class AddressList {
     private String recipientName;
     private String recipientPhone;
     private String recipientAddress;
+
+    protected AddressList() {
+    }
+
+    public AddressList(User user, String name, String recipientName, String recipientPhone, String recipientAddress) {
+        this.user = user;
+        this.name = name;
+        this.recipientName = recipientName;
+        this.recipientPhone = recipientPhone;
+        this.recipientAddress = recipientAddress;
+    }
+
 }

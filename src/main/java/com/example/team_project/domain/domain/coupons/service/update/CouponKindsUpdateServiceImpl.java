@@ -15,7 +15,7 @@ public class CouponKindsUpdateServiceImpl implements CouponKindsUpdateService {
     @Override
     public void update(String couponKindsName, CouponKindsUpdateServiceDto couponKindsUpdateServiceDto) {
         couponKindsRepository.findByName(couponKindsName).ifPresent(couponKinds ->
-                couponKinds.update(couponKindsUpdateServiceDto.getDiscountRate(),
+                couponKinds.updateApplicableConditions(couponKindsUpdateServiceDto.getDiscountRate(),
                         couponKindsUpdateServiceDto.getMinPrice()));
     }
 }
