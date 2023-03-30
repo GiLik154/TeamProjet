@@ -15,11 +15,9 @@ public class User {
     private Long id;
     private String name; // 아이디 : test123
     private String password;
-
-    public User(){}
-
-    public User(String name,String password){
-        this.name=name;
-        this.password=password;
+    protected User(){}
+    public User(String name, String password) {
+        this.name = name;
+        this.password = password;
     }
 }

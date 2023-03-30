@@ -13,10 +13,11 @@ public class Shop {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long shopId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seller_name")
+    //cascade = CascadeType.REMOVE
+    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "seller_id")
     private Seller seller;
 
     //가게 이름
@@ -42,6 +43,16 @@ public class Shop {
         this.businessRegistrationNumber = businessRegistrationNumber;
     }
 
+    public Shop(String shopName, String shopAddress, String businessRegistrationNumber) {
+        this.shopName = shopName;
+        this.shopAddress = shopAddress;
+        this.businessRegistrationNumber = businessRegistrationNumber;
+    }
+
+    public void update(String shopName, String shopAddress) {
+        this.shopName = shopName;
+        this.shopAddress = shopAddress;
+    }
 
 
 }

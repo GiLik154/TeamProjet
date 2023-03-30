@@ -1,7 +1,7 @@
 package com.example.team_project.domain.domain.order.item.domain;
 
 import com.example.team_project.domain.domain.order.list.domain.OrderList;
-import com.example.team_project.domain.domain.product.domain.Product;
+import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.user.domain.User;
 import lombok.Getter;
 
@@ -40,13 +40,13 @@ public class Order {
         this.orderList = orderList;
         this.product = product;
         this.quantity = quantity;
-        this.totalPrice = product.getProductStock().getProductPrice() * quantity;
+        this.totalPrice = product.getProductStock().getPrice() * quantity;
     }
 
     public void update(Product product, int quantity){
         this.product = product;
         this.quantity = quantity;
-        this.totalPrice = product.getProductStock().getProductPrice() * quantity;
+        this.totalPrice = product.getProductStock().getPrice() * quantity;
     }
 
 

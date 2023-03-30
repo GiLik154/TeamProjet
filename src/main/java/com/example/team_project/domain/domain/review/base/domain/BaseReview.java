@@ -26,8 +26,7 @@ public class BaseReview {
     //리뷰의 카테고리 종류
     @OneToOne(cascade = CascadeType.PERSIST)
     private ReviewToKinds reviewToKinds;
-
-    public BaseReview(){}
+    protected BaseReview(){}
 
     public BaseReview(User user,String content,String time,String imagePath,ReviewToKinds reviewToKinds){
         this.user=user;
@@ -48,4 +47,5 @@ public class BaseReview {
         this.imagePath=imagePath;
         this.reviewToKinds=reviewToKinds;
     }
+
 }

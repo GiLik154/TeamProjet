@@ -1,6 +1,6 @@
 package com.example.team_project.domain.domain.review.kinds.product.domain;
 
-import com.example.team_project.domain.domain.product.domain.Product;
+import com.example.team_project.domain.domain.product.product.domain.Product;
 import lombok.Getter;
 
 import javax.persistence.*;

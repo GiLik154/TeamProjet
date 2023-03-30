@@ -12,7 +12,15 @@ public class ReviewRecommend {
     //리뷰의 고유번호
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+<<<<<<< HEAD:src/main/java/com/example/team_project/domain/domain/review/recommend/domain/ReviewRecommend.java
     private Long Id;
+=======
+    private Long id;
+
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "base_review_id")
+    private BaseReview baseReview;
+>>>>>>> 8c539a37e549d0df3678c3ed049a8cf67817a686:src/main/java/com/example/team_project/domain/domain/review/rcommend/domain/ReviewRecommend.java
 
     //유저
     @ManyToOne(fetch = FetchType.LAZY)
