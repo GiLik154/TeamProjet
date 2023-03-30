@@ -47,7 +47,7 @@ class CouponKindsDeleteServiceImplTest {
         Product product = new Product();
         productRepository.save(product);
 
-        ProductCategory productCategory = new ProductCategory(product, "testCategory");
+        ProductCategory productCategory = new ProductCategory("testCategory");
         productCategoryRepository.save(productCategory);
 
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
@@ -69,7 +69,7 @@ class CouponKindsDeleteServiceImplTest {
         Product product = new Product();
         productRepository.save(product);
 
-        ProductCategory productCategory = new ProductCategory(product, "testCategory");
+        ProductCategory productCategory = new ProductCategory("testCategory");
         productCategoryRepository.save(productCategory);
 
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
