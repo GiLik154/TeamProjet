@@ -36,8 +36,6 @@ public class OrderList {
 
     private double totalPrice;
 
-
-
     public OrderList(){}
 
     public OrderList(User user, Address address, String paymentMethod){

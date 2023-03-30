@@ -14,7 +14,7 @@ public class PostReview {
     private Long baseReviewId;
 
     @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "base_review_id")
+    @JoinColumn(name="base_review_id")
     private BaseReview baseReview;
 
     @ManyToOne(fetch = FetchType.LAZY)
