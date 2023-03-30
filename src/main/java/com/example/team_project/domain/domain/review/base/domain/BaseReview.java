@@ -1,5 +1,6 @@
 package com.example.team_project.domain.domain.review.base.domain;
 
+import com.example.team_project.domain.domain.image.ImageUpload;
 import com.example.team_project.domain.domain.user.domain.User;
 import lombok.Getter;
 
@@ -7,7 +8,7 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-public class BaseReview {
+public class BaseReview implements ImageUpload {
     //리뷰의 고유번호
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,26 +27,32 @@ public class BaseReview {
     //리뷰의 카테고리 종류
     @OneToOne(cascade = CascadeType.PERSIST)
     private ReviewToKinds reviewToKinds;
-    protected BaseReview(){}
 
-    public BaseReview(User user,String content,String time,String imagePath,ReviewToKinds reviewToKinds){
-        this.user=user;
-        this.content=content;
-        this.time=time;
-        this.situation="create";
-        this.imagePath=imagePath;
-        this.reviewToKinds=reviewToKinds;
+    protected BaseReview() {
     }
 
-    public void delete(){
-        this.situation="delete";
+    public BaseReview(User user, String content, String time, String imagePath, ReviewToKinds reviewToKinds) {
+        this.user = user;
+        this.content = content;
+        this.time = time;
+        this.situation = "create";
+        this.imagePath = imagePath;
+        this.reviewToKinds = reviewToKinds;
     }
 
-    public void update(String content,String time,String imagePath,ReviewToKinds reviewToKinds) {
-        this.content=content;
-        this.time=time;
-        this.imagePath=imagePath;
-        this.reviewToKinds=reviewToKinds;
+    public void delete() {
+        this.situation = "delete";
     }
 
+    public void update(String content, String time, String imagePath, ReviewToKinds reviewToKinds) {
+        this.content = content;
+        this.time = time;
+        this.imagePath = imagePath;
+        this.reviewToKinds = reviewToKinds;
+    }
+
+    @Override
+    public void uploadImage(String imagePath) {
+        this.imagePath = imagePath;
+    }
 }

@@ -59,6 +59,6 @@ class BaseReviewAddServiceTest {
         assertEquals(baseReview.getContent(), "reviewContent");
         assertEquals(baseReview.getImagePath(), "reviewImage");
         assertEquals(baseReview.getReviewToKinds().getPostReview().getPost().getContent(),"postContent");
-//        assertNull(baseReview.getReviewToKinds().getProductReview());
+        assertNull(baseReview.getReviewToKinds().getProductReview());
     }
 }
