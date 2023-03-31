@@ -1,14 +1,11 @@
 package com.example.team_project.domain.domain.order.list.domain;
 
-import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.list.Address;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.enums.OrderStatus;
 import lombok.Getter;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
@@ -34,18 +31,12 @@ public class OrderList {
     @JoinColumn(name = "order_status")
     private OrderStatus status;
 
-    @OneToMany(mappedBy = "order_list")
-    private List<Order> orders = new ArrayList<>();
-
     private double totalPrice;
-
-
 
     public OrderList(){}
 
-    public OrderList(User user, Address address, String paymentMethod){
+    public OrderList(User user, String paymentMethod){
         this.user = user;
-        this.address = address;
         this.paymentMethod = paymentMethod;
         this.status = OrderStatus.ORDERED;
     }
@@ -54,19 +45,4 @@ public class OrderList {
         this.user = user;
         this.status = OrderStatus.CANCELED;
     }
-
-    public double getTotalPrice() {
-        double totalPrice = 0.0;
-        for (Order order : orders) {
-            totalPrice += order.getTotalPrice();
-        }
-        return totalPrice;
-    }
-
-
-
-
-
-
-
 }
