@@ -10,7 +10,7 @@ import lombok.Getter;
 import javax.persistence.*;
 
 @Entity
-@Table(name="product")
+@Table(name = "product")
 @Getter
 public class Product {
     @Id
@@ -34,10 +34,9 @@ public class Product {
     @Column
     private String description;
 
+    private int price;
 
-    //정규화 1:1연결
-    @OneToOne(fetch = FetchType.LAZY)
-    private ProductStock productStock;
+    private int stock;
 
     @OneToOne(fetch = FetchType.LAZY)
     private ProductSales productSales;
@@ -46,14 +45,17 @@ public class Product {
     private ProductLike productLike;
 
     @OneToOne(fetch = FetchType.LAZY)
-    private ProductCategory CategoryName;
+    private ProductCategory category;
+
     //
-    public Product(){
+    public Product() {
     }
 
-    public Product(String name, String image, String description) {
+    public Product(String name, String image, String description, ProductCategory category, int price) {
         this.name = name;
         this.image = image;
         this.description = description;
+        this.category = category;
+        this.price = price;
     }
 }

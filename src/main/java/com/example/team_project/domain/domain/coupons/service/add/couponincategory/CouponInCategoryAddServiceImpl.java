@@ -32,12 +32,15 @@ public class CouponInCategoryAddServiceImpl implements CouponInCategoryAddServic
         couponInCategoryRepository.save(couponInCategory);
     }
 
+    /** 쿠폰의 종류를 가지고 오기 위한 메소드
+     * 없을 경우 NotFoundCouponException 익셉션 발생 */
     private CouponKinds getCouponKinds(String couponKindsName) {
         return couponKindsRepository.findById(couponKindsName).orElseThrow(
                 NotFoundCouponException::new
         );
     }
-
+    /** 물건의 카테고리를 가지고 오기 위한 메소드
+     * 없을 경우 NotMatchCouponCategoryException 익셉션 발생 */
     private ProductCategory getProductCategory(Long productCategoryId) {
         return productCategoryRepository.findById(productCategoryId).orElseThrow(
                 NotMatchCouponCategoryException::new

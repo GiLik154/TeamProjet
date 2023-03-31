@@ -19,7 +19,6 @@ public class ProductCategory {
     private String categoryName;
 
     public ProductCategory(String categoryName) {
-        this.id = id;
         this.categoryName = categoryName;
     }
 
