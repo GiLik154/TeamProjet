@@ -1,4 +1,4 @@
-package com.example.team_project.domain.domain.review.rcommend.domain;
+package com.example.team_project.domain.domain.review.recommend.domain;
 
 import com.example.team_project.domain.domain.review.base.domain.BaseReview;
 import com.example.team_project.domain.domain.user.domain.User;
@@ -12,19 +12,27 @@ public class ReviewRecommend {
     //리뷰의 고유번호
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "base_review_id")
-    private BaseReview baseReview;
-
+    private Long Id;
     //유저
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     private User user;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private BaseReview baseReview;
+
     //추천 여부
     private Boolean recommend;
 
     public ReviewRecommend() {
+    }
+
+    public ReviewRecommend(User user, BaseReview baseReview,Boolean recommend){
+        this.user=user;
+        this.baseReview=baseReview;
+        this.recommend=recommend;
+    }
+
+    public void update(Boolean recommend){
+        this.recommend=recommend;
     }
 }
