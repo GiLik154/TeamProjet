@@ -3,6 +3,7 @@ package com.example.team_project.domain.domain.review.base.service.update;
 import com.example.team_project.domain.domain.post.category.domain.PostCategory;
 import com.example.team_project.domain.domain.post.post.domain.Post;
 import com.example.team_project.domain.domain.post.post.domain.PostRepository;
+import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import com.example.team_project.domain.domain.review.base.domain.BaseReview;
@@ -81,8 +82,7 @@ class BaseReviewUpdateServiceTest {
 
         User user = new User("userName","userPass");
         userRepository.save(user);
-
-        Product product = new Product("productName","productImage","TOP");
+        Product product = new Product("productName","productImage","productDescription",new ProductCategory(),1000);
         productRepository.save(product);
 
         BaseReview baseReview = new BaseReview(user,"title","content","time", new ReviewToKinds(new ProductReview()));
