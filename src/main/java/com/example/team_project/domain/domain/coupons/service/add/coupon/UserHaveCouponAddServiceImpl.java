@@ -64,7 +64,7 @@ public class UserHaveCouponAddServiceImpl implements UserHaveCouponAddService {
         if (couponKinds.getDeadline() != null && couponKinds.getDeadline().isBefore(LocalDate.now())) {
             throw new ExpiredCouponException();
         }
-        userHaveCoupon.setExpirationDate(getExpirationDate(couponKinds.getDeadline(), couponKinds.getPeriod()));
+        userHaveCoupon.updateExpirationDate(getExpirationDate(couponKinds.getDeadline(), couponKinds.getPeriod()));
     }
 
     private LocalDate getExpirationDate(LocalDate deadline, Period period) {

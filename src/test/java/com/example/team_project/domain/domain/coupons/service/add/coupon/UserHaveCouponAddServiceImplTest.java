@@ -7,7 +7,6 @@ import com.example.team_project.domain.domain.coupons.domain.UserHaveCouponRepos
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.exception.ExpiredCouponException;
-import com.example.team_project.exception.NotFoundCouponException;
 import com.example.team_project.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -77,7 +75,7 @@ class UserHaveCouponAddServiceImplTest {
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKinds.setDeadline(LocalDate.now());
+        couponKinds.updateDeadline(LocalDate.now());
         couponKindsRepository.save(couponKinds);
 
         couponAddService.add(user.getId(), couponKinds.getName());
@@ -96,7 +94,7 @@ class UserHaveCouponAddServiceImplTest {
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKinds.setPeriod(Period.ofDays(7));
+        couponKinds.updatePeriod(Period.ofDays(7));
         couponKindsRepository.save(couponKinds);
 
         couponAddService.add(user.getId(), couponKinds.getName());
@@ -115,8 +113,8 @@ class UserHaveCouponAddServiceImplTest {
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKinds.setDeadline(LocalDate.now().plusDays(30));
-        couponKinds.setPeriod(Period.ofDays(7));
+        couponKinds.updateDeadline(LocalDate.now().plusDays(30));
+        couponKinds.updatePeriod(Period.ofDays(7));
         couponKindsRepository.save(couponKinds);
 
         couponAddService.add(user.getId(), couponKinds.getName());
@@ -135,8 +133,8 @@ class UserHaveCouponAddServiceImplTest {
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKinds.setDeadline(LocalDate.now().plusDays(7));
-        couponKinds.setPeriod(Period.ofDays(30));
+        couponKinds.updateDeadline(LocalDate.now().plusDays(7));
+        couponKinds.updatePeriod(Period.ofDays(30));
         couponKindsRepository.save(couponKinds);
 
         couponAddService.add(user.getId(), couponKinds.getName());
@@ -155,8 +153,8 @@ class UserHaveCouponAddServiceImplTest {
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKinds.setDeadline(LocalDate.now().plusDays(7));
-        couponKinds.setPeriod(Period.ofDays(7));
+        couponKinds.updateDeadline(LocalDate.now().plusDays(7));
+        couponKinds.updatePeriod(Period.ofDays(7));
         couponKindsRepository.save(couponKinds);
 
         couponAddService.add(user.getId(), couponKinds.getName());
@@ -176,7 +174,7 @@ class UserHaveCouponAddServiceImplTest {
         Long userId = user.getId();
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKinds.setDeadline(LocalDate.now().plusDays(-5));
+        couponKinds.updateDeadline(LocalDate.now().plusDays(-5));
         couponKindsRepository.save(couponKinds);
 
         ExpiredCouponException e = assertThrows(ExpiredCouponException.class, () ->
