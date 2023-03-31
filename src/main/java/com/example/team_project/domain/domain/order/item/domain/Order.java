@@ -40,13 +40,13 @@ public class Order {
         this.orderList = orderList;
         this.product = product;
         this.quantity = quantity;
-        this.totalPrice = product.getProductStock().getPrice() * quantity;
+        this.totalPrice = product.getPrice() * quantity;
     }
 
     public void update(Product product, int quantity){
         this.product = product;
         this.quantity = quantity;
-        this.totalPrice = product.getProductStock().getPrice() * quantity;
+        this.totalPrice = product.getPrice() * quantity;
     }
 
 

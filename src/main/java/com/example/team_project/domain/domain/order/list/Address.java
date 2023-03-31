@@ -14,4 +14,12 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    private String address;
+
+    public Address(String address) {
+        this.address = address;
+    }
+
+    protected Address() {}
 }

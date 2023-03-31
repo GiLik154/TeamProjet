@@ -1,6 +1,6 @@
 package com.example.team_project.domain.domain.coupons.service.delete.coupon;
 
-import com.example.team_project.domain.domain.coupons.domain.CouponRepository;
+import com.example.team_project.domain.domain.coupons.domain.UserHaveCouponRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class CouponDeleteServiceImpl implements CouponDeleteService {
-    private final CouponRepository couponRepository;
+public class UserHaveCouponDeleteServiceImpl implements UserHaveCouponDeleteService {
+    private final UserHaveCouponRepository userHaveCouponRepository;
 
     /**
      * 유저에 있는 쿠폰 삭제
@@ -17,6 +17,6 @@ public class CouponDeleteServiceImpl implements CouponDeleteService {
      */
     @Override
     public void delete(Long userId, Long couponId) {
-        couponRepository.deleteByUserIdAndId(userId, couponId);
+        userHaveCouponRepository.deleteByUserIdAndId(userId, couponId);
     }
 }
