@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.Period;
 
@@ -51,10 +50,11 @@ public class UserHaveCouponAddServiceImpl implements UserHaveCouponAddService {
     /**
      * 쿠폰의 만료 기간을 설정해야 하는데,
      * 1. Deadline, Period 둘 다 Null 인 경우는 쿠폰 만료일 지정하지 않음.
-     * 2. Deadline 만 NUll 인 경우는 ExpirationDate = 현재 날짜 + Period
-     * 3. Period 만 NUll 인 경우는 ExpirationDate = Deadline
-     * 4. 둘 다 있는 경우, 현재 날자 + Period > Deadline 의 경우 ExpirationDate = Deadline
-     * 5. 둘 다 있는 경우, 현재 날자 + Period < Deadline 의 경우 ExpirationDate = 현재 날짜 + Period
+     * 2. 만료된 날자의 쿠폰인 경우에는 ExpiredCouponException 발생.
+     * 3. Deadline != Null Period == Null 인 경우는 ExpirationDate = Deadline
+     * 3. Deadline == NUll Period != Null 인 경우는 ExpirationDate = 현재 날짜 + Period
+     * 4. 둘 다 Null이 아니고 (현재 날자 + Period) > Deadline 의 경우 ExpirationDate = Deadline
+     * 5. 둘 다 Null이 아니고 (현재 날자 + Period) < Deadline 의 경우 ExpirationDate = 현재 날짜 + Period
      */
     private void setExpirationDate(CouponKinds couponKinds, UserHaveCoupon userHaveCoupon) {
         if (couponKinds.getDeadline() == null && couponKinds.getPeriod() == null) {
@@ -70,12 +70,9 @@ public class UserHaveCouponAddServiceImpl implements UserHaveCouponAddService {
     private LocalDate getExpirationDate(LocalDate deadline, Period period) {
         if (deadline != null && period == null) {
             return deadline;
-        } else if (deadline == null) {
+        } else if (deadline == null && period != null) {
             return LocalDate.now().plus(period);
-        } else if (deadline.plus(period).isAfter(LocalDate.now())) {
-            return deadline;
         }
-
-        return deadline.plus(period);
+        return deadline;
     }
 }

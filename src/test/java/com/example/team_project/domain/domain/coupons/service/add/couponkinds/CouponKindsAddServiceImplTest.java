@@ -99,7 +99,7 @@ class CouponKindsAddServiceImplTest {
         assertEquals("testName", couponKinds.getName());
         assertEquals(1, couponKinds.getDiscountRate());
         assertEquals(10000, couponKinds.getMinPrice());
-        assertEquals(Duration.ofDays(7), couponKinds.getPeriod());
+        assertEquals(Period.ofDays(7), couponKinds.getPeriod());
     }
 
     @Test
@@ -113,7 +113,7 @@ class CouponKindsAddServiceImplTest {
         assertEquals(1, couponKinds.getDiscountRate());
         assertEquals(10000, couponKinds.getMinPrice());
         assertEquals(LocalDate.now(), couponKinds.getDeadline());
-        assertEquals(Duration.ofDays(7), couponKinds.getPeriod());
+        assertEquals(Period.ofDays(7), couponKinds.getPeriod());
     }
 
     @Test

@@ -3,9 +3,7 @@ package com.example.team_project.domain.domain.coupons.service.add.couponkinds.d
 
 import lombok.Getter;
 
-import java.time.Duration;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.Period;
 
 @Getter

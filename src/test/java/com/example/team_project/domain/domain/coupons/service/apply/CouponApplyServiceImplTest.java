@@ -1,6 +1,6 @@
 package com.example.team_project.domain.domain.coupons.service.apply;
 
-import com.example.team_project.domain.domain.address.domain.AddressRepository;
+import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
 import com.example.team_project.domain.domain.coupons.domain.*;
 import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
@@ -29,7 +29,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class CouponApplyServiceImplTest {
     private final CouponApplyService couponApplyService;
     private final UserRepository userRepository;
-    private final AddressRepository addressRepository;
+    private final UserAddressRepository userAddressRepository;
     private final OrderListRepository orderListRepository;
     private final OrderRepository orderRepository;
     private final UserHaveCouponRepository userHaveCouponRepository;
@@ -39,10 +39,10 @@ class CouponApplyServiceImplTest {
     private final ProductRepository productRepository;
 
     @Autowired
-    public CouponApplyServiceImplTest(CouponApplyService couponApplyService, UserRepository userRepository, AddressRepository addressRepository, OrderListRepository orderListRepository, OrderRepository orderRepository, UserHaveCouponRepository userHaveCouponRepository, CouponInCategoryRepository couponInCategoryRepository, CouponKindsRepository couponKindsRepository, ProductCategoryRepository productCategoryRepository, ProductRepository productRepository) {
+    public CouponApplyServiceImplTest(CouponApplyService couponApplyService, UserRepository userRepository, UserAddressRepository userAddressRepository, OrderListRepository orderListRepository, OrderRepository orderRepository, UserHaveCouponRepository userHaveCouponRepository, CouponInCategoryRepository couponInCategoryRepository, CouponKindsRepository couponKindsRepository, ProductCategoryRepository productCategoryRepository, ProductRepository productRepository) {
         this.couponApplyService = couponApplyService;
         this.userRepository = userRepository;
-        this.addressRepository = addressRepository;
+        this.userAddressRepository = userAddressRepository;
         this.orderListRepository = orderListRepository;
         this.orderRepository = orderRepository;
         this.userHaveCouponRepository = userHaveCouponRepository;
