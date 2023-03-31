@@ -22,7 +22,7 @@ public class OrderListService {
 
         User user = userRepository.validateUserId(userId);
 
-        OrderList orderList = new OrderList(user, address, paymentMethod);
+        OrderList orderList = new OrderList(user, paymentMethod);
         orderListRepository.save(orderList);
     }
 

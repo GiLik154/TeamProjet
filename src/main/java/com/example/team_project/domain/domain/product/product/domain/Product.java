@@ -1,9 +1,7 @@
 package com.example.team_project.domain.domain.product.product.domain;
 
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
-import com.example.team_project.domain.domain.product.product.service.dto.ProductDto;
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
-import com.example.team_project.enums.ProductCategoryStatus;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -57,13 +55,6 @@ public class Product {
         this.salesCount=0;
     }
 
-
-
-
-
-
-
-
     public void updateSalesCount(Long orderId){
         this.salesCount++;
     }
@@ -72,7 +63,6 @@ public class Product {
         this.likeCount++;
     }
 
-
     public void update(String name, String image, String description, int stock, int price, ProductCategory category) {
         this.name = name;
         this.image = image;
@@ -80,7 +70,8 @@ public class Product {
         this.stock = stock;
         this.price = price;
         this.category = category;
-    }
 
+
+    }
 
 }
