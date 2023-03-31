@@ -35,6 +35,7 @@ public class Product {
 
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     private ProductCategory category;
+
     //
     private int salesCount;
 
@@ -55,10 +56,15 @@ public class Product {
         this.salesCount=0;
     }
 
-    public void updateSalesCount(Long orderId){
+
+
+    //판매량
+    public void updateSalesCount(){
         this.salesCount++;
     }
 
+    
+    //좋아요수
     public void updateLikeCount(){
         this.likeCount++;
     }
@@ -70,8 +76,12 @@ public class Product {
         this.stock = stock;
         this.price = price;
         this.category = category;
+    }
 
-
+    
+    //재고량
+    public void decreaseSalesCount(Long orderId){
+        this.salesCount--;
     }
 
 }
