@@ -76,7 +76,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
         //확인
         assertEquals("testId",sellerUpdate.getOwnerId());
-        assertNotEquals("testupdatename",sellerUpdate.getOwnerName());
+        assertNotEquals("testupdatename",seller.getOwnerName());
         assertNotEquals("testupdatephone",sellerUpdate.getPhoneNumber());
 
 
