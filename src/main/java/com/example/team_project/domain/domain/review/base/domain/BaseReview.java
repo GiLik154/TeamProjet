@@ -17,6 +17,9 @@ public class BaseReview implements ImageUpload {
     //유저
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
+    //리뷰 제목
+    private String title;
+    //리뷰 내용
     private String content;
     //리뷰 작성 시간
     private String time;
@@ -31,12 +34,12 @@ public class BaseReview implements ImageUpload {
     protected BaseReview() {
     }
 
-    public BaseReview(User user, String content, String time, String imagePath, ReviewToKinds reviewToKinds) {
+    public BaseReview(User user, String title,String content, String time, ReviewToKinds reviewToKinds) {
         this.user = user;
+        this.title=title;
         this.content = content;
         this.time = time;
         this.situation = "create";
-        this.imagePath = imagePath;
         this.reviewToKinds = reviewToKinds;
     }
 
@@ -44,10 +47,10 @@ public class BaseReview implements ImageUpload {
         this.situation = "delete";
     }
 
-    public void update(String content, String time, String imagePath, ReviewToKinds reviewToKinds) {
+    public void update(String title,String content, String time,ReviewToKinds reviewToKinds) {
+        this.title=title;
         this.content = content;
         this.time = time;
-        this.imagePath = imagePath;
         this.reviewToKinds = reviewToKinds;
     }
 

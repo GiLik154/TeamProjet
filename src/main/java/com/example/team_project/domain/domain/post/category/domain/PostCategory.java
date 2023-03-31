@@ -1,5 +1,6 @@
 package com.example.team_project.domain.domain.post.category.domain;
 
+import com.example.team_project.enums.PostCategoryStatus;
 import lombok.Getter;
 
 import javax.persistence.Entity;
@@ -11,9 +12,10 @@ public class PostCategory {
     @Id
     private String name;
 
-    public PostCategory(){}
+    protected PostCategory() {
+    }
 
-    public PostCategory(String name){
-        this.name=name;
+    public PostCategory(String name) {
+        this.name = name;
     }
 }

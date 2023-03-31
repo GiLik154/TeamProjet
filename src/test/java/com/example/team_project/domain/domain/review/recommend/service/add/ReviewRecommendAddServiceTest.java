@@ -15,8 +15,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -43,12 +44,58 @@ class ReviewRecommendAddServiceTest {
         BaseReview baseReview = new BaseReview(user,"content","time","image",new ReviewToKinds(new PostReview()));
         baseReviewRepository.save(baseReview);
 
-        reviewRecommendAddService.add(user.getId(),baseReview.getId(),"true");
+        boolean isTrue = reviewRecommendAddService.add(user.getId(),baseReview.getId(),"BEST");
 
         ReviewRecommend reviewRecommend = reviewRecommendRepository.findByUserAndBaseReview(user,baseReview).get();
 
-        assertTrue(reviewRecommend.getRecommend().booleanValue());
-        assertEquals(reviewRecommend.getUser(),user);
-        assertEquals(reviewRecommend.getBaseReview(),baseReview);
+        assertTrue(isTrue);
+        assertEquals("Best",reviewRecommend.getRecommend());
+        assertEquals(user,reviewRecommend.getUser());
+        assertEquals(baseReview,reviewRecommend.getBaseReview());
+    }
+
+    @Test
+    void 리뷰_추천_유저중복(){
+        User user = new User("user","pass");
+        userRepository.save(user);
+
+        BaseReview baseReview = new BaseReview(user,"content","time","image",new ReviewToKinds(new PostReview()));
+        baseReviewRepository.save(baseReview);
+
+        ReviewRecommend reviewRecommend = new ReviewRecommend(user,baseReview,"Best");
+        reviewRecommendRepository.save(reviewRecommend);
+
+        boolean isFalse = reviewRecommendAddService.add(user.getId(),baseReview.getId(),"false");
+
+        ReviewRecommend reviewRecommendTest = reviewRecommendRepository.findByUserAndBaseReview(user,baseReview).get();
+
+        assertFalse(isFalse);
+        assertEquals("Best",reviewRecommendTest.getRecommend());
+        assertEquals(user,reviewRecommendTest.getUser());
+        assertEquals(baseReview,reviewRecommendTest.getBaseReview());
+    }
+
+    @Test
+    void 리뷰_추천_유저객체_1개확인(){
+        User user = new User("user","pass");
+        userRepository.save(user);
+
+        BaseReview baseReview = new BaseReview(user,"content","time","image",new ReviewToKinds(new PostReview()));
+        baseReviewRepository.save(baseReview);
+
+        ReviewRecommend reviewRecommend = new ReviewRecommend(user,baseReview,"Best");
+        reviewRecommendRepository.save(reviewRecommend);
+
+        boolean isFalse = reviewRecommendAddService.add(user.getId(),baseReview.getId(),"false");
+
+        List<ReviewRecommend>list = reviewRecommendRepository.findByUser(user);
+
+        ReviewRecommend reviewRecommendTest = reviewRecommendRepository.findByUserAndBaseReview(user,baseReview).get();
+
+        assertFalse(isFalse);
+        assertEquals(1,list.size());
+        assertEquals("Best",reviewRecommendTest.getRecommend());
+        assertEquals(user,reviewRecommendTest.getUser());
+        assertEquals(baseReview,reviewRecommendTest.getBaseReview());
     }
 }
