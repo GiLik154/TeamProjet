@@ -4,6 +4,7 @@ import com.example.team_project.domain.domain.post.category.domain.PostCategory;
 import com.example.team_project.domain.domain.post.category.domain.PostCategoryRepository;
 import com.example.team_project.domain.domain.post.post.domain.Post;
 import com.example.team_project.domain.domain.post.post.domain.PostRepository;
+import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import com.example.team_project.domain.domain.review.base.domain.BaseReview;
@@ -86,7 +87,7 @@ class BaseReviewAddServiceTest {
         User user = new User("name", "pass");
         userRepository.save(user);
 
-        Product product = new Product("productName", "productImage", "TOP");
+        Product product = new Product("productName", "productImage","productImage",new ProductCategory(),1000);
         productRepository.save(product);
 
         ReviewDto reviewDto = new ReviewDto("reviewTitle", "reviewContent", "ProductReview", product.getId());
