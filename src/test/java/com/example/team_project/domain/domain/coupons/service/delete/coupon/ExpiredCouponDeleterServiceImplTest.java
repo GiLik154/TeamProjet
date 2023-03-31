@@ -43,7 +43,7 @@ class ExpiredCouponDeleterServiceImplTest {
         couponKindsRepository.save(couponKinds);
 
         UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
-        userHaveCoupon.setExpirationDate(LocalDate.now().plusDays(-5));
+        userHaveCoupon.updateExpirationDate(LocalDate.now().plusDays(-5));
         userHaveCouponRepository.save(userHaveCoupon);
 
         expiredCouponDeleterService.delete(user.getId());
@@ -62,7 +62,7 @@ class ExpiredCouponDeleterServiceImplTest {
         couponKindsRepository.save(couponKinds);
 
         UserHaveCoupon userHaveCoupon1 = new UserHaveCoupon(user, couponKinds);
-        userHaveCoupon1.setExpirationDate(LocalDate.now().plusDays(5));
+        userHaveCoupon1.updateExpirationDate(LocalDate.now().plusDays(5));
         userHaveCouponRepository.save(userHaveCoupon1);;
 
         expiredCouponDeleterService.delete(user.getId());
@@ -81,11 +81,11 @@ class ExpiredCouponDeleterServiceImplTest {
         couponKindsRepository.save(couponKinds);
 
         UserHaveCoupon userHaveCoupon1 = new UserHaveCoupon(user, couponKinds);
-        userHaveCoupon1.setExpirationDate(LocalDate.now().plusDays(-5));
+        userHaveCoupon1.updateExpirationDate(LocalDate.now().plusDays(-5));
         userHaveCouponRepository.save(userHaveCoupon1);
 
         UserHaveCoupon userHaveCoupon2 = new UserHaveCoupon(user, couponKinds);
-        userHaveCoupon2.setExpirationDate(LocalDate.now().plusDays(5));
+        userHaveCoupon2.updateExpirationDate(LocalDate.now().plusDays(5));
         userHaveCouponRepository.save(userHaveCoupon2);
 
         expiredCouponDeleterService.delete(user.getId());
@@ -105,11 +105,11 @@ class ExpiredCouponDeleterServiceImplTest {
         couponKindsRepository.save(couponKinds);
 
         UserHaveCoupon userHaveCoupon1 = new UserHaveCoupon(user, couponKinds);
-        userHaveCoupon1.setExpirationDate(LocalDate.now().plusDays(-5));
+        userHaveCoupon1.updateExpirationDate(LocalDate.now().plusDays(-5));
         userHaveCouponRepository.save(userHaveCoupon1);
 
         UserHaveCoupon userHaveCoupon2 = new UserHaveCoupon(user, couponKinds);
-        userHaveCoupon2.setExpirationDate(LocalDate.now().plusDays(-3));
+        userHaveCoupon2.updateExpirationDate(LocalDate.now().plusDays(-3));
         userHaveCouponRepository.save(userHaveCoupon2);
 
         expiredCouponDeleterService.delete(user.getId());

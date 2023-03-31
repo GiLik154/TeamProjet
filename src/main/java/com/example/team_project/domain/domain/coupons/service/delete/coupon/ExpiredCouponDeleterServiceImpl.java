@@ -33,7 +33,8 @@ public class ExpiredCouponDeleterServiceImpl implements ExpiredCouponDeleterServ
 
         userHaveCouponRepository.deleteAll(expiredCoupons);
     }
-
+    /** 쿠폰의 만료일을 계산함.
+     * 현재의 날짜에 따라 삭제됨. */
     private boolean isCouponExpired(UserHaveCoupon coupon) {
         return coupon.getExpirationDate().isBefore(LocalDate.now());
     }
