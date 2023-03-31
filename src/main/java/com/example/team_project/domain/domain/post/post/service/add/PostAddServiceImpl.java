@@ -24,10 +24,13 @@ public class PostAddServiceImpl implements PostAddService {
 
     @Override
     public boolean add(Long userId, String content, String postCategory){
-        Optional<User>userOptional=userRepository.findById(userId);
-        Optional<PostCategory>postCategoryOptional=postCategoryRepository.findByName(postCategory);
-        if(userOptional.isPresent()) {
-            Post post = new Post(content, getTime(), userOptional.get(), postCategoryOptional.get()); //점검
+        Optional<PostCategory>postCategoryOptional=postCategoryRepository.findById(postCategory);
+        if(postCategoryOptional.isPresent()) {
+            User user = userRepository.validateUserId(userId);
+            PostCategory getPostCategory = postCategoryOptional.get();
+
+            Post post = new Post(content, getTime(), user, getPostCategory); //점검
+
             postRepository.save(post);
             return true;
         }

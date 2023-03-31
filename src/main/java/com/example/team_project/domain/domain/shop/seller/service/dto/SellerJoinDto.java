@@ -5,6 +5,10 @@ import lombok.Getter;
 @Getter
 public class SellerJoinDto {
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> e97cbad6628652ecf9dd4df84b65861ffe514662
     private Long id;
     //판매자 아이디
     private String ownerId;
