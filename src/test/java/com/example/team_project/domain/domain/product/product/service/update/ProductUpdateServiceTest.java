@@ -70,6 +70,7 @@ class ProductUpdateServiceTest {
 
         productUpdateService.update(seller.getId(),product.getId(),"testPw",updatedProductDto);
 
+        //업데이트한 product 가지고오기
         Product productUpdate = productRepository.findById(product.getId()).get();
 
 // 수정된 상품 정보가 예상한 대로 업데이트 되었는지 검증합니다.
@@ -114,7 +115,7 @@ class ProductUpdateServiceTest {
         BadCredentialsException e = assertThrows(BadCredentialsException.class, () ->
                 productUpdateService.update(seller.getId(),product.getId(),"testsPw",updatedProductDto));
 
-
+        //업데이트한 product 가지고오기
         Product productUpdate = productRepository.findById(product.getId()).get();
 
 // 수정된 상품 정보가 예상한 대로 업데이트 되었는지 검증합니다.

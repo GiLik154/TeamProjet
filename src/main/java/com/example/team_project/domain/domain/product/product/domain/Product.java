@@ -35,7 +35,7 @@ public class Product {
 
     //정규화 1:1연결
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     private ProductCategory category;
     //
     private int salesCount;
