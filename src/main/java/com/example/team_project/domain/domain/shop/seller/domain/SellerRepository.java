@@ -25,6 +25,15 @@ public interface SellerRepository extends JpaRepository<Seller,Long> {
 
     }
 
+    default Seller validateSellerId(Long sellerId) {
+        Optional<Seller> optionalSeller = findById(sellerId);
+
+        return optionalSeller.orElseThrow(() ->
+                new UsernameNotFoundException("Invalid seller")
+        );
+
+    }
+
     void deleteByOwnerId(String ownerId);
 
 

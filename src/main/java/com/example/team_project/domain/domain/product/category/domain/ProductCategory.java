@@ -1,11 +1,11 @@
 package com.example.team_project.domain.domain.product.category.domain;
 
+import com.example.team_project.enums.ProductCategoryStatus;
 import lombok.Getter;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name="productCategory")
 @Getter
 public class ProductCategory {
 
@@ -14,17 +14,21 @@ public class ProductCategory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //품목 카테고리
-    @Column
-    private String categoryName;
+    @Enumerated(EnumType.STRING) // CategoryStatus enum 타입으로 저장
+    @Column(nullable = false)
+    private ProductCategoryStatus status;
 
-    public ProductCategory(String categoryName) {
-        this.categoryName = categoryName;
-    }
-
-    public ProductCategory(){
+    public ProductCategory(ProductCategoryStatus status) {
+        this.status = status;
 
     }
+
+    protected ProductCategory(){}
+
+    public ProductCategory(String testCategory) {
+        this.status = status;
+    }
+
 
 
 }
