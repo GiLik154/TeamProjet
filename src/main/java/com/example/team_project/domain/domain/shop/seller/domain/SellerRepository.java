@@ -35,9 +35,4 @@ public interface SellerRepository extends JpaRepository<Seller,Long> {
     }
 
     void deleteByOwnerId(String ownerId);
-
-
-
-
-
 }

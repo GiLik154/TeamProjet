@@ -51,6 +51,4 @@ public class Shop {
         this.shopName = shopName;
         this.shopAddress = shopAddress;
     }
-
-
 }

@@ -1,8 +1,11 @@
 package com.example.team_project.domain.domain.coupons.service.apply;
 
+import com.example.team_project.domain.domain.address.domain.UserAddress;
+import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
 import com.example.team_project.domain.domain.coupons.domain.*;
 import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
+import com.example.team_project.domain.domain.order.item.domain.OrderToProduct;
 import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
@@ -31,6 +34,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class CouponApplyServiceImplTest {
     private final CouponApplyService couponApplyService;
     private final UserRepository userRepository;
+    private final UserAddressRepository userAddressRepository;
     private final OrderListRepository orderListRepository;
     private final OrderRepository orderRepository;
     private final UserHaveCouponRepository userHaveCouponRepository;
@@ -41,9 +45,10 @@ class CouponApplyServiceImplTest {
     private final SellerRepository sellerRepository;
 
     @Autowired
-    public CouponApplyServiceImplTest(CouponApplyService couponApplyService, UserRepository userRepository, OrderListRepository orderListRepository, OrderRepository orderRepository, UserHaveCouponRepository userHaveCouponRepository, CouponInCategoryRepository couponInCategoryRepository, CouponKindsRepository couponKindsRepository, ProductCategoryRepository productCategoryRepository, ProductRepository productRepository, SellerRepository sellerRepository) {
+    public CouponApplyServiceImplTest(CouponApplyService couponApplyService, UserRepository userRepository, UserAddressRepository userAddressRepository, OrderListRepository orderListRepository, OrderRepository orderRepository, UserHaveCouponRepository userHaveCouponRepository, CouponInCategoryRepository couponInCategoryRepository, CouponKindsRepository couponKindsRepository, ProductCategoryRepository productCategoryRepository, ProductRepository productRepository, SellerRepository sellerRepository) {
         this.couponApplyService = couponApplyService;
         this.userRepository = userRepository;
+        this.userAddressRepository = userAddressRepository;
         this.orderListRepository = orderListRepository;
         this.orderRepository = orderRepository;
         this.userHaveCouponRepository = userHaveCouponRepository;
@@ -59,7 +64,10 @@ class CouponApplyServiceImplTest {
         User user = new User("testName", "testPw");
         userRepository.save(user);
 
-        OrderList orderList = new OrderList(user, "testPayment");
+        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
+        userAddressRepository.save(userAddress);
+
+        OrderList orderList = new OrderList(user, userAddress, "카드");
         orderListRepository.save(orderList);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
@@ -80,7 +88,9 @@ class CouponApplyServiceImplTest {
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
         couponInCategoryRepository.save(couponInCategory);
 
-        Order order = new Order(user, orderList, product, 5);
+        OrderToProduct orderToProduct = new OrderToProduct(product, 10);
+
+        Order order = new Order(user, orderList, orderToProduct);
         orderRepository.save(order);
 
         int salePrice = couponApplyService.apply(user.getId(), userHaveCoupon.getId(), order);
