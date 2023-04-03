@@ -1,6 +1,6 @@
 package com.example.team_project.domain.domain.order.list.service;
 
-import com.example.team_project.domain.domain.order.list.Address;
+import com.example.team_project.domain.domain.address.domain.UserAddress;
 import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
 import com.example.team_project.domain.domain.user.domain.User;
@@ -22,11 +22,11 @@ public class OrderListAddService {
     /**
      * 주문 리스트 생성
      **/
-    public OrderList add(Long userId, Address address, String paymentMethod) {
+    public OrderList add(Long userId, UserAddress userAddress, String paymentMethod) {
 
         User user = userRepository.validateUserId(userId);
 
-        OrderList orderList = new OrderList(user, address, paymentMethod);
+        OrderList orderList = new OrderList(user, userAddress, paymentMethod);
         orderListRepository.save(orderList);
 
         return orderList;

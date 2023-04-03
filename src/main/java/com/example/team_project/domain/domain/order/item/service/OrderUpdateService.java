@@ -2,8 +2,8 @@ package com.example.team_project.domain.domain.order.item.service;
 
 import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
-import com.example.team_project.domain.domain.product.domain.Product;
-import com.example.team_project.domain.domain.product.domain.ProductRepository;
+import com.example.team_project.domain.domain.product.product.domain.Product;
+import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import com.example.team_project.enums.OrderStatus;
 import com.example.team_project.exception.OrderNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class OrderUpdateService {
     private final OrderRepository orderRepository;
 
     /**
-     * productId 와 orderId로 validate를 통해 객체를 얻어온 뒤
+     * productId 와 orderId로 validate 를 통해 객체를 얻어온 뒤
      * 상품 재고량 확인 부족할 시 재고량 소진 익셉션
      * 충분 할 시 입력값으로 상품, 개수 수정
      **/

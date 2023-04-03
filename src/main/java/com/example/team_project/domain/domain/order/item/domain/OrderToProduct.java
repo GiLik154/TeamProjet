@@ -1,6 +1,6 @@
 package com.example.team_project.domain.domain.order.item.domain;
 
-import com.example.team_project.domain.domain.product.domain.Product;
+import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.enums.OrderStatus;
 import com.example.team_project.exception.InvalidQuantityException;
 import com.example.team_project.exception.OutOfStockException;
@@ -41,14 +41,14 @@ public class OrderToProduct {
     }
 
     /**
-     * 생성시 주문 개수, 상품 재고 검사 하고 동시에 기본상태가 enum을 통해 ORDERED로 저장된다
+     * 생성시 주문 개수, 상품 재고 검사 하고 동시에 기본상태가 enum 을 통해 ORDERED 로 저장된다
      **/
     public OrderToProduct(Product product, int quantity) {
         validateQuantityAndProductStock(product, quantity);
         this.product = product;
         this.status = OrderStatus.ORDERED;
         this.quantity = quantity;
-        this.totalPrice = product.getProductStock().getProductPrice() * quantity;
+        this.totalPrice = product.getPrice() * quantity;
 
     }
 
@@ -59,7 +59,7 @@ public class OrderToProduct {
         validateQuantityAndProductStock(product, quantity);
         this.product = product;
         this.quantity = quantity;
-        this.totalPrice = product.getProductStock().getProductPrice() * quantity;
+        this.totalPrice = product.getPrice() * quantity;
     }
 
     /**
@@ -72,7 +72,7 @@ public class OrderToProduct {
     private void validateQuantityAndProductStock(Product product, int quantity) {
         if (quantity <= 0) {
             throw new InvalidQuantityException();
-        } else if (product.getProductStock().getProductStock() < quantity) {
+        } else if (product.getStock() < quantity) {
             throw new OutOfStockException();
         }
     }

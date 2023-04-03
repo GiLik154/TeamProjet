@@ -29,7 +29,7 @@ public class CouponApplyServiceImpl implements CouponApplyService {
             throw new NotApplyCouponException();
         }
 
-        return order.getTotalPrice() * (100 - coupon.getDiscountRate()) / 100;
+        return order.getOrderToProduct().getTotalPrice() * (100 - coupon.getDiscountRate()) / 100;
     }
 
     private UserHaveCoupon getCoupon(Long userId, Long couponId) {
@@ -53,7 +53,7 @@ public class CouponApplyServiceImpl implements CouponApplyService {
         List<CouponInCategory> categories = couponInCategoryRepository.findByCouponKindsName(coupon.getName());
 
         return categories.stream().
-                anyMatch(category -> category.getProductCategory().equals(order.getProduct().getCategory()));
+                anyMatch(category -> category.getProductCategory().equals(order.getOrderToProduct().getProduct().getCategory()));
     }
 
     /**

@@ -21,14 +21,14 @@ public class Order {
 
     /**
      * OrderList 안에는
-     * 여러개의 Order가 포함 될 수 있으니
+     * 여러개의 Order 가 포함 될 수 있으니
      * manyToOne
      */
     @ManyToOne(fetch = FetchType.LAZY)
     private OrderList orderList;
 
     /**
-     * (cascade = CascadeType.PERSIST)을 붙여줌으로써 Order 와 OrderToProduct는 서로 함께 저장, 삭제 됩니다
+     * (cascade = CascadeType.PERSIST)을 붙여줌으로써 Order 와 OrderToProduct 는 서로 함께 저장, 삭제 됩니다
      */
     @OneToOne(cascade = CascadeType.PERSIST)
     private OrderToProduct orderToProduct;
@@ -43,13 +43,15 @@ public class Order {
     }
 
     /**
-     * Order를 생성 할 때
-     * User, OrderList,OrderToProduct를 가지고 생성되며
-     * OrderToProduct에는 주문 상품의 정보가 있습니다
+     * Order 를 생성 할 때
+     * User, OrderList,OrderToProduct 를 가지고 생성되며
+     * OrderToProduct 에는 주문 상품의 정보가 있습니다
      */
     public Order(User user, OrderList orderList, OrderToProduct orderToProduct) {
         this.user = user;
         this.orderList = orderList;
         this.orderToProduct = orderToProduct;
     }
+
+
 }
