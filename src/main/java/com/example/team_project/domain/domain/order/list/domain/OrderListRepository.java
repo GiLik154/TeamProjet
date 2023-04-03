@@ -11,6 +11,4 @@ public interface OrderListRepository extends JpaRepository<OrderList, Long> {
     Optional<OrderList> findByUserIdAndId(Long userId, Long orderListId);
 
     Optional<OrderList> findByUserId(Long userId);
-
-
 }

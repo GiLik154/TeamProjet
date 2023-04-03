@@ -1,4 +1,4 @@
-package com.example.team_project.domain.domain.product.product.service;
+package com.example.team_project.domain.domain.product.product.service.Registration;
 
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
