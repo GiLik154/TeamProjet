@@ -51,11 +51,11 @@ class PostReviewAddServiceTest {
         PostCategory postCategory = new PostCategory("testCategory");
         postCategoryRepository.save(postCategory);
 
-        Post post = new Post("postContent", "postTime", user, postCategory);
+        Post post = new Post("testTitle","postContent", "postTime", user, postCategory);
         postRepository.save(post);
 
         ReviewToKinds reviewToKinds = reviewJoinKindsServiceMap.get(KINDS).returnReviewToKindsEntity(post.getId());
 
-        assertEquals(reviewToKinds.getPostReview().getPost(), post);
+        assertEquals(post,reviewToKinds.getPostReview().getPost());
     }
 }

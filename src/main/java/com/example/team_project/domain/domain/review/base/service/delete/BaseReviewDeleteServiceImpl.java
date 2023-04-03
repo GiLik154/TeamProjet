@@ -22,9 +22,9 @@ public class BaseReviewDeleteServiceImpl<T> implements BaseReviewDeleteService {
     public void delete(Long baseReviewId, Long userId, String password) {
 
        baseReviewRepository.findById(baseReviewId).ifPresent(baseReview -> {
-           //사용자 검증 후
-
-            baseReview.delete();
+            if(baseReview.getUser().getId()==userId) {
+                baseReview.delete();
+            }
         });
     }
 }

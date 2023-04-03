@@ -2,6 +2,7 @@ package com.example.team_project.domain.domain.post.category.service.add;
 
 import com.example.team_project.domain.domain.post.category.domain.PostCategory;
 import com.example.team_project.domain.domain.post.category.domain.PostCategoryRepository;
+import com.example.team_project.enums.PostCategoryStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,7 +16,11 @@ public class PostCategoryAddServiceImpl implements PostCategoryAddService{
 
     @Override
     public void add(String name){
-        PostCategory postCategory = new PostCategory(name);
+        PostCategory postCategory = new PostCategory(getStatusName(name));
         postCategoryRepository.save(postCategory);
+    }
+
+    private String getStatusName(String name){
+        return PostCategoryStatus.valueOf(name).getName();
     }
 }

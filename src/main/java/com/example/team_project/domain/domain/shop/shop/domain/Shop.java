@@ -16,7 +16,6 @@ public class Shop {
 
     //cascade = CascadeType.REMOVE
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "seller_id")
     private Seller seller;
 
     //가게 이름

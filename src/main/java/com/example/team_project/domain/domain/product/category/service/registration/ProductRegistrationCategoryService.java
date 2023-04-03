@@ -1,10 +1,9 @@
-package com.example.team_project.domain.domain.product.category.service;
+package com.example.team_project.domain.domain.product.category.service.registration;
 
 
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
-import com.example.team_project.domain.domain.product.category.service.dto.ProductCategoryDto;
-import com.example.team_project.domain.domain.product.product.domain.Product;
+import com.example.team_project.enums.ProductCategoryStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,13 +15,11 @@ public class ProductRegistrationCategoryService {
 
     private final ProductCategoryRepository productCategoryRepository;
 
-    public ProductCategory insertCategory(Product product, ProductCategoryDto productCategoryDto){
+    public ProductCategory insertCategory(String category){
 
         //품목 카테고리
         ProductCategory productCategory = new ProductCategory(
-                productCategoryDto.getProductCategory());
-
-
+                ProductCategoryStatus.valueOf(category));
                 return productCategoryRepository.save(productCategory);
     }
 

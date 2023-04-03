@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 @Transactional
@@ -16,14 +17,14 @@ public class PostDeleteServiceImpl implements PostDeleteService {
 
     @Override
     public boolean delete(Long userId, Long postId, String password) {
-        Optional<Post> postOptional = postRepository.findById(postId);
-        if (postOptional.isPresent()) {
-            Post post = postOptional.get();
-            // 유저의 아이디와 패스워드 검증 후
+        AtomicBoolean result = new AtomicBoolean(false); // boolean 값을 저장할 AtomicBoolean 객체 생성
 
-            post.delete();
-            return true;
-        }
-        return false;
+        postRepository.findById(postId).ifPresent(post -> {
+            if (userId == post.getUser().getId()) {
+                post.delete();
+                result.set(true);
+            }
+        });
+        return result.get();
     }
 }

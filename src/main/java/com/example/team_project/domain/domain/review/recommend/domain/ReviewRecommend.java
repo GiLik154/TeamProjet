@@ -21,18 +21,18 @@ public class ReviewRecommend {
     private BaseReview baseReview;
 
     //추천 여부
-    private Boolean recommend;
+    private String recommend;
 
     public ReviewRecommend() {
     }
 
-    public ReviewRecommend(User user, BaseReview baseReview,Boolean recommend){
+    public ReviewRecommend(User user, BaseReview baseReview,String recommend){
         this.user=user;
         this.baseReview=baseReview;
         this.recommend=recommend;
     }
 
-    public void update(Boolean recommend){
+    public void update(String recommend){
         this.recommend=recommend;
     }
 }
