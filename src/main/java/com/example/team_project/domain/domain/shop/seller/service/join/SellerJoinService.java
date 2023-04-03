@@ -5,10 +5,13 @@ import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.domain.domain.shop.seller.service.dto.SellerJoinDto;
 import com.example.team_project.exception.PasswordEncodingFailedException;
+import com.example.team_project.exception.SellerDuplicateSellerException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +25,8 @@ public class SellerJoinService {
     
     //회원가입
     public void sellerJoin(SellerJoinDto sellerJoinDto){
+        sellerRepository.duplication(sellerJoinDto.getOwnerId());
+
         Seller seller = new Seller(
                 sellerJoinDto.getOwnerId(),
                 sellerJoinDto.getPassword(),
@@ -29,7 +34,6 @@ public class SellerJoinService {
                 sellerJoinDto.getPhoneNumber());
 
         checkEncodingPw(seller,sellerJoinDto.getPassword());
-
         sellerRepository.save(seller);
     }
 

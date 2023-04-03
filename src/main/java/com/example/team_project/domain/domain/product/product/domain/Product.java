@@ -36,6 +36,9 @@ public class Product {
     @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
     private ProductCategory category;
     //
+
+
+
     private int salesCount;
 
     private int likeCount;
