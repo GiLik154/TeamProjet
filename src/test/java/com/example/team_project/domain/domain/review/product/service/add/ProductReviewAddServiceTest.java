@@ -1,7 +1,7 @@
 package com.example.team_project.domain.domain.review.product.service.add;
 
-import com.example.team_project.domain.domain.product.product.domain.Product;
-import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
+import com.example.team_project.domain.domain.product.domain.Product;
+import com.example.team_project.domain.domain.product.domain.ProductRepository;
 import com.example.team_project.domain.domain.review.base.domain.ReviewToKinds;
 import com.example.team_project.domain.domain.review.kinds.ReviewJoinKindsService;
 import com.example.team_project.domain.domain.user.domain.User;

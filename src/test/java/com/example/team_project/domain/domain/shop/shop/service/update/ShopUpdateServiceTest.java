@@ -54,7 +54,7 @@ import static org.junit.jupiter.api.Assertions.*;
         Shop sellerUpdate = shopRepository.findById(shopId).get();
 
         //확인
-        assertEquals("testshopname", sellerUpdate.getShopName());
+        assertEquals("testupdateshopName", sellerUpdate.getShopName());
         assertEquals("testupdateshopaddress", sellerUpdate.getShopAddress());
 
 

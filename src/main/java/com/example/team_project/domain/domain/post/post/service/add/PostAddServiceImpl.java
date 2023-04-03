@@ -1,18 +1,20 @@
 package com.example.team_project.domain.domain.post.post.service.add;
 
-import com.example.team_project.domain.domain.post.category.domain.PostCategory;
+import com.example.team_project.domain.domain.image.service.ImageUploadService;
 import com.example.team_project.domain.domain.post.category.domain.PostCategoryRepository;
 import com.example.team_project.domain.domain.post.post.domain.Post;
 import com.example.team_project.domain.domain.post.post.domain.PostRepository;
+import com.example.team_project.domain.domain.post.post.service.PostDto;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Optional;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
 @Transactional
@@ -21,22 +23,23 @@ public class PostAddServiceImpl implements PostAddService {
     private final PostRepository postRepository;
     private final UserRepository userRepository;
     private final PostCategoryRepository postCategoryRepository;
+    private final ImageUploadService imageUploadService;
 
     @Override
-    public boolean add(Long userId, String content, String postCategory){
-        Optional<PostCategory>postCategoryOptional=postCategoryRepository.findById(postCategory);
-        if(postCategoryOptional.isPresent()) {
+    public boolean add(Long userId, PostDto dto, MultipartFile file) {
+        AtomicBoolean result = new AtomicBoolean(false); // boolean 값을 저장할 AtomicBoolean 객체 생성
+        postCategoryRepository.findById(dto.getCategory()).ifPresent(category -> {
             User user = userRepository.validateUserId(userId);
-            PostCategory getPostCategory = postCategoryOptional.get();
 
-            Post post = new Post(content, getTime(), user, getPostCategory); //점검
-
+            Post post = new Post(dto.getTitle(), dto.getContent(), getTime(), user, category); //점검
+            imageUploadService.upload(post.getTitle(), file, post);
             postRepository.save(post);
-            return true;
-        }
-        return false;
+            result.set(true);
+        });
+        return result.get();
     }
-    private  String getTime() {
+
+    private String getTime() {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         return localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:ss"));

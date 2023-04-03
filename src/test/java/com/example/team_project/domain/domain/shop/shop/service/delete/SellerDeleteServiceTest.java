@@ -20,7 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Transactional
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
- class SellerDeleteServiceTest {
+class SellerDeleteServiceTest {
     private final SellerRepository sellerRepository;
     private final ShopRepository shopRepository;
     private final PasswordEncoder passwordEncoder;
@@ -42,11 +42,12 @@ import static org.junit.jupiter.api.Assertions.*;
         Seller seller = new Seller("testId", passwordEncoder.encode("testPw"), "testName", "testPhone");
         sellerRepository.save(seller);
         Long sellerId = seller.getId();
+
         Shop shop = new Shop("testshopname", "testshowaddress", "testshopbnum");
         shopRepository.save(shop);
 
         //비밀번호 검증
-        sellerDeleteService.delete(sellerId,seller.getOwnerId(),"testPw");
+        sellerDeleteService.delete(sellerId, "testPw", seller.getOwnerId());
 
         //판매자 객체가 데이터베이스에 존재하지 않을 때 테스트 통과
         assertFalse(sellerRepository.findById(sellerId).isPresent());
@@ -64,7 +65,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
         //아이디가 다를때
         UsernameNotFoundException e = assertThrows(UsernameNotFoundException.class, () ->
-                sellerDeleteService.delete(sellerId,"test123", "testPw")
+                sellerDeleteService.delete(sellerId, "test123", "testPw")
         );
 
         assertTrue(sellerRepository.findById(sellerId).isPresent());
@@ -84,7 +85,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
         //비밀번호가 다를때
         BadCredentialsException e = assertThrows(BadCredentialsException.class, () ->
-                sellerDeleteService.delete(sellerId,"testId", "s")
+                sellerDeleteService.delete(sellerId, "s", "testId")
         );
 
         assertTrue(sellerRepository.findById(sellerId).isPresent());
@@ -103,14 +104,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
         //아이디, 비밀번호 둘다 다를때
         UsernameNotFoundException e = assertThrows(UsernameNotFoundException.class, () ->
-                sellerDeleteService.delete(sellerId,"tessstId", "s")
+                sellerDeleteService.delete(sellerId, "testId123", "s")
         );
 
         assertTrue(sellerRepository.findById(sellerId).isPresent());
     }
-
-
-
-
-
 }

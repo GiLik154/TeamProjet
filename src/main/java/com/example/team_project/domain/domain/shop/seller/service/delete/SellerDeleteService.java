@@ -17,15 +17,15 @@ public class SellerDeleteService {
     private final SellerRepository sellerRepository;
     private final PasswordEncoder passwordEncoder;
 
-        //회원탈퇴 selelr 탈퇴시 shop도 같이 삭제
-    public void delete(Long sellerId,String password,String ownerId){
+    //회원탈퇴 selelr 탈퇴시 shop도 같이 삭제
+    public void delete(Long sellerId, String password, String ownerId) {
         Seller seller = sellerRepository.validateSeller(ownerId);
 
-        if (!seller.isValidPassword(passwordEncoder,password)) {
+        if (!seller.isValidPassword(passwordEncoder, password)) {
             throw new BadCredentialsException("Invalid password");
         }
 
-                sellerRepository.deleteById(sellerId);
+        sellerRepository.deleteById(sellerId);
     }
 
 }

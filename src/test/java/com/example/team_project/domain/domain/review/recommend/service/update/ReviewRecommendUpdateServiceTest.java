@@ -44,13 +44,14 @@ class ReviewRecommendUpdateServiceTest {
         BaseReview baseReview = new BaseReview(user,"content","time","image",new ReviewToKinds(new PostReview()));
         baseReviewRepository.save(baseReview);
 
-        ReviewRecommend reviewRecommend = new ReviewRecommend(user,baseReview,true);
+        ReviewRecommend reviewRecommend = new ReviewRecommend(user,baseReview,"BEST");
         reviewRecommendRepository.save(reviewRecommend);
 
-        reviewRecommendUpdateService.update(user.getId(), baseReview.getId(),"false");
+        reviewRecommendUpdateService.update(user.getId(), baseReview.getId(),"WORST");
+        ReviewRecommend testReviewRecommend = reviewRecommendRepository.findByUserAndBaseReview(user,baseReview).get();
 
-        assertFalse(reviewRecommend.getRecommend().booleanValue());
-        assertEquals(reviewRecommend.getUser(),user);
-        assertEquals(reviewRecommend.getBaseReview(),baseReview);
+        assertEquals("Worst",testReviewRecommend.getRecommend());
+        assertEquals(user,testReviewRecommend.getUser());
+        assertEquals(baseReview,testReviewRecommend.getBaseReview());
     }
 }
