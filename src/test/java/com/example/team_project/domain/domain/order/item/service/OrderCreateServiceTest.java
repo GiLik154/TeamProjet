@@ -78,7 +78,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -95,9 +95,9 @@ class OrderCreateServiceTest {
         assertEquals(userId, order.getUser().getId());
         assertEquals(productId, order.getOrderToProduct().getProduct().getId());
         assertEquals("카드", order.getOrderList().getPaymentMethod());
-        assertEquals("product_name", order.getOrderToProduct().getProduct().getName());
-        assertEquals("product_image", order.getOrderToProduct().getProduct().getImage());
-        assertEquals("product_description", order.getOrderToProduct().getProduct().getDescription());
+        assertEquals("testProduct", order.getOrderToProduct().getProduct().getName());
+        assertEquals("testImg", order.getOrderToProduct().getProduct().getImage());
+        assertEquals("testDes", order.getOrderToProduct().getProduct().getDescription());
     }
 
     @Test
@@ -113,7 +113,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -145,9 +145,9 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
-        Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 5, 5000, productCategory);
+        Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 20, 1000, productCategory);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
@@ -156,7 +156,7 @@ class OrderCreateServiceTest {
         orderListRepository.save(orderList);
 
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
-        OrderToProduct orderToProduct1 = new OrderToProduct(product1, 20);
+        OrderToProduct orderToProduct1 = new OrderToProduct(product1, 10);
 
         Order order = new Order(user, orderList, orderToProduct);
         Order order1 = new Order(user, orderList, orderToProduct1);
@@ -164,8 +164,8 @@ class OrderCreateServiceTest {
         orderRepository.save(order1);
 
         //then
-        assertEquals(10000, orderToProduct.getTotalPrice());
-        assertEquals(20000, orderToProduct1.getTotalPrice());
+        assertEquals(50000, orderToProduct.getTotalPrice());
+        assertEquals(10000, orderToProduct1.getTotalPrice());
 
     }
 
@@ -253,7 +253,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 0, 5000, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 

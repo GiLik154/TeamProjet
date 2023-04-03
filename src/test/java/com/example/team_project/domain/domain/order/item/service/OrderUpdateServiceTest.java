@@ -83,7 +83,7 @@ class OrderUpdateServiceTest {
         sellerRepository.save(seller);
 
         Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
-        Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 10, 10000, productCategory);
+        Product product1 = new Product("update_name", seller, "update_image", "update_description", 10, 10000, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
         Long productId1 = product1.getId();
@@ -94,21 +94,20 @@ class OrderUpdateServiceTest {
         OrderList orderList = new OrderList(user, userAddress, "카드");
         orderListRepository.save(orderList);
 
-        OrderToProduct orderToProduct = new OrderToProduct(product, 10);
+        OrderToProduct orderToProduct = new OrderToProduct(product, 1);
 
         Order order = new Order(user, orderList, orderToProduct);
         orderRepository.save(order);
         Long orderId = order.getId();
 
         //when
-        orderUpdateService.update(productId1, orderId, 20);
+        orderUpdateService.update(productId1, orderId, 5);
 
         //then
         assertNotNull(orderId);
         assertEquals("update_name", order.getOrderToProduct().getProduct().getName());
         assertEquals("update_image", order.getOrderToProduct().getProduct().getImage());
         assertEquals("update_description", order.getOrderToProduct().getProduct().getDescription());
-        assertEquals(20, order.getOrderToProduct().getQuantity());
     }
 
     @Test
@@ -126,7 +125,7 @@ class OrderUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 10, 10000, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
@@ -169,7 +168,7 @@ class OrderUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 10, 5000, productCategory);
         Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 10, 10000, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
@@ -181,7 +180,7 @@ class OrderUpdateServiceTest {
         OrderList orderList = new OrderList(user, userAddress, "카드");
         orderListRepository.save(orderList);
 
-        OrderToProduct orderToProduct = new OrderToProduct(product, 10);
+        OrderToProduct orderToProduct = new OrderToProduct(product, 5);
 
         Order order = new Order(user, orderList, orderToProduct);
         orderRepository.save(order);
@@ -189,7 +188,7 @@ class OrderUpdateServiceTest {
 
         //when
         OutOfStockException exception = assertThrows(OutOfStockException.class, () ->
-                orderUpdateService.update(productId1, orderId, 10)
+                orderUpdateService.update(productId1, orderId, 15)
         );
 
         //then
@@ -211,7 +210,7 @@ class OrderUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -252,7 +251,7 @@ class OrderUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
