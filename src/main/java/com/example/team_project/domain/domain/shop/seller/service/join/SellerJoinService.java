@@ -17,12 +17,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @Transactional
 public class SellerJoinService {
-
-
     private final SellerRepository sellerRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
-    
-    
+
     //회원가입
     public void sellerJoin(SellerJoinDto sellerJoinDto){
         sellerRepository.duplication(sellerJoinDto.getOwnerId());
@@ -43,11 +40,4 @@ public class SellerJoinService {
             throw new PasswordEncodingFailedException();
         }
     }
-
-
-
-
-
-
-
 }

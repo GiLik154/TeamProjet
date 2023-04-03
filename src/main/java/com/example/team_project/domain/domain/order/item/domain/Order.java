@@ -17,36 +17,40 @@ public class Order {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     private User user;
 
+    /**
+     * OrderList 안에는
+     * 여러개의 Order 가 포함 될 수 있으니
+     * manyToOne
+     */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "orderlist_id")
     private OrderList orderList;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "product_id")
-    private Product product;
+    /**
+     * (cascade = CascadeType.PERSIST)을 붙여줌으로써 Order 와 OrderToProduct 는 서로 함께 저장, 삭제 됩니다
+     */
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private OrderToProduct orderToProduct;
 
-    private int quantity;
-
-    private int totalPrice;
-
-    public Order() {
+    /**
+     * Protected ->
+     * 해당 클래스의 내부 로직을
+     * 외부에서 직접적으로 조작하지 못하게 하여
+     * 안정성을 높이기 위함입니다
+     **/
+    protected Order() {
     }
 
-    public Order(User user, OrderList orderList, Product product, int quantity) {
+    /**
+     * Order 를 생성 할 때
+     * User, OrderList,OrderToProduct 를 가지고 생성되며
+     * OrderToProduct 에는 주문 상품의 정보가 있습니다
+     */
+    public Order(User user, OrderList orderList, OrderToProduct orderToProduct) {
         this.user = user;
         this.orderList = orderList;
-        this.product = product;
-        this.quantity = quantity;
-        this.totalPrice = product.getPrice() * quantity;
-    }
-
-    public void update(Product product, int quantity){
-        this.product = product;
-        this.quantity = quantity;
-        this.totalPrice = product.getPrice() * quantity;
+        this.orderToProduct = orderToProduct;
     }
 
 

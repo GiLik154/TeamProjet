@@ -2,7 +2,6 @@ package com.example.team_project.domain.domain.shop.seller.domain;
 
 import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
-
 import javax.persistence.*;
 
 @Entity
@@ -40,7 +39,6 @@ public class Seller {
 
     protected Seller() {
     }
-
 
     public Seller(String ownerId, String password) {
         this.ownerId = ownerId;

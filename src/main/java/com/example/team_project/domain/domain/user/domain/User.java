@@ -13,9 +13,11 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name; // 아이디 : test123
+    private String name;
     private String password;
-    protected User(){}
+
+    protected User() {}
+
     public User(String name, String password) {
         this.name = name;
         this.password = password;

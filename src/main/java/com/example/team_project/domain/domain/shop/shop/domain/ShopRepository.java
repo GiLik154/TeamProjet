@@ -2,6 +2,7 @@ package com.example.team_project.domain.domain.shop.shop.domain;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+
 import java.util.Optional;
 
 
