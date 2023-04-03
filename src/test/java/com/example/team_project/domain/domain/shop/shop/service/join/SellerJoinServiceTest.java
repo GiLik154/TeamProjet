@@ -47,7 +47,7 @@ class SellerJoinServiceTest {
             assertTrue(passwordEncoder.matches("testPw", seller.getPassword()));
             assertEquals("testname",seller.getOwnerName());
             assertEquals("testphonenumber",seller.getPhoneNumber());
-                });
+        });
     }
 
     @Test
