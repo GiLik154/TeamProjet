@@ -1,5 +1,7 @@
 package com.example.team_project.domain.domain.shop.seller.domain;
 
+import com.example.team_project.exception.SellerDuplicateSellerException;
+import com.example.team_project.exception.SellerNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -14,7 +16,7 @@ public interface SellerRepository extends JpaRepository<Seller,Long> {
 
     //로그인체크
     Optional<Seller> findByOwnerId(String ownerId);
-    boolean existsByOwnerId(String ownerId);
+
 
     default Seller validateSeller(String ownerId) {
         Optional<Seller> optionalSeller = findByOwnerId(ownerId);
@@ -25,10 +27,26 @@ public interface SellerRepository extends JpaRepository<Seller,Long> {
 
     }
 
+    default void duplication(String ownerId){
+        Optional<Seller> optionalSeller = findByOwnerId(ownerId);
+
+        if(optionalSeller.isPresent()){
+            throw new SellerDuplicateSellerException();
+
+        }
+
+
+    }
+
+
+    default Seller validateSellerId(Long sellerId) {
+        Optional<Seller> optionalSeller = findById(sellerId);
+
+        return optionalSeller.orElseThrow(() ->
+                new UsernameNotFoundException("Invalid seller")
+        );
+
+    }
+
     void deleteByOwnerId(String ownerId);
-
-
-
-
-
 }

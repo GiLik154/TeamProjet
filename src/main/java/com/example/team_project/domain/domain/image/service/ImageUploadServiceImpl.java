@@ -57,11 +57,13 @@ public class ImageUploadServiceImpl implements ImageUploadService {
     }
 
     private void uploadImage(MultipartFile file, Path uploadPath, String fileName) {
-        try (InputStream inputStream = file.getInputStream()) {
-            Path filePath = uploadPath.resolve(fileName);
-            Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
-        } catch (IOException e) {
-            e.printStackTrace();
+        if (file != null) {
+            try (InputStream inputStream = file.getInputStream()) {
+                Path filePath = uploadPath.resolve(fileName);
+                Files.copy(inputStream, filePath, StandardCopyOption.REPLACE_EXISTING);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 }

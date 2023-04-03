@@ -33,19 +33,38 @@ class PostDeleteServiceTest {
     }
 
     @Test
-    void 게시물_삭제_정상작동(){
-        User user = new User("testName","testPass");
+    void 게시물_삭제_정상작동() {
+        User user = new User("testName", "testPass");
         userRepository.save(user);
 
         PostCategory postCategory = new PostCategory("testCategory");
         postCategoryRepository.save(postCategory);
 
-        Post post = new Post("testContent","testTime",user,postCategory);
+        Post post = new Post("testTitle", "testContent", "testTime", user, postCategory);
         postRepository.save(post);
 
-        boolean isDel = postDeleteService.delete(user.getId(), post.getId(),"testPass");
+        boolean isDel = postDeleteService.delete(user.getId(), post.getId(), "testPass");
 
         assertTrue(isDel);
-        assertEquals(post.getSituation(),"delete");
+        assertEquals("delete", post.getSituation());
+    }
+
+    @Test
+    void 게시물_삭제_유저다름() {
+        User user = new User("testName", "testPass");
+        User user2 = new User("testName2", "testPass2");
+        userRepository.save(user);
+        userRepository.save(user2);
+
+        PostCategory postCategory = new PostCategory("testCategory");
+        postCategoryRepository.save(postCategory);
+
+        Post post = new Post("testTitle", "testContent", "testTime", user, postCategory);
+        postRepository.save(post);
+
+        boolean isDel = postDeleteService.delete(user2.getId(), post.getId(), "testPass");
+
+        assertFalse(isDel);
+        assertNotEquals("delete", post.getSituation());
     }
 }

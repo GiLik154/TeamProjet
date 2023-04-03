@@ -5,6 +5,9 @@ import com.example.team_project.domain.domain.product.category.domain.ProductCat
 import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
+import com.example.team_project.domain.domain.shop.seller.domain.Seller;
+import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
+import com.example.team_project.enums.ProductCategoryStatus;
 import com.example.team_project.exception.NotFoundCouponException;
 import com.example.team_project.exception.NotMatchCouponCategoryException;
 import org.junit.jupiter.api.Test;
@@ -24,14 +27,16 @@ class CouponInCategoryAddServiceImplTest {
     private final CouponKindsRepository couponKindsRepository;
     private final ProductCategoryRepository productCategoryRepository;
     private final ProductRepository productRepository;
+    private final SellerRepository sellerRepository;
 
     @Autowired
-    CouponInCategoryAddServiceImplTest(CouponInCategoryAddService couponInCategoryAddService, CouponInCategoryRepository couponInCategoryRepository, CouponKindsRepository couponKindsRepository, ProductCategoryRepository productCategoryRepository, ProductRepository productRepository) {
+    CouponInCategoryAddServiceImplTest(CouponInCategoryAddService couponInCategoryAddService, CouponInCategoryRepository couponInCategoryRepository, CouponKindsRepository couponKindsRepository, ProductCategoryRepository productCategoryRepository, ProductRepository productRepository, SellerRepository sellerRepository) {
         this.couponInCategoryAddService = couponInCategoryAddService;
         this.couponInCategoryRepository = couponInCategoryRepository;
         this.couponKindsRepository = couponKindsRepository;
         this.productCategoryRepository = productCategoryRepository;
         this.productRepository = productRepository;
+        this.sellerRepository = sellerRepository;
     }
 
     @Test
@@ -39,11 +44,14 @@ class CouponInCategoryAddServiceImplTest {
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        Product product = new Product();
-        productRepository.save(product);
-
-        ProductCategory productCategory = new ProductCategory("testCategory");
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
+
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        productRepository.save(product);
 
         couponInCategoryAddService.add(couponKinds.getName(), productCategory.getId());
 
@@ -59,12 +67,15 @@ class CouponInCategoryAddServiceImplTest {
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        Product product = new Product();
-        productRepository.save(product);
-
-        ProductCategory productCategory = new ProductCategory("testCategory");
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
         Long productCategoryId = productCategory.getId();
+
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        productRepository.save(product);
 
         NotFoundCouponException e = assertThrows(NotFoundCouponException.class, () ->
                 couponInCategoryAddService.add("wrongName",
@@ -79,12 +90,15 @@ class CouponInCategoryAddServiceImplTest {
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        Product product = new Product();
-        productRepository.save(product);
-
-        ProductCategory productCategory = new ProductCategory("testCategory");
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
         Long productCategoryId = productCategory.getId();
+
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        productRepository.save(product);
 
         couponInCategoryAddService.add(couponKinds.getName(), productCategory.getId());
 

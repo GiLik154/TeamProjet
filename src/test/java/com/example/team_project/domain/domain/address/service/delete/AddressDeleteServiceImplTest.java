@@ -2,9 +2,6 @@ package com.example.team_project.domain.domain.address.service.delete;
 
 import com.example.team_project.domain.domain.address.domain.UserAddress;
 import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
-import com.example.team_project.domain.domain.address.service.add.AddressAddService;
-import com.example.team_project.domain.domain.address.service.add.dto.AddressAddServiceDto;
-import com.example.team_project.domain.domain.order.list.Address;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import org.junit.jupiter.api.Test;

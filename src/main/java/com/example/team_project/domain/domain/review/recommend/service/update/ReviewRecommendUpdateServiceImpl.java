@@ -6,6 +6,7 @@ import com.example.team_project.domain.domain.review.recommend.domain.ReviewReco
 import com.example.team_project.domain.domain.review.recommend.domain.ReviewRecommendRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.ReviewRecommendStatus;
 import com.example.team_project.exception.BaseReviewAndUserNotFoundException;
 import com.example.team_project.exception.BaseReviewNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +29,7 @@ public class ReviewRecommendUpdateServiceImpl implements ReviewRecommendUpdateSe
 
             ReviewRecommend reviewRecommend = reviewRecommendValidate(user, baseReview);
 
-            reviewRecommend.update(trueOrFalse(trueOrFalse));
+            reviewRecommend.update(getReviewRecommendName(trueOrFalse));
 
             reviewRecommendRepository.save(reviewRecommend);
         });
@@ -44,10 +45,8 @@ public class ReviewRecommendUpdateServiceImpl implements ReviewRecommendUpdateSe
                 .orElseThrow(BaseReviewAndUserNotFoundException::new);
     }
 
-    private Boolean trueOrFalse(String trueOrFalse) {
-        if (trueOrFalse.equals("true")) {
-            return true;
-        }
-        return false;
+    private String getReviewRecommendName(String name) {
+        return ReviewRecommendStatus.valueOf(name).getName();
     }
+
 }

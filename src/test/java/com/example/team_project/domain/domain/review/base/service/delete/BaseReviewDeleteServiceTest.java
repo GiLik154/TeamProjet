@@ -2,6 +2,7 @@ package com.example.team_project.domain.domain.review.base.service.delete;
 
 import com.example.team_project.domain.domain.review.base.domain.BaseReview;
 import com.example.team_project.domain.domain.review.base.domain.BaseReviewRepository;
+import com.example.team_project.domain.domain.review.base.domain.ReviewToKinds;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import org.junit.jupiter.api.Test;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @SpringBootTest
 @Transactional
@@ -33,11 +35,28 @@ class BaseReviewDeleteServiceTest {
         User user = new User("user","123");
         userRepository.save(user);
 
-        BaseReview baseReview = new BaseReview();
+        BaseReview baseReview = new BaseReview(user,"content","time","image",new ReviewToKinds());
         baseReviewRepository.save(baseReview);
 
         baseReviewDeleteService.delete(baseReview.getId(),user.getId(),"123");
+        BaseReview testBaseReview = baseReviewRepository.findById(baseReview.getId()).get();
 
-        assertEquals(baseReview.getSituation(),"delete");
+        assertEquals("delete",testBaseReview.getSituation());
+    }
+
+    @Test
+    void 삭제_유저다름(){
+        User user = new User("user","123");
+        userRepository.save(user);
+        User user2 = new User("user2","456");
+        userRepository.save(user2);
+
+        BaseReview baseReview = new BaseReview(user,"content","time","image",new ReviewToKinds());
+        baseReviewRepository.save(baseReview);
+
+        baseReviewDeleteService.delete(baseReview.getId(),user2.getId(),"123");
+        BaseReview testBaseReview = baseReviewRepository.findById(baseReview.getId()).get();
+
+        assertNotEquals("delete",testBaseReview.getSituation());
     }
 }

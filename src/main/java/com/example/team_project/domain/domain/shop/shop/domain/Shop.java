@@ -7,7 +7,6 @@ import lombok.Getter;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "shop")
 @Getter
 public class Shop {
 
@@ -17,7 +16,6 @@ public class Shop {
 
     //cascade = CascadeType.REMOVE
     @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    @JoinColumn(name = "seller_id")
     private Seller seller;
 
     //가게 이름
@@ -53,6 +51,4 @@ public class Shop {
         this.shopName = shopName;
         this.shopAddress = shopAddress;
     }
-
-
 }

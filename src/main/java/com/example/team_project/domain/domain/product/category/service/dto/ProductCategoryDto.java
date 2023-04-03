@@ -6,8 +6,6 @@ import lombok.Getter;
 @Getter
 public class ProductCategoryDto {
 
-    //product 고유번호
-    private Product productId;
     //품목 카테고리
     private String productCategory;
 
