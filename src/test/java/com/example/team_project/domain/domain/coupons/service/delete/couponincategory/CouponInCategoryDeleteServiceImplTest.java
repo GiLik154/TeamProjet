@@ -8,6 +8,9 @@ import com.example.team_project.domain.domain.product.category.domain.ProductCat
 import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
+import com.example.team_project.domain.domain.shop.seller.domain.Seller;
+import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
+import com.example.team_project.enums.ProductCategoryStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -25,14 +28,15 @@ class CouponInCategoryDeleteServiceImplTest {
     private final CouponKindsRepository couponKindsRepository;
     private final ProductCategoryRepository productCategoryRepository;
     private final ProductRepository productRepository;
-
+    private final SellerRepository sellerRepository;
     @Autowired
-    CouponInCategoryDeleteServiceImplTest(CouponInCategoryDeleteService couponInCategoryDeleteService, CouponInCategoryRepository couponInCategoryRepository, CouponKindsRepository couponKindsRepository, ProductCategoryRepository productCategoryRepository, ProductRepository productRepository) {
+    CouponInCategoryDeleteServiceImplTest(CouponInCategoryDeleteService couponInCategoryDeleteService, CouponInCategoryRepository couponInCategoryRepository, CouponKindsRepository couponKindsRepository, ProductCategoryRepository productCategoryRepository, ProductRepository productRepository, SellerRepository sellerRepository) {
         this.couponInCategoryDeleteService = couponInCategoryDeleteService;
         this.couponInCategoryRepository = couponInCategoryRepository;
         this.couponKindsRepository = couponKindsRepository;
         this.productCategoryRepository = productCategoryRepository;
         this.productRepository = productRepository;
+        this.sellerRepository = sellerRepository;
     }
 
     @Test
@@ -40,11 +44,15 @@ class CouponInCategoryDeleteServiceImplTest {
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        Product product = new Product();
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
+        productCategoryRepository.save(productCategory);
+
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
         productRepository.save(product);
 
-        ProductCategory productCategory = new ProductCategory("testCategory");
-        productCategoryRepository.save(productCategory);
 
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
         couponInCategoryRepository.save(couponInCategory);
@@ -59,11 +67,14 @@ class CouponInCategoryDeleteServiceImplTest {
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        Product product = new Product();
-        productRepository.save(product);
-
-        ProductCategory productCategory = new ProductCategory("testCategory");
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
+
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
+        productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
         couponInCategoryRepository.save(couponInCategory);
@@ -87,11 +98,14 @@ class CouponInCategoryDeleteServiceImplTest {
         CouponKinds testCouponKinds = new CouponKinds("testName2", 10, 5);
         couponKindsRepository.save(couponKinds);
 
-        Product product = new Product();
-        productRepository.save(product);
-
-        ProductCategory productCategory = new ProductCategory("testCategory");
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
+
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
+        productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
         couponInCategoryRepository.save(couponInCategory);

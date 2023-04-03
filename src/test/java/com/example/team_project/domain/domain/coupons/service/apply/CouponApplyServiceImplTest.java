@@ -1,6 +1,5 @@
 package com.example.team_project.domain.domain.coupons.service.apply;
 
-import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
 import com.example.team_project.domain.domain.coupons.domain.*;
 import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
@@ -10,8 +9,11 @@ import com.example.team_project.domain.domain.product.category.domain.ProductCat
 import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
+import com.example.team_project.domain.domain.shop.seller.domain.Seller;
+import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.ProductCategoryStatus;
 import com.example.team_project.exception.NotApplyCouponException;
 import com.example.team_project.exception.NotFoundCouponException;
 import org.junit.jupiter.api.Test;
@@ -29,7 +31,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 class CouponApplyServiceImplTest {
     private final CouponApplyService couponApplyService;
     private final UserRepository userRepository;
-    private final UserAddressRepository userAddressRepository;
     private final OrderListRepository orderListRepository;
     private final OrderRepository orderRepository;
     private final UserHaveCouponRepository userHaveCouponRepository;
@@ -37,12 +38,12 @@ class CouponApplyServiceImplTest {
     private final CouponKindsRepository couponKindsRepository;
     private final ProductCategoryRepository productCategoryRepository;
     private final ProductRepository productRepository;
+    private final SellerRepository sellerRepository;
 
     @Autowired
-    public CouponApplyServiceImplTest(CouponApplyService couponApplyService, UserRepository userRepository, UserAddressRepository userAddressRepository, OrderListRepository orderListRepository, OrderRepository orderRepository, UserHaveCouponRepository userHaveCouponRepository, CouponInCategoryRepository couponInCategoryRepository, CouponKindsRepository couponKindsRepository, ProductCategoryRepository productCategoryRepository, ProductRepository productRepository) {
+    public CouponApplyServiceImplTest(CouponApplyService couponApplyService, UserRepository userRepository, OrderListRepository orderListRepository, OrderRepository orderRepository, UserHaveCouponRepository userHaveCouponRepository, CouponInCategoryRepository couponInCategoryRepository, CouponKindsRepository couponKindsRepository, ProductCategoryRepository productCategoryRepository, ProductRepository productRepository, SellerRepository sellerRepository) {
         this.couponApplyService = couponApplyService;
         this.userRepository = userRepository;
-        this.userAddressRepository = userAddressRepository;
         this.orderListRepository = orderListRepository;
         this.orderRepository = orderRepository;
         this.userHaveCouponRepository = userHaveCouponRepository;
@@ -50,6 +51,7 @@ class CouponApplyServiceImplTest {
         this.couponKindsRepository = couponKindsRepository;
         this.productCategoryRepository = productCategoryRepository;
         this.productRepository = productRepository;
+        this.sellerRepository = sellerRepository;
     }
 
     @Test
@@ -66,10 +68,13 @@ class CouponApplyServiceImplTest {
         UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
         userHaveCouponRepository.save(userHaveCoupon);
 
-        ProductCategory productCategory = new ProductCategory("testCategory");
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
 
-        Product product = new Product("testProduct", "testImg", "testDes", productCategory, 5000);
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
@@ -97,18 +102,21 @@ class CouponApplyServiceImplTest {
         UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
         userHaveCouponRepository.save(userHaveCoupon);
 
-        ProductCategory a = new ProductCategory("a");
+        ProductCategory a = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(a);
-        ProductCategory b = new ProductCategory("b");
+        ProductCategory b = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(b);
-        ProductCategory c = new ProductCategory("c");
+        ProductCategory c = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(c);
-        ProductCategory d = new ProductCategory("d");
+        ProductCategory d = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(d);
-        ProductCategory e = new ProductCategory("e");
+        ProductCategory e = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(e);
 
-        Product product = new Product("testProduct", "testImg", "testDes", c, 5000);
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, c);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, c);
@@ -131,17 +139,20 @@ class CouponApplyServiceImplTest {
         OrderList orderList = new OrderList(user, "testPayment");
         orderListRepository.save(orderList);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
+        CouponKinds couponKinds = new CouponKinds("testName", 5, 1000000);
         couponKindsRepository.save(couponKinds);
 
         UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
         userHaveCouponRepository.save(userHaveCoupon);
         Long couponId = userHaveCoupon.getId();
 
-        ProductCategory productCategory = new ProductCategory("testCategory");
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
 
-        Product product = new Product("testProduct", "testImg", "testDes", productCategory, 1000);
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
@@ -172,10 +183,13 @@ class CouponApplyServiceImplTest {
         userHaveCouponRepository.save(userHaveCoupon);
         Long couponId = userHaveCoupon.getId();
 
-        ProductCategory productCategory = new ProductCategory("testCategory");
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
 
-        Product product = new Product("testProduct", "testImg", "testDes", productCategory, 1000);
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
@@ -206,10 +220,13 @@ class CouponApplyServiceImplTest {
         userHaveCouponRepository.save(userHaveCoupon);
         Long couponId = userHaveCoupon.getId();
 
-        ProductCategory productCategory = new ProductCategory("testCategory");
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
 
-        Product product = new Product("testProduct", "testImg", "testDes", productCategory, 1000);
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
