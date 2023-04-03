@@ -4,6 +4,7 @@ import com.example.team_project.domain.domain.post.category.domain.PostCategory;
 import com.example.team_project.domain.domain.post.post.domain.Post;
 import com.example.team_project.domain.domain.post.post.domain.PostRepository;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
+import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import com.example.team_project.domain.domain.review.base.domain.BaseReview;
@@ -12,9 +13,12 @@ import com.example.team_project.domain.domain.review.base.domain.ReviewToKinds;
 import com.example.team_project.domain.domain.review.base.service.dto.ReviewDto;
 import com.example.team_project.domain.domain.review.kinds.post.domain.PostReview;
 import com.example.team_project.domain.domain.review.kinds.product.domain.ProductReview;
+import com.example.team_project.domain.domain.shop.seller.domain.Seller;
+import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.PostCategoryStatus;
+import com.example.team_project.enums.ProductCategoryStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -35,14 +39,18 @@ class BaseReviewUpdateServiceTest {
     private final UserRepository userRepository;
     private final PostRepository postRepository;
     private final ProductRepository productRepository;
+    private final SellerRepository sellerRepository;
+    private final ProductCategoryRepository productCategoryRepository;
 
     @Autowired
-    BaseReviewUpdateServiceTest(BaseReviewUpdateService baseReviewUpdateService, BaseReviewRepository baseReviewRepository, UserRepository userRepository, PostRepository postRepository, ProductRepository productRepository) {
+    BaseReviewUpdateServiceTest(BaseReviewUpdateService baseReviewUpdateService, BaseReviewRepository baseReviewRepository, UserRepository userRepository, PostRepository postRepository, ProductRepository productRepository, SellerRepository sellerRepository, ProductCategoryRepository productCategoryRepository) {
         this.baseReviewUpdateService = baseReviewUpdateService;
         this.baseReviewRepository = baseReviewRepository;
         this.userRepository = userRepository;
         this.postRepository = postRepository;
         this.productRepository = productRepository;
+        this.sellerRepository = sellerRepository;
+        this.productCategoryRepository = productCategoryRepository;
     }
 
     @Test
@@ -82,7 +90,14 @@ class BaseReviewUpdateServiceTest {
 
         User user = new User("userName","userPass");
         userRepository.save(user);
-        Product product = new Product("productName","productImage","productDescription",new ProductCategory(),1000);
+
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
+        productCategoryRepository.save(productCategory);
+
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
         productRepository.save(product);
 
         BaseReview baseReview = new BaseReview(user,"title","content","time", new ReviewToKinds(new ProductReview()));

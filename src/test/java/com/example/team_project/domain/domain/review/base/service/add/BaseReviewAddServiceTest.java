@@ -5,21 +5,23 @@ import com.example.team_project.domain.domain.post.category.domain.PostCategoryR
 import com.example.team_project.domain.domain.post.post.domain.Post;
 import com.example.team_project.domain.domain.post.post.domain.PostRepository;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
+import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import com.example.team_project.domain.domain.review.base.domain.BaseReview;
 import com.example.team_project.domain.domain.review.base.domain.BaseReviewRepository;
 import com.example.team_project.domain.domain.review.base.service.dto.ReviewDto;
+import com.example.team_project.domain.domain.shop.seller.domain.Seller;
+import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.ProductCategoryStatus;
 import com.example.team_project.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.mock.web.MockMultipartFile;
-import org.springframework.security.authentication.BadCredentialsException;
 
 import javax.transaction.Transactional;
 
@@ -35,6 +37,8 @@ class BaseReviewAddServiceTest {
     private final BaseReviewRepository baseReviewRepository;
     private final PostCategoryRepository postCategoryRepository;
     private final ProductRepository productRepository;
+    private final ProductCategoryRepository productCategoryRepository;
+    private final SellerRepository sellerRepository;
 
     @Autowired
     BaseReviewAddServiceTest(BaseReviewAddService baseReviewAddService,
@@ -42,13 +46,15 @@ class BaseReviewAddServiceTest {
                              UserRepository userRepository,
                              BaseReviewRepository baseReviewRepository,
                              PostCategoryRepository postCategoryRepository,
-                             ProductRepository productRepository) {
+                             ProductRepository productRepository, ProductCategoryRepository productCategoryRepository, SellerRepository sellerRepository) {
         this.baseReviewAddService = baseReviewAddService;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.baseReviewRepository = baseReviewRepository;
         this.postCategoryRepository = postCategoryRepository;
         this.productRepository = productRepository;
+        this.productCategoryRepository = productCategoryRepository;
+        this.sellerRepository = sellerRepository;
     }
 
     @Test
@@ -87,7 +93,13 @@ class BaseReviewAddServiceTest {
         User user = new User("name", "pass");
         userRepository.save(user);
 
-        Product product = new Product("productName", "productImage","productImage",new ProductCategory(),1000);
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
+        productCategoryRepository.save(productCategory);
+
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
         productRepository.save(product);
 
         ReviewDto reviewDto = new ReviewDto("reviewTitle", "reviewContent", "ProductReview", product.getId());
@@ -97,9 +109,9 @@ class BaseReviewAddServiceTest {
 
         assertEquals("reviewTitle", baseReview.getTitle());
         assertEquals("reviewContent", baseReview.getContent());
-        assertEquals("productName", baseReview.getReviewToKinds().getProductReview().getProduct().getName());
-        assertEquals("productImage", baseReview.getReviewToKinds().getProductReview().getProduct().getImage());
-        assertEquals("TOP", baseReview.getReviewToKinds().getProductReview().getProduct().getDescription());
+        assertEquals("testProduct", baseReview.getReviewToKinds().getProductReview().getProduct().getName());
+        assertEquals("testImg", baseReview.getReviewToKinds().getProductReview().getProduct().getImage());
+        assertEquals("testDes", baseReview.getReviewToKinds().getProductReview().getProduct().getDescription());
         assertNotNull(baseReview.getImagePath());
         assertNull(baseReview.getReviewToKinds().getPostReview());
     }

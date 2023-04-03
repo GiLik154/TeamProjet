@@ -24,11 +24,4 @@ public class ProductCategory {
     }
 
     protected ProductCategory(){}
-
-    public ProductCategory(String testCategory) {
-        this.status = status;
-    }
-
-
-
 }

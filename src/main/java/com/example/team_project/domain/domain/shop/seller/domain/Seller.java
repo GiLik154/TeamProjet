@@ -1,4 +1,4 @@
- package com.example.team_project.domain.domain.shop.seller.domain;
+package com.example.team_project.domain.domain.shop.seller.domain;
 
 import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -6,7 +6,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.persistence.*;
 
 @Entity
-@Table(name="seller")
 @Getter
 public class Seller {
 
@@ -39,14 +38,13 @@ public class Seller {
     }
 
 
-    public Seller() {
-
+    protected Seller() {
     }
 
 
     public Seller(String ownerId, String password) {
-        this.ownerId=ownerId;
-        this.password=password;
+        this.ownerId = ownerId;
+        this.password = password;
     }
 
 
@@ -56,14 +54,13 @@ public class Seller {
     }
 
 
-
     public boolean isValidPassword(PasswordEncoder passwordEncoder, String password) {
         return passwordEncoder.matches(password, this.password);
     }
 
 
     public void update(String ownerName, String phoneNumber) {
-        this.ownerName=ownerName;
-        this.phoneNumber=phoneNumber;
+        this.ownerName = ownerName;
+        this.phoneNumber = phoneNumber;
     }
 }

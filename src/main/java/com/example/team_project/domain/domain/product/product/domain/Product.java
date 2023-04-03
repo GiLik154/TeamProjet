@@ -40,7 +40,7 @@ public class Product {
 
     private int likeCount;
 
-    public Product(){
+    protected Product(){
     }
 
     public Product(String name, Seller seller, String image, String description, int stock, int price, ProductCategory category) {

@@ -1,11 +1,16 @@
 package com.example.team_project.domain.domain.review.product.service.add;
 
+import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
+import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import com.example.team_project.domain.domain.review.base.domain.ReviewToKinds;
 import com.example.team_project.domain.domain.review.kinds.ReviewJoinKindsService;
+import com.example.team_project.domain.domain.shop.seller.domain.Seller;
+import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.ProductCategoryStatus;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -24,15 +29,19 @@ class ProductReviewAddServiceTest {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final Map<String,ReviewJoinKindsService> reviewJoinKindsServiceMap;
+    private final ProductCategoryRepository productCategoryRepository;
+    private final SellerRepository sellerRepository;
 
     @Autowired
     ProductReviewAddServiceTest(UserRepository userRepository,
-                             ProductRepository productRepository,
-                                Map<String,ReviewJoinKindsService> reviewJoinKindsServiceMap
-    ) {
+                                ProductRepository productRepository,
+                                Map<String,ReviewJoinKindsService> reviewJoinKindsServiceMap,
+                                ProductCategoryRepository productCategoryRepository, SellerRepository sellerRepository) {
         this.userRepository = userRepository;
         this.productRepository = productRepository;
         this.reviewJoinKindsServiceMap = reviewJoinKindsServiceMap;
+        this.productCategoryRepository = productCategoryRepository;
+        this.sellerRepository = sellerRepository;
     }
 
     private final String KINDS = "ProductReview";
@@ -41,7 +50,13 @@ class ProductReviewAddServiceTest {
         User user = new User("name", "password");
         userRepository.save(user);
 
-        Product product = new Product();
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
+        productCategoryRepository.save(productCategory);
+
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
         productRepository.save(product);
 
         ReviewToKinds reviewToKinds = reviewJoinKindsServiceMap.get(KINDS).returnReviewToKindsEntity(product.getId());
