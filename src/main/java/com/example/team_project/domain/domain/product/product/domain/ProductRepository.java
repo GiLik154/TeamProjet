@@ -2,6 +2,7 @@ package com.example.team_project.domain.domain.product.product.domain;
 
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.exception.OrderNotFoundException;
+import com.example.team_project.exception.ProductNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
@@ -15,7 +16,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
         if (productOptional.isPresent()){
             return productOptional.get();
         }
-        throw new OrderNotFoundException();
+        throw new ProductNotFoundException();
     }
 
     Optional<Product> findBySeller(Seller seller);
