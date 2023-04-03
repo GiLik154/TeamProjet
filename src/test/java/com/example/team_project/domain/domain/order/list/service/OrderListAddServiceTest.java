@@ -23,17 +23,15 @@ import static org.junit.jupiter.api.Assertions.*;
 class OrderListAddServiceTest {
 
     private final UserRepository userRepository;
-    private final AddressRepository addressRepository;
     private final OrderListAddService orderListAddService;
     private final OrderListRepository orderListRepository;
     private final UserAddressRepository userAddressRepository;
 
     @Autowired
-    OrderListAddServiceTest(OrderListAddService orderListAddService, OrderListRepository orderListRepository, UserRepository userRepository, AddressRepository addressRepository, UserAddressRepository userAddressRepository) {
+    OrderListAddServiceTest(OrderListAddService orderListAddService, OrderListRepository orderListRepository, UserRepository userRepository, UserAddressRepository userAddressRepository) {
         this.orderListAddService = orderListAddService;
         this.orderListRepository = orderListRepository;
         this.userRepository = userRepository;
-        this.addressRepository = addressRepository;
         this.userAddressRepository = userAddressRepository;
     }
 

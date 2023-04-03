@@ -126,7 +126,7 @@ class OrderUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
+                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 10, 10000, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
@@ -169,7 +169,7 @@ class OrderUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
+                Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
         Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 10, 10000, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
@@ -211,7 +211,7 @@ class OrderUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
+                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -252,7 +252,7 @@ class OrderUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
+                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
