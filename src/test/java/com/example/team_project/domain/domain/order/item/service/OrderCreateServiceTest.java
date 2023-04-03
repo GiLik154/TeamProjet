@@ -78,7 +78,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
+                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -113,7 +113,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
+                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -145,7 +145,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
+                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
         Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 5, 5000, productCategory);
 
@@ -182,7 +182,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -192,7 +192,6 @@ class OrderCreateServiceTest {
 
         OrderList orderList = new OrderList(user, userAddress, "카드");
         orderListRepository.save(orderList);
-        Long orderListId = orderList.getId();
 
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
 
@@ -221,7 +220,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -254,7 +253,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
+                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 

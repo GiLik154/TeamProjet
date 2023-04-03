@@ -53,7 +53,7 @@ class CouponKindsDeleteServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
+                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
@@ -78,7 +78,7 @@ class CouponKindsDeleteServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
+                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);

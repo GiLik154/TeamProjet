@@ -60,6 +60,6 @@ public class CouponApplyServiceImpl implements CouponApplyService {
      * CouponKinds와 구매한 오더의 가격 비교
      */
     private boolean isMinimumPriceSatisfied(Order order, int couponMinPrice) {
-        return order.getTotalPrice() >= couponMinPrice;
+        return order.getOrderToProduct().getTotalPrice() >= couponMinPrice;
     }
 }

@@ -14,12 +14,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class SellerJoinService {
-
-
     private final SellerRepository sellerRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
-    
-    
+
     //회원가입
     public void sellerJoin(SellerJoinDto sellerJoinDto){
         Seller seller = new Seller(
@@ -39,11 +36,4 @@ public class SellerJoinService {
             throw new PasswordEncodingFailedException();
         }
     }
-
-
-
-
-
-
-
 }
