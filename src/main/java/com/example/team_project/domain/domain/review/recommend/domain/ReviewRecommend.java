@@ -9,29 +9,40 @@ import javax.persistence.*;
 @Entity
 @Getter
 public class ReviewRecommend {
-    //리뷰의 고유번호
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
-    //유저
+    /**
+     * 추천을 한 유저의 정보
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-
+    /**
+     * 추천을 받은 리뷰의 정보
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     private BaseReview baseReview;
 
-    //추천 여부
+    /**
+     * 추천 여부(추천,비추천,취소)
+     */
     private String recommend;
 
     public ReviewRecommend() {
     }
 
+    /**
+     * 유저의 정보,리뷰의 정보,추천 여부 로 객체 생성
+     */
     public ReviewRecommend(User user, BaseReview baseReview,String recommend){
         this.user=user;
         this.baseReview=baseReview;
         this.recommend=recommend;
     }
 
+    /**
+     * 추천여부의 변경
+     */
     public void update(String recommend){
         this.recommend=recommend;
     }

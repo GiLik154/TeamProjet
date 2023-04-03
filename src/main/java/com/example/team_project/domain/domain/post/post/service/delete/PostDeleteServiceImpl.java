@@ -15,6 +15,10 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class PostDeleteServiceImpl implements PostDeleteService {
     private final PostRepository postRepository;
 
+    /**
+     * 유저 고유번호 와 게시물의 고유번호 ,유저의 비밀번호를 입력받음
+     * 게시글의 고유번호로 게시글의 가져와서 delete() 함수를 실행
+     */
     @Override
     public boolean delete(Long userId, Long postId, String password) {
         AtomicBoolean result = new AtomicBoolean(false); // boolean 값을 저장할 AtomicBoolean 객체 생성
