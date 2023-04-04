@@ -9,6 +9,7 @@ import com.example.team_project.domain.domain.review.recommend.domain.ReviewReco
 import com.example.team_project.domain.domain.review.recommend.service.add.ReviewRecommendAddService;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.UserGrade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -38,7 +39,7 @@ class ReviewRecommendUpdateServiceTest {
 
     @Test
     void 추천_업데이트_정상작동(){
-        User user = new User("user","pass");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         BaseReview baseReview = new BaseReview(user,"content","time","image",new ReviewToKinds(new PostReview()));

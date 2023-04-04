@@ -7,6 +7,7 @@ import com.example.team_project.domain.domain.post.post.domain.PostRepository;
 import com.example.team_project.domain.domain.post.post.service.PostDto;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.UserGrade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -39,7 +40,7 @@ class PostUpdateServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("name", "pass");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         PostCategory postCategory = new PostCategory("PRODUCT_INQUIRY");
@@ -68,9 +69,9 @@ class PostUpdateServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("name", "pass");
+        User user = new User("testId1", "testPw1", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
-        User user2 = new User("name2", "pass2");
+        User user2 = new User("testId2", "testPw2", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user2);
 
         PostCategory postCategory = new PostCategory("PRODUCT_INQUIRY");

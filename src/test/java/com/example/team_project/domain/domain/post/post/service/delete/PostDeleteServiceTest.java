@@ -6,6 +6,7 @@ import com.example.team_project.domain.domain.post.post.domain.Post;
 import com.example.team_project.domain.domain.post.post.domain.PostRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.UserGrade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -34,7 +35,7 @@ class PostDeleteServiceTest {
 
     @Test
     void 게시물_삭제_정상작동() {
-        User user = new User("testName", "testPass");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         PostCategory postCategory = new PostCategory("testCategory");
@@ -51,9 +52,8 @@ class PostDeleteServiceTest {
 
     @Test
     void 게시물_삭제_유저다름() {
-        User user = new User("testName", "testPass");
-        User user2 = new User("testName2", "testPass2");
-        userRepository.save(user);
+        User user = new User("testId1", "testPw1", "testNane", "testNumber", UserGrade.SILVER);
+        User user2 = new User("testId2", "testPw2", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user2);
 
         PostCategory postCategory = new PostCategory("testCategory");

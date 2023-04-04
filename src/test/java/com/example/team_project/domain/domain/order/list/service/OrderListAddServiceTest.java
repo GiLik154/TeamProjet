@@ -6,6 +6,7 @@ import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ class OrderListAddServiceTest {
     @Test
     void 주문리스트_생성_정상작동() {
         //given
-        User user = new User("test_name", "test_pw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -62,7 +63,7 @@ class OrderListAddServiceTest {
     @Test
     void 주문리스트_생성_유저아이디없음_비정상작동() {
         //given
-        User user = new User("test_name", "test_pw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
