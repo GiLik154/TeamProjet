@@ -24,12 +24,18 @@ public class ProductReviewAddServiceImpl implements ReviewJoinKindsService {
         return new ReviewToKinds(add(productId));
     }
 
+    /**
+     * ProductReview 를 생성 후 ProductReview 반환해줌
+     * */
     private ProductReview add(Long productId) {
         ProductReview productReview = new ProductReview(product(productId));
         productReviewRepository.save(productReview);
         return productReview;
     }
 
+    /**
+     * Product 찾은 후 반환해줌 없을시 오류
+     * */
     private Product product(Long productId) {
         return productRepository.findById(productId)
                 .orElseThrow(ProductNotFoundException::new);

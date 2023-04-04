@@ -9,6 +9,9 @@ import javax.persistence.Id;
 @Entity
 @Getter
 public class PostCategory {
+    /**
+     * 카테고리의 종류 이름
+     */
     @Id
     private String name;
 

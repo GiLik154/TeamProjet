@@ -13,9 +13,15 @@ public class ReviewToKinds {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * 게시글의 리뷰정보를 저장
+     */
     @OneToOne(cascade = CascadeType.PERSIST)
     private PostReview postReview;
 
+    /**
+     * 상품의 리뷰정보를 저장
+     */
     @OneToOne(cascade = CascadeType.PERSIST)
     private ProductReview productReview;
 

@@ -26,7 +26,8 @@ public class PostReviewAddServiceImpl implements ReviewJoinKindsService {
     }
 
     /**
-     * PostReivew를 생성 후 PostReview 반환해줌*/
+     * PostReview 를 생성 후 PostReview 반환해줌
+     * */
     private PostReview add(Long postId) {
         PostReview postReview = new PostReview(post(postId));
         postReviewRepository.save(postReview);
@@ -34,7 +35,8 @@ public class PostReviewAddServiceImpl implements ReviewJoinKindsService {
     }
 
     /**
-     * Post 찾은 후 반환해줌 없을시 오류*/
+     * Post 찾은 후 반환해줌 없을시 오류
+     * */
     private Post post(Long postId) {
         return postRepository.findById(postId)
                 .orElseThrow(PostNotFoundException::new);

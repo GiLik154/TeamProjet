@@ -12,7 +12,9 @@ public class PostReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    /**
+     * 리뷰가 달린 게시글의 정보
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     private Post post;
 
