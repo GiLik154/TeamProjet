@@ -19,6 +19,7 @@ import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.OrderStatus;
 import com.example.team_project.enums.ProductCategoryStatus;
+import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.CannotCancelOrderException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,7 @@ class OrderListCancelServiceTest {
     @Test
     void 주문리스트_취소_정상작동() {
         //given
-        User user = new User("test_user", "test_pw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -111,7 +112,7 @@ class OrderListCancelServiceTest {
     @Test
     void 주문리스트_취소불가_정상작동() {
         //given
-        User user = new User("test_user", "test_pw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         Shop shop = new Shop();

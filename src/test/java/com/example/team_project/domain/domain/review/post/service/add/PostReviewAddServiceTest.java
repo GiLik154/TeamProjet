@@ -9,6 +9,7 @@ import com.example.team_project.domain.domain.review.kinds.ReviewJoinKindsServic
 import com.example.team_project.domain.domain.review.kinds.post.domain.PostReviewRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.UserGrade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -45,7 +46,7 @@ class PostReviewAddServiceTest {
     private final String KINDS = "PostReview";
     @Test
     void 게시물_리뷰_객체_반환() {
-        User user = new User("name", "password");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         PostCategory postCategory = new PostCategory("testCategory");

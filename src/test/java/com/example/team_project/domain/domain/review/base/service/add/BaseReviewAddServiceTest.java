@@ -16,6 +16,7 @@ import com.example.team_project.domain.domain.shop.seller.domain.SellerRepositor
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.ProductCategoryStatus;
+import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ class BaseReviewAddServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("name", "pass");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         PostCategory postCategory = new PostCategory("category");
@@ -90,7 +91,7 @@ class BaseReviewAddServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("name", "pass");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -122,7 +123,7 @@ class BaseReviewAddServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("name", "pass");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         PostCategory postCategory = new PostCategory("category");

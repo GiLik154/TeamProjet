@@ -6,7 +6,9 @@ import com.example.team_project.domain.domain.coupons.domain.CouponKindsReposito
 import com.example.team_project.domain.domain.coupons.domain.UserHaveCouponRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.ExpiredCouponException;
+import com.example.team_project.exception.NotFoundCouponException;
 import com.example.team_project.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +40,7 @@ class UserHaveCouponAddServiceImplTest {
 
     @Test
     void 쿠폰_추가_정상작동() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
@@ -54,24 +56,40 @@ class UserHaveCouponAddServiceImplTest {
     }
 
     @Test
-    void 쿠폰_추가_정상작동_유저_고유번호_없음() {
-        User user = new User("testName", "testPw");
+    void 쿠폰_추가_정상작동_유저_고유번호_다름() {
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        userRepository.save(user);
+        Long userId = user.getId() + 1L;
+
+        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
+        couponKindsRepository.save(couponKinds);
+
+        UserNotFoundException e = assertThrows(UserNotFoundException.class, () ->
+                couponAddService.add(userId, "testName")
+        );
+
+        assertEquals("User not found with id: " + userId, e.getMessage());
+    }
+
+    @Test
+    void 쿠폰_추가_정상작동_쿠폰_고유번호_다름() {
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        UserNotFoundException e = assertThrows(UserNotFoundException.class, () ->
-                couponAddService.add(userId + 1L, "testName")
+        NotFoundCouponException e = assertThrows(NotFoundCouponException.class, () ->
+                couponAddService.add(userId, "testName123")
         );
 
-        assertEquals("This user could not be found", e.getMessage());
+        assertEquals("Coupon kinds not found: testName123", e.getMessage());
     }
 
     @Test
     void 쿠폰_추가_정상작동_만료일설정() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
@@ -90,7 +108,7 @@ class UserHaveCouponAddServiceImplTest {
 
     @Test
     void 쿠폰_추가_정상작동_기간_설정() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
@@ -109,7 +127,7 @@ class UserHaveCouponAddServiceImplTest {
 
     @Test
     void 쿠폰_추가_정상작동_만료일_기간_설정_만료일이_더_김() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
@@ -129,7 +147,7 @@ class UserHaveCouponAddServiceImplTest {
 
     @Test
     void 쿠폰_추가_정상작동_만료일_기간_설정_기간이_더_김() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
@@ -149,7 +167,7 @@ class UserHaveCouponAddServiceImplTest {
 
     @Test
     void 쿠폰_추가_정상작동_만료일_기간_같음() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
@@ -169,7 +187,7 @@ class UserHaveCouponAddServiceImplTest {
 
     @Test
     void 쿠폰_추가_정상작동_만료일_지났음() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 

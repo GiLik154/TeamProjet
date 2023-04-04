@@ -50,7 +50,7 @@ class CouponInCategoryAddServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
 
         couponInCategoryAddService.add(couponKinds.getName(), productCategory.getId());
@@ -74,14 +74,14 @@ class CouponInCategoryAddServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
 
         NotFoundCouponException e = assertThrows(NotFoundCouponException.class, () ->
                 couponInCategoryAddService.add("wrongName",
                         productCategoryId));
 
-        assertEquals("Not Found Coupon" , e.getMessage());
+        assertEquals("Coupon kinds not found: " + "wrongName", e.getMessage());
 
     }
 
@@ -97,7 +97,7 @@ class CouponInCategoryAddServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
 
         couponInCategoryAddService.add(couponKinds.getName(), productCategory.getId());
@@ -106,6 +106,6 @@ class CouponInCategoryAddServiceImplTest {
                 couponInCategoryAddService.add("testName",
                         productCategoryId + 1L));
 
-        assertEquals("Not Match Coupon Category" , e.getMessage());
+        assertEquals("Not Match Coupon Category", e.getMessage());
     }
 }

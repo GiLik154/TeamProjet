@@ -5,6 +5,7 @@ import com.example.team_project.domain.domain.review.base.domain.BaseReviewRepos
 import com.example.team_project.domain.domain.review.base.domain.ReviewToKinds;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.UserGrade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -32,13 +33,13 @@ class BaseReviewDeleteServiceTest {
 
     @Test
     void 삭제_정상작동(){
-        User user = new User("user","123");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         BaseReview baseReview = new BaseReview(user,"content","time","image",new ReviewToKinds());
         baseReviewRepository.save(baseReview);
 
-        baseReviewDeleteService.delete(baseReview.getId(),user.getId(),"123");
+        baseReviewDeleteService.delete(baseReview.getId(),user.getId(),"testPw");
         BaseReview testBaseReview = baseReviewRepository.findById(baseReview.getId()).get();
 
         assertEquals("delete",testBaseReview.getSituation());
@@ -46,9 +47,9 @@ class BaseReviewDeleteServiceTest {
 
     @Test
     void 삭제_유저다름(){
-        User user = new User("user","123");
+        User user = new User("testId1", "testPw1", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
-        User user2 = new User("user2","456");
+        User user2 = new User("testId2", "testPw2", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user2);
 
         BaseReview baseReview = new BaseReview(user,"content","time","image",new ReviewToKinds());

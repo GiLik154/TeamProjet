@@ -33,7 +33,8 @@ public class CouponApplyServiceImpl implements CouponApplyService {
     }
 
     private UserHaveCoupon getCoupon(Long userId, Long couponId) {
-        return userHaveCouponRepository.findByUserIdAndId(userId, couponId).orElseThrow(NotFoundCouponException::new);
+        return userHaveCouponRepository.findByUserIdAndId(userId, couponId).orElseThrow(() ->
+                new NotFoundCouponException(("User does not have the coupon. Coupon ID:" + couponId)));
     }
 
     /**
@@ -53,7 +54,8 @@ public class CouponApplyServiceImpl implements CouponApplyService {
         List<CouponInCategory> categories = couponInCategoryRepository.findByCouponKindsName(coupon.getName());
 
         return categories.stream().
-                anyMatch(category -> category.getProductCategory().equals(order.getOrderToProduct().getProduct().getCategory()));
+                anyMatch(category ->
+                        category.getProductCategory().equals(order.getOrderToProduct().getProduct().getCategory()));
     }
 
     /**
