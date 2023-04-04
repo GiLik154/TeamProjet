@@ -5,6 +5,7 @@ import com.example.team_project.domain.domain.address.domain.UserAddressReposito
 import com.example.team_project.domain.domain.address.service.add.dto.AddressAddServiceDto;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,11 +32,11 @@ class UserAddressAddServiceImplTest {
 
     @Test
     void 주소_추가_정상작동() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
-        AddressAddServiceDto dto = new AddressAddServiceDto(                "testName",
+        AddressAddServiceDto dto = new AddressAddServiceDto("testName",
                 "testRecipientName",
                 "testPhone",
                 "testStreetAddress",
@@ -58,11 +59,11 @@ class UserAddressAddServiceImplTest {
 
     @Test
     void 주소_추가_유저_고유번호_다름() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
-        AddressAddServiceDto dto = new AddressAddServiceDto(                "testName",
+        AddressAddServiceDto dto = new AddressAddServiceDto("testName",
                 "testRecipientName",
                 "testPhone",
                 "testStreetAddress",
@@ -70,7 +71,7 @@ class UserAddressAddServiceImplTest {
                 "testZipCode");
 
         UserNotFoundException e = assertThrows(UserNotFoundException.class, () ->
-                addressAddService.add(userId +1L, dto));
+                addressAddService.add(userId + 1L, dto));
 
         assertEquals("This user could not be found", e.getMessage());
     }

@@ -1,11 +1,9 @@
 package com.example.team_project.domain.domain.user.domain;
 
+import com.example.team_project.enums.UserGrade;
 import lombok.Getter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -13,13 +11,39 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
+
+    @Column(unique = true, nullable = false)
+    private String userId;
+
+    @Column(nullable = false)
     private String password;
 
-    protected User() {}
+    @Column(nullable = false)
+    private String userName;
 
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
+    @Column(nullable = false)
+    private String phoneNumber;
+
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private UserGrade userGrade;
+
+    protected User() {
     }
+
+    public User(String userId, String password, String userName, String phoneNumber) {
+        this.userId = userId;
+        this.password = password;
+        this.userName = userName;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public User(String userId, String password, String userName, String phoneNumber, UserGrade userGrade) {
+        this.userId = userId;
+        this.password = password;
+        this.userName = userName;
+        this.phoneNumber = phoneNumber;
+        this.userGrade = userGrade;
+    }
+
 }

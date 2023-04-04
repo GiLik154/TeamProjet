@@ -19,6 +19,7 @@ import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.PostCategoryStatus;
 import com.example.team_project.enums.ProductCategoryStatus;
+import com.example.team_project.enums.UserGrade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -59,7 +60,7 @@ class BaseReviewUpdateServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("userName","userPass");
+        User user = new User("testId1", "testPw1", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         PostCategoryStatus status = PostCategoryStatus.valueOf("PRODUCT_INQUIRY");
@@ -88,7 +89,7 @@ class BaseReviewUpdateServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("userName","userPass");
+        User user = new User("testId1", "testPw1", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -121,9 +122,9 @@ class BaseReviewUpdateServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("userName","userPass");
+        User user = new User("testId1", "testPw1", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
-        User user2 = new User("userName2","userPass2");
+        User user2 =new User("testId2", "testPw2", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user2);
 
         PostCategoryStatus status = PostCategoryStatus.valueOf("PRODUCT_INQUIRY");

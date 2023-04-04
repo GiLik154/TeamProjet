@@ -16,6 +16,7 @@ import com.example.team_project.domain.domain.shop.seller.domain.SellerRepositor
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.ProductCategoryStatus;
+import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.InvalidQuantityException;
 import com.example.team_project.exception.OutOfStockException;
 import com.example.team_project.exception.ProductNotFoundException;
@@ -68,7 +69,7 @@ class OrderCreateServiceTest {
     @Test
     void 주문추가_정상작동() {
         //given
-        User user = new User("test_name", "test_pw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -103,7 +104,7 @@ class OrderCreateServiceTest {
     @Test
     void 주문추가_유효하지_않은_사용자_비정삭작동() {
         //given
-        User user = new User("test_name", "test_pw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -136,7 +137,7 @@ class OrderCreateServiceTest {
     @Test
     void 주문추가_가격확인_정상작동() {
         //given
-        User user = new User("test_user", "test_pw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -172,7 +173,7 @@ class OrderCreateServiceTest {
     @Test
     void 주문추가_유효하지_않는_상품_비정상작동() {
         //given
-        User user = new User("test_user", "test_pw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -210,7 +211,7 @@ class OrderCreateServiceTest {
     @Test
     void 주문추가_주문개수0이하_비정상작동() {
         //given
-        User user = new User("test_user", "test_pw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -243,7 +244,7 @@ class OrderCreateServiceTest {
     @Test
     void 주문추가_재고소진_비정상작동() {
         //given
-        User user = new User("test_user", "test_pw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 

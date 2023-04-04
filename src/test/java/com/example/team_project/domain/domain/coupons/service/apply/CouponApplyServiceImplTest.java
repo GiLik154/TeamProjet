@@ -17,6 +17,7 @@ import com.example.team_project.domain.domain.shop.seller.domain.SellerRepositor
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.ProductCategoryStatus;
+import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.NotApplyCouponException;
 import com.example.team_project.exception.NotFoundCouponException;
 import org.junit.jupiter.api.Test;
@@ -24,6 +25,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
@@ -61,7 +64,7 @@ class CouponApplyServiceImplTest {
 
     @Test
     void 쿠폰_적용_정상작동() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
@@ -73,7 +76,7 @@ class CouponApplyServiceImplTest {
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -100,7 +103,7 @@ class CouponApplyServiceImplTest {
 
     @Test
     void 쿠폰_적용_정상작동_카테고리여러개() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
@@ -112,7 +115,7 @@ class CouponApplyServiceImplTest {
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
 
         ProductCategory a = new ProductCategory(ProductCategoryStatus.TOP);
@@ -146,7 +149,7 @@ class CouponApplyServiceImplTest {
 
     @Test
     void 쿠폰_적용_최저가격_못맞춤() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -159,7 +162,7 @@ class CouponApplyServiceImplTest {
         CouponKinds couponKinds = new CouponKinds("testName", 5, 1000000);
         couponKindsRepository.save(couponKinds);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
         Long couponId = userHaveCoupon.getId();
 
@@ -187,7 +190,7 @@ class CouponApplyServiceImplTest {
 
     @Test
     void 쿠폰_적용_유저_고유번호_다름() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -200,7 +203,7 @@ class CouponApplyServiceImplTest {
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
         Long couponId = userHaveCoupon.getId();
 
@@ -210,7 +213,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
         productRepository.save(product);
 
@@ -223,12 +226,12 @@ class CouponApplyServiceImplTest {
         NotFoundCouponException e = assertThrows(NotFoundCouponException.class, () ->
                 couponApplyService.apply(userId + 1L, couponId, order));
 
-        assertEquals("Not Found Coupon", e.getMessage());
+        assertEquals("User does not have the coupon. Coupon ID:" + couponId, e.getMessage());
     }
 
     @Test
     void 쿠폰_적용_쿠폰_고유번호_다름() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -241,9 +244,9 @@ class CouponApplyServiceImplTest {
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
-        Long couponId = userHaveCoupon.getId();
+        Long couponId = userHaveCoupon.getId() + 1L;
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
@@ -251,7 +254,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
         productRepository.save(product);
 
@@ -262,8 +265,8 @@ class CouponApplyServiceImplTest {
         orderRepository.save(order);
 
         NotFoundCouponException e = assertThrows(NotFoundCouponException.class, () ->
-                couponApplyService.apply(userId, couponId + 1L, order));
+                couponApplyService.apply(userId, couponId, order));
 
-        assertEquals("Not Found Coupon", e.getMessage());
+        assertEquals("User does not have the coupon. Coupon ID:" + couponId, e.getMessage());
     }
 }

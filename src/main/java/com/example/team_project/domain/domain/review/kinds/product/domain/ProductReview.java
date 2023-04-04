@@ -12,7 +12,9 @@ public class ProductReview {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
+    /**
+     * 리뷰가 달린 상품의 정보
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
 

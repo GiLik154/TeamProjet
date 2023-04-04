@@ -14,26 +14,43 @@ public class BaseReview implements ImageUpload {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //유저
+    /**
+     * 리뷰를 작성한 유저의 정보
+     */
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
-    //리뷰 제목
+    /**
+     * 리뷰의 제목
+     */
     private String title;
-    //리뷰 내용
+    /**
+     * 리뷰의 내용
+     */
     private String content;
-    //리뷰 작성 시간
+    /**
+     * 리뷰의 작성시간
+     */
     private String time;
-    //리뷰 이미지
+    /**
+     * 리뷰의 이미지
+     */
     private String imagePath;
-    //리뷰 삭제 여부
+    /**
+     * 리뷰의 존재여부(생성,삭제)등
+     */
     private String situation;
-    //리뷰의 카테고리 종류
+    /**
+     * 리뷰의 종류(게시물,상품)
+     */
     @OneToOne(cascade = CascadeType.PERSIST)
     private ReviewToKinds reviewToKinds;
 
     protected BaseReview() {
     }
 
+    /**
+     * 정보를 입력받아 생성
+     */
     public BaseReview(User user, String title,String content, String time, ReviewToKinds reviewToKinds) {
         this.user = user;
         this.title=title;
@@ -43,10 +60,16 @@ public class BaseReview implements ImageUpload {
         this.reviewToKinds = reviewToKinds;
     }
 
+    /**
+     * 존재여부를 delete 로 변경
+     */
     public void delete() {
         this.situation = "delete";
     }
 
+    /**
+     * 정보를 입력받아 수정
+     */
     public void update(String title,String content, String time,ReviewToKinds reviewToKinds) {
         this.title=title;
         this.content = content;
@@ -54,6 +77,9 @@ public class BaseReview implements ImageUpload {
         this.reviewToKinds = reviewToKinds;
     }
 
+    /**
+     * 리뷰의 이미지 저장
+     */
     @Override
     public void uploadImage(String imagePath) {
         this.imagePath = imagePath;

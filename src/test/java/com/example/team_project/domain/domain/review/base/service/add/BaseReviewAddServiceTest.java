@@ -16,6 +16,7 @@ import com.example.team_project.domain.domain.shop.seller.domain.SellerRepositor
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.ProductCategoryStatus;
+import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +38,8 @@ class BaseReviewAddServiceTest {
     private final BaseReviewRepository baseReviewRepository;
     private final PostCategoryRepository postCategoryRepository;
     private final ProductRepository productRepository;
-    private final ProductCategoryRepository productCategoryRepository;
     private final SellerRepository sellerRepository;
+    private final ProductCategoryRepository productCategoryRepository;
 
     @Autowired
     BaseReviewAddServiceTest(BaseReviewAddService baseReviewAddService,
@@ -46,15 +47,15 @@ class BaseReviewAddServiceTest {
                              UserRepository userRepository,
                              BaseReviewRepository baseReviewRepository,
                              PostCategoryRepository postCategoryRepository,
-                             ProductRepository productRepository, ProductCategoryRepository productCategoryRepository, SellerRepository sellerRepository) {
+                             ProductRepository productRepository, SellerRepository sellerRepository, ProductCategoryRepository productCategoryRepository) {
         this.baseReviewAddService = baseReviewAddService;
         this.postRepository = postRepository;
         this.userRepository = userRepository;
         this.baseReviewRepository = baseReviewRepository;
         this.postCategoryRepository = postCategoryRepository;
         this.productRepository = productRepository;
-        this.productCategoryRepository = productCategoryRepository;
         this.sellerRepository = sellerRepository;
+        this.productCategoryRepository = productCategoryRepository;
     }
 
     @Test
@@ -63,7 +64,7 @@ class BaseReviewAddServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("name", "pass");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         PostCategory postCategory = new PostCategory("category");
@@ -90,7 +91,7 @@ class BaseReviewAddServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("name", "pass");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -122,7 +123,7 @@ class BaseReviewAddServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("name", "pass");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         PostCategory postCategory = new PostCategory("category");

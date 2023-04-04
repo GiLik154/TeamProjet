@@ -4,6 +4,7 @@ import com.example.team_project.domain.domain.address.domain.UserAddress;
 import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.UserGrade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -31,7 +32,7 @@ class AddressDeleteServiceImplTest {
 
     @Test
     void 주소_삭제_정상작동() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -55,7 +56,7 @@ class AddressDeleteServiceImplTest {
 
     @Test
     void 주소_삭제_유저_고유번호_다름() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -79,7 +80,7 @@ class AddressDeleteServiceImplTest {
 
     @Test
     void 주소_삭제_주소_고유번호_다름() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 

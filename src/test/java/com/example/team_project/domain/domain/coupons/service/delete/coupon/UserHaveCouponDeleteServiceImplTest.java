@@ -6,11 +6,14 @@ import com.example.team_project.domain.domain.coupons.domain.CouponKindsReposito
 import com.example.team_project.domain.domain.coupons.domain.UserHaveCouponRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.UserGrade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -34,13 +37,13 @@ class UserHaveCouponDeleteServiceImplTest {
 
     @Test
     void 쿠폰_삭제_정상작동() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
 
         couponDeleteService.delete(user.getId(), userHaveCoupon.getId());
@@ -50,14 +53,14 @@ class UserHaveCouponDeleteServiceImplTest {
 
     @Test
     void 쿠폰_삭제_유저_고유변호_다름() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
         Long couponId = userHaveCoupon.getId();
 
@@ -68,14 +71,14 @@ class UserHaveCouponDeleteServiceImplTest {
 
     @Test
     void 쿠폰_삭제_쿠폰_고유변호_다름() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
         Long couponId = userHaveCoupon.getId();
 

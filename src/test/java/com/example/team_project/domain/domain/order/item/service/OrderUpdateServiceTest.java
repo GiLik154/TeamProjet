@@ -19,6 +19,7 @@ import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.OrderStatus;
 import com.example.team_project.enums.ProductCategoryStatus;
+import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.InvalidQuantityException;
 import com.example.team_project.exception.OutOfStockException;
 import com.example.team_project.exception.ProductNotFoundException;
@@ -70,7 +71,7 @@ class OrderUpdateServiceTest {
     @Test
     void 주문상품_수정_정상작동() {
         //given
-        User user = new User("test_user", "test_pw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -113,7 +114,7 @@ class OrderUpdateServiceTest {
     @Test
     void 주문상품_수정_주문개수0이하_비정상작동() {
         //given
-        User user = new User("test_user", "test_pw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -156,7 +157,7 @@ class OrderUpdateServiceTest {
     @Test
     void 주문상품_수정_상품재고소진_비정상작동() {
         //given
-        User user = new User("test_user", "test_pw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -198,7 +199,7 @@ class OrderUpdateServiceTest {
     @Test
     void 주문상품_수정_유효하지_않는_상품_비정상작동() {
         //given
-        User user = new User("test_user", "test_pw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -238,7 +239,7 @@ class OrderUpdateServiceTest {
     @Test
     void 주문상품_상태수정_정상작동() {
         //given
-        User user = new User("test_user", "test_pw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 

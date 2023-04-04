@@ -6,6 +6,7 @@ import com.example.team_project.domain.domain.coupons.domain.UserHaveCoupon;
 import com.example.team_project.domain.domain.coupons.domain.UserHaveCouponRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.UserGrade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -36,17 +37,17 @@ class ExpiredCouponDeleterServiceImplTest {
 
     @Test
     void 기간_만료_쿠폰_정상작동() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds);
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now().plusDays(-1));
         userHaveCoupon.updateExpirationDate(LocalDate.now().plusDays(-5));
         userHaveCouponRepository.save(userHaveCoupon);
 
-        expiredCouponDeleterService.delete(user.getId());
+        expiredCouponDeleterService.delete();
 
         List<UserHaveCoupon> couponList = userHaveCouponRepository.findByUserId(user.getId());
 
@@ -55,17 +56,18 @@ class ExpiredCouponDeleterServiceImplTest {
 
     @Test
     void 기간_만료_쿠폰_정상_만료쿠폰_없음() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        UserHaveCoupon userHaveCoupon1 = new UserHaveCoupon(user, couponKinds);
+        UserHaveCoupon userHaveCoupon1 = new UserHaveCoupon(user, couponKinds, LocalDate.now());
         userHaveCoupon1.updateExpirationDate(LocalDate.now().plusDays(5));
-        userHaveCouponRepository.save(userHaveCoupon1);;
+        userHaveCouponRepository.save(userHaveCoupon1);
+        ;
 
-        expiredCouponDeleterService.delete(user.getId());
+        expiredCouponDeleterService.delete();
 
         List<UserHaveCoupon> couponList = userHaveCouponRepository.findByUserId(user.getId());
 
@@ -74,21 +76,21 @@ class ExpiredCouponDeleterServiceImplTest {
 
     @Test
     void 기간_만료_쿠폰_정상_섞여있음() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        UserHaveCoupon userHaveCoupon1 = new UserHaveCoupon(user, couponKinds);
+        UserHaveCoupon userHaveCoupon1 = new UserHaveCoupon(user, couponKinds, LocalDate.now());
         userHaveCoupon1.updateExpirationDate(LocalDate.now().plusDays(-5));
         userHaveCouponRepository.save(userHaveCoupon1);
 
-        UserHaveCoupon userHaveCoupon2 = new UserHaveCoupon(user, couponKinds);
+        UserHaveCoupon userHaveCoupon2 = new UserHaveCoupon(user, couponKinds, LocalDate.now());
         userHaveCoupon2.updateExpirationDate(LocalDate.now().plusDays(5));
         userHaveCouponRepository.save(userHaveCoupon2);
 
-        expiredCouponDeleterService.delete(user.getId());
+        expiredCouponDeleterService.delete();
 
         List<UserHaveCoupon> couponList = userHaveCouponRepository.findByUserId(user.getId());
 
@@ -98,21 +100,21 @@ class ExpiredCouponDeleterServiceImplTest {
 
     @Test
     void 기간_만료_쿠폰_정상_여러개() {
-        User user = new User("testName", "testPw");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
         couponKindsRepository.save(couponKinds);
 
-        UserHaveCoupon userHaveCoupon1 = new UserHaveCoupon(user, couponKinds);
+        UserHaveCoupon userHaveCoupon1 = new UserHaveCoupon(user, couponKinds, LocalDate.now());
         userHaveCoupon1.updateExpirationDate(LocalDate.now().plusDays(-5));
         userHaveCouponRepository.save(userHaveCoupon1);
 
-        UserHaveCoupon userHaveCoupon2 = new UserHaveCoupon(user, couponKinds);
+        UserHaveCoupon userHaveCoupon2 = new UserHaveCoupon(user, couponKinds, LocalDate.now());
         userHaveCoupon2.updateExpirationDate(LocalDate.now().plusDays(-3));
         userHaveCouponRepository.save(userHaveCoupon2);
 
-        expiredCouponDeleterService.delete(user.getId());
+        expiredCouponDeleterService.delete();
 
         List<UserHaveCoupon> couponList = userHaveCouponRepository.findByUserId(user.getId());
 

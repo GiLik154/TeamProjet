@@ -5,6 +5,7 @@ import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.UserGrade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -34,7 +35,7 @@ class LikeCountCheckServiceTest {
     @Test
     void 좋아요_증가_성공() {
         //user 회원가입
-        User user = new User("userTest", "test123");
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
         userRepository.save(user);
 
         Product product = new Product("productTest", null, "imageTest", "descriptionTest", 10, 1000, null);
