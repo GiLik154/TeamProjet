@@ -6,15 +6,13 @@ import lombok.Getter;
 @Getter
 public class ShopJoinDto {
 
-    private Long id;
-    // 판매자 아이디
-    private Seller seller;
+
     // 가게 이름
-    private String shopName;
+    private final String shopName;
     // 가게 주소
-    private String shopAddress;
+    private final String shopAddress;
     // 사업자번호
-    private String businessRegistrationNumber;
+    private final String businessRegistrationNumber;
 
     public ShopJoinDto(String shopName, String shopAddress, String businessRegistrationNumber) {
         this.shopName = shopName;
@@ -22,11 +20,6 @@ public class ShopJoinDto {
         this.businessRegistrationNumber = businessRegistrationNumber;
     }
 
-    public ShopJoinDto() {
 
-    }
 
-    public ShopJoinDto(Seller seller) {
-        this.seller = seller;
-    }
 }
