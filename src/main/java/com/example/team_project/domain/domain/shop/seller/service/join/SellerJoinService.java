@@ -22,6 +22,7 @@ public class SellerJoinService {
 
     //회원가입
     public void sellerJoin(SellerJoinDto sellerJoinDto){
+        //아이디 중복체크
         sellerRepository.duplication(sellerJoinDto.getOwnerId());
 
         Seller seller = new Seller(
