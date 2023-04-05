@@ -14,23 +14,22 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class SellerUpdateService {
 
-        private final SellerRepository sellerRepository;
-        private final PasswordEncoder passwordEncoder;
+    private final SellerRepository sellerRepository;
+    private final PasswordEncoder passwordEncoder;
 
-        //seller: 이름,휴대폰번호     shop:매장번호,주소 수정
-        public void sellerUpdate(String sellerId,String password,String ownerName,String phoneNumber){
-                Seller seller = sellerRepository.validateSeller(sellerId);
+    //seller: 이름,휴대폰번호     shop:매장번호,주소 수정
+    public void sellerUpdate(String sellerId, String password, String ownerName, String phoneNumber) {
+        Seller seller = sellerRepository.validateSeller(sellerId);
 
-                // 판매자 비밀번호 검증
-                if (!seller.isValidPassword(passwordEncoder, password)) {
-                        throw new BadCredentialsException("Invalid password");
-                }
-
-                //판매자 이름, 판매자 번호 수정
-                seller.update(ownerName,phoneNumber);
-
+        // 판매자 비밀번호 검증
+        if (!seller.isValidPassword(passwordEncoder, password)) {
+            throw new BadCredentialsException("Invalid password");
         }
 
+        //판매자 이름, 판매자 번호 수정
+        seller.update(ownerName, phoneNumber);
+
+    }
 
 
 }

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Login Form</title>
+</head>
+<body>
+        <form action="/seller/login-form" method="post">
+            <input name="ownerId">
+            <input type="password" name="password">
+            <button type="submit">확인</button>
+        </form>
+<p th:text="${errMsg}"></p>
+</body>
+
+</html>
