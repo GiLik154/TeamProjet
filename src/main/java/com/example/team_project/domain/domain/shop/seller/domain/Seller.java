@@ -57,6 +57,8 @@ public class Seller {
     }
 
 
+
+
     public void update(String ownerName, String phoneNumber) {
         this.ownerName = ownerName;
         this.phoneNumber = phoneNumber;

@@ -6,4 +6,8 @@ public class SellerNotFoundException extends RuntimeException{
         super("This seller could not be found");
     }
 
+    public SellerNotFoundException(String errorMessage){
+        super(errorMessage);
+    }
+
 }
