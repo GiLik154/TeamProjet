@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop List</title>
+    <link rel="stylesheet" href="/css/shopList.css">
+</head>
+<body>
+<table>
+    <tr>
+        <th>가게 ID</th>
+        <th>가게 이름</th>
+        <th>주소</th>
+        <th>사업자 등록 번호</th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
+    <tr th:each="list:${shopList}">
+        <td th:text="${list.getShopId()}"></td>
+        <td th:text="${list.getShopName()}"></td>
+        <td th:text="${list.getShopAddress()}"></td>
+        <td th:text="${list.getBusinessRegistrationNumber()}"></td>
+        <td>관리</td>
+        <td>
+            <form th:action="@{/shop/update}" target="popup"
+                  onsubmit="window.open('about:blank','popup','width=800,height=600, top=50%, left=50%, margin-top=-300px, margin-left=-400px')">
+                <input type="hidden" name="shopId" th:value="${list.getShopId()}">
+                <button type="submit">수정</button>
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/shop/delete}" target="popup"
+                  onsubmit="window.open('about:blank','popup','width=800,height=600, top=50%, left=50%, margin-top=-300px, margin-left=-400px')">
+                <input type="hidden" name="shopId" th:value="${list.getShopId()}">
+                <button type="submit">삭제</button>
+            </form>
+        </td>
+
+    </tr>
+</table>
+
+
+</body>
+
+<script>
+    window.opener.location.href = '/shop/list';
+    window.close();
+</script>
+
+
+</html>

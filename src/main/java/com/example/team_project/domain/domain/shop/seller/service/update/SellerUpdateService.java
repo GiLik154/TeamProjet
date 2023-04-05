@@ -18,8 +18,8 @@ public class SellerUpdateService {
     private final PasswordEncoder passwordEncoder;
 
     //seller: 이름,휴대폰번호     shop:매장번호,주소 수정
-    public void sellerUpdate(String sellerId, String password, String ownerName, String phoneNumber) {
-        Seller seller = sellerRepository.validateSeller(sellerId);
+    public void sellerUpdate(Long sellerId, String password, String ownerName, String phoneNumber) {
+        Seller seller = sellerRepository.validateSellerId(sellerId);
 
         // 판매자 비밀번호 검증
         if (!seller.isValidPassword(passwordEncoder, password)) {
