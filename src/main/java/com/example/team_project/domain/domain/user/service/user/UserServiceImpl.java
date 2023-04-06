@@ -39,7 +39,7 @@ public class UserServiceImpl implements UserService {
     // 사용자 정보 수정 메서드
     @Override
     public User updateUser(String password, String userName, String phoneNumber, Long userId){
-        public User updateUser(String password, String userName, String phoneNumber, Long userId) {
+
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new UserNotFoundException());
 
@@ -52,7 +52,7 @@ public class UserServiceImpl implements UserService {
             );
 
             return userRepository.save(updatedUser);
-    }}
+    }
 
     // 사용자 삭제 메서드
     @Override
