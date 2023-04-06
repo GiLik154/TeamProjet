@@ -27,7 +27,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User login(String userId, String password){
         User user = userRepository.findByUserId(userId)
-                .orElseThrow(() -> new UserNotFoundException();
+                .orElseThrow(() -> new UserNotFoundException());
 
         if (!user.getPassword().equals(password)) {
             throw new PasswordNotMatchedException();
