@@ -14,7 +14,7 @@ public class CouponInCategory {
     private Long id;
     /** 쿠폰 종류 */
     @ManyToOne(fetch = FetchType.LAZY)
-    private CouponKinds couponKinds;
+    private Coupon coupon;
     /** 물건의 카테고리 */
     @ManyToOne(fetch = FetchType.LAZY)
     private ProductCategory productCategory;
@@ -23,8 +23,8 @@ public class CouponInCategory {
     }
 
     /** 기본 생성자 */
-    public CouponInCategory(CouponKinds couponKinds, ProductCategory productCategory) {
-        this.couponKinds = couponKinds;
+    public CouponInCategory(Coupon coupon, ProductCategory productCategory) {
+        this.coupon = coupon;
         this.productCategory = productCategory;
     }
 

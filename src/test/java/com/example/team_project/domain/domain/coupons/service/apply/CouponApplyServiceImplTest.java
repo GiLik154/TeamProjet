@@ -42,13 +42,13 @@ class CouponApplyServiceImplTest {
     private final OrderRepository orderRepository;
     private final UserHaveCouponRepository userHaveCouponRepository;
     private final CouponInCategoryRepository couponInCategoryRepository;
-    private final CouponKindsRepository couponKindsRepository;
+    private final CouponRepository couponRepository;
     private final ProductCategoryRepository productCategoryRepository;
     private final ProductRepository productRepository;
     private final SellerRepository sellerRepository;
 
     @Autowired
-    public CouponApplyServiceImplTest(CouponApplyService couponApplyService, UserRepository userRepository, UserAddressRepository userAddressRepository, OrderListRepository orderListRepository, OrderRepository orderRepository, UserHaveCouponRepository userHaveCouponRepository, CouponInCategoryRepository couponInCategoryRepository, CouponKindsRepository couponKindsRepository, ProductCategoryRepository productCategoryRepository, ProductRepository productRepository, SellerRepository sellerRepository) {
+    public CouponApplyServiceImplTest(CouponApplyService couponApplyService, UserRepository userRepository, UserAddressRepository userAddressRepository, OrderListRepository orderListRepository, OrderRepository orderRepository, UserHaveCouponRepository userHaveCouponRepository, CouponInCategoryRepository couponInCategoryRepository, CouponRepository couponRepository, ProductCategoryRepository productCategoryRepository, ProductRepository productRepository, SellerRepository sellerRepository) {
         this.couponApplyService = couponApplyService;
         this.userRepository = userRepository;
         this.userAddressRepository = userAddressRepository;
@@ -56,7 +56,7 @@ class CouponApplyServiceImplTest {
         this.orderRepository = orderRepository;
         this.userHaveCouponRepository = userHaveCouponRepository;
         this.couponInCategoryRepository = couponInCategoryRepository;
-        this.couponKindsRepository = couponKindsRepository;
+        this.couponRepository = couponRepository;
         this.productCategoryRepository = productCategoryRepository;
         this.productRepository = productRepository;
         this.sellerRepository = sellerRepository;
@@ -64,7 +64,7 @@ class CouponApplyServiceImplTest {
 
     @Test
     void 쿠폰_적용_정상작동() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
@@ -73,10 +73,10 @@ class CouponApplyServiceImplTest {
         OrderList orderList = new OrderList(user, userAddress, "카드");
         orderListRepository.save(orderList);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        couponRepository.save(coupon);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, coupon, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -88,7 +88,7 @@ class CouponApplyServiceImplTest {
         Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
         productRepository.save(product);
 
-        CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
+        CouponInCategory couponInCategory = new CouponInCategory(coupon, productCategory);
         couponInCategoryRepository.save(couponInCategory);
 
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
@@ -103,7 +103,7 @@ class CouponApplyServiceImplTest {
 
     @Test
     void 쿠폰_적용_정상작동_카테고리여러개() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
@@ -112,10 +112,10 @@ class CouponApplyServiceImplTest {
         OrderList orderList = new OrderList(user, userAddress, "testPayment");
         orderListRepository.save(orderList);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        couponRepository.save(coupon);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, coupon, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
 
         ProductCategory a = new ProductCategory(ProductCategoryStatus.TOP);
@@ -136,7 +136,7 @@ class CouponApplyServiceImplTest {
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
         productRepository.save(product);
 
-        CouponInCategory couponInCategory = new CouponInCategory(couponKinds, c);
+        CouponInCategory couponInCategory = new CouponInCategory(coupon, c);
         couponInCategoryRepository.save(couponInCategory);
 
         Order order = new Order(user, orderList, orderToProduct);
@@ -149,7 +149,7 @@ class CouponApplyServiceImplTest {
 
     @Test
     void 쿠폰_적용_최저가격_못맞춤() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -159,10 +159,10 @@ class CouponApplyServiceImplTest {
         OrderList orderList = new OrderList(user, userAddress, "testPayment");
         orderListRepository.save(orderList);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 1000000);
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 1000000);
+        couponRepository.save(coupon);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, coupon, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
         Long couponId = userHaveCoupon.getId();
 
@@ -176,7 +176,7 @@ class CouponApplyServiceImplTest {
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
         productRepository.save(product);
 
-        CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
+        CouponInCategory couponInCategory = new CouponInCategory(coupon, productCategory);
         couponInCategoryRepository.save(couponInCategory);
 
         Order order = new Order(user, orderList, orderToProduct);
@@ -190,7 +190,7 @@ class CouponApplyServiceImplTest {
 
     @Test
     void 쿠폰_적용_유저_고유번호_다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -200,10 +200,10 @@ class CouponApplyServiceImplTest {
         OrderList orderList = new OrderList(user, userAddress, "testPayment");
         orderListRepository.save(orderList);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        couponRepository.save(coupon);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, coupon, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
         Long couponId = userHaveCoupon.getId();
 
@@ -217,7 +217,7 @@ class CouponApplyServiceImplTest {
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
         productRepository.save(product);
 
-        CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
+        CouponInCategory couponInCategory = new CouponInCategory(coupon, productCategory);
         couponInCategoryRepository.save(couponInCategory);
 
         Order order = new Order(user, orderList, orderToProduct);
@@ -231,7 +231,7 @@ class CouponApplyServiceImplTest {
 
     @Test
     void 쿠폰_적용_쿠폰_고유번호_다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -241,10 +241,10 @@ class CouponApplyServiceImplTest {
         OrderList orderList = new OrderList(user, userAddress, "testPayment");
         orderListRepository.save(orderList);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        couponRepository.save(coupon);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, coupon, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
         Long couponId = userHaveCoupon.getId() + 1L;
 
@@ -258,7 +258,7 @@ class CouponApplyServiceImplTest {
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
         productRepository.save(product);
 
-        CouponInCategory couponInCategory = new CouponInCategory(couponKinds, productCategory);
+        CouponInCategory couponInCategory = new CouponInCategory(coupon, productCategory);
         couponInCategoryRepository.save(couponInCategory);
 
         Order order = new Order(user, orderList, orderToProduct);

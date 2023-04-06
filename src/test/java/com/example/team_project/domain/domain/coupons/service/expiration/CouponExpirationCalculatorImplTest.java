@@ -1,8 +1,7 @@
 package com.example.team_project.domain.domain.coupons.service.expiration;
 
-import com.example.team_project.domain.domain.coupons.domain.CouponKinds;
-import com.example.team_project.domain.domain.coupons.domain.CouponKindsRepository;
-import com.example.team_project.domain.domain.coupons.domain.UserHaveCouponRepository;
+import com.example.team_project.domain.domain.coupons.domain.Coupon;
+import com.example.team_project.domain.domain.coupons.domain.CouponRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.UserGrade;
@@ -24,83 +23,83 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class CouponExpirationCalculatorImplTest {
     private final CouponExpirationCalculator couponExpirationCalculator;
-    private final CouponKindsRepository couponKindsRepository;
+    private final CouponRepository couponRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    CouponExpirationCalculatorImplTest(CouponExpirationCalculator couponExpirationCalculator, CouponKindsRepository couponKindsRepository, UserRepository userRepository) {
+    CouponExpirationCalculatorImplTest(CouponExpirationCalculator couponExpirationCalculator, CouponRepository couponRepository, UserRepository userRepository) {
         this.couponExpirationCalculator = couponExpirationCalculator;
-        this.couponKindsRepository = couponKindsRepository;
+        this.couponRepository = couponRepository;
         this.userRepository = userRepository;
     }
 
     @Test
     void 쿠폰_추가_정상작동_기간_설정() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKinds.updatePeriod(Period.ofDays(7));
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        coupon.updatePeriod(Period.ofDays(7));
+        couponRepository.save(coupon);
 
-        LocalDate expirationDate = couponExpirationCalculator.setExpirationDate(couponKinds);
+        LocalDate expirationDate = couponExpirationCalculator.setExpirationDate(coupon);
 
         assertEquals(LocalDate.now().plusDays(7), expirationDate);
     }
 
     @Test
     void 쿠폰_추가_정상작동_만료일_기간_설정_만료일이_더_김() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKinds.updateDeadline(LocalDate.now().plusDays(30));
-        couponKinds.updatePeriod(Period.ofDays(7));
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        coupon.updateDeadline(LocalDate.now().plusDays(30));
+        coupon.updatePeriod(Period.ofDays(7));
+        couponRepository.save(coupon);
 
-        LocalDate expirationDate = couponExpirationCalculator.setExpirationDate(couponKinds);
+        LocalDate expirationDate = couponExpirationCalculator.setExpirationDate(coupon);
         assertEquals(LocalDate.now().plusDays(30), expirationDate);
     }
 
     @Test
     void 쿠폰_추가_정상작동_만료일_기간_설정_기간이_더_김() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKinds.updateDeadline(LocalDate.now().plusDays(7));
-        couponKinds.updatePeriod(Period.ofDays(30));
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        coupon.updateDeadline(LocalDate.now().plusDays(7));
+        coupon.updatePeriod(Period.ofDays(30));
+        couponRepository.save(coupon);
 
-        LocalDate expirationDate = couponExpirationCalculator.setExpirationDate(couponKinds);
+        LocalDate expirationDate = couponExpirationCalculator.setExpirationDate(coupon);
         assertEquals(LocalDate.now().plusDays(7), expirationDate);
     }
 
     @Test
     void 쿠폰_추가_정상작동_만료일_기간_같음() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKinds.updateDeadline(LocalDate.now().plusDays(7));
-        couponKinds.updatePeriod(Period.ofDays(7));
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        coupon.updateDeadline(LocalDate.now().plusDays(7));
+        coupon.updatePeriod(Period.ofDays(7));
+        couponRepository.save(coupon);
 
-        LocalDate expirationDate = couponExpirationCalculator.setExpirationDate(couponKinds);
+        LocalDate expirationDate = couponExpirationCalculator.setExpirationDate(coupon);
         assertEquals(LocalDate.now().plusDays(7), expirationDate);
     }
 
     @Test
     void 쿠폰_추가_정상작동_만료일_지났음() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKinds.updateDeadline(LocalDate.now().plusDays(-5));
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        coupon.updateDeadline(LocalDate.now().plusDays(-5));
+        couponRepository.save(coupon);
 
         ExpiredCouponException e = assertThrows(ExpiredCouponException.class, () ->
-                couponExpirationCalculator.setExpirationDate(couponKinds)
+                couponExpirationCalculator.setExpirationDate(coupon)
         );
 
         assertEquals("Expired Coupon Exception", e.getMessage());

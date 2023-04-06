@@ -1,6 +1,6 @@
 package com.example.team_project.domain.domain.coupons.service.update;
 
-import com.example.team_project.domain.domain.coupons.domain.CouponKinds;
+import com.example.team_project.domain.domain.coupons.domain.Coupon;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,14 +15,12 @@ import java.time.Period;
 @Transactional
 @RequiredArgsConstructor
 public class TermsAndConditionsUpdateServiceImpl implements TermsAndConditionsUpdateService {
-    /** 쿠폰의 Period을 업데이트 하는 메소드*/
     @Override
-    public void update(CouponKinds couponKinds, Period period) {
-        couponKinds.updatePeriod(period);
+    public void update(Coupon coupon, Period period) {
+        coupon.updatePeriod(period);
     }
-    /** 쿠폰의 deadline을 업데이트 하는 메소드*/
     @Override
-    public void update(CouponKinds couponKinds, LocalDate deadline) {
-        couponKinds.updateDeadline(deadline);
+    public void update(Coupon coupon, LocalDate deadline) {
+        coupon.updateDeadline(deadline);
     }
 }

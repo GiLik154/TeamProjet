@@ -35,7 +35,7 @@ class LikeCountCheckServiceTest {
     @Test
     void 좋아요_증가_성공() {
         //user 회원가입
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
         Product product = new Product("productTest", null, "imageTest", "descriptionTest", 10, 1000, null);

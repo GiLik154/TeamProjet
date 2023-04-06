@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface CouponKindsRepository extends JpaRepository<CouponKinds, String> {
-    Optional<CouponKinds> findByName(String name);
+public interface CouponRepository extends JpaRepository<Coupon, String> {
+    Optional<Coupon> findByName(String name);
 }

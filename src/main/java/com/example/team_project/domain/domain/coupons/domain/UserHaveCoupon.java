@@ -22,7 +22,7 @@ public class UserHaveCoupon {
      * 유저가 가지고 있는 쿠폰의 종류
      */
     @OneToOne(fetch = FetchType.LAZY)
-    private CouponKinds couponKinds;
+    private Coupon coupon;
     /**
      * 쿠폰의 사용 기한
 
@@ -36,9 +36,9 @@ public class UserHaveCoupon {
     /**
      * 쿠폰의 기본 생성자
      */
-    public UserHaveCoupon(User user, CouponKinds couponKinds, LocalDate expirationDate) {
+    public UserHaveCoupon(User user, Coupon coupon, LocalDate expirationDate) {
         this.user = user;
-        this.couponKinds = couponKinds;
+        this.coupon = coupon;
         this.expirationDate = expirationDate;
     }
 

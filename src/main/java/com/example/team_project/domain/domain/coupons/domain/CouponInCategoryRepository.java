@@ -6,9 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CouponInCategoryRepository extends JpaRepository<CouponInCategory, Long> {
-    void deleteAllByCouponKinds(CouponKinds couponKinds);
-
-    void deleteAllByProductCategory(ProductCategory productCategory);
-
-    List<CouponInCategory> findByCouponKindsName(String couponKindsName);
+    void deleteAllByCoupon(Coupon coupon);
+    boolean existsByCouponNameAndProductCategory(String couponName, ProductCategory productCategory);
+    List<CouponInCategory> findByCouponName(String couponName);
 }

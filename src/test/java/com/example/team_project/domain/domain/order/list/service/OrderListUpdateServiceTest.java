@@ -71,7 +71,7 @@ class OrderListUpdateServiceTest {
     @Test
     void 주문리스트_수정_주소지변경_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -103,7 +103,7 @@ class OrderListUpdateServiceTest {
     @Test
     void 주문리스트_결제완료시_사용불가_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
         Shop shop = new Shop();

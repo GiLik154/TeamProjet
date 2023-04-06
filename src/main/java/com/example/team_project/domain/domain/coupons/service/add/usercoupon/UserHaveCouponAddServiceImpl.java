@@ -1,8 +1,8 @@
-package com.example.team_project.domain.domain.coupons.service.add.coupon;
+package com.example.team_project.domain.domain.coupons.service.add.usercoupon;
 
 import com.example.team_project.domain.domain.coupons.domain.UserHaveCoupon;
-import com.example.team_project.domain.domain.coupons.domain.CouponKinds;
-import com.example.team_project.domain.domain.coupons.domain.CouponKindsRepository;
+import com.example.team_project.domain.domain.coupons.domain.Coupon;
+import com.example.team_project.domain.domain.coupons.domain.CouponRepository;
 import com.example.team_project.domain.domain.coupons.domain.UserHaveCouponRepository;
 import com.example.team_project.domain.domain.coupons.service.expiration.CouponExpirationCalculator;
 import com.example.team_project.domain.domain.user.domain.User;
@@ -21,40 +21,28 @@ import java.time.LocalDate;
 public class UserHaveCouponAddServiceImpl implements UserHaveCouponAddService {
     private final CouponExpirationCalculator couponExpirationCalculator;
     private final UserHaveCouponRepository userHaveCouponRepository;
-    private final CouponKindsRepository couponKindsRepository;
+    private final CouponRepository couponRepository;
     private final UserRepository userRepository;
 
-    /**
-     * 컨트롤단에서 유저 아이디, 쿠폰 종류의 이름을 받아와서 추가해야함.
-     */
     @Override
     public void add(Long userId, String couponKindsName) {
-        CouponKinds couponKinds = getCouponKinds(couponKindsName);
         User user = getUser(userId);
+        Coupon coupon = getCouponKinds(couponKindsName);
 
-        LocalDate couponExpirationDate = couponExpirationCalculator.setExpirationDate(couponKinds);
+        LocalDate couponExpirationDate = couponExpirationCalculator.setExpirationDate(coupon);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, couponExpirationDate);
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, coupon, couponExpirationDate);
 
         userHaveCouponRepository.save(userHaveCoupon);
     }
 
-    /**
-     * CouponKinds를 찾는다.
-     * 없으면 NotFoundCouponException 익셉선 발생
-     * CouponKinds의 고유키값을 넣어서 디버깅 하기 유용하게 만듬.
-     */
-    private CouponKinds getCouponKinds(String couponKindsName) {
-        return couponKindsRepository.findByName(couponKindsName)
+
+    private Coupon getCouponKinds(String couponKindsName) {
+        return couponRepository.findByName(couponKindsName)
                 .orElseThrow(() ->
                         new NotFoundCouponException("Coupon kinds not found: " + couponKindsName));
     }
 
-    /**
-     * User를 찾는다.
-     * 없으면 UserNotFoundException 익셉선 발생
-     * User의 고유키값을 넣어서 디버깅 하기 유용하게 만듬.
-     */
     private User getUser(Long userId) {
         return userRepository.findById(userId)
                 .orElseThrow(() ->

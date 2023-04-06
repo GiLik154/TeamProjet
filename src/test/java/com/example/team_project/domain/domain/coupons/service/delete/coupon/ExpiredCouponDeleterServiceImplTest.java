@@ -1,7 +1,7 @@
 package com.example.team_project.domain.domain.coupons.service.delete.coupon;
 
-import com.example.team_project.domain.domain.coupons.domain.CouponKinds;
-import com.example.team_project.domain.domain.coupons.domain.CouponKindsRepository;
+import com.example.team_project.domain.domain.coupons.domain.Coupon;
+import com.example.team_project.domain.domain.coupons.domain.CouponRepository;
 import com.example.team_project.domain.domain.coupons.domain.UserHaveCoupon;
 import com.example.team_project.domain.domain.coupons.domain.UserHaveCouponRepository;
 import com.example.team_project.domain.domain.user.domain.User;
@@ -24,26 +24,26 @@ import static org.junit.jupiter.api.Assertions.*;
 class ExpiredCouponDeleterServiceImplTest {
     private final ExpiredCouponDeleterService expiredCouponDeleterService;
     private final UserHaveCouponRepository userHaveCouponRepository;
-    private final CouponKindsRepository couponKindsRepository;
+    private final CouponRepository couponRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    public ExpiredCouponDeleterServiceImplTest(ExpiredCouponDeleterService expiredCouponDeleterService, UserHaveCouponRepository userHaveCouponRepository, CouponKindsRepository couponKindsRepository, UserRepository userRepository) {
+    public ExpiredCouponDeleterServiceImplTest(ExpiredCouponDeleterService expiredCouponDeleterService, UserHaveCouponRepository userHaveCouponRepository, CouponRepository couponRepository, UserRepository userRepository) {
         this.expiredCouponDeleterService = expiredCouponDeleterService;
         this.userHaveCouponRepository = userHaveCouponRepository;
-        this.couponKindsRepository = couponKindsRepository;
+        this.couponRepository = couponRepository;
         this.userRepository = userRepository;
     }
 
     @Test
     void 기간_만료_쿠폰_정상작동() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        couponRepository.save(coupon);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now().plusDays(-1));
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, coupon, LocalDate.now().plusDays(-1));
         userHaveCoupon.updateExpirationDate(LocalDate.now().plusDays(-5));
         userHaveCouponRepository.save(userHaveCoupon);
 
@@ -56,13 +56,13 @@ class ExpiredCouponDeleterServiceImplTest {
 
     @Test
     void 기간_만료_쿠폰_정상_만료쿠폰_없음() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        couponRepository.save(coupon);
 
-        UserHaveCoupon userHaveCoupon1 = new UserHaveCoupon(user, couponKinds, LocalDate.now());
+        UserHaveCoupon userHaveCoupon1 = new UserHaveCoupon(user, coupon, LocalDate.now());
         userHaveCoupon1.updateExpirationDate(LocalDate.now().plusDays(5));
         userHaveCouponRepository.save(userHaveCoupon1);
         ;
@@ -76,17 +76,17 @@ class ExpiredCouponDeleterServiceImplTest {
 
     @Test
     void 기간_만료_쿠폰_정상_섞여있음() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        couponRepository.save(coupon);
 
-        UserHaveCoupon userHaveCoupon1 = new UserHaveCoupon(user, couponKinds, LocalDate.now());
+        UserHaveCoupon userHaveCoupon1 = new UserHaveCoupon(user, coupon, LocalDate.now());
         userHaveCoupon1.updateExpirationDate(LocalDate.now().plusDays(-5));
         userHaveCouponRepository.save(userHaveCoupon1);
 
-        UserHaveCoupon userHaveCoupon2 = new UserHaveCoupon(user, couponKinds, LocalDate.now());
+        UserHaveCoupon userHaveCoupon2 = new UserHaveCoupon(user, coupon, LocalDate.now());
         userHaveCoupon2.updateExpirationDate(LocalDate.now().plusDays(5));
         userHaveCouponRepository.save(userHaveCoupon2);
 
@@ -100,17 +100,17 @@ class ExpiredCouponDeleterServiceImplTest {
 
     @Test
     void 기간_만료_쿠폰_정상_여러개() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        couponRepository.save(coupon);
 
-        UserHaveCoupon userHaveCoupon1 = new UserHaveCoupon(user, couponKinds, LocalDate.now());
+        UserHaveCoupon userHaveCoupon1 = new UserHaveCoupon(user, coupon, LocalDate.now());
         userHaveCoupon1.updateExpirationDate(LocalDate.now().plusDays(-5));
         userHaveCouponRepository.save(userHaveCoupon1);
 
-        UserHaveCoupon userHaveCoupon2 = new UserHaveCoupon(user, couponKinds, LocalDate.now());
+        UserHaveCoupon userHaveCoupon2 = new UserHaveCoupon(user, coupon, LocalDate.now());
         userHaveCoupon2.updateExpirationDate(LocalDate.now().plusDays(-3));
         userHaveCouponRepository.save(userHaveCoupon2);
 

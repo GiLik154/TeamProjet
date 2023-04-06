@@ -13,7 +13,7 @@ public interface UserHaveCouponRepository extends JpaRepository<UserHaveCoupon, 
 
     List<UserHaveCoupon> findByUserId(Long userId);
 
-    Optional<UserHaveCoupon> findByCouponKindsName(String couponKindsName);
+    Optional<UserHaveCoupon> findByCouponName(String couponKindsName);
 
     void deleteByUserIdAndId(Long couponId, Long userId);
 

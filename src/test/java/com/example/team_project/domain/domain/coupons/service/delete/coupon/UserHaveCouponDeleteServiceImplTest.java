@@ -1,8 +1,8 @@
 package com.example.team_project.domain.domain.coupons.service.delete.coupon;
 
 import com.example.team_project.domain.domain.coupons.domain.UserHaveCoupon;
-import com.example.team_project.domain.domain.coupons.domain.CouponKinds;
-import com.example.team_project.domain.domain.coupons.domain.CouponKindsRepository;
+import com.example.team_project.domain.domain.coupons.domain.Coupon;
+import com.example.team_project.domain.domain.coupons.domain.CouponRepository;
 import com.example.team_project.domain.domain.coupons.domain.UserHaveCouponRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
@@ -24,26 +24,26 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 class UserHaveCouponDeleteServiceImplTest {
     private final UserHaveCouponDeleteService couponDeleteService;
     private final UserHaveCouponRepository userHaveCouponRepository;
-    private final CouponKindsRepository couponKindsRepository;
+    private final CouponRepository couponRepository;
     private final UserRepository userRepository;
 
     @Autowired
-    UserHaveCouponDeleteServiceImplTest(UserHaveCouponDeleteService couponDeleteService, UserHaveCouponRepository userHaveCouponRepository, CouponKindsRepository couponKindsRepository, UserRepository userRepository) {
+    UserHaveCouponDeleteServiceImplTest(UserHaveCouponDeleteService couponDeleteService, UserHaveCouponRepository userHaveCouponRepository, CouponRepository couponRepository, UserRepository userRepository) {
         this.couponDeleteService = couponDeleteService;
         this.userHaveCouponRepository = userHaveCouponRepository;
-        this.couponKindsRepository = couponKindsRepository;
+        this.couponRepository = couponRepository;
         this.userRepository = userRepository;
     }
 
     @Test
     void 쿠폰_삭제_정상작동() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        couponRepository.save(coupon);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, coupon, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
 
         couponDeleteService.delete(user.getId(), userHaveCoupon.getId());
@@ -53,14 +53,14 @@ class UserHaveCouponDeleteServiceImplTest {
 
     @Test
     void 쿠폰_삭제_유저_고유변호_다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
         Long userId = user.getId();
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        couponRepository.save(coupon);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, coupon, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
         Long couponId = userHaveCoupon.getId();
 
@@ -71,14 +71,14 @@ class UserHaveCouponDeleteServiceImplTest {
 
     @Test
     void 쿠폰_삭제_쿠폰_고유변호_다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
         Long userId = user.getId();
 
-        CouponKinds couponKinds = new CouponKinds("testName", 5, 10000);
-        couponKindsRepository.save(couponKinds);
+        Coupon coupon = new Coupon("testName", 5, 10000);
+        couponRepository.save(coupon);
 
-        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, couponKinds, LocalDate.now());
+        UserHaveCoupon userHaveCoupon = new UserHaveCoupon(user, coupon, LocalDate.now());
         userHaveCouponRepository.save(userHaveCoupon);
         Long couponId = userHaveCoupon.getId();
 

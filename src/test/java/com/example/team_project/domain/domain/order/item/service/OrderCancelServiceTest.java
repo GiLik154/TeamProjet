@@ -73,7 +73,7 @@ class OrderCancelServiceTest {
     @Test
     void 주문상품_취소_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -112,7 +112,7 @@ class OrderCancelServiceTest {
     @Test
     void 주문상품_취소불가_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -153,7 +153,7 @@ class OrderCancelServiceTest {
     @Test
     void 주문상품_취소_상태변경_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
         Shop shop = new Shop();

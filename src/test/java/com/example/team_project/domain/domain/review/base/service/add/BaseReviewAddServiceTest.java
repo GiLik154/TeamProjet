@@ -64,7 +64,7 @@ class BaseReviewAddServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
         PostCategory postCategory = new PostCategory("category");
@@ -91,7 +91,7 @@ class BaseReviewAddServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -123,7 +123,7 @@ class BaseReviewAddServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
         userRepository.save(user);
 
         PostCategory postCategory = new PostCategory("category");

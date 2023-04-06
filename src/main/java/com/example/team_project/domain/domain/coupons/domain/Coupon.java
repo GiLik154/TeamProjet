@@ -12,7 +12,7 @@ import java.time.Period;
  */
 @Entity
 @Getter
-public class CouponKinds {
+public class Coupon {
     /**
      * String으로 직접 넣어줘야 함.
      * 중복되는 쿠폰의 이름은 사용 불가능
@@ -39,14 +39,14 @@ public class CouponKinds {
      */
     private LocalDate deadline;
 
-    protected CouponKinds() {
+    protected Coupon() {
     }
 
     /**
      * validateParam 메소드에서 입력값 검증이 필요함.
      * expirationDate에서 삭제 기한 날짜 설정 가능
      */
-    public CouponKinds(String name, int discountRate, int minPrice) {
+    public Coupon(String name, int discountRate, int minPrice) {
         validateParam(discountRate, minPrice);
         this.name = name;
         this.discountRate = discountRate;
