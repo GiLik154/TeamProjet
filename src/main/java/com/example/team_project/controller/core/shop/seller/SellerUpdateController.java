@@ -4,7 +4,9 @@ import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.domain.domain.shop.seller.service.dto.SellerJoinDto;
 import com.example.team_project.domain.domain.shop.seller.service.update.SellerUpdateService;
+import com.example.team_project.exception.ShopIncorrectUpdatePasswordException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,9 +33,13 @@ public class SellerUpdateController {
                          @RequestParam("ownerName") String ownerName,
                          @RequestParam("phoneNumber") String phoneNumber) {
 
-        sellerUpdateService.sellerUpdate(sellerId, password, ownerName, phoneNumber);
 
+        sellerUpdateService.sellerUpdate(sellerId, password, ownerName, phoneNumber);
         return "redirect:/";
+
+
+
+
     }
 
 }

@@ -25,14 +25,15 @@ public class SellerDeleteController {
         return "thymeleaf/seller/sellerDeleteForm";
     }
 
-    @PostMapping("")
-    public String delete(@SessionAttribute("sellerId") Long sellerId, @RequestParam("password") String password){
-        Optional<Seller> seller = sellerRepository.findById(sellerId);
-        sellerDeleteService.delete(sellerId,password,seller.get().getOwnerId());
 
-        return "thymeleaf/seller/sellerIndex";
-
-
+@PostMapping("")
+public String delete(@SessionAttribute("sellerId") Long sellerId, @RequestParam("password") String password){
+    Optional<Seller> sellerOptional = sellerRepository.findById(sellerId);
+    if(sellerOptional.isPresent()){
+        Seller seller = sellerOptional.get();
+        sellerDeleteService.delete(sellerId,password,seller.getOwnerId());
     }
+    return "thymeleaf/seller/sellerIndex";
+}
 
 }

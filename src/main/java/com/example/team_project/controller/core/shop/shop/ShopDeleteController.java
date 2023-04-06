@@ -23,7 +23,6 @@ public class ShopDeleteController {
     @GetMapping("")
     public String delForm(@RequestParam("shopId") Long shopId, Model model){
         model.addAttribute("shopIds",shopId);
-        System.out.println("뮤ㅜ브"+shopId);
         return "thymeleaf/shop/shopDeleteForm";
 
     }
@@ -31,7 +30,6 @@ public class ShopDeleteController {
     @PostMapping("")
     public String del(@RequestParam("shopId") Long shopId,@SessionAttribute("ownerId")String ownerId, @RequestParam("password")String password){
         shopDeleteService.delete(shopId, ownerId,password);
-        System.out.println("저장"+shopId);
         return "redirect:/shop/list";
     }
 
