@@ -21,7 +21,6 @@ public class ProductDetailController {
 
     @GetMapping("{productId}")
     public String detail(@PathVariable Long productId, Model model){
-        System.out.println(productId);
         Optional<Product> product = productRepository.findById(productId);
         model.addAttribute("productDetail",product);
         return "thymeleaf/product/productUserDetail";

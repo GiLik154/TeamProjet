@@ -24,7 +24,6 @@ public class ProductSellerListController {
         int page = Math.max(pageable.getPageNumber(), 1);
         int limitPage = 8;
 
-        System.out.println("숫자는뭘까:"+page);
 
         Page<Product> list = productRepository.findBySellerId(sellerId, PageRequest.of(page-1, limitPage, Sort.Direction.DESC, "id"));
         model.addAttribute("productList", list);
@@ -43,7 +42,6 @@ public class ProductSellerListController {
         int page = Math.max(pageable.getPageNumber(), 1);
         int limitPage = 8;
 
-        System.out.println("숫자는뭘까:"+page);
 
         Page<Product> list = productRepository.findBySellerIdAndCategoryId(sellerId,categoryId, PageRequest.of(page-1, limitPage, Sort.Direction.DESC, "id"));
         model.addAttribute("productList", list);

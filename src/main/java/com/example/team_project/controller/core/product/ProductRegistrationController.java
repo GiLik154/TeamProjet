@@ -20,7 +20,6 @@ public class ProductRegistrationController {
 
     @GetMapping("")
     public String registrationForm() {
-        System.out.println("무브");
         return "thymeleaf/product/productRegistrationForm";
     }
 

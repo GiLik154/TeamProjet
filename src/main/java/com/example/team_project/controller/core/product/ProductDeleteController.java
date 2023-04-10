@@ -16,7 +16,6 @@ public class ProductDeleteController {
 
     @GetMapping("")
     public String delForm(@RequestParam("productId")Long productId, Model model){
-        System.out.println("이동" + productId);
         model.addAttribute("productId",productId);
         return "thymeleaf/product/productDeleteForm";
     }

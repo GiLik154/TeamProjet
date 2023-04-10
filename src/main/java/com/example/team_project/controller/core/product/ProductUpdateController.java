@@ -25,7 +25,6 @@ public class ProductUpdateController {
                          @RequestParam("password") String password,
                          @RequestParam("productId") Long productId,
                          ProductDto productDto) {
-        System.out.println("저장" + productDto.getName()+ "셀러아이디: " + sellerId+ productDto.getDescription()+"asd"+productDto.getCategoryDto());
         productUpdateService.update(sellerId, productId, password, productDto);
 
         return "redirect:/product/seller/list";

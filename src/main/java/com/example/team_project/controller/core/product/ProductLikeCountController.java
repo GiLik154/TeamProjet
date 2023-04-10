@@ -14,7 +14,6 @@ public class ProductLikeCountController {
 
     @GetMapping()
     public String likeCount(@SessionAttribute("userId")Long userId, @RequestParam("productId")Long productId){
-        System.out.println("유저아이디: " + userId + "프로덕트아이디: " + productId);
         likeCountCheckService.countCheck(userId,productId);
 
         return "redirect:/product/detail/"+productId;
