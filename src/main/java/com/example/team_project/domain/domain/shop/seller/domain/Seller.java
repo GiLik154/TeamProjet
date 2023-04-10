@@ -1,5 +1,6 @@
 package com.example.team_project.domain.domain.shop.seller.domain;
 
+import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.shop.shop.domain.Shop;
 import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -33,6 +34,8 @@ public class Seller {
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     private List<Shop> shops = new ArrayList<>();
+
+
 
 
     public Seller(String ownerId, String password, String ownerName, String phoneNumber) {

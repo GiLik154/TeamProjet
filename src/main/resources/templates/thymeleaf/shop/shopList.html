@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Shop List</title>
-    <link rel="stylesheet" href="/css/shopList.css">
+    <link rel="stylesheet" href="/static/css/shopList.css">
 </head>
 <body>
 <table>
@@ -21,7 +21,7 @@
         <td th:text="${list.getShopName()}"></td>
         <td th:text="${list.getShopAddress()}"></td>
         <td th:text="${list.getBusinessRegistrationNumber()}"></td>
-        <td>관리</td>
+        <td><button onclick="productList()">관리</button></td>
         <td>
             <form th:action="@{/shop/update}" target="popup"
                   onsubmit="window.open('about:blank','popup','width=800,height=600, top=50%, left=50%, margin-top=-300px, margin-left=-400px')">
@@ -39,13 +39,16 @@
 
     </tr>
 </table>
-
-
 </body>
 
 <script>
     window.opener.location.href = '/shop/list';
     window.close();
+
+    function productList(){
+        location.href = "/product/seller/list";
+
+    }
 </script>
 
 

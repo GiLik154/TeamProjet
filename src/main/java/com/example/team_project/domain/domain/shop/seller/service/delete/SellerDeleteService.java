@@ -25,6 +25,7 @@ public class SellerDeleteService {
             throw new BadCredentialsException("Invalid password");
         }
 
+
         sellerRepository.deleteById(sellerId);
     }
 

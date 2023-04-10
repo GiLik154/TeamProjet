@@ -1,0 +1,34 @@
+package com.example.team_project.controller.core.product;
+
+
+import com.example.team_project.domain.domain.product.product.service.delete.ProductDeleteService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+@Controller
+@RequiredArgsConstructor
+@RequestMapping("product/delete")
+public class ProductDeleteController {
+
+    private final ProductDeleteService productDeleteService;
+
+    @GetMapping("")
+    public String delForm(@RequestParam("productId")Long productId, Model model){
+        System.out.println("이동" + productId);
+        model.addAttribute("productId",productId);
+        return "thymeleaf/product/productDeleteForm";
+    }
+
+    @PostMapping("")
+    public String del(@SessionAttribute("sellerId")Long sellerId,
+                      @RequestParam("productId")Long productId,
+                      @RequestParam("password")String password){
+
+        productDeleteService.delete(sellerId,productId,password);
+
+        return "redirect:product/seller/list";
+
+    }
+}
