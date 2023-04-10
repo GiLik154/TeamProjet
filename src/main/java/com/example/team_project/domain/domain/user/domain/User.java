@@ -50,6 +50,7 @@ public class User {
         this.password = password;
         this.userName = userName;
         this.phoneNumber = phoneNumber;
+        this.userGrade = UserGrade.SILVER;
     }
 
     public User(String password, String userName, String phoneNumber, Long userId) {
@@ -67,4 +68,7 @@ public class User {
         encodePassword(passwordEncoder);
     }
 
+    public void updateUserGrade(UserGrade userGrade) {
+        this.userGrade = userGrade;
+    }
 }

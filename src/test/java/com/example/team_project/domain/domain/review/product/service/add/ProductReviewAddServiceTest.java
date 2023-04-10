@@ -48,7 +48,7 @@ class ProductReviewAddServiceTest {
     private final String KINDS = "ProductReview";
     @Test
     void 상품_리뷰_객체_반환() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);

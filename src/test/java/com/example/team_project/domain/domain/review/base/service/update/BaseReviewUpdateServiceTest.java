@@ -60,7 +60,7 @@ class BaseReviewUpdateServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId1", "testPw1", "testNane", "testNumber", UserGrade.VIP);
+        User user = new User("testId1", "testPw1", "testNane", "testNumber");
         userRepository.save(user);
 
         PostCategoryStatus status = PostCategoryStatus.valueOf("PRODUCT_INQUIRY");
@@ -89,7 +89,7 @@ class BaseReviewUpdateServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId1", "testPw1", "testNane", "testNumber", UserGrade.VIP);
+        User user = new User("testId1", "testPw1", "testNane", "testNumber");
         userRepository.save(user);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -122,9 +122,9 @@ class BaseReviewUpdateServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId1", "testPw1", "testNane", "testNumber", UserGrade.VIP);
+        User user = new User("testId1", "testPw1", "testNane", "testNumber");
         userRepository.save(user);
-        User user2 =new User("testId2", "testPw2", "testNane", "testNumber", UserGrade.VIP);
+        User user2 =new User("testId2", "testPw2", "testNane", "testNumber");
         userRepository.save(user2);
 
         PostCategoryStatus status = PostCategoryStatus.valueOf("PRODUCT_INQUIRY");

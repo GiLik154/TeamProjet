@@ -1,8 +1,8 @@
 package com.example.team_project.controller.core.coupon.add;
 
 import com.example.team_project.controller.advice.UserExceptionAdvice;
-import com.example.team_project.domain.domain.coupons.domain.Coupon;
-import com.example.team_project.domain.domain.coupons.domain.CouponRepository;
+import com.example.team_project.domain.domain.coupons.coupon.domain.Coupon;
+import com.example.team_project.domain.domain.coupons.coupon.domain.CouponRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.UserGrade;
@@ -49,7 +49,8 @@ class CouponAddPostControllerTest {
 
     @Test
     void Get_쿠폰_추가_정상작동() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
+        user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 
         MockHttpSession session = new MockHttpSession();
@@ -59,6 +60,7 @@ class CouponAddPostControllerTest {
                 .param("name", "testCoupon")
                 .param("discountRate", "5")
                 .param("minPrice", "1000")
+                .param("maxCouponCount", "1")
                 .session(session);
 
         mockMvc.perform(builder)
@@ -74,7 +76,7 @@ class CouponAddPostControllerTest {
 
     @Test
     void Get_쿠폰_추가_정상작동_유저고유번호_다름() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
         Long userId = user.getId() + 1L;
 
@@ -87,6 +89,7 @@ class CouponAddPostControllerTest {
                 .param("name", "testCoupon")
                 .param("discountRate", "5")
                 .param("minPrice", "1000")
+                .param("maxCouponCount", "1")
                 .session(session);
 
         mockMvc.perform(builder)

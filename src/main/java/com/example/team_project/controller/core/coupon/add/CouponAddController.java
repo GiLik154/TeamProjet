@@ -1,10 +1,7 @@
 package com.example.team_project.controller.core.coupon.add;
 
 import com.example.team_project.controller.core.coupon.add.dto.CouponAddControlDto;
-import com.example.team_project.domain.domain.coupons.domain.Coupon;
-import com.example.team_project.domain.domain.coupons.service.add.coupon.CouponAddService;
-import com.example.team_project.domain.domain.user.domain.UserRepository;
-import lombok.Getter;
+import com.example.team_project.domain.domain.coupons.coupon.service.add.CouponAddService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

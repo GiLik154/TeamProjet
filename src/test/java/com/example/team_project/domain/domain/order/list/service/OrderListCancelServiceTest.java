@@ -69,7 +69,7 @@ class OrderListCancelServiceTest {
     @Test
     void 주문리스트_취소_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -112,7 +112,7 @@ class OrderListCancelServiceTest {
     @Test
     void 주문리스트_취소불가_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         Shop shop = new Shop();

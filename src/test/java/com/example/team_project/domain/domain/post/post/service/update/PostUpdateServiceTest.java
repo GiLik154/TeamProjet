@@ -40,7 +40,7 @@ class PostUpdateServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.VIP);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         PostCategory postCategory = new PostCategory("PRODUCT_INQUIRY");
@@ -69,9 +69,9 @@ class PostUpdateServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId1", "testPw1", "testNane", "testNumber", UserGrade.VIP);
+        User user = new User("testId1", "testPw1", "testNane", "testNumber");
         userRepository.save(user);
-        User user2 = new User("testId2", "testPw2", "testNane", "testNumber", UserGrade.VIP);
+        User user2 = new User("testId2", "testPw2", "testNane", "testNumber");
         userRepository.save(user2);
 
         PostCategory postCategory = new PostCategory("PRODUCT_INQUIRY");
