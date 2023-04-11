@@ -35,3 +35,38 @@ th {
     width: 20%;
     background-color: #eee;
 }
+
+
+form {
+    display: inline-flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+button {
+    margin-right: 10px;
+}
+
+
+form button {
+    padding: 10px;
+    background-color: #cfd9da;
+    color: #281111;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+form button:hover {
+    background-color: #3e8e41;
+}
+
+form span {
+    font-size: 20px;
+    cursor: pointer;
+}
+
+form span:hover {
+    transform: scale(1.2);
+}

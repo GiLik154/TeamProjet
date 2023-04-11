@@ -15,37 +15,31 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class LikeCountCheckService {
-    private final UserRepository userRepository;
+public class LikeCountDeleteService {
+
+    private final LikeCountCheckService likeCountCheckService;
     private final ProductRepository productRepository;
     private final LikeCountRepository likeCountRepository;
+    private final UserRepository userRepository;
 
-    public boolean countCheck(Long userId, Long productId) {
 
-        Optional<User> user = userRepository.findById(userId);
+    public boolean delete(Long productId, Long userId){
         Optional<Product> product = productRepository.findById(productId);
+        Optional<User> user = userRepository.findById(userId);
 
-        //db에서 userid productid 와 맞는 값 검색
-        Optional<LikeCountCheck> countCheckOptional = likeCountRepository.findByUserIdAndProductId(user,product);
+        Optional<LikeCountCheck> likeCount = likeCountRepository.findByUserIdAndProductId(user,product);
 
-
-        if(countCheckOptional.isPresent()){
-       //값이존재하면 return false
-            return false;
-        }else{
-
-            LikeCountCheck likeCountCheck = LikeCountCheck.builder().userId(user.get()).productId(product.get()).build();
-            likeCountRepository.save(likeCountCheck);
-
+        if(likeCount.isPresent()){
+            likeCountRepository.deleteByProductId(product);
             Product updateProduct = product.get();
-            updateProduct.updateLikeCount();
+            updateProduct.downLikeCount();
             productRepository.save(updateProduct);
             return true;
-
+        }else{
+            return false;
         }
 
+
     }
-
-
 
 }

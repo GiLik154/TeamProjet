@@ -73,6 +73,9 @@ public class Product implements ImageUpload {
         this.likeCount++;
     }
 
+    public void downLikeCount() {
+        this.likeCount -- ;
+    }
 
     public void update(String name, String image, String description, int stock, int price, ProductCategory category) {
         this.name = name;
@@ -83,7 +86,7 @@ public class Product implements ImageUpload {
         this.category = category;
     }
 
-    
+
     //재고량
     public void decreaseSalesCount(Long orderId){
         this.salesCount--;
@@ -93,4 +96,5 @@ public class Product implements ImageUpload {
     public void uploadImage(String image) {
         this.image=image;
     }
+
 }

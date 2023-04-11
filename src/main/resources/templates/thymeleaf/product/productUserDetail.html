@@ -32,12 +32,24 @@
             </tr>
         </table>
 
+
+
+            <form>
+                <button>구매하기</button>
+            </form>
+
         <form th:action="@{/update/like}">
-            <input type="hidden" name="productId" th:value="${productDetail.get().getId()}">
-            <button type="submit" th:text="${productDetail.get().getLikeCount()}"></button>
+            <input type="hidden" name="productId" th:value="${productId}">
+            <button type="submit">
+                <span th:if="${isLiked}">❤️</span>
+                <span th:if="${!isLiked}">🖤</span>
+            </button>
         </form>
+
+
     </div>
 </div>
 
 </body>
+
 </html>
