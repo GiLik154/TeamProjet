@@ -22,7 +22,13 @@ public class ImageUploadServiceImpl implements ImageUploadService {
     @Override
     public void upload(String name, MultipartFile multipartFile, ImageUpload imageUpload) {
         String fileName = getFileName();
-        imageUpload.uploadImage("/" + getUploadPath(name, multipartFile, fileName) + fileName);
+
+        if (multipartFile!=null) {
+            imageUpload.uploadImage("/" + getUploadPath(name, multipartFile, fileName) + fileName);
+        }else {
+            imageUpload.uploadImage("/images/null/null.jpg");
+        }
+
     }
 
     private String getFileName() {

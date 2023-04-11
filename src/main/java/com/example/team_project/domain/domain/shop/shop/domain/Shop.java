@@ -14,8 +14,8 @@ public class Shop {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shopId;
 
-    //cascade = CascadeType.REMOVE
-    @ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+
+    @ManyToOne(fetch = FetchType.LAZY)
     private Seller seller;
 
     //가게 이름

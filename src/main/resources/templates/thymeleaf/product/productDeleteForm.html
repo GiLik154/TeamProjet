@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Delete Form</title>
+</head>
+<body>
+
+<form action="/product/delete" method="post">
+    <input type="hidden" name="productId" th:value="${productId}">
+    <table>
+        <tr>
+            <th>정말 삭제하시겠습니까? 데이터 복구불가</th>
+        </tr>
+        <tr>
+            <td>비밀번호 입력 : <input type="password" name="password"></td>
+            <td>
+
+                <button type="submit">확인</button>
+            </td>
+        </tr>
+    </table>
+</form>
+
+
+</body>
+</html>

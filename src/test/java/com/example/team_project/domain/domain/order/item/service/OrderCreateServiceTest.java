@@ -79,7 +79,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -114,7 +114,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -146,9 +146,9 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
-        Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 20, 1000, productCategory);
+        Product product1 = new Product("testProduct", seller, "testImg", 1, 40, productCategory);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
@@ -183,7 +183,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -221,7 +221,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -254,7 +254,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 0, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 0, 20, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 

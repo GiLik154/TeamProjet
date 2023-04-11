@@ -115,8 +115,8 @@ class OrderListUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
-        Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 10, 10000, productCategory);
+                Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
+        Product product1 = new Product("testProduct1", seller, "testImg1", 2, 10, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
 

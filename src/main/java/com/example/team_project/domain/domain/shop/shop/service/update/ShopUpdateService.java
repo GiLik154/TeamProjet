@@ -24,8 +24,8 @@ public class ShopUpdateService {
 
 
     //판매처 매장번호,주소 수정
-    public void shopUpdate(String sellerId, Long shopId, String password, String shopName, String shopAddress) {
-        Seller seller = sellerRepository.validateSeller(sellerId);
+    public void shopUpdate(Long sellerId, Long shopId, String password, String shopName, String shopAddress) {
+        Seller seller = sellerRepository.validateSellerId(sellerId);
 
         // 판매자 ID를 사용하여 저장소에서 상점 엔티티 검색
         Shop shop = shopRepository.findById(shopId)

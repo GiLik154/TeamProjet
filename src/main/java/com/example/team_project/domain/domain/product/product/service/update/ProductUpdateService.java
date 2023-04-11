@@ -46,8 +46,8 @@ public class ProductUpdateService {
 
 
         productRepository.findById(productId).ifPresent(product -> {
-            product.update(productDto.getProductName(), productDto.getProductImage(), productDto.getProductDescription(),
-                    productDto.getProductStock(), productDto.getProductPrice(), getCategory(productCategoryStatus));
+            product.update(productDto.getName(), productDto.getImage(), productDto.getDescription(),
+                    productDto.getStock(), productDto.getPrice(), getCategory(productCategoryStatus));
         });
 
 

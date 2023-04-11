@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Seller List</title>
+    <link rel="stylesheet" href="/static/css/productSellerList.css">
+</head>
+<body>
+
+<div class="category-links">
+    <a href="/product/seller/list" th:classappend="${categoryId == null ? 'active' : ''}">전체</a>
+    <a href="/product/seller/list/224" th:classappend="${categoryId == 224 ? 'active' : ''}">상의</a>
+    <a href="/product/seller/list/225" th:classappend="${categoryId == 225 ? 'active' : ''}" >하의</a>
+    <a href="/product/seller/list/226" th:classappend="${categoryId == 226 ? 'active' : ''}">신발</a>
+</div>
+
+
+<table>
+    <thead>
+    <tr>
+        <th>번호</th>
+        <th>이름</th>
+        <th>이미지</th>
+        <th>상세설명</th>
+        <th>재고량</th>
+        <th>가격</th>
+        <th>판매량</th>
+        <th>좋아요</th>
+        <th></th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 상품 목록 반복문 -->
+    <tr th:each="list:${productList}">
+        <td th:text="${list.getId()}"></td>
+        <td th:text="${list.getName()}"></td>
+        <td><img style="width: 50px" th:src="${list.getImage()}"></td>
+        <td th:text="${list.getDescription()}"></td>
+        <td th:text="${list.getStock()}"></td>
+        <td th:text="${list.getPrice()}"></td>
+        <td th:text="${list.getSalesCount()}"></td>
+        <td th:text="${list.getLikeCount()}"></td>
+        <td>
+            <form th:action="@{/product/update}">
+                <button type="submit">수정</button>
+                <input type="hidden" name="productId" th:value="${list.getId()}">
+            </form>
+        </td>
+        <td>
+            <form th:action="@{/product/delete}">
+                <button type="submit">삭제</button>
+                <input type="hidden" name="productId" th:value="${list.getId()}">
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="pagination-links">
+    <a th:if="${page >= 1}" th:href="@{/product/seller/list/{categoryId}(page=${page - 1}, categoryId=${categoryId})}">이전</a>
+
+    <form action="/product/seller/list">
+        <input type="number" name="page" min="1" th:max="${totalPage}" th:value="${page}" />
+        /<a th:text="${totalPage}"></a>
+        <button type="submit" style="width:60px;height:31px;border-style:none;border-radius:10px">이동</button>
+    </form>
+
+
+    <a th:if="${page < totalPage}" th:href="@{/product/seller/list/{categoryId}(page=${page + 1},categoryId=${categoryId})}">다음</a>
+
+
+</div>
+
+<a href="/product/registration" class="write-btn">글쓰기</a>
+
+
+<footer>
+    <p>&copy; 2023 My Online Shop. All rights reserved.</p>
+</footer>
+
+
+</body>
+
+
+</html>

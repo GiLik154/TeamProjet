@@ -89,7 +89,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(coupon, productCategory);
@@ -136,7 +136,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, c);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, c);
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
         productRepository.save(product);
 
@@ -176,7 +176,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
         productRepository.save(product);
 
@@ -217,7 +217,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
         productRepository.save(product);
 
@@ -258,7 +258,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
         productRepository.save(product);
 
@@ -300,7 +300,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(coupon, productCategory);
@@ -343,7 +343,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(coupon, productCategory);

@@ -66,7 +66,7 @@ class ProductRegistrationServiceTest {
 
         
         //이름으로 검색하여 관련된 내용 가지고오기
-        Product product = productRepository.findByName(productDto.getProductName()).get();
+        Product product = productRepository.findByName(productDto.getName()).get();
         
         //확인
         assertEquals("testName", product.getName());

@@ -54,7 +54,7 @@ class CouponInCategoryAddServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("productTest", null, "imageTest", 1, 10, null);
         productRepository.save(product);
 
         couponInCategoryAddService.add(coupon.getName(), productCategory.getId());
@@ -78,7 +78,7 @@ class CouponInCategoryAddServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("productTest", null, "imageTest", 1, 10, null);
         productRepository.save(product);
 
         NotFoundCouponException e = assertThrows(NotFoundCouponException.class, () ->
@@ -101,7 +101,7 @@ class CouponInCategoryAddServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("productTest", null, "imageTest", 1, 10, null);
         productRepository.save(product);
 
         couponInCategoryAddService.add(coupon.getName(), productCategory.getId());

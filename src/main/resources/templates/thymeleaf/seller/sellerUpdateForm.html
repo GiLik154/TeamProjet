@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Seller Update Form</title>
+</head>
+<body>
+<h1>수정하기</h1>
+<form action="/seller/update" method="post">
+    <table>
+        <tr>
+            <th>아이디</th>
+            <th>비밀번호 확인</th>
+            <th>이름</th>
+            <th>전화번호</th>
+        </tr>
+        <tr>
+            <td th:text="${ownerId}"></td>
+            <td><input type="password" name="password"></td>
+            <td><input name="ownerName"></td>
+            <td><input name="phoneNumber"></td>
+            <td><button type="submit">확인</button></td>
+        </tr>
+
+
+    </table>
+</form>
+
+
+</body>
+</html>

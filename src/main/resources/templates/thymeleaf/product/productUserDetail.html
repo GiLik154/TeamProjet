@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product User Detail</title>
+    <link rel="stylesheet" href="/static/css/productUserDetail.css">
+</head>
+<body>
+
+<div class="container">
+    <div class="image">
+        <img th:src="${productDetail.get().getImage()}" alt="Product Image">
+    </div>
+
+    <div class="product-info">
+        <table>
+            <tr>
+                <th>이름</th>
+                <td th:text="${productDetail.get().getName()}"></td>
+            </tr>
+            <tr>
+                <th>가격</th>
+                <td th:text="${productDetail.get().getPrice()}"></td>
+            </tr>
+            <tr>
+                <th>설명</th>
+                <td th:text="${productDetail.get().getDescription()}"></td>
+            </tr>
+            <tr>
+                <th>재고</th>
+                <td th:text="${productDetail.get().getStock()}"></td>
+            </tr>
+        </table>
+
+
+
+            <form>
+                <button>구매하기</button>
+            </form>
+
+        <form th:action="@{/update/like}">
+            <input type="hidden" name="productId" th:value="${productId}">
+            <button type="submit">
+                <span th:if="${isLiked}">❤️</span>
+                <span th:if="${!isLiked}">🖤</span>
+            </button>
+        </form>
+
+
+    </div>
+</div>
+
+</body>
+
+</html>
