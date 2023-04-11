@@ -67,7 +67,7 @@
     </form>
 
 
-    <a th:if="${page <= 1}" th:href="@{/product/seller/list(page=${page + 1})}">다음</a>
+    <a th:if="${page < totalPage}" th:href="@{/product/seller/list(page=${page + 1})}">다음</a>
 </div>
 
 <a href="/product/registration" class="write-btn">글쓰기</a>

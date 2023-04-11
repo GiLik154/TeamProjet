@@ -54,7 +54,7 @@
     </form>
 
 
-    <a th:if="${page <= 1}" th:href="@{/product/user/list(page=${page + 1})}">다음</a>
+    <a th:if="${page < totalPage}" th:href="@{/product/user/list(page=${page + 1})}">다음</a>
 </div>
 
 
