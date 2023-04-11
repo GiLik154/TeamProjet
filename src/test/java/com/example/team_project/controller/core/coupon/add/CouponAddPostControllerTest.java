@@ -95,7 +95,7 @@ class CouponAddPostControllerTest {
         mockMvc.perform(builder)
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("thymeleaf/error/error-page"))
-                .andExpect(model().attribute("errMsg", "This user could not be found"));
+                .andExpect(model().attribute("errorMessage", "This user could not be found"));
     }
 }
 
