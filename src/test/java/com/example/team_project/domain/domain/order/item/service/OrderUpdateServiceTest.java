@@ -71,7 +71,7 @@ class OrderUpdateServiceTest {
     @Test
     void 주문상품_수정_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -114,7 +114,7 @@ class OrderUpdateServiceTest {
     @Test
     void 주문상품_수정_주문개수0이하_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -157,7 +157,7 @@ class OrderUpdateServiceTest {
     @Test
     void 주문상품_수정_상품재고소진_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -199,7 +199,7 @@ class OrderUpdateServiceTest {
     @Test
     void 주문상품_수정_유효하지_않는_상품_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -239,7 +239,7 @@ class OrderUpdateServiceTest {
     @Test
     void 주문상품_상태수정_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 

@@ -35,7 +35,7 @@ class PostDeleteServiceTest {
 
     @Test
     void 게시물_삭제_정상작동() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         PostCategory postCategory = new PostCategory("testCategory");
@@ -52,8 +52,8 @@ class PostDeleteServiceTest {
 
     @Test
     void 게시물_삭제_유저다름() {
-        User user = new User("testId1", "testPw1", "testNane", "testNumber", UserGrade.SILVER);
-        User user2 = new User("testId2", "testPw2", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId1", "testPw1", "testNane", "testNumber");
+        User user2 = new User("testId2", "testPw2", "testNane", "testNumber");
         userRepository.save(user2);
 
         PostCategory postCategory = new PostCategory("testCategory");
