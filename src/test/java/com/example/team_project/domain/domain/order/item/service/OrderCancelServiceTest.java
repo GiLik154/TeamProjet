@@ -73,7 +73,7 @@ class OrderCancelServiceTest {
     @Test
     void 주문상품_취소_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -85,7 +85,7 @@ class OrderCancelServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -112,7 +112,7 @@ class OrderCancelServiceTest {
     @Test
     void 주문상품_취소불가_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -124,7 +124,7 @@ class OrderCancelServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
@@ -153,7 +153,7 @@ class OrderCancelServiceTest {
     @Test
     void 주문상품_취소_상태변경_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -165,8 +165,8 @@ class OrderCancelServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
-        Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 50, 10000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
+        Product product1 = new Product("testProduct", seller, "testImg", 2, 40, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
 

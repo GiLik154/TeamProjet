@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Coupon Add Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma">
+    <style>
+        /* CSS */
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 5px;
+            padding: 40px;
+            box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.1);
+            max-width: 800px;
+        }
+
+        form {
+            margin-top: 30px;
+        }
+
+        h1 {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="date"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: none;
+            border-radius: 5px;
+            background-color: #f2f2f2;
+            font-size: 16px;
+            font-weight: bold;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 30px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0069d9;
+        }
+
+        .input-group-text {
+            width: 100px; /* 적절한 너비로 조정 */
+            text-align: center; /* 가운데 정렬 */
+            white-space: nowrap; /* 한 줄로 표시 */
+            overflow: hidden; /* 너무 길 경우 자르기 */
+            text-overflow: ellipsis; /* 자른 텍스트에 대해 ... 표시 */
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>쿠폰 추가 페이지</h1>
+    <form action="#" method="post">
+        <div class="form-group">
+            <label for="name">쿠폰 이름:</label>
+            <input type="text" class="form-control" id="name" placeholder="쿠폰 이름을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label for="discountRate">할인율: (%)</label>
+            <div class="input-group">
+                <input type="number" class="form-control" id="discountRate" placeholder="할인율을 입력하세요">
+                <div class="input-group-append">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="minPrice">최소 가격: (원)</label>
+            <div class="input-group">
+                <input type="number" class="form-control" id="minPrice" placeholder="최소 가격을 입력하세요">
+                <div class="input-group-append">
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="maxCouponCount">최대 쿠폰 수:</label>
+            <input type="number" class="form-control" id="maxCouponCount"
+                   placeholder="최대 쿠폰 수를 입력하세요">
+        </div>
+        <div class="form-group">
+            <label for="deadline">마감일:</label>
+            <input type="date" class="form-control" id="deadline" placeholder="마감일을 입력하세요">
+        </div>
+        <div class="form-group">
+            <label for="period">유효기간: (일)</label>
+            <div class="input-group">
+                <input type="number" class="form-control" id="period" placeholder="유효기간을 입력하세요">
+                <div class="input-group-append">
+                </div>
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary">제출</button>
+    </form>
+</div>
+</body>
+</html>

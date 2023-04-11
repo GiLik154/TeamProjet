@@ -60,7 +60,7 @@ class BaseReviewUpdateServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId1", "testPw1", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId1", "testPw1", "testNane", "testNumber");
         userRepository.save(user);
 
         PostCategoryStatus status = PostCategoryStatus.valueOf("PRODUCT_INQUIRY");
@@ -89,7 +89,7 @@ class BaseReviewUpdateServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId1", "testPw1", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId1", "testPw1", "testNane", "testNumber");
         userRepository.save(user);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -98,7 +98,7 @@ class BaseReviewUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("productTest", null, "imageTest", 1, 10, null);
         productRepository.save(product);
 
         BaseReview baseReview = new BaseReview(user,"title","content","time", new ReviewToKinds(new ProductReview()));
@@ -122,9 +122,9 @@ class BaseReviewUpdateServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId1", "testPw1", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId1", "testPw1", "testNane", "testNumber");
         userRepository.save(user);
-        User user2 =new User("testId2", "testPw2", "testNane", "testNumber", UserGrade.SILVER);
+        User user2 =new User("testId2", "testPw2", "testNane", "testNumber");
         userRepository.save(user2);
 
         PostCategoryStatus status = PostCategoryStatus.valueOf("PRODUCT_INQUIRY");

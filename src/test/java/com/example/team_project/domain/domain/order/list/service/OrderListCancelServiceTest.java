@@ -69,7 +69,7 @@ class OrderListCancelServiceTest {
     @Test
     void 주문리스트_취소_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -81,8 +81,8 @@ class OrderListCancelServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
-        Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 10, 10000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
+        Product product1 = new Product("testProduct", seller, "testImg", 1, 40, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
 
@@ -112,7 +112,7 @@ class OrderListCancelServiceTest {
     @Test
     void 주문리스트_취소불가_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -124,8 +124,8 @@ class OrderListCancelServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
-        Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 10, 10000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
+        Product product1 = new Product("testProduct", seller, "testImg", 12, 40, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
 

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Coupon List</title>
+    <!-- 부트스트랩 CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+          integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+hNpX+JLrE9PJ6z/FAKm2J8/5U6vEW0AVzN6z"
+          crossorigin="anonymous">
+    <style>
+        /* 전체 테이블 스타일 */
+        table {
+            width: 100%;
+            max-width: 100%;
+            margin-bottom: 1rem;
+            background-color: transparent;
+            border-collapse: collapse;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 테이블 헤더 스타일 */
+        thead {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        /* 테이블 헤더 셀 스타일 */
+        th {
+            font-weight: 500;
+            vertical-align: middle;
+            padding: 0.75rem;
+            text-align: center;
+        }
+
+        /* 테이블 셀 스타일 */
+        td {
+            vertical-align: middle;
+            padding: 0.75rem;
+            text-align: center;
+        }
+
+        /* 발급받기 버튼 스타일 */
+        .btn-primary {
+            color: #fff;
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        /* 테이블이 작은 화면에서 스크롤 가능하도록 설정 */
+        @media (max-width: 767px) {
+            table {
+                overflow-x: auto;
+                display: block;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 class="my-4">Coupon List</h1>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>쿠폰 이름</th>
+            <th>할인율</th>
+            <th>쿠폰 적용 최저 가격</th>
+            <th>발급 받을 수 있는 숫자</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="coupon : ${couponList}">
+            <tr>
+                <td th:text="${coupon.name}"></td>
+                <td th:text="${coupon.discountRate} + '%'"></td>
+                <td th:text="${coupon.minPrice} + '원'"></td>
+                <td th:text="${coupon.maxCouponCount}"></td>
+                <td>
+                    <form method="post" th:action="@{/coupon/{name}(name=${coupon.name})}">
+                        <input type="hidden" name="userId" th:value="${session.userId}"/>
+                        <button type="submit" class="btn btn-primary">발급받기</button>
+                    </form>
+                </td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+<!-- 부트스트랩 JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+hNpX+JLrE9PJ6z/FAKm2J8/5U6vEW0AVzN6z"
+        crossorigin="anonymous"></script>
+</body>
+</html>

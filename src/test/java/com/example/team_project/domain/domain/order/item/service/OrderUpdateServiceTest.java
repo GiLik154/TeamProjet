@@ -71,7 +71,7 @@ class OrderUpdateServiceTest {
     @Test
     void 주문상품_수정_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -83,8 +83,8 @@ class OrderUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
-        Product product1 = new Product("update_name", seller, "update_image", "update_description", 10, 10000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 5, 5000, productCategory);
+        Product product1 = new Product("testProduct", seller, "testImg", 10, 1000, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
         Long productId1 = product1.getId();
@@ -114,7 +114,7 @@ class OrderUpdateServiceTest {
     @Test
     void 주문상품_수정_주문개수0이하_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -126,8 +126,8 @@ class OrderUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
-        Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 10, 10000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
+        Product product1 = new Product("testProduct", seller, "testImg", 2, 40, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
         Long productId1 = product1.getId();
@@ -157,7 +157,7 @@ class OrderUpdateServiceTest {
     @Test
     void 주문상품_수정_상품재고소진_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -169,8 +169,8 @@ class OrderUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 10, 5000, productCategory);
-        Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 10, 10000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 40, productCategory);
+        Product product1 = new Product("testProduct", seller, "testImg", 2, 40, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
         Long productId1 = product1.getId();
@@ -199,7 +199,7 @@ class OrderUpdateServiceTest {
     @Test
     void 주문상품_수정_유효하지_않는_상품_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         Shop shop = new Shop();
@@ -211,7 +211,7 @@ class OrderUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -239,7 +239,7 @@ class OrderUpdateServiceTest {
     @Test
     void 주문상품_상태수정_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -252,7 +252,7 @@ class OrderUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 

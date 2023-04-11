@@ -59,7 +59,7 @@ class ProductDeleteServiceTest {
         productCategoryRepository.save(productCategory);
 
         Product product = new Product(
-                "asd", shop.getSeller(), "zxczxc", "asd", 10, 1,productCategory);
+                "asd", shop.getSeller(), "zxczxc", 1, 10, productCategory);
 
         productRepository.save(product);
         productDeleteService.delete(seller.getId(),product.getId(),"testPw");
@@ -81,7 +81,7 @@ class ProductDeleteServiceTest {
         productCategoryRepository.save(productCategory);
 
         Product product = new Product(
-                "asd", shop.getSeller(), "zxczxc", "asd", 10, 1,productCategory);
+                "asd", shop.getSeller(), "zxczxc", 1, 10, productCategory);
 
         productRepository.save(product);
         BadCredentialsException e = assertThrows(BadCredentialsException.class, () ->

@@ -69,7 +69,7 @@ class OrderCreateServiceTest {
     @Test
     void 주문추가_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -79,7 +79,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -104,7 +104,7 @@ class OrderCreateServiceTest {
     @Test
     void 주문추가_유효하지_않은_사용자_비정삭작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -114,7 +114,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -137,7 +137,7 @@ class OrderCreateServiceTest {
     @Test
     void 주문추가_가격확인_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -146,9 +146,9 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
-        Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 20, 1000, productCategory);
+        Product product1 = new Product("testProduct", seller, "testImg", 1, 40, productCategory);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
@@ -173,7 +173,7 @@ class OrderCreateServiceTest {
     @Test
     void 주문추가_유효하지_않는_상품_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -183,7 +183,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -211,7 +211,7 @@ class OrderCreateServiceTest {
     @Test
     void 주문추가_주문개수0이하_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -221,7 +221,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -244,7 +244,7 @@ class OrderCreateServiceTest {
     @Test
     void 주문추가_재고소진_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -254,7 +254,7 @@ class OrderCreateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 0, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 0, 20, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 

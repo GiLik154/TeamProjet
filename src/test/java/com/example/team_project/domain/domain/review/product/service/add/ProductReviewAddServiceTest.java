@@ -48,7 +48,7 @@ class ProductReviewAddServiceTest {
     private final String KINDS = "ProductReview";
     @Test
     void 상품_리뷰_객체_반환() {
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -57,7 +57,7 @@ class ProductReviewAddServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
 
         ReviewToKinds reviewToKinds = reviewJoinKindsServiceMap.get(KINDS).returnReviewToKindsEntity(product.getId());
