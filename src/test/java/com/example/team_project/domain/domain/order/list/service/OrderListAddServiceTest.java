@@ -39,7 +39,7 @@ class OrderListAddServiceTest {
     @Test
     void 주문리스트_생성_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -63,7 +63,7 @@ class OrderListAddServiceTest {
     @Test
     void 주문리스트_생성_유저아이디없음_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.SILVER);
+        User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
