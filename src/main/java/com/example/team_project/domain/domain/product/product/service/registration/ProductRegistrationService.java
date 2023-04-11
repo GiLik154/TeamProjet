@@ -1,5 +1,6 @@
 package com.example.team_project.domain.domain.product.product.service.registration;
 
+import com.example.team_project.domain.domain.image.service.ImageUploadService;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
 import com.example.team_project.domain.domain.product.product.domain.Product;
@@ -14,6 +15,7 @@ import com.example.team_project.enums.ProductCategoryStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 @Transactional
@@ -24,6 +26,7 @@ public class ProductRegistrationService {
     private final ShopRepository shopRepository;
     private final ProductCategoryRepository productCategoryRepository;
     private final SellerRepository sellerRepository;
+    private final ImageUploadService imageUploadService;
 
     private Seller getSeller(Long sellerId){
         return sellerRepository.findById(sellerId).orElseThrow(() -> new RuntimeException("shop id ."));
@@ -36,18 +39,23 @@ public class ProductRegistrationService {
 
 
     //product 상품 등록
-    public void productRegistration(Long sellerId, ProductDto productDto) {
+    public void productRegistration(Long sellerId, ProductDto productDto, MultipartFile multipartFile) {
         ProductCategoryStatus productCategoryStatus = ProductCategoryStatus.valueOf(productDto.getCategoryDto());
+
+        System.out.println("1"+productCategoryStatus.getCategory());
+        System.out.println("2"+productDto.getCategoryDto());
+        System.out.println("3"+ProductCategoryStatus.valueOf(productDto.getCategoryDto()));
+        System.out.println("4"+productCategoryStatus);
         //품목이름,이미지,상세설명 등록
         Product product = new Product(
-                productDto.getProductName(),
+                productDto.getName(),
                 getSeller(sellerId),
-                productDto.getProductImage(),
-                productDto.getProductDescription(),
-                productDto.getProductPrice(),
-                productDto.getProductStock(),
-                getCategory(productCategoryStatus)
-        );
+                productDto.getDescription(),
+                productDto.getPrice(),
+                productDto.getStock(),
+                getCategory(productCategoryStatus));
+
+        imageUploadService.upload(productDto.getName(), multipartFile, product);
         productRepository.save(product);
     }
 

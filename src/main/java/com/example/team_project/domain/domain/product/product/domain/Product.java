@@ -1,14 +1,16 @@
 package com.example.team_project.domain.domain.product.product.domain;
 
+import com.example.team_project.domain.domain.image.ImageUpload;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.awt.*;
 
 @Entity
 @Getter
-public class Product {
+public class Product implements ImageUpload {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -26,14 +28,14 @@ public class Product {
     //상세설명
     private String description;
 
-    private int stock;
+    private Integer stock;
 
-    private int price;
+    private Integer price;
 
 
     //정규화 1:1연결
 
-    @OneToOne(fetch = FetchType.LAZY,cascade = CascadeType.REMOVE)
+    @OneToOne(fetch = FetchType.LAZY)
     private ProductCategory category;
 
     //
@@ -47,10 +49,9 @@ public class Product {
     protected Product(){
     }
 
-    public Product(String name, Seller seller, String image, String description, int stock, int price, ProductCategory category) {
+    public Product(String name, Seller seller, String description, int stock, int price, ProductCategory category) {
         this.name = name;
         this.seller = seller;
-        this.image = image;
         this.description = description;
         this.stock = stock;
         this.price = price;
@@ -72,6 +73,10 @@ public class Product {
         this.likeCount++;
     }
 
+    public void downLikeCount() {
+        this.likeCount -- ;
+    }
+
     public void update(String name, String image, String description, int stock, int price, ProductCategory category) {
         this.name = name;
         this.image = image;
@@ -81,10 +86,15 @@ public class Product {
         this.category = category;
     }
 
-    
+
     //재고량
     public void decreaseSalesCount(Long orderId){
         this.salesCount--;
+    }
+
+    @Override
+    public void uploadImage(String image) {
+        this.image=image;
     }
 
 }

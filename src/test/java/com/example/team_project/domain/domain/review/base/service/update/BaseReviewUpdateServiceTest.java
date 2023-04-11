@@ -98,7 +98,7 @@ class BaseReviewUpdateServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("productTest", null, "imageTest", 1, 10, null);
         productRepository.save(product);
 
         BaseReview baseReview = new BaseReview(user,"title","content","time", new ReviewToKinds(new ProductReview()));

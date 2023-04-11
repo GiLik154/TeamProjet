@@ -60,7 +60,7 @@ class ProductUpdateServiceTest {
 
 
         Product product = new Product(
-                "asd", shop.getSeller(), "zxczxc", "asd", 10, 1,productCategory);
+                "asd", shop.getSeller(), "zxczxc", 1, 10, productCategory);
 
         productRepository.save(product);
 
@@ -103,7 +103,7 @@ class ProductUpdateServiceTest {
 
 
         Product product = new Product(
-                "asd", shop.getSeller(), "zxczxc", "asd", 10, 1,productCategory);
+                "asd", shop.getSeller(), "zxczxc", 1, 10, productCategory);
 
         productRepository.save(product);
 

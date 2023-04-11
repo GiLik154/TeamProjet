@@ -100,7 +100,7 @@ class BaseReviewAddServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-                Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
         productRepository.save(product);
 
         ReviewDto reviewDto = new ReviewDto("reviewTitle", "reviewContent", "ProductReview", product.getId());
