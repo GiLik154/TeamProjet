@@ -1,12 +1,10 @@
 package com.example.team_project.domain.domain.post.post.service.delete;
 
-import com.example.team_project.domain.domain.post.post.domain.Post;
 import com.example.team_project.domain.domain.post.post.domain.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Optional;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
@@ -20,7 +18,7 @@ public class PostDeleteServiceImpl implements PostDeleteService {
      * 게시글의 고유번호로 게시글의 가져와서 delete() 함수를 실행
      */
     @Override
-    public boolean delete(Long userId, Long postId, String password) {
+    public boolean delete(Long userId, Long postId) {
         AtomicBoolean result = new AtomicBoolean(false); // boolean 값을 저장할 AtomicBoolean 객체 생성
 
         postRepository.findById(postId).ifPresent(post -> {
