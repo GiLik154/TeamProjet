@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.transaction.Transactional;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -36,6 +37,8 @@ public class BaseReviewAddServiceImpl<T> implements BaseReviewAddService {
     @Override
     public void add(Long userId, ReviewDto reviewDto, MultipartFile file) {
         userRepository.validateUserId(userId);
+        System.out.println("여기오나요??"+reviewDto.getKindsId());
+        System.out.println("여기오나요??"+reviewDto.getKinds());
         userRepository.findById(userId).ifPresent(user -> {
             BaseReview baseReview = new BaseReview(user,
                     reviewDto.getTitle(),

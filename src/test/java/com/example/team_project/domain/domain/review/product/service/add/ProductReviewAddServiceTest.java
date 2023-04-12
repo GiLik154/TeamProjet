@@ -57,7 +57,7 @@ class ProductReviewAddServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 99, 20, productCategory);
         productRepository.save(product);
 
         ReviewToKinds reviewToKinds = reviewJoinKindsServiceMap.get(KINDS).returnReviewToKindsEntity(product.getId());

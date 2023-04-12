@@ -32,7 +32,7 @@ public class PostUpdateServiceImpl implements PostUpdateService {
         AtomicBoolean result = new AtomicBoolean(false); // boolean 값을 저장할 AtomicBoolean 객체 생성
 
         postRepository.findById(postId).ifPresent(post -> {
-            if (post.getUser().getId() == userId) {
+            if (post.getUser().getId().equals(userId)) {
                 PostCategory getP_C = getPostCategory(dto.getCategory());
                 post.update(dto.getTitle(), dto.getContent(), getTime(), getP_C);
                 imageUploadService.upload(post.getTitle(), file, post);
