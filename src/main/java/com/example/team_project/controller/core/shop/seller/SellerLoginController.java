@@ -25,7 +25,6 @@ public class SellerLoginController {
 
     @GetMapping("")
     public String loginForm(SessionStatus sessionStatus) {
-        sessionStatus.setComplete();
         return "thymeleaf/seller/sellerLoginForm";
     }
 

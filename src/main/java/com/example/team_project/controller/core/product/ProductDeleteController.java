@@ -2,6 +2,7 @@ package com.example.team_project.controller.core.product;
 
 
 import com.example.team_project.domain.domain.product.product.service.delete.ProductDeleteService;
+import com.example.team_project.exception.NotPasswordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,19 +16,23 @@ public class ProductDeleteController {
     private final ProductDeleteService productDeleteService;
 
     @GetMapping("")
-    public String delForm(@RequestParam("productId")Long productId, Model model){
-        model.addAttribute("productId",productId);
+    public String delForm(@RequestParam("productId") Long productId, Model model) {
+        model.addAttribute("productId", productId);
         return "thymeleaf/product/productDeleteForm";
     }
 
     @PostMapping("")
-    public String del(@SessionAttribute("sellerId")Long sellerId,
-                      @RequestParam("productId")Long productId,
-                      @RequestParam("password")String password){
+    public String del(@SessionAttribute("sellerId") Long sellerId,
+                      @RequestParam("productId") Long productId,
+                      @RequestParam("password") String password) {
 
-        productDeleteService.delete(sellerId,productId,password);
+        try {
+            productDeleteService.delete(sellerId, productId, password);
+            return "redirect:product/seller/list";
 
-        return "redirect:product/seller/list";
+        } catch (NotPasswordException ex) {
+            throw new NotPasswordException("로그인 실패하였습니다. 다시 시도해주세요.");
+        }
 
     }
 }

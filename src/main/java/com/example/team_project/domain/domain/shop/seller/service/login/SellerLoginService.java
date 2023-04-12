@@ -19,7 +19,11 @@ public class SellerLoginService {
     private final SellerRepository sellerRepository;
     private final PasswordEncoder bCryptPasswordEncoder;
 
-    //로그인체크
+    /**
+     * 로그인 id,pw 체크
+     * ownerId,password 를 받아와서 ownerId가 존재하는지 먼저확인후 비밀번호 검증진행 성공시
+     * @return seller.getOwnerId
+     */
     public String sellerLogin(String ownerId, String password) {
 
         Seller seller = sellerRepository.validateSeller(ownerId);

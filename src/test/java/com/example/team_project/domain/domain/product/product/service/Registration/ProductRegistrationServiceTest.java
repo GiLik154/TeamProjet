@@ -48,9 +48,11 @@ class ProductRegistrationServiceTest {
     @Test
     void 상품_등록_완료() {
         //판매자생성
+        byte[] imageBytes = "test-image".getBytes();
+        String imageName = "test-image.jpg";
+        MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
         Seller seller = new Seller("testId", passwordEncoder.encode("testPw"), "testName", "testPhone");
         sellerRepository.save(seller);
-        MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
         //shop 생성
         Shop shop = new Shop("testshopname", "testshowaddress", "testshopbnum");
         shopRepository.save(shop);

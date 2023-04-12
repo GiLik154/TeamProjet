@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -44,6 +45,9 @@ class ProductUpdateServiceTest {
     @Test
     void 수정_성공(){
         //판매자회원가입
+        byte[] imageBytes = "test-image".getBytes();
+        String imageName = "test-image.jpg";
+        MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
         Seller seller = new Seller("testId", passwordEncoder.encode("testPw"), "testName", "testPhone");
         sellerRepository.save(seller);
         //샵정보
@@ -68,7 +72,7 @@ class ProductUpdateServiceTest {
         ProductDto updatedProductDto = new ProductDto(
                 "updatedName", "updatedImage", "updatedDescription", 10, 20, "BOTTOM");
 
-        productUpdateService.update(seller.getId(),product.getId(),"testPw",updatedProductDto);
+        productUpdateService.update(seller.getId(),product.getId(),"testPw",updatedProductDto,file);
 
         //업데이트한 product 가지고오기
         Product productUpdate = productRepository.findById(product.getId()).get();
@@ -86,6 +90,9 @@ class ProductUpdateServiceTest {
 
     @Test
     void 수정_실패_비밀번호_틀림(){
+        byte[] imageBytes = "test-image".getBytes();
+        String imageName = "test-image.jpg";
+        MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
         //판매자회원가입
         Seller seller = new Seller("testId", passwordEncoder.encode("testPw"), "testName", "testPhone");
         sellerRepository.save(seller);
@@ -113,7 +120,7 @@ class ProductUpdateServiceTest {
 
 
         BadCredentialsException e = assertThrows(BadCredentialsException.class, () ->
-                productUpdateService.update(seller.getId(),product.getId(),"testsPw",updatedProductDto));
+                productUpdateService.update(seller.getId(),product.getId(),"testsPw",updatedProductDto,file));
 
         //업데이트한 product 가지고오기
         Product productUpdate = productRepository.findById(product.getId()).get();
@@ -122,8 +129,8 @@ class ProductUpdateServiceTest {
         assertNotEquals("updatedName", product.getName());
         assertNotEquals("updatedImage", product.getImage());
         assertNotEquals("updatedDescription", product.getDescription());
-        assertNotEquals(10, product.getPrice());
         assertNotEquals(20, product.getStock());
+        assertNotEquals(20, product.getPrice());
         assertNotEquals(ProductCategoryStatus.BOTTOM, product.getCategory().getStatus());
         assertNotEquals("updatedName", productUpdate.getName());
     }
