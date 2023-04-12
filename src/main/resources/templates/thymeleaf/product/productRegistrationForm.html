@@ -3,40 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="/static/css/productRegistrationForm.css">
 </head>
 <body>
-
-
 <form action="/product/registration" method="post" enctype="multipart/form-data">
     <table>
         <tr>
-            <th>글쓰기</th>
+            <th colspan="2">글쓰기</th>
         </tr>
         <tr>
-            <td>이름 : <input name="name"></td>
-            <td> 이미지 :<input type="file" name="file" accept="image/*"></td>
-            <td> 상세 설명 :<input name="description"></td>
-            <td> 재고 :<input name="stock"></td>
-            <td> 가격 :<input name="price"></td>
-            <td> 판매량 :<input name="salesCount"></td>
+            <td>이름 :</td>
+            <td><input name="name"></td>
+        </tr>
+        <tr>
+            <td>이미지 :</td>
+            <td><input type="file" name="file" accept="image/*"></td>
+        </tr>
+        <tr>
+            <td>상세 설명 :</td>
+            <td><input name="description"></td>
+        </tr>
+        <tr>
+            <td>재고 :</td>
+            <td><input name="stock"></td>
+        </tr>
+        <tr>
+            <td>가격 :</td>
+            <td><input name="price"></td>
+        </tr>
+        <tr>
+            <td>판매량 :</td>
+            <td><input name="salesCount"></td>
+        </tr>
+        <tr>
+            <td><label for="categoryDto">카테고리:</label></td>
             <td>
-                <label for="categoryDto">카테고리:</label>
                 <select id="categoryDto" name="categoryDto">
                     <option value="TOP">상의</option>
                     <option value="BOTTOM">하의</option>
                     <option value="SHOES">신발</option>
                 </select>
             </td>
-            <button type="submit">확인</button>
         </tr>
         <tr>
-            <td>
-                <button>likeCount</button>
+            <td colspan="2">
+                <button type="submit">확인</button>
             </td>
         </tr>
 
     </table>
 </form>
-
 </body>
 </html>
