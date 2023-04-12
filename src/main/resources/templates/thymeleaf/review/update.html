@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/post/review/update}" method="post" enctype="multipart/form-data">
+    제목<input type="text" name="title" th:value="${baseReview.getTitle()}">
+    내용<input type="text" name="content" th:value="${baseReview.getContent()}">
+    이미지<input type="file" name="file" accept="image/*">
+    <input type="hidden" name="baseReviewId" th:value="${baseReview.getId()}">
+    <input type="hidden" name="kinds" value="PostReview">
+    <input type="hidden" name="kindsId" th:value="${baseReview.getReviewToKinds().getPostReview().getPost().getId()}">
+    <input type="submit" value="수정">
+</form>
+</body>
+</html>

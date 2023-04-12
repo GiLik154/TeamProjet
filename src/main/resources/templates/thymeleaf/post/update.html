@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/post/update}" method="post" enctype="multipart/form-data">
+<label for="category">문의 유형:</label>
+<select id="category" name="category" th:value="${post.getPostCategory().getName()}">
+    <option value="ProductInquiry">제품 문의</option>
+    <option value="SHIPPING_INQUIRY">배송 문의</option>
+    <option value="EXCHANGE_RETURN_INQUIRY">교환 및 반품 문의</option>
+    <option value="PAYMENT_INQUIRY">결제 문의</option>
+    <option value="DISCOUNT_COUPON_INQUIRY">할인쿠폰 문의</option>
+    <option value="ETC_INQUIRY">기타 문의</option>
+</select>
+제목:<input type="text" name="title" th:value="${post.getTitle()}">
+내용:<input type="text" name="content" th:value="${post.getContent()}">
+이미지:<input type="file" name="file" accept="image/*">
+    <input type="hidden" name="postId" th:value="${post.getId()}">
+    <input type="submit" value="수정">
+</form>
+</body>
+</html>

@@ -31,7 +31,7 @@ public class BaseReviewUpdateServiceImpl<T> implements BaseReviewUpdateService {
     public void update(Long baseReviewId, Long userId, ReviewDto reviewDto, MultipartFile file) {
 
         baseReviewRepository.findById(baseReviewId).ifPresent(baseReview -> {
-            if (baseReview.getUser().getId() == userId) {
+            if (baseReview.getUser().getId().equals(userId)) {
                 baseReview.update(
                         reviewDto.getTitle(),
                         reviewDto.getContent(),

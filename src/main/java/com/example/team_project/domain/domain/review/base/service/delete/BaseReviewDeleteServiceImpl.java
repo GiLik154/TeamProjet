@@ -1,21 +1,15 @@
 package com.example.team_project.domain.domain.review.base.service.delete;
 
 import com.example.team_project.domain.domain.review.base.domain.BaseReviewRepository;
-import com.example.team_project.domain.domain.review.base.domain.ReviewToKinds;
-import com.example.team_project.domain.domain.review.base.service.dto.ReviewDto;
-import com.example.team_project.domain.domain.review.kinds.ReviewJoinKindsService;
-import com.example.team_project.domain.domain.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class BaseReviewDeleteServiceImpl<T> implements BaseReviewDeleteService {
+public class BaseReviewDeleteServiceImpl implements BaseReviewDeleteService {
     private final BaseReviewRepository baseReviewRepository;
 
     /**
@@ -25,10 +19,10 @@ public class BaseReviewDeleteServiceImpl<T> implements BaseReviewDeleteService {
      *  delete()함수를 실행해 존재여부를 delete 로 변경
      */
     @Override
-    public void delete(Long baseReviewId, Long userId, String password) {
+    public void delete(Long baseReviewId, Long userId) {
 
        baseReviewRepository.findById(baseReviewId).ifPresent(baseReview -> {
-            if(baseReview.getUser().getId()==userId) {
+            if(baseReview.getUser().getId().equals(userId)) {
                 baseReview.delete();
             }
         });
