@@ -1,56 +1,27 @@
 package com.example.team_project.domain.domain.order.item.service;
 
-import com.example.team_project.domain.domain.address.domain.UserAddress;
-import com.example.team_project.domain.domain.order.item.domain.Order;
-import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
-import com.example.team_project.domain.domain.order.item.domain.OrderToProduct;
-import com.example.team_project.domain.domain.order.list.domain.OrderList;
-import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
-import com.example.team_project.domain.domain.order.list.service.OrderListAddService;
-import com.example.team_project.domain.domain.product.product.domain.Product;
-import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
-import com.example.team_project.domain.domain.user.domain.User;
-import com.example.team_project.domain.domain.user.domain.UserRepository;
-import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Service;
+import com.example.team_project.exception.OutOfStockException;
+import com.example.team_project.exception.ProductNotFoundException;
+import com.example.team_project.exception.UserNotFoundException;
 
-import javax.transaction.Transactional;
 
-@Service
-@Transactional
-@RequiredArgsConstructor
-public class OrderCreateService {
-    private final OrderRepository orderRepository;
-    private final UserRepository userRepository;
-    private final ProductRepository productRepository;
-    private final OrderListRepository orderListRepository;
-    private final OrderListAddService orderListAddService;
+public interface OrderCreateService {
 
     /**
-     * 생성자를 통해 주문을 생성하여 주문상태를 ORDERD 로 표시,
-     * 유저와 주문리스트 번호 가지고 저장,
-     * 상품 재고 부족시 상품 소진 알리는 익셉션 발생
+     * User와 OrderList 고유 ID, OrderToProduct(주문상품 구입개수,상태 및 가격 등)를 가지고 생성하는데
+     * 사용자와 상품을 validate로 검증해준뒤 오더리스트 존재하지 않을시
+     * OrderListService로 이동후 OrderList를 생성을 한뒤 Order를 생성후 레퍼지토리에 저장
+     * 유저와 상품 검증단계에서는 해당 고유 ID로 레퍼지토리에서 찾을 수 없을시 각각 NotFoundException 발생
+     * 상품 재고 부족시 상품 소진 알리는 Exception 발생
+     *
+     * @param userId        : 사용자 고유 ID
+     * @param productId     : 상품 고유 ID
+     * @param quantity      : 주문 상품 개수
+     * @param userAddressId : 사용자 주소 고유 Id
+     * @param paymentId     : 결제 방법 고유 Id
+     * @throws UserNotFoundException    : 해당 사용자를 찾을 수 없을 때
+     * @throws ProductNotFoundException :해당 상품을 찾을 수 없을 때
+     * @throws OutOfStockException      : 주문하려는 상품의 재고가 떨어졌거나 부족할 때
      **/
-    public void create(Long userId, Long productId, int quantity, UserAddress userAddress, String paymentMethod) {
-        User user = userRepository.validateUserId(userId);
-        OrderList orderList = findAvailableOrderList(userId, userAddress, paymentMethod);
-        Product product = productRepository.validateProductId(productId);
-
-        OrderToProduct orderToProduct = new OrderToProduct(product, quantity);
-
-        Order order = new Order(user, orderList, orderToProduct);
-        orderRepository.save(order);
-    }
-
-    /**
-     * 오더를 생성하려면 오더리스트를 필요로 합니다
-     * 오더리스트 존재하지 않을시 오더리스트 서비스로
-     * 이동후 생성후 다음 로직 진행
-     **/
-    private OrderList findAvailableOrderList(Long userId, UserAddress userAddress, String paymentMethod) {
-        return orderListRepository.findByUserIdAndStatus(userId, true).orElseGet(() ->
-                orderListAddService.add(userId, userAddress, paymentMethod)
-        );
-    }
-
+    void create(Long userId, Long productId, int quantity, Long userAddressId, Long paymentId);
 }

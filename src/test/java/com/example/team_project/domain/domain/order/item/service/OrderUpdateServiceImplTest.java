@@ -7,6 +7,8 @@ import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
 import com.example.team_project.domain.domain.order.item.domain.OrderToProduct;
 import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
+import com.example.team_project.domain.domain.payment.domain.Payment;
+import com.example.team_project.domain.domain.payment.domain.PaymentRepository;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
 import com.example.team_project.domain.domain.product.product.domain.Product;
@@ -18,6 +20,7 @@ import com.example.team_project.domain.domain.shop.shop.domain.ShopRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.OrderStatus;
+import com.example.team_project.enums.PaymentType;
 import com.example.team_project.enums.ProductCategoryStatus;
 import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.InvalidQuantityException;
@@ -30,42 +33,47 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 
+import java.time.LocalDateTime;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class OrderUpdateServiceTest {
+class OrderUpdateServiceImplTest {
 
     private final UserRepository userRepository;
     private final UserAddressRepository userAddressRepository;
+    private final PaymentRepository paymentRepository;
     private final ShopRepository shopRepository;
     private final SellerRepository sellerRepository;
     private final ProductRepository productRepository;
     private final ProductCategoryRepository productCategoryRepository;
     private final OrderListRepository orderListRepository;
     private final OrderRepository orderRepository;
-    private final OrderUpdateService orderUpdateService;
+    private final OrderUpdateServiceImpl orderUpdateServiceImpl;
 
     @Autowired
-    public OrderUpdateServiceTest(UserRepository userRepository,
-                                  UserAddressRepository userAddressRepository,
-                                  ShopRepository shopRepository,
-                                  SellerRepository sellerRepository,
-                                  ProductRepository productRepository,
-                                  ProductCategoryRepository productCategoryRepository,
-                                  OrderListRepository orderListRepository,
-                                  OrderRepository orderRepository,
-                                  OrderUpdateService orderUpdateService) {
+    public OrderUpdateServiceImplTest(UserRepository userRepository,
+                                      UserAddressRepository userAddressRepository,
+                                      PaymentRepository paymentRepository,
+                                      ShopRepository shopRepository,
+                                      SellerRepository sellerRepository,
+                                      ProductRepository productRepository,
+                                      ProductCategoryRepository productCategoryRepository,
+                                      OrderListRepository orderListRepository,
+                                      OrderRepository orderRepository,
+                                      OrderUpdateServiceImpl orderUpdateServiceImpl) {
         this.userRepository = userRepository;
         this.userAddressRepository = userAddressRepository;
+        this.paymentRepository = paymentRepository;
         this.shopRepository = shopRepository;
         this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
         this.productCategoryRepository = productCategoryRepository;
         this.orderListRepository = orderListRepository;
         this.orderRepository = orderRepository;
-        this.orderUpdateService = orderUpdateService;
+        this.orderUpdateServiceImpl = orderUpdateServiceImpl;
     }
 
     @Test
@@ -73,6 +81,9 @@ class OrderUpdateServiceTest {
         //given
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
+
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
 
         Shop shop = new Shop();
         shopRepository.save(shop);
@@ -92,7 +103,7 @@ class OrderUpdateServiceTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, "카드");
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
 
         OrderToProduct orderToProduct = new OrderToProduct(product, 1);
@@ -102,7 +113,7 @@ class OrderUpdateServiceTest {
         Long orderId = order.getId();
 
         //when
-        orderUpdateService.update(productId1, orderId, 5);
+        orderUpdateServiceImpl.update(productId1, orderId, 5);
 
         //then
         assertNotNull(orderId);
@@ -116,6 +127,9 @@ class OrderUpdateServiceTest {
         //given
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
+
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
 
         Shop shop = new Shop();
         shopRepository.save(shop);
@@ -136,7 +150,7 @@ class OrderUpdateServiceTest {
         userAddressRepository.save(userAddress);
 
 
-        OrderList orderList = new OrderList(user, userAddress, "카드");
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
 
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
@@ -147,7 +161,7 @@ class OrderUpdateServiceTest {
 
         //when
         InvalidQuantityException exception = assertThrows(InvalidQuantityException.class, () ->
-                orderUpdateService.update(productId1, orderId, 0)
+                orderUpdateServiceImpl.update(productId1, orderId, 0)
         );
 
         //then
@@ -159,6 +173,9 @@ class OrderUpdateServiceTest {
         //given
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
+
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
 
         Shop shop = new Shop();
         shopRepository.save(shop);
@@ -178,7 +195,7 @@ class OrderUpdateServiceTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, "카드");
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
 
         OrderToProduct orderToProduct = new OrderToProduct(product, 5);
@@ -189,7 +206,7 @@ class OrderUpdateServiceTest {
 
         //when
         OutOfStockException exception = assertThrows(OutOfStockException.class, () ->
-                orderUpdateService.update(productId1, orderId, 15)
+                orderUpdateServiceImpl.update(productId1, orderId, 15)
         );
 
         //then
@@ -201,6 +218,9 @@ class OrderUpdateServiceTest {
         //given
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
+
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
 
         Shop shop = new Shop();
         shopRepository.save(shop);
@@ -218,7 +238,7 @@ class OrderUpdateServiceTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, "카드");
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
 
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
@@ -229,7 +249,7 @@ class OrderUpdateServiceTest {
 
         //when
         ProductNotFoundException exception = assertThrows(ProductNotFoundException.class, () ->
-                orderUpdateService.update(productId + 1L, orderId, 10)
+                orderUpdateServiceImpl.update(productId + 1L, orderId, 10)
         );
 
         //then
@@ -243,6 +263,9 @@ class OrderUpdateServiceTest {
         userRepository.save(user);
         Long userId = user.getId();
 
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+
         Shop shop = new Shop();
         shopRepository.save(shop);
 
@@ -259,7 +282,7 @@ class OrderUpdateServiceTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, "카드");
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
 
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
@@ -269,7 +292,7 @@ class OrderUpdateServiceTest {
         Long orderId = order.getId();
 
         //when
-        orderUpdateService.updateStatus(userId, orderId, OrderStatus.PAYMENT_COMPLETED);
+        orderUpdateServiceImpl.updateStatus(userId, orderId, OrderStatus.PAYMENT_COMPLETED);
 
         //then
         assertEquals("PAYMENT_COMPLETED", order.getOrderToProduct().getStatus().toString());

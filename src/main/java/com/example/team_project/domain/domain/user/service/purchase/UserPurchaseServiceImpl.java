@@ -24,7 +24,7 @@
 //        Optional<User> optionalUser = userRepository.findById(userId);
 //        if (optionalUser.isPresent()) {
 //            User user = optionalUser.get();
-//            user.(product);
+//            user.purchaseProduct(product);
 //            userRepository.save(user);
 //        } else {
 //            throw new RuntimeException("User not found");

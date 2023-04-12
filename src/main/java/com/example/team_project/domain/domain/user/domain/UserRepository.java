@@ -35,4 +35,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     default boolean checkUserCouponLevel(Long userId) {
         return validateUserId(userId).getUserGrade().equals(UserGrade.VIP);
     }
+
 }

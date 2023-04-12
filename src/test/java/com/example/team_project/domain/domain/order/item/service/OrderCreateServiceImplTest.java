@@ -7,6 +7,8 @@ import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
 import com.example.team_project.domain.domain.order.item.domain.OrderToProduct;
 import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
+import com.example.team_project.domain.domain.payment.domain.Payment;
+import com.example.team_project.domain.domain.payment.domain.PaymentRepository;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
 import com.example.team_project.domain.domain.product.product.domain.Product;
@@ -15,8 +17,8 @@ import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.PaymentType;
 import com.example.team_project.enums.ProductCategoryStatus;
-import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.InvalidQuantityException;
 import com.example.team_project.exception.OutOfStockException;
 import com.example.team_project.exception.ProductNotFoundException;
@@ -27,6 +29,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -34,32 +37,35 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Transactional
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class OrderCreateServiceTest {
+class OrderCreateServiceImplTest {
 
     private final UserRepository userRepository;
     private final UserAddressRepository userAddressRepository;
+    private final PaymentRepository paymentRepository;
     private final SellerRepository sellerRepository;
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
-    private final OrderCreateService orderCreateService;
+    private final OrderCreateServiceImpl orderCreateServiceImpl;
     private final OrderListRepository orderListRepository;
     private final ProductCategoryRepository productCategoryRepository;
 
 
     @Autowired
-    OrderCreateServiceTest(
+    OrderCreateServiceImplTest(
             SellerRepository sellerRepository,
-            OrderCreateService orderCreateService,
+            OrderCreateServiceImpl orderCreateServiceImpl,
             UserRepository userRepository,
             UserAddressRepository userAddressRepository,
+            PaymentRepository paymentRepository,
             OrderRepository orderRepository,
             ProductRepository productRepository,
             OrderListRepository orderListRepository,
             ProductCategoryRepository productCategoryRepository) {
         this.sellerRepository = sellerRepository;
-        this.orderCreateService = orderCreateService;
+        this.orderCreateServiceImpl = orderCreateServiceImpl;
         this.userRepository = userRepository;
         this.userAddressRepository = userAddressRepository;
+        this.paymentRepository = paymentRepository;
         this.orderRepository = orderRepository;
         this.productRepository = productRepository;
         this.orderListRepository = orderListRepository;
@@ -73,6 +79,15 @@ class OrderCreateServiceTest {
         userRepository.save(user);
         Long userId = user.getId();
 
+        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
+        userAddressRepository.save(userAddress);
+        Long userAddressId = userAddress.getId();
+
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+        Long paymentId = payment.getId();
+
+
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
 
@@ -83,11 +98,8 @@ class OrderCreateServiceTest {
         productRepository.save(product);
         Long productId = product.getId();
 
-        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
-        userAddressRepository.save(userAddress);
-
         //when
-        orderCreateService.create(userId, productId, 10, userAddress, "카드");
+        orderCreateServiceImpl.create(userId, productId, 10, userAddressId, paymentId);
         Optional<Order> orderOptional = orderRepository.findByUserId(userId);
         Order order = orderOptional.get();
 
@@ -95,7 +107,8 @@ class OrderCreateServiceTest {
         assertNotNull(order.getId());
         assertEquals(userId, order.getUser().getId());
         assertEquals(productId, order.getOrderToProduct().getProduct().getId());
-        assertEquals("카드", order.getOrderList().getPaymentMethod());
+        assertEquals("CARD", order.getOrderList().getPayment().getPaymentType().toString());
+        assertEquals("1111", order.getOrderList().getPayment().getCardNumber());
         assertEquals("testProduct", order.getOrderToProduct().getProduct().getName());
         assertEquals("testImg", order.getOrderToProduct().getProduct().getImage());
         assertEquals("testDes", order.getOrderToProduct().getProduct().getDescription());
@@ -108,6 +121,14 @@ class OrderCreateServiceTest {
         userRepository.save(user);
         Long userId = user.getId();
 
+        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
+        userAddressRepository.save(userAddress);
+        Long userAddressId = userAddress.getId();
+
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+        Long paymentId = payment.getId();
+
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
 
@@ -118,16 +139,12 @@ class OrderCreateServiceTest {
         productRepository.save(product);
         Long productId = product.getId();
 
-        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
-        userAddressRepository.save(userAddress);
-
-        OrderList orderList = new OrderList(user, userAddress, "카드");
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
-        Long orderListId = orderList.getId();
 
         //when
         UserNotFoundException exception = assertThrows(UserNotFoundException.class, () ->
-                orderCreateService.create(userId + 1L, productId, 10, userAddress, "카드")
+                orderCreateServiceImpl.create(userId + 1L, productId, 10, userAddressId, paymentId)
         );
 
         //then
@@ -140,6 +157,12 @@ class OrderCreateServiceTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
+        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
+        userAddressRepository.save(userAddress);
+
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
 
@@ -150,10 +173,7 @@ class OrderCreateServiceTest {
         productRepository.save(product);
         Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 20, 1000, productCategory);
 
-        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
-        userAddressRepository.save(userAddress);
-
-        OrderList orderList = new OrderList(user, userAddress, "카드");
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
 
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
@@ -177,6 +197,14 @@ class OrderCreateServiceTest {
         userRepository.save(user);
         Long userId = user.getId();
 
+        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
+        userAddressRepository.save(userAddress);
+        Long userAddressId = userAddress.getId();
+
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+        Long paymentId = payment.getId();
+
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
 
@@ -187,11 +215,7 @@ class OrderCreateServiceTest {
         productRepository.save(product);
         Long productId = product.getId();
 
-        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
-        userAddressRepository.save(userAddress);
-
-
-        OrderList orderList = new OrderList(user, userAddress, "카드");
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
 
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
@@ -201,7 +225,7 @@ class OrderCreateServiceTest {
 
         //when
         ProductNotFoundException exception = assertThrows(ProductNotFoundException.class, () ->
-                orderCreateService.create(userId, productId + 1L, 10, userAddress, "카드")
+                orderCreateServiceImpl.create(userId, productId + 1L, 10, userAddressId, paymentId)
         );
 
         //then
@@ -215,6 +239,14 @@ class OrderCreateServiceTest {
         userRepository.save(user);
         Long userId = user.getId();
 
+        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
+        userAddressRepository.save(userAddress);
+        Long userAddressId = userAddress.getId();
+
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+        Long paymentId = payment.getId();
+
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
 
@@ -225,16 +257,12 @@ class OrderCreateServiceTest {
         productRepository.save(product);
         Long productId = product.getId();
 
-        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
-        userAddressRepository.save(userAddress);
-
-        OrderList orderList = new OrderList(user, userAddress, "카드");
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
-        Long orderListId = orderList.getId();
 
         //when
         InvalidQuantityException exception = assertThrows(InvalidQuantityException.class, () ->
-                orderCreateService.create(userId, productId, 0, userAddress, "카드")
+                orderCreateServiceImpl.create(userId, productId, 0, userAddressId, paymentId)
         );
 
         //then
@@ -248,6 +276,14 @@ class OrderCreateServiceTest {
         userRepository.save(user);
         Long userId = user.getId();
 
+        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
+        userAddressRepository.save(userAddress);
+        Long userAddressId = userAddress.getId();
+
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+        Long paymentId = payment.getId();
+
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
 
@@ -258,16 +294,12 @@ class OrderCreateServiceTest {
         productRepository.save(product);
         Long productId = product.getId();
 
-        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
-        userAddressRepository.save(userAddress);
-
-        OrderList orderList = new OrderList(user, userAddress, "카드");
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
-        Long orderListId = orderList.getId();
 
         //when
         OutOfStockException exception = assertThrows(OutOfStockException.class, () ->
-                orderCreateService.create(userId, productId, 10, userAddress, "카드")
+                orderCreateServiceImpl.create(userId, productId, 10, userAddressId, paymentId)
         );
 
         //then
