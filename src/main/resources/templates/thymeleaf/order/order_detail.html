@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="/static/css/order_detail.css"/>
+    <title>주문 상세보기</title>
+    <style>
+        h1, h2 {
+            text-align: center;
+        }
+
+        table {
+            margin: 0 auto;
+        }
+
+        td {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+<h1>주문 상세보기</h1>
+<h2>주문날짜:</h2>
+<table>
+    <thead>
+    <tr>
+        <th>상품이미지</th>
+        <th>상품명</th>
+        <th>수령인</th>
+        <th>배송지</th>
+        <th>전화번호</th>
+        <th>총상품금액</th>
+        <th>취소</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="order : ${orders}">
+        <td><img th:src="@{${order.orderToProduct.product.image}}" alt="상품 이미지"></td>
+        <td th:text="${order.orderToProduct.product.name}"></td>
+        <td th:text="${order.orderList.userAddress.recipientName}"></td>
+        <td th:text="${order.orderList.userAddress.streetAddress + order.orderList.userAddress.detailedAddress}"></td>
+        <td th:text="${order.orderList.userAddress.phone}"></td>
+        <td th:text="${order.orderToProduct.totalPrice}"></td>
+        <td>
+            <form th:action="@{/order/cancel/{userId}/{orderId}(userId=${userId}, orderId=${order.id})}" method="get">
+                <button type="submit">취소</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

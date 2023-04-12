@@ -60,13 +60,13 @@ class ProductUpdateServiceTest {
 
 
         Product product = new Product(
-                "asd", shop.getSeller(), "zxczxc", 1, 10, productCategory);
+                "asd", shop.getSeller(), "zxczxc", 1, 20, productCategory);
 
         productRepository.save(product);
 
         //상품이름,이미지,설명,재고,가격,카테고리선택
         ProductDto updatedProductDto = new ProductDto(
-                "updatedName", "updatedImage", "updatedDescription", 10, 20, "BOTTOM");
+                "updatedName", "updatedImage", "updatedDescription", 20, 10, "BOTTOM");
 
         productUpdateService.update(seller.getId(),product.getId(),"testPw",updatedProductDto);
 
@@ -77,8 +77,8 @@ class ProductUpdateServiceTest {
         assertEquals("updatedName", product.getName());
         assertEquals("updatedImage", product.getImage());
         assertEquals("updatedDescription", product.getDescription());
-        assertEquals(10, product.getPrice());
         assertEquals(20, product.getStock());
+        assertEquals(10, product.getPrice());
         assertEquals(ProductCategoryStatus.BOTTOM, product.getCategory().getStatus());
         assertEquals("updatedName", productUpdate.getName());
     }
@@ -109,7 +109,7 @@ class ProductUpdateServiceTest {
 
         //상품이름,이미지,설명,재고,가격,카테고리선택
         ProductDto updatedProductDto = new ProductDto(
-                "updatedName", "updatedImage", "updatedDescription", 10, 20, "BOTTOM");
+                "updatedName", "updatedImage", "updatedDescription", 20, 30, "BOTTOM");
 
 
         BadCredentialsException e = assertThrows(BadCredentialsException.class, () ->
@@ -122,8 +122,8 @@ class ProductUpdateServiceTest {
         assertNotEquals("updatedName", product.getName());
         assertNotEquals("updatedImage", product.getImage());
         assertNotEquals("updatedDescription", product.getDescription());
-        assertNotEquals(10, product.getPrice());
-        assertNotEquals(20, product.getStock());
+        assertNotEquals(9, product.getStock());
+        assertNotEquals(99, product.getPrice());
         assertNotEquals(ProductCategoryStatus.BOTTOM, product.getCategory().getStatus());
         assertNotEquals("updatedName", productUpdate.getName());
     }

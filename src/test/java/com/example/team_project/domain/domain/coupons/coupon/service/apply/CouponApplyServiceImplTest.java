@@ -13,6 +13,8 @@ import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
 import com.example.team_project.domain.domain.order.item.domain.OrderToProduct;
 import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
+import com.example.team_project.domain.domain.payment.domain.Payment;
+import com.example.team_project.domain.domain.payment.domain.PaymentRepository;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
 import com.example.team_project.domain.domain.product.product.domain.Product;
@@ -22,6 +24,7 @@ import com.example.team_project.domain.domain.shop.seller.domain.SellerRepositor
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.CouponStatus;
+import com.example.team_project.enums.PaymentType;
 import com.example.team_project.enums.ProductCategoryStatus;
 import com.example.team_project.exception.NotApplyCouponException;
 import com.example.team_project.exception.NotFoundCouponException;
@@ -32,6 +35,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -42,6 +46,7 @@ class CouponApplyServiceImplTest {
     private final CouponApplyService couponApplyService;
     private final UserRepository userRepository;
     private final UserAddressRepository userAddressRepository;
+    private final PaymentRepository paymentRepository;
     private final OrderListRepository orderListRepository;
     private final OrderRepository orderRepository;
     private final UserCouponRepository userCouponRepository;
@@ -52,10 +57,11 @@ class CouponApplyServiceImplTest {
     private final SellerRepository sellerRepository;
 
     @Autowired
-    public CouponApplyServiceImplTest(CouponApplyService couponApplyService, UserRepository userRepository, UserAddressRepository userAddressRepository, OrderListRepository orderListRepository, OrderRepository orderRepository, UserCouponRepository userCouponRepository, CouponInCategoryRepository couponInCategoryRepository, CouponRepository couponRepository, ProductCategoryRepository productCategoryRepository, ProductRepository productRepository, SellerRepository sellerRepository) {
+    public CouponApplyServiceImplTest(CouponApplyService couponApplyService, UserRepository userRepository, UserAddressRepository userAddressRepository, PaymentRepository paymentRepository, OrderListRepository orderListRepository, OrderRepository orderRepository, UserCouponRepository userCouponRepository, CouponInCategoryRepository couponInCategoryRepository, CouponRepository couponRepository, ProductCategoryRepository productCategoryRepository, ProductRepository productRepository, SellerRepository sellerRepository) {
         this.couponApplyService = couponApplyService;
         this.userRepository = userRepository;
         this.userAddressRepository = userAddressRepository;
+        this.paymentRepository = paymentRepository;
         this.orderListRepository = orderListRepository;
         this.orderRepository = orderRepository;
         this.userCouponRepository = userCouponRepository;
@@ -74,7 +80,10 @@ class CouponApplyServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, "카드");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
 
         Coupon coupon = new Coupon("testName", 5, 10000, 1);
@@ -89,7 +98,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 99, 5000, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(coupon, productCategory);
@@ -113,7 +122,10 @@ class CouponApplyServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, "testPayment");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
 
         Coupon coupon = new Coupon("testName", 5, 10000, 1);
@@ -136,7 +148,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", 1, 20, c);
+        Product product = new Product("testProduct", seller, "testImg", 99, 5000, c);
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
         productRepository.save(product);
 
@@ -160,7 +172,10 @@ class CouponApplyServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, "testPayment");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
 
         Coupon coupon = new Coupon("testName", 5, 1000000, 1);
@@ -176,7 +191,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 99, 20, productCategory);
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
         productRepository.save(product);
 
@@ -201,7 +216,10 @@ class CouponApplyServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, "testPayment");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);
@@ -217,7 +235,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 99, 20, productCategory);
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
         productRepository.save(product);
 
@@ -242,7 +260,10 @@ class CouponApplyServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, "testPayment");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);
@@ -258,7 +279,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 99, 20, productCategory);
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
         productRepository.save(product);
 
@@ -283,7 +304,10 @@ class CouponApplyServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, "카드");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);
@@ -300,7 +324,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 99, 20, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(coupon, productCategory);
@@ -326,7 +350,10 @@ class CouponApplyServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, "카드");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);
@@ -343,7 +370,7 @@ class CouponApplyServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 99, 20, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(coupon, productCategory);

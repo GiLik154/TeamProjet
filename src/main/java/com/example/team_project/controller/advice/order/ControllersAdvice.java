@@ -1,0 +1,46 @@
+package com.example.team_project.controller.advice.order;
+
+import com.example.team_project.exception.OrderListNotFoundException;
+import com.example.team_project.exception.OrderNotFoundException;
+import com.example.team_project.exception.OutOfStockException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.servlet.ModelAndView;
+
+@ControllerAdvice
+public class ControllersAdvice {
+    public static String ERROR_PAGE = "error-page";
+
+
+    @ExceptionHandler(OrderListNotFoundException.class)
+
+    public ModelAndView notValidateOrderList() {
+        ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
+        modelAndView.addObject("order_list_not_found_message", "해당 오더리스트가 존재하지 않습니다");
+
+        return modelAndView;
+    }
+
+    @ExceptionHandler(OrderNotFoundException.class)
+
+    public ModelAndView notValidateOrder() {
+        ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
+        modelAndView.addObject("Order_not_found_message", "해당 주문은 존재하지 않습니다");
+
+        return modelAndView;
+    }
+
+    @ExceptionHandler(OutOfStockException.class)
+
+    public ModelAndView notExistedStock() {
+        ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
+        modelAndView.addObject("out_of_stock", "해당 상품의 재고가 부족합니다");
+
+        return modelAndView;
+
+    }
+}
+
+
+
+

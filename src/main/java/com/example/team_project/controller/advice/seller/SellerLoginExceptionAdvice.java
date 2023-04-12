@@ -1,4 +1,4 @@
-package com.example.team_project.controller.advice;
+package com.example.team_project.controller.advice.seller;
 
 
 import com.example.team_project.exception.SellerNotFoundException;

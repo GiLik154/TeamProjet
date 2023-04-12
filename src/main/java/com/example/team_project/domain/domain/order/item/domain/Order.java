@@ -19,11 +19,6 @@ public class Order {
     @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 
-    /**
-     * OrderList 안에는
-     * 여러개의 Order 가 포함 될 수 있으니
-     * manyToOne
-     */
     @ManyToOne(fetch = FetchType.LAZY)
     private OrderList orderList;
 
@@ -42,11 +37,6 @@ public class Order {
     protected Order() {
     }
 
-    /**
-     * Order 를 생성 할 때
-     * User, OrderList,OrderToProduct 를 가지고 생성되며
-     * OrderToProduct 에는 주문 상품의 정보가 있습니다
-     */
     public Order(User user, OrderList orderList, OrderToProduct orderToProduct) {
         this.user = user;
         this.orderList = orderList;

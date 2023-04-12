@@ -4,9 +4,11 @@ import com.example.team_project.domain.domain.address.domain.UserAddress;
 import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
 import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
+import com.example.team_project.domain.domain.payment.domain.Payment;
+import com.example.team_project.domain.domain.payment.domain.PaymentRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
-import com.example.team_project.enums.UserGrade;
+import com.example.team_project.enums.PaymentType;
 import com.example.team_project.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,18 +23,20 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @Transactional
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class OrderListAddServiceTest {
+class OrderListAddServiceImplTest {
 
     private final UserRepository userRepository;
-    private final OrderListAddService orderListAddService;
+    private final PaymentRepository paymentRepository;
+    private final OrderListAddServiceImpl orderListAddServiceImpl;
     private final OrderListRepository orderListRepository;
     private final UserAddressRepository userAddressRepository;
 
     @Autowired
-    OrderListAddServiceTest(OrderListAddService orderListAddService, OrderListRepository orderListRepository, UserRepository userRepository, UserAddressRepository userAddressRepository) {
-        this.orderListAddService = orderListAddService;
+    OrderListAddServiceImplTest(OrderListAddServiceImpl orderListAddServiceImpl, OrderListRepository orderListRepository, UserRepository userRepository, PaymentRepository paymentRepository, UserAddressRepository userAddressRepository) {
+        this.orderListAddServiceImpl = orderListAddServiceImpl;
         this.orderListRepository = orderListRepository;
         this.userRepository = userRepository;
+        this.paymentRepository = paymentRepository;
         this.userAddressRepository = userAddressRepository;
     }
 
@@ -43,11 +47,16 @@ class OrderListAddServiceTest {
         userRepository.save(user);
         Long userId = user.getId();
 
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+        Long paymentId = payment.getId();
+
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
+        Long userAddressId = userAddress.getId();
 
         //when
-        orderListAddService.add(userId, userAddress, "카드");
+        orderListAddServiceImpl.add(userId, userAddressId, paymentId);
         Optional<OrderList> orderListOptional = orderListRepository.findByUserId(userId);
         OrderList orderList = orderListOptional.get();
 
@@ -57,7 +66,8 @@ class OrderListAddServiceTest {
         assertEquals("서울특별시 강남구", orderList.getUserAddress().getStreetAddress());
         assertEquals("강남아파드101호", orderList.getUserAddress().getDetailedAddress());
         assertEquals("11111", orderList.getUserAddress().getZipCode());
-        assertEquals("카드", orderList.getPaymentMethod());
+        assertEquals("CARD", orderList.getPayment().getPaymentType().toString());
+        System.out.println("==============================================================" + orderList.getOrderDate());
     }
 
     @Test
@@ -67,12 +77,18 @@ class OrderListAddServiceTest {
         userRepository.save(user);
         Long userId = user.getId();
 
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+        Long paymentId = payment.getId();
+
+
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
+        Long userAddressId = userAddress.getId();
 
         //when
         UserNotFoundException exception = assertThrows(UserNotFoundException.class, () ->
-                orderListAddService.add(userId + 1L, userAddress, "카드")
+                orderListAddServiceImpl.add(userId + 1L, userAddressId, paymentId)
         );
 
         //then
