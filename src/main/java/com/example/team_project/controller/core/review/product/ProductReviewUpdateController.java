@@ -1,4 +1,4 @@
-package com.example.team_project.controller.review.product;
+package com.example.team_project.controller.core.review.product;
 
 import com.example.team_project.domain.domain.review.base.domain.BaseReviewRepository;
 import com.example.team_project.domain.domain.review.base.service.dto.ReviewDto;

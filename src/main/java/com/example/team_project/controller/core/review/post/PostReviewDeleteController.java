@@ -1,4 +1,4 @@
-package com.example.team_project.controller.review.post;
+package com.example.team_project.controller.core.review.post;
 
 import com.example.team_project.domain.domain.review.base.service.delete.BaseReviewDeleteService;
 import lombok.RequiredArgsConstructor;

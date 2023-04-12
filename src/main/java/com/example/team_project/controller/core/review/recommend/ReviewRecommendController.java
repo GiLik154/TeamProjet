@@ -1,4 +1,4 @@
-package com.example.team_project.controller.review.recommend;
+package com.example.team_project.controller.core.review.recommend;
 
 import com.example.team_project.domain.domain.review.recommend.service.add.ReviewRecommendAddService;
 import com.example.team_project.domain.domain.review.recommend.service.update.ReviewRecommendUpdateService;
