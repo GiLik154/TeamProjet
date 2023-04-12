@@ -2,6 +2,7 @@ package com.example.team_project.controller.core.order.create;
 
 import com.example.team_project.domain.domain.address.domain.UserAddress;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
+import com.example.team_project.domain.domain.order.item.service.OrderCreateService;
 import com.example.team_project.domain.domain.order.item.service.OrderCreateServiceImpl;
 import com.example.team_project.domain.domain.payment.domain.Payment;
 import com.example.team_project.exception.OrderNotFoundException;
@@ -16,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 public class OrderCreateController {
 
     private final OrderRepository orderRepository;
-    private final OrderCreateServiceImpl orderCreateServiceImpl;
+    private final OrderCreateService orderCreateService;
 
     @GetMapping("/{orderId}")
     public ModelAndView createForm(@PathVariable Long orderId, @RequestParam Long userId) {
@@ -34,7 +35,7 @@ public class OrderCreateController {
                                @RequestBody Long userAddressId,
                                @RequestParam Long paymentId) {
 
-        orderCreateServiceImpl.create(userId, productId, quantity, userAddressId, paymentId);
+        orderCreateService.create(userId, productId, quantity, userAddressId, paymentId);
 
         return new ModelAndView("redirect:/order_list/view" + userId);
 

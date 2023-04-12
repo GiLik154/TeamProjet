@@ -4,6 +4,7 @@ import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
 import com.example.team_project.exception.OrderNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;

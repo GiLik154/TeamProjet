@@ -33,7 +33,7 @@ public class OrderUpdateServiceImpl implements OrderUpdateService {
     /**
      * 사용자의 고유 ID와 주문의 고유 ID로 주문을 찾는다
      * 해당하는 주문을 찾을 수 없을시 OrderNotFoundException 발생
-     * 해당하는 주문을 찾았을시 OrderToProduct Entity의 updateStatus 메소드를 통해 주문의 상태를 변경해 줄 수 있다
+     * 해당하는 주문을 찾았을시 OrderToProduct updateStatus를 통해 주문의 상태를 변경해 줄 수 있다
      **/
     public void updateStatus(Long userId, Long orderId, OrderStatus orderStatus) {
 

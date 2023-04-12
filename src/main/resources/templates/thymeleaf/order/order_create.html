@@ -33,7 +33,10 @@
                             <option value="Bank Transfer">계좌이체</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">주문하기</button>
+                    <form th:action="@{#}" method="get">
+                        <input type="hidden" name="orderId" th:value="${orderId}">
+                        <button type="submit" class="btn btn-primary">주문하기</button>
+                    </form>
                 </div>
             </div>
         </div>
