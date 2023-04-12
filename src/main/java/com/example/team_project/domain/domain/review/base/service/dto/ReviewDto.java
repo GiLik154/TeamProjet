@@ -4,14 +4,11 @@ import lombok.Getter;
 
 @Getter
 public class ReviewDto {
-    private String title;
-    private String content;
-    //리뷰 이미지
-    private String kinds;
-    private Long kindsId;
+    private final String title;
+    private final String content;
+    private final String kinds;
+    private final Long kindsId;
 
-    public ReviewDto(){
-    }
     public ReviewDto(String title,String content,String kinds,Long kindsId){
         this.title=title;
         this.content=content;

@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/post/delete}" method="post">
+    <input type="hidden" name="postId" th:value="${postId}">
+    비밀번호<input name="password" type="text">
+    <input type="submit" value="확인">
+</form>
+</body>
+</html>
