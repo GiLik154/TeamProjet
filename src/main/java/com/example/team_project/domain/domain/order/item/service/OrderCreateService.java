@@ -9,8 +9,7 @@ public interface OrderCreateService {
 
     /**
      * User와 OrderList 고유 ID, OrderToProduct(주문상품 구입개수,상태 및 가격 등)를 가지고 생성하는데
-     * 사용자와 상품을 validate로 검증해준뒤 오더리스트 존재하지 않을시
-     * OrderListService로 이동후 OrderList를 생성을 한뒤 Order를 생성후 레퍼지토리에 저장
+     * 사용자와 상품을 검증해준뒤 오더리스트 존재하지 않을시 OrderList를 생성을 한뒤 Order를 생성후 레퍼지토리에 저장
      * 유저와 상품 검증단계에서는 해당 고유 ID로 레퍼지토리에서 찾을 수 없을시 각각 NotFoundException 발생
      * 상품 재고 부족시 상품 소진 알리는 Exception 발생
      *
