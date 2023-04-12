@@ -3,15 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <title>sellerIndex</title>
+    <link rel="stylesheet" href="/static/css/sellerIndex.css">
 </head>
 <body>
-<a href="/shop/join">샵등록</a>
-<a href="/shop/list">샵리스트</a>
-<a href="/seller/update">회원정보 수정</a>
-
-<form th:action="@{/seller/delete}" target="popup" onsubmit="window.open('about:blank','popup','width=800,height=600, top=50%, left=50%, margin-top=-300px, margin-left=-400px')">
-    <button type="submit">회원탈퇴</button>
-</form>
+<header>
+    <h1>Seller Index</h1>
+</header>
+<nav>
+    <a href="/shop/join">샵 등록</a>
+    <a href="/shop/list">샵 리스트</a>
+    <a href="/seller/update">회원 정보 수정</a>
+    <form th:action="@{/seller/delete}" target="popup" onsubmit="window.open('about:blank','popup','width=800,height=600, top=50%, left=50%, margin-top=-300px, margin-left=-400px')">
+        <button type="submit">회원 탈퇴</button>
+    </form>
+</nav>
+</body>
 </body>
 
 

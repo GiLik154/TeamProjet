@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Shop Join Form</title>
+    <link rel="stylesheet" href="/static/css/shopJoin.css">
 </head>
 <body>
 <form action="/shop/join" method="post">
-    이름 : <input name="shopName">
-    주소 : <input name="shopAddress">
-    사업자 번호 : <input name="businessRegistrationNumber">
+    <label>이름 :</label>
+    <input name="shopName">
+    <label>주소 :</label>
+    <input name="shopAddress">
+    <label>사업자 번호 :</label>
+    <input name="businessRegistrationNumber">
     <button type="submit">확인</button>
 </form>
+
+<a href="../seller/sellerIndex.html">뒤로가기</a>
 </body>
 
 </html>

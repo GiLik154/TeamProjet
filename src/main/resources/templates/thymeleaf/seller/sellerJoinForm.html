@@ -3,17 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>Seller Join Form</title>
+    <link rel="stylesheet" href="/static/css/sellerJoin.css">
 </head>
 <body>
-
-
 <form action="/seller/join-form" method="post">
-    아이디: <input name="ownerId">
-    비밀번호 : <input type="password" name="password">
-    이름 : <input name="ownerName">
-    핸드폰 번호 : <input type="tel" name="phoneNumber">
+    <label>아이디 :</label>
+    <input name="ownerId">
+    <label>비밀번호 :</label>
+    <input type="password" name="password">
+    <label>이름 :</label>
+    <input name="ownerName">
+    <label>핸드폰 번호 :</label>
+    <input type="tel" name="phoneNumber">
     <button type="submit">확인</button>
 </form>
-
+<a href="/">뒤로가기</a>
 </body>
 </html>

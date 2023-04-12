@@ -23,7 +23,7 @@ public class ProductLikeCountController {
     private final LikeCountCheckService likeCountCheckService;
     private final LikeCountDeleteService likeCountDeleteService;
 
-    @GetMapping()
+    @GetMapping("")
     public String likeCount(@SessionAttribute("userId")Long userId, @RequestParam("productId")Long productId){
 
         boolean delete = likeCountDeleteService.delete(productId,userId);
