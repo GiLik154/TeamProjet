@@ -25,10 +25,14 @@ public class PostDeleteController {
     }
 
     @PostMapping("")
-    public String post(Long userId, @RequestParam("postId") Long postId){
-
+    public String post(@SessionAttribute("userId") Long userId, @RequestParam("postId") Long postId){
+        String url = "thymeleaf/error/error-page";
+        System.out.println("테스트"+userId);
+        System.out.println("테스트"+postId);
         // user.vaildate(password); 예시
-        postDeleteService.delete(151L,postId);
-        return "redirect:/post/list";
+        if(postDeleteService.delete(userId,postId)) {
+            url= "redirect:/post/list";
+        }
+        return url;
     }
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -27,9 +28,9 @@ public class PostAddController {
      * 로그인 처리 기능이 구현되면 userId 세션으로 가지고 올 예정
      */
     @PostMapping("")
-    public String post(Long userId,PostDto dto,
+    public String post(@SessionAttribute("userId") Long userId, PostDto dto,
                        MultipartFile file){
-        postAddService.add(151L,dto,file);
+        postAddService.add(userId,dto,file);
         return "redirect:/post/list";
     }
 }

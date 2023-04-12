@@ -6,10 +6,7 @@ import com.example.team_project.domain.domain.review.base.service.update.BaseRev
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -32,10 +29,10 @@ public class PostReviewUpdateController {
 
     @PostMapping("")
     public String post(@RequestParam("baseReviewId") Long baseReviewId,
-                       Long userId,
+                       @SessionAttribute("userId") Long userId,
                        ReviewDto dto,
                        MultipartFile file){
-        baseReviewUpdateService.update(baseReviewId,151L,dto,file);
+        baseReviewUpdateService.update(baseReviewId,userId,dto,file);
         return "redirect:/post/read?postId="+dto.getKindsId();
     }
 }

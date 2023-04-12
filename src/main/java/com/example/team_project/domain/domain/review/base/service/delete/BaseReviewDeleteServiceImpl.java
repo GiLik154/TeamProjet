@@ -19,17 +19,12 @@ public class BaseReviewDeleteServiceImpl implements BaseReviewDeleteService {
      *  delete()함수를 실행해 존재여부를 delete 로 변경
      */
     @Override
-    public void delete(Long baseReviewId, Long userId, String password) {
+    public void delete(Long baseReviewId, Long userId) {
 
        baseReviewRepository.findById(baseReviewId).ifPresent(baseReview -> {
-            if(baseReview.getUser().getId()==userId) {
+            if(baseReview.getUser().getId().equals(userId)) {
                 baseReview.delete();
             }
         });
-    }
-
-    @Override
-    public void delete(Long baseReviewId, Long userId) {
-
     }
 }

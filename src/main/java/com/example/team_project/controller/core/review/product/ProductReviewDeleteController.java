@@ -16,7 +16,7 @@ public class ProductReviewDeleteController {
 
     @GetMapping("")
     public String get(){
-        return "thymeleaf/validate-password";
+        return "";
     }
 
     @PostMapping("")

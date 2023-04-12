@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 @RequiredArgsConstructor
@@ -16,9 +17,9 @@ public class ReviewRecommendController {
     private final ReviewRecommendAddService reviewRecommendAddService;
     private final ReviewRecommendUpdateService reviewRecommendUpdateService;
     @PostMapping("")
-    public String post(Long userId, @RequestParam("baseReviewId") Long baseReviewId,@RequestParam("trueOrFalse") String trueOrFalse){
-        if(!reviewRecommendAddService.add(151L,baseReviewId,trueOrFalse)){
-            reviewRecommendUpdateService.update(151L,baseReviewId,trueOrFalse);
+    public String post(@SessionAttribute("userId") Long userId, @RequestParam("baseReviewId") Long baseReviewId, @RequestParam("trueOrFalse") String trueOrFalse){
+        if(!reviewRecommendAddService.add(userId,baseReviewId,trueOrFalse)){
+            reviewRecommendUpdateService.update(userId,baseReviewId,trueOrFalse);
         }
 
         return "redirect:/post/list";

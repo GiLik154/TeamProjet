@@ -23,7 +23,7 @@ public class PostReadController {
 
     @GetMapping("")
     public String get(@RequestParam("postId")Long postId,
-                      Long userId,
+                      @SessionAttribute("userId") Long userId,
                       @RequestParam(value = "reviewLink", defaultValue = "false") Boolean reviewLink,
                       Model model){
 
@@ -34,7 +34,7 @@ public class PostReadController {
             model.addAttribute("reviewLink",reviewLink);
             model.addAttribute("post",post);
             model.addAttribute("postReviewList",baseReviewList);
-            model.addAttribute("userId",151L);
+            model.addAttribute("userId",userId);
             model.addAttribute("recommendList",reviewRecommendList.isEmpty() ? null : reviewRecommendList);
 //            model.addAttribute("recommendCount",recommendCountList);
         });

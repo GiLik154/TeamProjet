@@ -20,9 +20,10 @@ public class PostDeleteServiceImpl implements PostDeleteService {
     @Override
     public boolean delete(Long userId, Long postId) {
         AtomicBoolean result = new AtomicBoolean(false); // boolean 값을 저장할 AtomicBoolean 객체 생성
-
+        
         postRepository.findById(postId).ifPresent(post -> {
-            if (userId == post.getUser().getId()) {
+            if (userId.equals(post.getUser().getId())) {
+                System.out.println("일로 왜 안와??");
                 post.delete();
                 result.set(true);
             }

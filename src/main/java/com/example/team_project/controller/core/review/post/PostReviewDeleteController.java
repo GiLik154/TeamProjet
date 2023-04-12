@@ -4,10 +4,7 @@ import com.example.team_project.domain.domain.review.base.service.delete.BaseRev
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -26,12 +23,12 @@ public class PostReviewDeleteController {
     }
 
     @PostMapping("")
-    public String post(Long userId,
+    public String post(@SessionAttribute("userId") Long userId,
                        @RequestParam("baseReviewId") Long baseReviewId,
                        @RequestParam("postId") Long postId,
                        @RequestParam("password") String password) {
 
-        baseReviewDeleteService.delete(baseReviewId, 151L);
+        baseReviewDeleteService.delete(baseReviewId, userId);
         return "redirect:/post/read?postId=" + postId;
     }
 }

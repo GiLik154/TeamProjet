@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 @Controller
@@ -15,14 +16,16 @@ import org.springframework.web.multipart.MultipartFile;
 public class PostReviewAddController {
 
     private final BaseReviewAddService baseReviewAddService;
-    private final ReviewRecommendRepository reviewRecommendRepository;
 
     @PostMapping("")
-    public String post(Long userId,
+    public String post(@SessionAttribute("userId") Long userId,
                        ReviewDto dto,
                        MultipartFile file) {
-
-        baseReviewAddService.add(151L,dto,file);
+        System.out.println("!!"+userId);
+        System.out.println("!!"+dto.getKinds());
+        System.out.println("!!"+dto.getKindsId());
+        System.out.println("!!"+dto.getContent());
+        baseReviewAddService.add(userId,dto,file);
             return "redirect:/post/read?postId="+dto.getKindsId();
     }
 }

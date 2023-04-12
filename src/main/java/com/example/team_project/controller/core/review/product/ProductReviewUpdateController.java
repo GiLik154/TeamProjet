@@ -26,7 +26,7 @@ public class ProductReviewUpdateController {
         baseReviewRepository.findById(baseReviewId).ifPresent(baseReview -> {
             model.addAttribute("baseReview",baseReview);
         });
-        return "thymeleaf/base-review/update";
+        return "";
     }
 
     @PostMapping("")

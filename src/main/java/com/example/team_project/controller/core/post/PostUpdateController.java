@@ -31,11 +31,11 @@ public class PostUpdateController {
     }
 
     @PostMapping("")
-    public String post(Long userId,
+    public String post(@SessionAttribute("userId") Long userId,
                        @RequestParam("postId") Long postId,
                        PostDto dto,
                        MultipartFile file){
-        postUpdateService.update(151L,postId,dto,file);
+        postUpdateService.update(userId,postId,dto,file);
 
         return "redirect:/post/list";
     }
