@@ -12,11 +12,10 @@ import org.springframework.web.servlet.ModelAndView;
 public class UserExceptionAdvice {
 
     @ExceptionHandler(UserNotFoundException.class)
-    public ModelAndView userNotFound(UserNotFoundException ex) {
+    public ModelAndView userNotFound(UserNotFoundException e) {
 
-        String errmsg = ex.getMessage();
         ModelAndView modelAndView = new ModelAndView("thymeleaf/error/error-page");
-        modelAndView.addObject("errMsg",errmsg);
+        modelAndView.addObject("errorMessage",e.getMessage());
         return modelAndView;
     }
 }

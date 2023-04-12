@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Product Update Form</title>
+  <link rel="stylesheet" href="/static/css/productUpdateForm.css">
+</head>
+<body>
+<form th:action="@{/product/update}" method="post">
+    <input type="hidden" name="productId" th:value="${productId}">
+    <table>
+        <tr>
+            <th colspan="2">수정하기</th>
+        </tr>
+        <tr>
+            <td>이름 : <input type="text" name="name"></td>
+            <td>이미지 :<input type="text" name="image"></td>
+        </tr>
+        <tr>
+            <td colspan="2">상세 설명 :<input type="text" name="description"></td>
+        </tr>
+        <tr>
+            <td>재고 :<input type="text" name="stock"></td>
+            <td>가격 :<input type="text" name="price"></td>
+        </tr>
+        <tr>
+            <td>비밀번호 : <input type="password" name="password"></td>
+            <td>
+                <label for="categoryDto">카테고리:</label>
+                <select id="categoryDto" name="categoryDto">
+                    <option value="TOP">상의</option>
+                    <option value="BOTTOM">하의</option>
+                    <option value="SHOES">신발</option>
+                </select>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <button type="submit">확인</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>

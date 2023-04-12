@@ -46,7 +46,7 @@ import static org.junit.jupiter.api.Assertions.*;
         Shop shop = new Shop("testshopname", "testshowaddress", "testshopbnum");
         shopRepository.save(shop);
 
-        String sellerId = seller.getOwnerId();
+        Long sellerId = seller.getId();
         Long shopId = shop.getShopId();
 
         shopUpdateService.shopUpdate(sellerId, shopId, "testPw", "testupdateshopName", "testupdateshopaddress");
@@ -69,7 +69,7 @@ import static org.junit.jupiter.api.Assertions.*;
         Shop shop = new Shop("testshopname", "testshowaddress", "testshopbnum");
         shopRepository.save(shop);
 
-        String sellerId = seller.getOwnerId();
+        Long sellerId = seller.getId();
         Long shopId = shop.getShopId();
 
         BadCredentialsException e = assertThrows(BadCredentialsException.class, () ->

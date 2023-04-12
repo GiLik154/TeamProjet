@@ -24,7 +24,7 @@ public class SellerJoinController {
     @PostMapping("")
     public String join(SellerJoinDto sellerJoinDto) {
         sellerJoinService.sellerJoin(sellerJoinDto);
-        return "thymeleaf/seller/sellerIndex";
+        return "redirect:/";
     }
 
 }

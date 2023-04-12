@@ -15,8 +15,10 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -48,6 +50,9 @@ class ProductRegistrationServiceTest {
         //판매자생성
         Seller seller = new Seller("testId", passwordEncoder.encode("testPw"), "testName", "testPhone");
         sellerRepository.save(seller);
+
+        byte[]imageBytes = "testimage".getBytes();
+        MockMultipartFile file = new MockMultipartFile("file", "imageName", "image/jpeg", imageBytes);
         //shop 생성
         Shop shop = new Shop("testshopname", "testshowaddress", "testshopbnum");
         shopRepository.save(shop);
@@ -62,11 +67,11 @@ class ProductRegistrationServiceTest {
         Long sellerId = seller.getId();
         
         //서비스실행
-        productRegistrationService.productRegistration(sellerId, productDto);
+        productRegistrationService.productRegistration(sellerId, productDto,file);
 
         
         //이름으로 검색하여 관련된 내용 가지고오기
-        Product product = productRepository.findByName(productDto.getProductName()).get();
+        Product product = productRepository.findByName(productDto.getName()).get();
         
         //확인
         assertEquals("testName", product.getName());

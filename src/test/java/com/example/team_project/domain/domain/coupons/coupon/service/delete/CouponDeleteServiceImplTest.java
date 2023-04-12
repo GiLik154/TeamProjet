@@ -65,7 +65,7 @@ class CouponDeleteServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 99, 20, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(coupon, productCategory);
@@ -95,7 +95,7 @@ class CouponDeleteServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 99, 20, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(coupon, productCategory);
@@ -125,7 +125,7 @@ class CouponDeleteServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 99, 20, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(coupon, productCategory);
@@ -154,7 +154,7 @@ class CouponDeleteServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testImg", 99, 20, productCategory);
         productRepository.save(product);
 
         CouponInCategory couponInCategory = new CouponInCategory(coupon, productCategory);

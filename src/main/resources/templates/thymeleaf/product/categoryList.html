@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>TOP Category</title>
+    <link rel="stylesheet" href="/static/css/productUserList.css">
+</head>
+<body>
+
+<div class="category-links">
+    <a href="/product/user/list" th:classappend="${categoryId == null ? 'active' : ''}">전체</a>
+    <a href="/product/user/list/224" th:classappend="${categoryId == 224 ? 'active' : ''}">상의</a>
+    <a href="/product/user/list/225" th:classappend="${categoryId == 225 ? 'active' : ''}">하의</a>
+    <a href="/product/user/list/226" th:classappend="${categoryId == 226 ? 'active' : ''}">신발</a>
+</div>
+<table class="product-list">
+    <thead>
+    <tr>
+        <th>이름</th>
+        <th>이미지</th>
+        <th>가격</th>
+        <th>좋아요</th>
+    </tr>
+    </thead>
+    <tbody>
+    <!-- 상품 목록 반복문 -->
+    <tr th:each="list:${productList}">
+        <td>
+            <a th:href="@{/product/detail/{productId}(productId=${list.getId()})}">
+                <span th:text="${list.getName()}"></span>
+            </a>
+        </td>
+        <td><img style="width: 50px" th:src="${list.getImage()}"></td>
+        <td><span th:text="${list.getPrice()}"></span> 원</td>
+        <td><span th:text="${list.getLikeCount()}"></span></td>
+    </tr>
+    </tbody>
+</table>
+
+<footer>
+    <p>&copy; 2023 My Online Shop. All rights reserved.</p>
+</footer>
+
+<div class="pagination-links">
+    <a th:if="${page >= 1}" th:href="@{/product/user/list/{categoryId}(page=${page - 1}, categoryId=${categoryId})}">이전</a>
+
+    <form action="/product/seller/list">
+        <input type="number" name="page" min="1" th:max="${totalPage}" th:value="${page}"/>
+        /<a th:text="${totalPage}"></a>
+        <button type="submit" style="width:60px;height:31px;border-style:none;border-radius:10px">이동</button>
+    </form>
+
+
+    <a th:if="${page < totalPage}" th:href="@{/product/user/list/{categoryId}(page=${page + 1}, categoryId=${categoryId})}">다음</a>
+</div>
+
+
+</body>
+</html>

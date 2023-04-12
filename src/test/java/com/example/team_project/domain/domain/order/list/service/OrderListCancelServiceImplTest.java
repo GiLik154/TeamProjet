@@ -91,8 +91,8 @@ class OrderListCancelServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
-        Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 10, 10000, productCategory);
+        Product product = new Product("testProduct", seller, "testDes", 99, 20, productCategory);
+        Product product1 = new Product("testProduct", seller, "testDes", 99, 40, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
 
@@ -137,8 +137,8 @@ class OrderListCancelServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
-        Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 10, 10000, productCategory);
+        Product product = new Product("testProduct", seller, "testDes", 99, 20, productCategory);
+        Product product1 = new Product("testProduct", seller, "testDes", 12, 40, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
 

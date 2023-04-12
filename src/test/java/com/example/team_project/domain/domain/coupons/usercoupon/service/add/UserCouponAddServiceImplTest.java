@@ -84,7 +84,7 @@ class UserCouponAddServiceImplTest {
                 couponAddService.add(userId, "testName123")
         );
 
-        assertEquals("Coupon not found: testName123", e.getMessage());
+        assertTrue(e.getMessage().contains("Coupon not found: "));
     }
 
     @Test

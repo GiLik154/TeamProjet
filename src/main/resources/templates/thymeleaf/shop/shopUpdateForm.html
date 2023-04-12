@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Shop Update Form</title>
+</head>
+<body>
+
+<h1>가게정보 수정하기</h1>
+<form action="/shop/update" method="post">
+    <input type="hidden" name="shopId" th:value="${shopId}">
+    <table>
+        <tr>
+            <th>아이디</th>
+            <th>비밀번호 확인</th>
+            <th>가게 이름</th>
+            <th>가게 주소</th>
+        </tr>
+        <tr>
+            <td th:text="${ownerId}"></td>
+            <td><input type="password" name="password"></td>
+            <td><input name="shopName"></td>
+            <td><input name="shopAddress"></td>
+            <td>
+                <button type="submit">확인</button>
+            </td>
+        </tr>
+
+
+    </table>
+</form>
+
+
+</body>
+</html>

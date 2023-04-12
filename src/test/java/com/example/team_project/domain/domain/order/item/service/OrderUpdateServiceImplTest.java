@@ -94,8 +94,8 @@ class OrderUpdateServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 5, 5000, productCategory);
-        Product product1 = new Product("update_name", seller, "update_image", "update_description", 10, 10000, productCategory);
+        Product product = new Product("testProduct", seller, "testDes", 5, 5000, productCategory);
+        Product product1 = new Product("update_name", seller, "update_description", 10, 1000, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
         Long productId1 = product1.getId();
@@ -118,7 +118,6 @@ class OrderUpdateServiceImplTest {
         //then
         assertNotNull(orderId);
         assertEquals("update_name", order.getOrderToProduct().getProduct().getName());
-        assertEquals("update_image", order.getOrderToProduct().getProduct().getImage());
         assertEquals("update_description", order.getOrderToProduct().getProduct().getDescription());
     }
 
@@ -140,8 +139,8 @@ class OrderUpdateServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
-        Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 10, 10000, productCategory);
+        Product product = new Product("testProduct", seller, "testDes", 99, 20, productCategory);
+        Product product1 = new Product("testProduct", seller, "testDes", 2, 40, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
         Long productId1 = product1.getId();
@@ -186,8 +185,8 @@ class OrderUpdateServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 10, 5000, productCategory);
-        Product product1 = new Product("testProduct1", seller, "testImg1", "testDes1", 10, 10000, productCategory);
+        Product product = new Product("testProduct", seller, "testDes", 6, 40, productCategory);
+        Product product1 = new Product("testProduct", seller, "testDes", 6, 40, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
         Long productId1 = product1.getId();
@@ -231,7 +230,7 @@ class OrderUpdateServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testDes", 99, 20, productCategory);
         productRepository.save(product);
         Long productId = product.getId();
 
@@ -275,9 +274,8 @@ class OrderUpdateServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", "testDes", 20, 5000, productCategory);
+        Product product = new Product("testProduct", seller, "testDes", 99, 20, productCategory);
         productRepository.save(product);
-        Long productId = product.getId();
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
