@@ -48,7 +48,7 @@
 <div class="pagination-links">
     <a th:if="${page >= 1}" th:href="@{/product/user/list(page=${page - 1})}">이전</a>
 
-    <form action="/product/seller/list">
+    <form action="/product/user/list">
         <input type="number" name="page" min="1" th:max="${totalPage}" th:value="${page}" />
         /<a th:text="${totalPage}"></a>
         <button type="submit" style="width:60px;height:31px;border-style:none;border-radius:10px">이동</button>
