@@ -2,6 +2,7 @@ package com.example.team_project.controller.core.order.create;
 
 import com.example.team_project.domain.domain.address.domain.UserAddress;
 import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
+import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
 import com.example.team_project.domain.domain.order.item.service.OrderCreateService;
 import com.example.team_project.domain.domain.order.item.service.OrderCreateServiceImpl;
@@ -29,8 +30,8 @@ public class OrderCreateController {
     private final ProductRepository productRepository;
     private final OrderCreateService orderCreateService;
 
-    @GetMapping
-    public ModelAndView createForm(@RequestParam Long productId, @RequestParam Long userId) {
+    @GetMapping("/{productId}/{salesCount}")
+    public ModelAndView createForm(@PathVariable Long productId, @SessionAttribute("userId")Long userId, @PathVariable("salesCount") int quantity) {
         ModelAndView modelAndView = new ModelAndView("/thymeleaf/order/order_create");
         List<UserAddress> userAddressList = userAddressRepository.findByUserId(userId);
         List<Payment> paymentList = paymentRepository.findByUserId(userId);
@@ -40,19 +41,21 @@ public class OrderCreateController {
         modelAndView.addObject("user_address_list", userAddressList);
         modelAndView.addObject("payment_list", paymentList);
         modelAndView.addObject("product", product);
+        modelAndView.addObject("quantity" , quantity);
+
         return modelAndView;
     }
 
-    @PostMapping("/{userId}")
-    public ModelAndView create(@PathVariable Long userId,
+    @PostMapping
+    public ModelAndView create(@SessionAttribute("userId")Long userId,
                                @RequestParam Long productId,
                                @RequestParam int quantity,
                                @RequestParam Long userAddressId,
                                @RequestParam Long paymentId) {
 
-        orderCreateService.create(userId, productId, quantity, userAddressId, paymentId);
+        Order order = orderCreateService.create(userId, productId, quantity, userAddressId, paymentId);
 
-        return new ModelAndView("redirect:/order_list/view" + userId);//결제페이지로 이동하게
+        return new ModelAndView("redirect:/order_list/view" + order.getId());//결제페이지로 이동하게
 
     }
 }

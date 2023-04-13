@@ -1,13 +1,11 @@
 package com.example.team_project.domain.domain.order.item.service;
 
-import com.example.team_project.domain.domain.address.domain.UserAddress;
 import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
 import com.example.team_project.domain.domain.order.item.domain.OrderToProduct;
 import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
 import com.example.team_project.domain.domain.order.list.service.OrderListAddServiceImpl;
-import com.example.team_project.domain.domain.payment.domain.Payment;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import com.example.team_project.domain.domain.user.domain.User;
@@ -29,7 +27,7 @@ public class OrderCreateServiceImpl implements OrderCreateService{
 
 
     @Override
-    public void create(Long userId, Long productId, int quantity, Long userAddressId, Long paymentId) {
+    public Order create(Long userId, Long productId, int quantity, Long userAddressId, Long paymentId) {
         User user = userRepository.validateUserId(userId);
         Product product = productRepository.validateProductId(productId);
         OrderList orderList = findAvailableOrderList(userId, userAddressId, paymentId);
@@ -38,6 +36,8 @@ public class OrderCreateServiceImpl implements OrderCreateService{
 
         Order order = new Order(user, orderList, orderToProduct);
         orderRepository.save(order);
+
+        return order;
     }
 
 
