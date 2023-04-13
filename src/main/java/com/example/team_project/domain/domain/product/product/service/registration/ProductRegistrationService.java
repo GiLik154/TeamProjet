@@ -48,8 +48,8 @@ public class ProductRegistrationService {
                 productDto.getName(),
                 getSeller(sellerId),
                 productDto.getDescription(),
-                productDto.getPrice(),
                 productDto.getStock(),
+                productDto.getPrice(),
                 getCategory(productCategoryStatus));
 
         imageUploadService.upload(productDto.getName(), multipartFile, product);

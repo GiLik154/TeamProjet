@@ -23,9 +23,10 @@ public class ImageUploadServiceImpl implements ImageUploadService {
     public void upload(String name, MultipartFile multipartFile, ImageUpload imageUpload) {
         String fileName = getFileName();
 
-        if (multipartFile!=null) {
+        if (!multipartFile.isEmpty()) {
             imageUpload.uploadImage("/" + getUploadPath(name, multipartFile, fileName) + fileName);
-        }else {
+        }else{
+            System.out.println("이미지"+multipartFile);
             imageUpload.uploadImage("/images/null/null.jpg");
         }
 
@@ -45,6 +46,8 @@ public class ImageUploadServiceImpl implements ImageUploadService {
 
         return uploadDir;
     }
+
+
 
     private String creatFileName() {
         LocalDateTime now = LocalDateTime.now();

@@ -5,6 +5,7 @@ import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.domain.domain.shop.shop.domain.Shop;
 import com.example.team_project.domain.domain.shop.shop.domain.ShopRepository;
+import com.example.team_project.exception.NotPasswordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -32,7 +33,7 @@ public class ShopUpdateService {
                 .orElseThrow(() -> new EntityNotFoundException("Shop not found"));
         // 판매자 비밀번호 검증
         if (!seller.isValidPassword(passwordEncoder, password)) {
-            throw new BadCredentialsException("Invalid password");
+            throw new NotPasswordException("Invalid password");
         }
 
 
