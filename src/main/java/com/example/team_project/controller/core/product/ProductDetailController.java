@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("product/detail")
+@RequestMapping("/product/detail")
 public class ProductDetailController {
 
     private final ProductRepository productRepository;
@@ -27,23 +27,17 @@ public class ProductDetailController {
     private final UserRepository userRepository;
 
     @GetMapping("{productId}")
-    public String detail(@PathVariable Long productId, Model model, @SessionAttribute("userId")Long userId){
+    public String detail(@PathVariable Long productId, Model model, @SessionAttribute("userId") Long userId) {
         Optional<Product> product = productRepository.findById(productId);
         Optional<User> user = userRepository.findById(userId);
-        model.addAttribute("productDetail",product);
-
-
-
+        model.addAttribute("productDetail", product);
 
         //좋아요 누르면 빨간하트 아니면 검은하트!
-        Optional<LikeCountCheck> likeCount = likeCountRepository.findByUserIdAndProductId(user,product);
+        Optional<LikeCountCheck> likeCount = likeCountRepository.findByUserIdAndProductId(user, product);
         boolean isLiked = likeCount.isPresent();
 
-        model.addAttribute("isLiked",isLiked);
-
-
+        model.addAttribute("isLiked", isLiked);
 
         return "thymeleaf/product/productUserDetail";
     }
-
 }

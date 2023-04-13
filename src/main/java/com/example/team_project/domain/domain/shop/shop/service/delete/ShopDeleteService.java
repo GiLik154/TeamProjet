@@ -26,7 +26,7 @@ public class ShopDeleteService {
         Seller seller = sellerRepository.validateSeller(ownerId);
 
         if (!seller.isValidPassword(passwordEncoder, password)) {
-            throw new NotPasswordException("Invalid password");
+            throw new NotPasswordException("비밀번호를 다시 확인해주세요");
         }
 
 
