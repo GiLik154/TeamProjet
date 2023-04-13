@@ -31,18 +31,9 @@ public class PostReadController {
         postRepository.findById(postId).ifPresent(post -> {
             List<BaseReview>baseReviewList = baseReviewRepository.findByReviewToKinds_PostReview_PostIdAndSituation(postId,"create");
             List<ReviewRecommend>reviewRecommendList = reviewRecommendRepository.findByBaseReview_ReviewToKinds_PostReview_PostIdAndUser_Id(postId,userId);
-            List<String> resultList = new ArrayList<String>();
-            for(int i=0;i<baseReviewList.size();i++){
-                String result = "false";
-                if(baseReviewList.get(i).getId()==reviewRecommendList.get(i).getBaseReview().getId()){
-                    result = "true";
-                }
-                resultList.add(result);
-            }
 
             model.addAttribute("reviewLink",reviewLink);
             model.addAttribute("post",post);
-            model.addAttribute("resultList",resultList);
             model.addAttribute("postReviewList",baseReviewList);
             model.addAttribute("recommendList",reviewRecommendList.isEmpty() ? null : reviewRecommendList);
         });

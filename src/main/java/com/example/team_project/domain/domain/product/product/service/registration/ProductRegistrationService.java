@@ -32,9 +32,13 @@ public class ProductRegistrationService {
         return sellerRepository.findById(sellerId).orElseThrow(() -> new RuntimeException("shop id ."));
     }
 
-    private ProductCategory getCategory(ProductCategoryStatus status){
+    private ProductCategory getCategory(ProductCategoryStatus status) {
         return productCategoryRepository.findByStatus(status)
-                .orElseThrow(() -> new RuntimeException("해당 카테고리를 찾을 수 없습니다."));
+                .orElseGet(() -> {
+                    ProductCategory productCategory = new ProductCategory(status);
+                    productCategoryRepository.save(productCategory);
+                    return productCategory;
+                });
     }
 
 

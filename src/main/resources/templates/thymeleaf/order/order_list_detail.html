@@ -50,7 +50,7 @@
             <td th:text="${order.orderToProduct.quantity}"></td>
             <td th:text="${order.orderToProduct.totalPrice}"></td>
             <td>
-                <a th:href="@{#}" class="btn btn-primary btn-sm">리뷰 작성</a>
+                <a th:href="@{/product/review/add(productId=${order.getOrderToProduct().getProduct().getId()})}">리뷰작성</a>
             </td>
 <!--            <td>-->
 <!--                <a th:href="@{/order/cancel/{userId}/{orderId}(userId=${userId},orderId=${order.id})}"-->

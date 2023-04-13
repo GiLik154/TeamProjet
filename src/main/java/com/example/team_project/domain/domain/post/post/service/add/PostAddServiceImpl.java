@@ -1,10 +1,12 @@
 package com.example.team_project.domain.domain.post.post.service.add;
 
 import com.example.team_project.domain.domain.image.service.ImageUploadService;
+import com.example.team_project.domain.domain.post.category.domain.PostCategory;
 import com.example.team_project.domain.domain.post.category.domain.PostCategoryRepository;
 import com.example.team_project.domain.domain.post.post.domain.Post;
 import com.example.team_project.domain.domain.post.post.domain.PostRepository;
 import com.example.team_project.domain.domain.post.post.service.PostDto;
+import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,19 +29,14 @@ public class PostAddServiceImpl implements PostAddService {
 
     @Override
     public boolean add(Long userId, PostDto dto, MultipartFile file) {
-        AtomicBoolean result = new AtomicBoolean(false); // boolean 값을 저장할 AtomicBoolean 객체 생성
-        postCategoryRepository.findById(dto.getCategory()).ifPresent(category -> {
             User user = userRepository.validateUserId(userId);
 
-            Post post = new Post(dto.getTitle(), dto.getContent(), getTime(), user, category); //점검
+            Post post = new Post(dto.getTitle(), dto.getContent(), getTime(), user, getCategory(dto.getCategory())); //점검
 
             imageUploadService.upload(post.getTitle(), file, post);
-
             postRepository.save(post);
 
-            result.set(true);
-        });
-        return result.get();
+        return true;
     }
 
     /**
@@ -49,5 +46,14 @@ public class PostAddServiceImpl implements PostAddService {
         LocalDateTime localDateTime = LocalDateTime.now();
 
         return localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:ss"));
+    }
+
+    private PostCategory getCategory(String status){
+        return postCategoryRepository.findByName(status)
+                .orElseGet(() -> {
+                    PostCategory postCategory = new PostCategory(status);
+                    postCategoryRepository.save(postCategory);
+                    return postCategory;
+                });
     }
 }
