@@ -4,6 +4,7 @@ package com.example.team_project.domain.domain.shop.shop.service.delete;
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.domain.domain.shop.shop.domain.ShopRepository;
+import com.example.team_project.exception.NotPasswordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,7 +26,7 @@ public class ShopDeleteService {
         Seller seller = sellerRepository.validateSeller(ownerId);
 
         if (!seller.isValidPassword(passwordEncoder, password)) {
-            throw new BadCredentialsException("Invalid password");
+            throw new NotPasswordException("Invalid password");
         }
 
 
