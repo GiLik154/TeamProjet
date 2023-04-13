@@ -22,12 +22,6 @@ public class ReviewRecommendUpdateServiceImpl implements ReviewRecommendUpdateSe
     private final UserRepository userRepository;
     private final BaseReviewRepository baseReviewRepository;
 
-    /**
-     * 유저의 고유번호로 유저가 있으면 객체를 가져옴
-     * baseReviewValidate 로 리뷰 검증
-     * reviewRecommendValidate 로 추천 검증
-     * 추천 업데이트 후 저장
-     */
     @Override
     public void update(Long userId, Long baseReviewId, String trueOrFalse) {
         userRepository.findById(userId).ifPresent(user -> {

@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface PostReviewRepository extends JpaRepository<PostReview,Long> {
-    Optional<PostReview> findByPostId(Long postId);
+
 }

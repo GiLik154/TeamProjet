@@ -25,12 +25,6 @@ public class PostAddServiceImpl implements PostAddService {
     private final PostCategoryRepository postCategoryRepository;
     private final ImageUploadService imageUploadService;
 
-    /**
-     * 컨트롤단에서 postDto 와 userId, 이미지 파일을 가지고 생성
-     * 유저의 아이디 검증
-     * 이미지파일 업로드
-     * 저장후 결과값 true 로 보냄
-     */
     @Override
     public boolean add(Long userId, PostDto dto, MultipartFile file) {
         AtomicBoolean result = new AtomicBoolean(false); // boolean 값을 저장할 AtomicBoolean 객체 생성

@@ -29,25 +29,23 @@ public class PostReadController {
 
         postRepository.findById(postId).ifPresent(post -> {
             List<BaseReview>baseReviewList = baseReviewRepository.findByReviewToKinds_PostReview_PostIdAndSituation(postId,"create");
-            List<ReviewRecommend>reviewRecommendList = reviewRecommendRepository.findByBaseReview_ReviewToKinds_PostReview_PostIdAndBaseReview_Situation(postId,"create");
+            List<ReviewRecommend>reviewRecommendList = reviewRecommendRepository.findByBaseReview_ReviewToKinds_PostReview_PostIdAndUser_Id(postId,userId);
 
             model.addAttribute("reviewLink",reviewLink);
             model.addAttribute("post",post);
             model.addAttribute("postReviewList",baseReviewList);
-            model.addAttribute("userId",userId);
             model.addAttribute("recommendList",reviewRecommendList.isEmpty() ? null : reviewRecommendList);
-//            model.addAttribute("recommendCount",recommendCountList);
         });
         return "thymeleaf/post/read";
     }
 
-    @GetMapping("/recommend/{baseReviewId}")
+    @GetMapping("/recommend")
     @ResponseBody
-    public String recommendInfo(@PathVariable Long baseReviewId,Long userId) {
+    public String recommendInfo(@RequestParam Long baseReviewId,@SessionAttribute("userId") Long userId) {
         System.out.println("sdfdsfsdf"+baseReviewId);
         // Handle post update logic here
             AtomicReference<String> result = new AtomicReference<>("Cancel");
-        reviewRecommendRepository.findByBaseReview_IdAndUser_Id(baseReviewId,151L).ifPresent(reviewRecommend -> {
+        reviewRecommendRepository.findByBaseReview_IdAndUser_Id(baseReviewId,userId).ifPresent(reviewRecommend -> {
             if(reviewRecommend.getRecommend().equals("Best")){
                 result.set("Best");
             }else if (reviewRecommend.getRecommend().equals("Worst")){

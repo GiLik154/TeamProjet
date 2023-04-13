@@ -26,13 +26,6 @@ public class BaseReviewAddServiceImpl<T> implements BaseReviewAddService {
     private final Map<String, ReviewJoinKindsService> reviewJoinKindsServiceMap;
     private final ImageUploadService imageUploadService;
 
-    /**
-     * 유저의 고유번호,리뷰작성글,이미지 파일을 받아 실행
-     * 유저를 검증함
-     * 유저의 고유번호를 이용해 유저가있으면 객체를 가져옴
-     * 반환된 ReviewToKinds 저장
-     * 이미지 파일을 업로드
-     */
     @Override
     public void add(Long userId, ReviewDto reviewDto, MultipartFile file) {
         userRepository.validateUserId(userId);
@@ -59,11 +52,7 @@ public class BaseReviewAddServiceImpl<T> implements BaseReviewAddService {
         return localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:ss"));
     }
 
-    /**
-     * 정보를 받아 종류와 고유번호를 받음
-     * 종류가 게시글이면 게시글리뷰 상품이면 상품리뷰로 저장
-     * 고유번호로 종류의 객체를 가져와 반환
-     */
+
     private ReviewToKinds getType(ReviewDto reviewDto) {
         ReviewJoinKindsService reviewJoinKindsService = reviewJoinKindsServiceMap.get(reviewDto.getKinds());
         return reviewJoinKindsService.returnReviewToKindsEntity(reviewDto.getKindsId());
