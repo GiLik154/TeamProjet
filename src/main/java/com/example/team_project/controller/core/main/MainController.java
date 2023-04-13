@@ -11,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 @Controller
 @RequiredArgsConstructor
@@ -19,7 +20,7 @@ public class MainController {
     private final ProductRepository productRepository;
 
     @GetMapping
-    public String get(Pageable pageable, Model model) {
+    public String get(@SessionAttribute Long userId, Pageable pageable, Model model) {
 
         int page = Math.max(pageable.getPageNumber(), 1);
         int limitPage = 8;
