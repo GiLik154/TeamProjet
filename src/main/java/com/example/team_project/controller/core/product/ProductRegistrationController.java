@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("product/registration")
+@RequestMapping("/product/registration")
 public class ProductRegistrationController {
 
     private final ProductRegistrationService productRegistrationService;

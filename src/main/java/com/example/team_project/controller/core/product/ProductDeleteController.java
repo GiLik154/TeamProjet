@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("product/delete")
+@RequestMapping("/product/delete")
 public class ProductDeleteController {
 
     private final ProductDeleteService productDeleteService;
@@ -28,7 +28,7 @@ public class ProductDeleteController {
 
         try {
             productDeleteService.delete(sellerId, productId, password);
-            return "redirect:product/seller/list";
+            return "redirect:/product/seller/list";
 
         } catch (NotPasswordException ex) {
             throw new NotPasswordException("비밀번호를 잘못 입력했습니다.");

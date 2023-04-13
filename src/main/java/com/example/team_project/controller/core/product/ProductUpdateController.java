@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("product/update")
+@RequestMapping("/product/update")
 public class ProductUpdateController {
 
     private final ProductUpdateService productUpdateService;

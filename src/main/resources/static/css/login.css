@@ -1,0 +1,15 @@
+.container {
+    margin-top: 50px;
+}
+
+.form-group label {
+    font-weight: bold;
+}
+
+.form-check-label {
+    margin-left: 20px;
+}
+
+.btn {
+    margin-right: 10px;
+}
