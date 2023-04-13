@@ -29,8 +29,8 @@ public class OrderCreateController {
     private final ProductRepository productRepository;
     private final OrderCreateService orderCreateService;
 
-    @GetMapping
-    public ModelAndView createForm(@RequestParam Long productId, @RequestParam Long userId) {
+    @GetMapping("/{productId}")
+    public ModelAndView createForm(@PathVariable Long productId, @SessionAttribute Long userId) {
         ModelAndView modelAndView = new ModelAndView("/thymeleaf/order/order_create");
         List<UserAddress> userAddressList = userAddressRepository.findByUserId(userId);
         List<Payment> paymentList = paymentRepository.findByUserId(userId);
@@ -43,9 +43,9 @@ public class OrderCreateController {
         return modelAndView;
     }
 
-    @PostMapping("/{userId}")
-    public ModelAndView create(@PathVariable Long userId,
-                               @RequestParam Long productId,
+    @PostMapping("/{productId}")
+    public ModelAndView create(@SessionAttribute Long userId,
+                               @PathVariable Long productId,
                                @RequestParam int quantity,
                                @RequestParam Long userAddressId,
                                @RequestParam Long paymentId) {
@@ -53,6 +53,5 @@ public class OrderCreateController {
         orderCreateService.create(userId, productId, quantity, userAddressId, paymentId);
 
         return new ModelAndView("redirect:/order_list/view" + userId);//결제페이지로 이동하게
-
     }
 }

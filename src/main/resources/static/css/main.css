@@ -1,0 +1,88 @@
+.card-title, .card-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.card-img-top {
+    height: 200px; /* 이미지 높이 설정 */
+    object-fit: cover; /* 요소 내에서 비율 유지 */
+}
+.banner {
+    height: 200px;
+    background-color: #ccc;
+}
+
+.products .card {
+    height: 400px;
+}
+
+.my-page {
+    color: red;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
+
+header h1 {
+    flex: 1;
+    font-size: 24px;
+    margin: 0;
+}
+
+nav ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+nav li {
+    margin-left: 10px;
+}
+
+nav a {
+    color: #fff;
+    text-decoration: none;
+    padding: 10px;
+}
+
+nav a:hover {
+    background-color: #fff;
+    color: #333;
+}
+
+nav .my-page {
+    display: none;
+}
+
+main {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.banner {
+    height: 200px;
+    background-color: #f2f2f2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.products {
+    margin-top: 50px;
+}
+
+.products h2 {
+    font-size: 20px;
+    margin: 0;
+}

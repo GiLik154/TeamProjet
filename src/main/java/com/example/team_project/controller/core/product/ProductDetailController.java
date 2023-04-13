@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("product/detail")
+@RequestMapping("/product/detail")
 public class ProductDetailController {
 
     private final ProductRepository productRepository;

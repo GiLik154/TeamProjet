@@ -2,13 +2,10 @@ package com.example.team_project.controller.core.shop.seller;
 
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
-import com.example.team_project.domain.domain.shop.seller.service.dto.SellerJoinDto;
 import com.example.team_project.domain.domain.shop.seller.service.login.SellerLoginService;
 import com.example.team_project.exception.NotPasswordException;
 import com.example.team_project.exception.SellerNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -31,24 +28,22 @@ public class SellerLoginController {
 
 
     @PostMapping("")
-    public String login(@RequestParam("ownerId") String ownerId, @RequestParam("password") String password, Model model) {
+    public String login(@RequestParam("userId") String userId, @RequestParam("password") String password, Model model) {
         //오너 아이디 있나 검사
-        Seller seller = sellerRepository.findByOwnerId(ownerId).orElseThrow(() ->
+        Seller seller = sellerRepository.findByOwnerId(userId).orElseThrow(() ->
                 new SellerNotFoundException("아이디가없음"));
         try {
             //로그인시도
-            sellerLoginService.sellerLogin(ownerId, password);
-            model.addAttribute("ownerId", ownerId);
+            sellerLoginService.sellerLogin(userId, password);
+            model.addAttribute("ownerId", userId);
             model.addAttribute("sellerId", seller.getId());
 
             //성공하면 seller 메인페이지로이동
-            return "thymeleaf/seller/sellerIndex";
+            return "redirect:/main";
 
         } catch (NotPasswordException e) {
             //실패시 출력
             throw new NotPasswordException("로그인 실패하였습니다. 다시 시도해주세요.");
-
         }
     }
-
 }
