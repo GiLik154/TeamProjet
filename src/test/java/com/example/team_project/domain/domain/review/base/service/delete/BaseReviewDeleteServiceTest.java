@@ -39,7 +39,7 @@ class BaseReviewDeleteServiceTest {
         BaseReview baseReview = new BaseReview(user,"content","time","image",new ReviewToKinds());
         baseReviewRepository.save(baseReview);
 
-        baseReviewDeleteService.delete(baseReview.getId(),user.getId(),"testPw");
+        baseReviewDeleteService.delete(baseReview.getId(),user.getId());
         BaseReview testBaseReview = baseReviewRepository.findById(baseReview.getId()).get();
 
         assertEquals("delete",testBaseReview.getSituation());
@@ -55,7 +55,7 @@ class BaseReviewDeleteServiceTest {
         BaseReview baseReview = new BaseReview(user,"content","time","image",new ReviewToKinds());
         baseReviewRepository.save(baseReview);
 
-        baseReviewDeleteService.delete(baseReview.getId(),user2.getId(),"123");
+        baseReviewDeleteService.delete(baseReview.getId(),user2.getId());
         BaseReview testBaseReview = baseReviewRepository.findById(baseReview.getId()).get();
 
         assertNotEquals("delete",testBaseReview.getSituation());
