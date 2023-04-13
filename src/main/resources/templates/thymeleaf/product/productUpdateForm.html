@@ -6,7 +6,7 @@
   <link rel="stylesheet" href="/static/css/productUpdateForm.css">
 </head>
 <body>
-<form th:action="@{/product/update}" method="post">
+<form th:action="@{/product/update}" method="post" enctype="multipart/form-data">
     <input type="hidden" name="productId" th:value="${productId}">
     <table>
         <tr>
@@ -14,8 +14,9 @@
         </tr>
         <tr>
             <td>이름 : <input type="text" name="name"></td>
-            <td>이미지 :<input type="text" name="image"></td>
+            <td>이미지 :<input type="file" name="multipartFile" accept="image/*"></td>
         </tr>
+
         <tr>
             <td colspan="2">상세 설명 :<input type="text" name="description"></td>
         </tr>

@@ -1,4 +1,4 @@
-package com.example.team_project.controller.advice;
+package com.example.team_project.controller.advice.seller;
 
 
 import com.example.team_project.exception.SellerNotFoundException;
@@ -18,11 +18,5 @@ public class SellerLoginExceptionAdvice {
         return modelAndView;
     }
 
-    @ExceptionHandler({SellerNotFoundException.class})
-    public ModelAndView idCheck(SellerNotFoundException errorMessage) {
-        String errmsg = errorMessage.getMessage();
-        ModelAndView modelAndView = new ModelAndView("thymeleaf/seller/sellerLoginForm");
-        modelAndView.addObject("errMsg",errmsg);
-        return modelAndView;
-    }
+
 }

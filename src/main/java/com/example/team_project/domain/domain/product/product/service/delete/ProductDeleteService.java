@@ -34,14 +34,6 @@ public class ProductDeleteService {
             throw new BadCredentialsException("Invalid password");
         }
 
-
-
         productRepository.deleteById(productId);
-
-
-
     }
-
-
-
 }

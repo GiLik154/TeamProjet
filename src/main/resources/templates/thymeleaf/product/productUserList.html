@@ -32,8 +32,10 @@
             </a>
         </td>
         <td ><img style="width: 50px" th:src="${list.getImage()}"></td>
-        <td><span th:text="${list.getPrice()}"></span> 원</td>
+        <!--가격에 , 생성하기위해서  numbers.formatInteger 사용함.-->
+        <td><span th:text="${#numbers.formatInteger(list.getPrice(), 3, 'COMMA')}"></span> 원</td>
         <td><span th:text="${list.getLikeCount()}"></span></td>
+
     </tr>
     </tbody>
 </table>
@@ -43,11 +45,11 @@
 </footer>
 
 
-
+<!--페이징-->
 <div class="pagination-links">
     <a th:if="${page >= 1}" th:href="@{/product/user/list(page=${page - 1})}">이전</a>
 
-    <form action="/product/seller/list">
+    <form action="/product/user/list">
         <input type="number" name="page" min="1" th:max="${totalPage}" th:value="${page}" />
         /<a th:text="${totalPage}"></a>
         <button type="submit" style="width:60px;height:31px;border-style:none;border-radius:10px">이동</button>

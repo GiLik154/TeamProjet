@@ -1,6 +1,7 @@
 package com.example.team_project.controller.core.shop.shop;
 
 import com.example.team_project.domain.domain.shop.shop.service.update.ShopUpdateService;
+import com.example.team_project.exception.NotPasswordException;
 import com.example.team_project.exception.ShopIncorrectUpdatePasswordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -36,8 +37,8 @@ public class ShopUpdateController {
 
             return "redirect:/shop/list";
 
-        }catch (BadCredentialsException e){
-            throw new ShopIncorrectUpdatePasswordException("비밀번호 틀림 . 다시 시도해주세요.");
+        }catch (NotPasswordException e){
+            throw new NotPasswordException("비밀번호 틀림 . 다시 시도해주세요.");
         }
 
 

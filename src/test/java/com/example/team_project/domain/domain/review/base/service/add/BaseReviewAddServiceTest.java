@@ -100,7 +100,7 @@ class BaseReviewAddServiceTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testImg", 1, 20, productCategory);
+        Product product = new Product("testProduct", seller, "testDes", 99, 20, productCategory);
         productRepository.save(product);
 
         ReviewDto reviewDto = new ReviewDto("reviewTitle", "reviewContent", "ProductReview", product.getId());
@@ -111,7 +111,6 @@ class BaseReviewAddServiceTest {
         assertEquals("reviewTitle", baseReview.getTitle());
         assertEquals("reviewContent", baseReview.getContent());
         assertEquals("testProduct", baseReview.getReviewToKinds().getProductReview().getProduct().getName());
-        assertEquals("testImg", baseReview.getReviewToKinds().getProductReview().getProduct().getImage());
         assertEquals("testDes", baseReview.getReviewToKinds().getProductReview().getProduct().getDescription());
         assertNotNull(baseReview.getImagePath());
         assertNull(baseReview.getReviewToKinds().getPostReview());

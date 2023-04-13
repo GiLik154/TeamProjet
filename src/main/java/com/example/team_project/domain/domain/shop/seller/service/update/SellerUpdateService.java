@@ -2,6 +2,7 @@ package com.example.team_project.domain.domain.shop.seller.service.update;
 
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
+import com.example.team_project.exception.NotPasswordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,7 +24,7 @@ public class SellerUpdateService {
 
         // 판매자 비밀번호 검증
         if (!seller.isValidPassword(passwordEncoder, password)) {
-            throw new BadCredentialsException("Invalid password");
+            throw new NotPasswordException("Invalid password");
         }
 
         //판매자 이름, 판매자 번호 수정

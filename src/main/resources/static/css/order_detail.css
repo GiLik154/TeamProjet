@@ -1,0 +1,45 @@
+/* order_detail.css */
+
+/* Table style */
+table {
+    border-collapse: collapse;
+    margin: 30px 0;
+    width: 100%;
+    max-width: 800px;
+}
+
+th, td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+    font-size: 16px;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Image style */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Cancel button style */
+button {
+    background-color: #ff4d4d;
+    border: none;
+    color: white;
+    padding: 12px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+button:hover {
+    background-color: #ff3333;
+}

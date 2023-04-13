@@ -42,17 +42,14 @@ public class ProductRegistrationService {
     public void productRegistration(Long sellerId, ProductDto productDto, MultipartFile multipartFile) {
         ProductCategoryStatus productCategoryStatus = ProductCategoryStatus.valueOf(productDto.getCategoryDto());
 
-        System.out.println("1"+productCategoryStatus.getCategory());
-        System.out.println("2"+productDto.getCategoryDto());
-        System.out.println("3"+ProductCategoryStatus.valueOf(productDto.getCategoryDto()));
-        System.out.println("4"+productCategoryStatus);
+
         //품목이름,이미지,상세설명 등록
         Product product = new Product(
                 productDto.getName(),
                 getSeller(sellerId),
                 productDto.getDescription(),
-                productDto.getPrice(),
                 productDto.getStock(),
+                productDto.getPrice(),
                 getCategory(productCategoryStatus));
 
         imageUploadService.upload(productDto.getName(), multipartFile, product);

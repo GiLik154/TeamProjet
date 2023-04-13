@@ -22,9 +22,16 @@ public class SellerJoinService {
 
     //회원가입
     public void sellerJoin(SellerJoinDto sellerJoinDto){
-        //아이디 중복체크
+        
+        /**
+         * seller 에 ownerId가 존재하는지 검색하고 이미 ownerId가 존재한다면,
+         * @SellerDuplicateSellerException 예외발생
+         * */
         sellerRepository.duplication(sellerJoinDto.getOwnerId());
 
+        /**
+         * 아이디가 존재하지 않으면 값을받아와서 seller 에 저장
+         * */
         Seller seller = new Seller(
                 sellerJoinDto.getOwnerId(),
                 sellerJoinDto.getPassword(),
@@ -35,7 +42,9 @@ public class SellerJoinService {
         sellerRepository.save(seller);
     }
 
-    //password
+    /** 
+     * 비밀번호 암호화
+     * */
     private void checkEncodingPw(Seller seller, String password) {
         if (!seller.isEncodePassword(bCryptPasswordEncoder, password)) {
             throw new PasswordEncodingFailedException();

@@ -40,7 +40,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
         //판매자 아이디로 업데이트함 (판매자 이름, 판매자 폰번호)
-        sellerUpdateService.sellerUpdate(seller.getOwnerId(),"testPw","testupdatename","testupdatephone");
+        sellerUpdateService.sellerUpdate(seller.getId(),"testPw","testupdatename","testupdatephone");
 
         //오너 아이디 관련된거 가지고오기
         Seller sellerUpdate = sellerRepository.findByOwnerId(seller.getOwnerId()).get();
@@ -68,7 +68,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
         //비밀번호가 다를때 메시지 출력하는 코드
         BadCredentialsException e = assertThrows(BadCredentialsException.class, () ->
-                sellerUpdateService.sellerUpdate(sellerId,"testPws","testupdatename","testupdatephone"));
+                sellerUpdateService.sellerUpdate(seller.getId(),"testPws","testupdatename","testupdatephone"));
 
         //오너아이디이용해서 검색 가지고오기
         Seller sellerUpdate = sellerRepository.findByOwnerId(seller.getOwnerId()).get();
