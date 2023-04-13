@@ -35,7 +35,7 @@ public class ProductUpdateController {
             productUpdateService.update(sellerId, productId, password, productDto, multipartFile);
             return "redirect:/product/seller/list";
         } catch (NotPasswordException ex) {
-            throw new NotPasswordException("로그인 실패하였습니다. 다시 시도해주세요.");
+            throw new NotPasswordException("비밀번호 를 다시 확인하세요.");
         }
 
     }

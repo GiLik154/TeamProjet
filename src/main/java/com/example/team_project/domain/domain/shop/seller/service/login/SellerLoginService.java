@@ -3,6 +3,7 @@ package com.example.team_project.domain.domain.shop.seller.service.login;
 
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
+import com.example.team_project.exception.NotPasswordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,7 +31,7 @@ public class SellerLoginService {
 
 
         if (!seller.isValidPassword(bCryptPasswordEncoder, password)) {
-            throw new BadCredentialsException("Invalid password");
+            throw new NotPasswordException("Invalid password");
         }
 
         return seller.getOwnerId();

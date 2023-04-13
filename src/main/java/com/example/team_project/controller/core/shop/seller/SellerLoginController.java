@@ -4,6 +4,7 @@ import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.domain.domain.shop.seller.service.dto.SellerJoinDto;
 import com.example.team_project.domain.domain.shop.seller.service.login.SellerLoginService;
+import com.example.team_project.exception.NotPasswordException;
 import com.example.team_project.exception.SellerNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -43,9 +44,9 @@ public class SellerLoginController {
             //성공하면 seller 메인페이지로이동
             return "thymeleaf/seller/sellerIndex";
 
-        } catch (BadCredentialsException e) {
+        } catch (NotPasswordException e) {
             //실패시 출력
-            throw new BadCredentialsException("로그인 실패하였습니다. 다시 시도해주세요.");
+            throw new NotPasswordException("로그인 실패하였습니다. 다시 시도해주세요.");
 
         }
     }

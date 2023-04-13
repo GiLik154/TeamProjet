@@ -31,7 +31,7 @@ public class ProductDeleteController {
             return "redirect:product/seller/list";
 
         } catch (NotPasswordException ex) {
-            throw new NotPasswordException("로그인 실패하였습니다. 다시 시도해주세요.");
+            throw new NotPasswordException("비밀번호를 잘못 입력했습니다.");
         }
 
     }

@@ -1,10 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en"  >
+
 <head>
+
     <meta charset="UTF-8">
     <title>Product User Detail</title>
     <link rel="stylesheet" href="/static/css/productUserDetail.css">
+
 </head>
+
 <body>
 
 <div class="container">
@@ -20,7 +24,8 @@
             </tr>
             <tr>
                 <th>가격</th>
-                <td th:text="${productDetail.get().getPrice()}"></td>
+                <!--  <td th:text="${productDetail.get().getPrice()}"></td> -->
+                <td><span th:text="${#numbers.formatInteger(productDetail.get().getPrice(), 3, 'COMMA')}"></span> 원</td>
             </tr>
             <tr>
                 <th>설명</th>
@@ -30,13 +35,24 @@
                 <th>재고</th>
                 <td th:text="${productDetail.get().getStock()}"></td>
             </tr>
+
+        </table>
+        <table>
+            <tr>
+                <th>리뷰</th>
+            </tr>
+            <tr>
+                <td>리뷰1</td>
+            </tr>
         </table>
 
 
-
-            <form>
-                <button>구매하기</button>
-            </form>
+        <form>
+            <input type="hidden" name="productId" th:value="${productId}">
+            수량 :&nbsp;&nbsp;<input type="number" name="salesCount" min="1" max="100"
+                                   style="width: 35px;height: 35px; border-radius: 9px; border-style: double" value="1">
+            <button type="submit">구매하기</button>
+        </form>
 
         <form th:action="@{/update/like}">
             <input type="hidden" name="productId" th:value="${productId}">
@@ -45,7 +61,6 @@
                 <span th:if="${!isLiked}">🖤</span>
             </button>
         </form>
-
 
 
     </div>
