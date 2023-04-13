@@ -13,26 +13,33 @@
             <div class="row">
                 <div class="col-md-4">
                     <label for="productImage">상품 이미지:</label>
-                    <img id="productImage" src="#" alt="상품 이미지">
+                    <img id="productImage" src="${product.image}" alt="상품 이미지">
                 </div>
                 <div class="col-md-8">
                     <label for="productId">상품명:</label>
-                    <input type="text" class="form-control" id="productId" name="productId" required>
+                    <input type="text" class="form-control" id="productId" name="productId" th:value="${product.name}"
+                           required>
                     <div class="form-group">
                         <label for="quantity">주문 수량:</label>
                         <input type="number" class="form-control" id="quantity" name="quantity" min="1" required>
                     </div>
                     <div class="form-group">
                         <label for="address">배송지:</label>
-                        <input type="text" class="form-control" id="address" name="address" required>
+                        <select class="form-control" id="address" name="userAddressId" required>
+                            <option th:each="address : ${user_address_list}" th:value="${address.id}"
+                                    th:text="${address.streetAddress + ' ' + address.detailedAddress}">주소를 선택하세요.
+                            </option>
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="paymentMethod">결제 방법:</label>
-                        <select class="form-control" id="paymentMethod" name="paymentMethod" required>
-                            <option value="Credit Card">신용카드</option>
-                            <option value="Bank Transfer">계좌이체</option>
+                        <select class="form-control" id="paymentMethod" name="paymentMethodId" required>
+                            <option th:each="payment : ${payment_list}" th:value="${payment.id}"
+                                    th:text="${payment.paymentType + ' ' + payment.cardNumber}">결제수단을 선택하세요.
+                            </option>
                         </select>
                     </div>
+                    <!-- 결제페이지로 이동 -->
                     <form th:action="@{#}" method="get">
                         <input type="hidden" name="orderId" th:value="${orderId}">
                         <button type="submit" class="btn btn-primary">주문하기</button>

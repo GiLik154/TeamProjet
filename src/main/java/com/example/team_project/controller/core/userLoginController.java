@@ -21,12 +21,10 @@ public class userLoginController {
     }
 
     @PostMapping("")
-    public String login(@RequestParam("id") Long id, Model model){
-        System.out.println(id);
-        userLogin.userLogin(id);
-        model.addAttribute("userId",id);
-        return "redirect:/product/user/list";
+    public String login(@RequestParam("userId") Long userId, Model model){
+        System.out.println(userId);
+        userLogin.userLogin(userId);
+        model.addAttribute("userId", userId);
+        return "redirect:/main";
     }
-
-
 }

@@ -22,7 +22,10 @@ public class ProductDeleteController {
     }
 
     @PostMapping("")
-    public String del(@SessionAttribute("sellerId") Long sellerId, @RequestParam("productId") Long productId, @RequestParam("password") String password) {
+    public String del(@SessionAttribute("sellerId") Long sellerId,
+                      @RequestParam("productId") Long productId,
+                      @RequestParam("password") String password) {
+
 
         productDeleteService.delete(sellerId, productId, password);
         return "redirect:product/seller/list";

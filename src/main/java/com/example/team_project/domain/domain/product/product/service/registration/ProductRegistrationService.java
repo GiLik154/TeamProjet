@@ -32,7 +32,6 @@ public class ProductRegistrationService {
     public void productRegistration(Long sellerId, ProductDto productDto, MultipartFile multipartFile) {
         ProductCategoryStatus productCategoryStatus = ProductCategoryStatus.valueOf(productDto.getCategoryDto());
 
-
         //품목이름,이미지,상세설명 등록
         Product product = new Product(
                 productDto.getName(),
