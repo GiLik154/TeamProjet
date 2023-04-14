@@ -24,9 +24,9 @@ public class OrderUpdateController {
     private final UserAddressRepository userAddressRepository;
 
     @GetMapping("/{userAddressId}")
-    public ModelAndView updateForm(@PathVariable Long userAddressId, @RequestParam Long userId, @RequestParam Long orderListId) {
+    public ModelAndView updateForm(@PathVariable Long userAddressId, @SessionAttribute("userId") Long userId, @RequestParam Long orderListId) {
         UserAddress userAddress = userAddressRepository.findById(userAddressId).orElseThrow(InvalidAddressException::new);
-        ModelAndView modelAndView = new ModelAndView("/thymeleaf/order/order_address_update");
+        ModelAndView modelAndView = new ModelAndView("thymeleaf/order/order_address_update");
         modelAndView.addObject("userAddress", userAddress);
         modelAndView.addObject("userId", userId);
         modelAndView.addObject("order_list_id", orderListId);

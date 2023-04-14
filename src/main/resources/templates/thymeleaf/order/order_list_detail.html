@@ -5,6 +5,12 @@
     <title>주문 내역</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        .product-image {
+            width: 80px;
+            height: 50px;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -16,7 +22,7 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <form th:action="@{/order/view/detail/{orderListId}(orderListId=${orderListId}, userId=${userId})}"
+                <form th:action="@{/order/view/detail/{orderListId}(orderListId=${orderListId})}"
                       method="get">
                     <button type="submit" class="btn btn-primary">주문 상세보기</button>
                 </form>
@@ -39,12 +45,12 @@
         <tbody>
         <tr th:each="order : ${orders}">
             <td>
-                <a href="/order/create/{userId}">
-                    <img th:src="${order.orderToProduct.product.image}" width="100">
+                <a th:href="@{/order/create}"><!-- todo 이미지 크기 조정중 -->
+                    <img th:src="${order.orderToProduct.product.image}" alt="상품 이미지" class="product-image img-fluid">
                 </a>
             </td>
             <td>
-                <a th:href="@{/order/create/{userId}(usrId=${userId})}"
+                <a th:href="@{/order/create}"
                    th:text="${order.orderToProduct.product.name}"></a>
             </td>
             <td th:text="${order.orderToProduct.quantity}"></td>
@@ -52,13 +58,11 @@
             <td>
                 <a th:href="@{/product/review/add(productId=${order.getOrderToProduct().getProduct().getId()})}">리뷰작성</a>
             </td>
-<!--            <td>-->
-<!--                <a th:href="@{/order/cancel/{userId}/{orderId}(userId=${userId},orderId=${order.id})}"-->
-<!--                   class="btn btn-danger btn-sm">주문 취소</a>-->
-<!--            </td>-->
         </tr>
         </tbody>
     </table>
+    <a href="javascript:history.back()" class="btn btn-secondary">뒤로 돌아가기</a>
+
 </div>
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

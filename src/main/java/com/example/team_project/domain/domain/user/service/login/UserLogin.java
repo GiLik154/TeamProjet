@@ -11,9 +11,9 @@ public class UserLogin {
 
     private final UserRepository userRepository;
 
-    public void userLogin(Long userid){
+    public void userLogin(Long userId){
 
-        userRepository.findById(userid);
+        userRepository.findById(userId);
 
     }
 }

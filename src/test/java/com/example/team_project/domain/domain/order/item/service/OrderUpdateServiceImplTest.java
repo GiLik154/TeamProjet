@@ -22,7 +22,6 @@ import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.OrderStatus;
 import com.example.team_project.enums.PaymentType;
 import com.example.team_project.enums.ProductCategoryStatus;
-import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.InvalidQuantityException;
 import com.example.team_project.exception.OutOfStockException;
 import com.example.team_project.exception.ProductNotFoundException;
@@ -51,6 +50,7 @@ class OrderUpdateServiceImplTest {
     private final ProductCategoryRepository productCategoryRepository;
     private final OrderListRepository orderListRepository;
     private final OrderRepository orderRepository;
+    private final OrderUpdateService orderUpdateService;
     private final OrderUpdateServiceImpl orderUpdateServiceImpl;
 
     @Autowired
@@ -63,7 +63,7 @@ class OrderUpdateServiceImplTest {
                                       ProductCategoryRepository productCategoryRepository,
                                       OrderListRepository orderListRepository,
                                       OrderRepository orderRepository,
-                                      OrderUpdateServiceImpl orderUpdateServiceImpl) {
+                                      OrderUpdateServiceImpl orderUpdateServiceImpl, OrderUpdateService orderUpdateService, OrderUpdateServiceImpl orderUpdateServiceImpl1) {
         this.userRepository = userRepository;
         this.userAddressRepository = userAddressRepository;
         this.paymentRepository = paymentRepository;
@@ -73,7 +73,8 @@ class OrderUpdateServiceImplTest {
         this.productCategoryRepository = productCategoryRepository;
         this.orderListRepository = orderListRepository;
         this.orderRepository = orderRepository;
-        this.orderUpdateServiceImpl = orderUpdateServiceImpl;
+        this.orderUpdateService = orderUpdateService;
+        this.orderUpdateServiceImpl = orderUpdateServiceImpl1;
     }
 
     @Test
@@ -113,7 +114,7 @@ class OrderUpdateServiceImplTest {
         Long orderId = order.getId();
 
         //when
-        orderUpdateServiceImpl.update(productId1, orderId, 5);
+        orderUpdateService.update(productId1, orderId, 5);
 
         //then
         assertNotNull(orderId);
@@ -160,7 +161,7 @@ class OrderUpdateServiceImplTest {
 
         //when
         InvalidQuantityException exception = assertThrows(InvalidQuantityException.class, () ->
-                orderUpdateServiceImpl.update(productId1, orderId, 0)
+                orderUpdateService.update(productId1, orderId, 0)
         );
 
         //then
@@ -205,7 +206,7 @@ class OrderUpdateServiceImplTest {
 
         //when
         OutOfStockException exception = assertThrows(OutOfStockException.class, () ->
-                orderUpdateServiceImpl.update(productId1, orderId, 15)
+                orderUpdateService.update(productId1, orderId, 15)
         );
 
         //then
@@ -248,7 +249,7 @@ class OrderUpdateServiceImplTest {
 
         //when
         ProductNotFoundException exception = assertThrows(ProductNotFoundException.class, () ->
-                orderUpdateServiceImpl.update(productId + 1L, orderId, 10)
+                orderUpdateService.update(productId + 1L, orderId, 10)
         );
 
         //then
