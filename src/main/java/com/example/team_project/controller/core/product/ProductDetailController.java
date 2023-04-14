@@ -14,12 +14,10 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -36,25 +34,35 @@ public class ProductDetailController {
 
     @GetMapping("{productId}")
     public String detail(@PathVariable Long productId, Model model, @SessionAttribute("userId") Long userId,
-                         int page) {
+                         @RequestParam(name = "page", defaultValue = "1") int page) {
         Optional<Product> product = productRepository.findById(productId);
         Optional<User> user = userRepository.findById(userId);
+        System.out.println("페이지 확인"+ page);
 
+        int limitPost = 5;
         int limitPage = 5;
-        Pageable pageable = PageRequest.of(page - 1, limitPage, Sort.Direction.DESC, "id");
+        Pageable pageable = PageRequest.of(page - 1, limitPost, Sort.Direction.DESC, "id");
         Page<BaseReview> productReview = baseReviewRepository.findByReviewToKinds_ProductReview_ProductIdAndSituation(productId,
                 "create",
                 pageable
                 );
 
-        int pageBlock = (int)Math.round((double)productReview.getTotalPages()/limitPage);
-        int startPage = (pageBlock-1) * limitPage;
-        int EndPage = (pageBlock) * limitPage;
+        int pageBlock = (int)Math.ceil(((double)productReview.getNumber()+1)/limitPage);
+        int startPage = ((pageBlock-1) * limitPage)+1;
+        int endPage = (pageBlock) * limitPage;
+
+        System.out.println("토탈 페이지="+productReview.getTotalPages());
+        System.out.println("페이징블락="+pageBlock);
+        System.out.println("스타트="+startPage);
+        System.out.println("엔트="+endPage);
 
         //좋아요 누르면 빨간하트 아니면 검은하트!
         Optional<LikeCountCheck> likeCount = likeCountRepository.findByUserIdAndProductId(user, product);
         boolean isLiked = likeCount.isPresent();
 
+        model.addAttribute("limitPage",limitPage);
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("endPage",endPage);
         model.addAttribute("productDetail", product);
         model.addAttribute("productReviewList", productReview);
         model.addAttribute("isLiked", isLiked);
