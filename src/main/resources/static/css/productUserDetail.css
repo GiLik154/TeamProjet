@@ -71,3 +71,30 @@ form span {
 form span:hover {
     transform: scale(1.2);
 }
+
+.pagination {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.pagination a,
+.pagination span {
+    display: inline-block;
+    padding: 5px 10px;
+    color: #337ab7;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.pagination a:hover {
+    color: #23527c;
+}
+
+.pagination span {
+    color: #777;
+}
+
+.pagination div {
+    display: inline-block;
+    margin-right: 5px;
+}
