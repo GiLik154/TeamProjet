@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("product/seller/list")
+@RequestMapping("/product/seller/list")
 public class ProductSellerListController {
 
     private final ProductRepository productRepository;

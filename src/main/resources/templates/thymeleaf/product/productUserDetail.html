@@ -6,6 +6,8 @@
     <meta charset="UTF-8">
     <title>Product User Detail</title>
     <link rel="stylesheet" href="/static/css/productUserDetail.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script th:src="@{/js/button.js}"></script>
 
 </head>
 
@@ -51,7 +53,7 @@
             <input type="hidden" name="productId" th:value="${productId}">
             수량 :&nbsp;&nbsp;<input type="number" name="salesCount" min="1" max="100"
                                    style="width: 35px;height: 35px; border-radius: 9px; border-style: double" value="1">
-            <button type="submit">구매하기</button>
+            <button type="button" class="btn btn-primary btn-lg float-right" id="buy-button">구매하기</button>
         </form>
 
         <form th:action="@{/update/like}">

@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("update/like")
+@RequestMapping("/update/like")
 public class ProductLikeCountController {
 
     private final LikeCountCheckService likeCountCheckService;

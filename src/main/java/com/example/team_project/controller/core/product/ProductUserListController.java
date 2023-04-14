@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("product/user/list")
+@RequestMapping("/product/user/list")
 public class ProductUserListController {
 
     private final ProductRepository productRepository;

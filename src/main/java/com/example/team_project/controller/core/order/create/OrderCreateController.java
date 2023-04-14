@@ -11,10 +11,12 @@ import com.example.team_project.domain.domain.payment.domain.PaymentRepository;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import com.example.team_project.domain.domain.product.product.service.dto.ProductDto;
+import com.example.team_project.exception.InvalidAddressException;
 import com.example.team_project.exception.OrderNotFoundException;
 import com.example.team_project.exception.ProductNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -31,9 +33,13 @@ public class OrderCreateController {
     private final OrderCreateService orderCreateService;
 
     @GetMapping("/{productId}/{salesCount}")
-    public ModelAndView createForm(@PathVariable Long productId, @SessionAttribute("userId")Long userId, @PathVariable("salesCount") int quantity) {
-        ModelAndView modelAndView = new ModelAndView("/thymeleaf/order/order_create");
+    public ModelAndView createForm(@PathVariable Long productId, @SessionAttribute("userId") Long userId, @PathVariable("salesCount") int quantity) {
+        ModelAndView modelAndView = new ModelAndView("thymeleaf/order/order_create");
+        //todo 예외처리에 대한 부분
         List<UserAddress> userAddressList = userAddressRepository.findByUserId(userId);
+        if (userAddressList.isEmpty()) {
+            throw new InvalidAddressException();
+        }
         List<Payment> paymentList = paymentRepository.findByUserId(userId);
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
 
@@ -41,21 +47,20 @@ public class OrderCreateController {
         modelAndView.addObject("user_address_list", userAddressList);
         modelAndView.addObject("payment_list", paymentList);
         modelAndView.addObject("product", product);
-        modelAndView.addObject("quantity" , quantity);
+        modelAndView.addObject("quantity", quantity);
 
         return modelAndView;
     }
 
     @PostMapping
-    public ModelAndView create(@SessionAttribute("userId")Long userId,
-                               @RequestParam Long productId,
-                               @RequestParam int quantity,
-                               @RequestParam Long userAddressId,
-                               @RequestParam Long paymentId) {
+    public ModelAndView create(@SessionAttribute("userId") Long userId, @Validated OrderCreateDto orderCreateDto) {
 
-        Order order = orderCreateService.create(userId, productId, quantity, userAddressId, paymentId);
+        Order order = orderCreateService.create(userId,
+                orderCreateDto.getProductId(),
+                orderCreateDto.getQuantity(),
+                orderCreateDto.getUserAddressId(),
+                orderCreateDto.getPaymentId());
 
         return new ModelAndView("redirect:/order_list/view" + order.getId());//결제페이지로 이동하게
-
     }
 }

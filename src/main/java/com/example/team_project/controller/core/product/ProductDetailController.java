@@ -19,7 +19,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("product/detail")
+@RequestMapping("/product/detail")
 public class ProductDetailController {
 
     private final ProductRepository productRepository;
@@ -27,7 +27,7 @@ public class ProductDetailController {
     private final UserRepository userRepository;
 
     @GetMapping("{productId}")
-    public String detail(@PathVariable Long productId, Model model, @SessionAttribute("userId")Long userId){
+    public String detail(@PathVariable Long productId, Model model, @SessionAttribute("userId") Long userId){
         Optional<Product> product = productRepository.findById(productId);
         Optional<User> user = userRepository.findById(userId);
         model.addAttribute("productDetail",product);
