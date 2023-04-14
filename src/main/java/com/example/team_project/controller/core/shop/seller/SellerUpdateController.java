@@ -15,11 +15,10 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("seller/update")
+@RequestMapping("/seller/update")
 public class SellerUpdateController {
 
     private final SellerUpdateService sellerUpdateService;
-
 
     @GetMapping("")
     public String updateForm(@SessionAttribute("ownerId") String ownerId, Model model) {
@@ -33,13 +32,7 @@ public class SellerUpdateController {
                          @RequestParam("ownerName") String ownerName,
                          @RequestParam("phoneNumber") String phoneNumber) {
 
-
         sellerUpdateService.sellerUpdate(sellerId, password, ownerName, phoneNumber);
         return "redirect:/";
-
-
-
-
     }
-
 }

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Seller Update Form</title>
+    <link rel="stylesheet" href="/static/css/sellerUpdateForm.css">
 </head>
 <body>
 <h1>수정하기</h1>
@@ -19,13 +20,16 @@
             <td><input type="password" name="password"></td>
             <td><input name="ownerName"></td>
             <td><input name="phoneNumber"></td>
-            <td><button type="submit">확인</button></td>
         </tr>
-
-
     </table>
+    <button type="submit">확인</button>
+    <button type="button" onclick="back()">취소</button>
 </form>
-
-
 </body>
+<script>
+    function back(){
+        history.back();
+    }
+
+</script>
 </html>

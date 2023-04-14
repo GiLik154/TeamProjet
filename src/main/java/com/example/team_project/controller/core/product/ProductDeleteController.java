@@ -26,13 +26,8 @@ public class ProductDeleteController {
                       @RequestParam("productId") Long productId,
                       @RequestParam("password") String password) {
 
-        try {
-            productDeleteService.delete(sellerId, productId, password);
-            return "redirect:/product/seller/list";
 
-        } catch (NotPasswordException ex) {
-            throw new NotPasswordException("비밀번호를 잘못 입력했습니다.");
-        }
-
+        productDeleteService.delete(sellerId, productId, password);
+        return "redirect:product/seller/list";
     }
 }

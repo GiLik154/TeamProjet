@@ -8,6 +8,7 @@ import com.example.team_project.domain.domain.product.product.service.dto.Produc
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.enums.ProductCategoryStatus;
+import com.example.team_project.exception.NotPasswordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,7 +32,7 @@ public class ProductDeleteService {
 
         // 판매자 비밀번호 검증
         if (!seller.isValidPassword(passwordEncoder, password)) {
-            throw new BadCredentialsException("Invalid password");
+            throw new NotPasswordException("비밀번호를 다시 확인해주세요");
         }
 
         productRepository.deleteById(productId);

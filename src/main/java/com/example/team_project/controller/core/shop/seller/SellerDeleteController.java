@@ -13,27 +13,25 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("seller/delete")
+@RequestMapping("/seller/delete")
 public class SellerDeleteController {
 
     private final SellerDeleteService sellerDeleteService;
     private final SellerRepository sellerRepository;
 
     @GetMapping("")
-    public String delForm(@SessionAttribute("sellerId") Long sellerId, Model model){
-        model.addAttribute("sellerId",sellerId);
+    public String delForm(@SessionAttribute("sellerId") Long sellerId, Model model) {
+        model.addAttribute("sellerId", sellerId);
         return "thymeleaf/seller/sellerDeleteForm";
     }
 
-
-@PostMapping("")
-public String delete(@SessionAttribute("sellerId") Long sellerId, @RequestParam("password") String password){
-    Optional<Seller> sellerOptional = sellerRepository.findById(sellerId);
-    if(sellerOptional.isPresent()){
-        Seller seller = sellerOptional.get();
-        sellerDeleteService.delete(sellerId,password,seller.getOwnerId());
+    @PostMapping("")
+    public String delete(@SessionAttribute("sellerId") Long sellerId, @RequestParam("password") String password) {
+        Optional<Seller> sellerOptional = sellerRepository.findById(sellerId);
+        if (sellerOptional.isPresent()) {
+            Seller seller = sellerOptional.get();
+            sellerDeleteService.delete(sellerId, password, seller.getOwnerId());
+        }
+        return "thymeleaf/seller/sellerIndex";
     }
-    return "thymeleaf/seller/sellerIndex";
-}
-
 }

@@ -11,37 +11,27 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("shop/update")
+@RequestMapping("/shop/update")
 public class ShopUpdateController {
 
     private final ShopUpdateService shopUpdateService;
 
-
     @GetMapping("")
-    public String updateForm(@SessionAttribute("ownerId")String ownerId,@RequestParam("shopId")Long shopId, Model model){
-        model.addAttribute("ownerId",ownerId);
-        model.addAttribute("shopId",shopId);
+    public String updateForm(@SessionAttribute("ownerId") String ownerId, @RequestParam("shopId") Long shopId, Model model) {
+        model.addAttribute("ownerId", ownerId);
+        model.addAttribute("shopId", shopId);
         return "thymeleaf/shop/shopUpdateForm";
     }
-
 
     @PostMapping("")
     public String update(@SessionAttribute("sellerId") Long sellerId,
                          @RequestParam("password") String password,
                          @RequestParam("shopName") String shopName,
                          @RequestParam("shopAddress") String shopAddress,
-                         @RequestParam("shopId")Long shopId){
+                         @RequestParam("shopId") Long shopId) {
 
-        try{
-            shopUpdateService.shopUpdate(sellerId,shopId,password,shopName,shopAddress);
+        shopUpdateService.shopUpdate(sellerId, shopId, password, shopName, shopAddress);
 
-            return "redirect:/shop/list";
-
-        }catch (NotPasswordException e){
-            throw new NotPasswordException("비밀번호 틀림 . 다시 시도해주세요.");
-        }
-
-
+        return "redirect:/shop/list";
     }
-
 }
