@@ -26,7 +26,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("product/detail")
+@RequestMapping("/product/detail")
 public class ProductDetailController {
 
     private final ProductRepository productRepository;
@@ -54,12 +54,10 @@ public class ProductDetailController {
         //좋아요 누르면 빨간하트 아니면 검은하트!
         Optional<LikeCountCheck> likeCount = likeCountRepository.findByUserIdAndProductId(user, product);
         boolean isLiked = likeCount.isPresent();
-
         model.addAttribute("productDetail", product);
         model.addAttribute("productReviewList", productReview);
         model.addAttribute("isLiked", isLiked);
 
         return "thymeleaf/product/productUserDetail";
     }
-
 }

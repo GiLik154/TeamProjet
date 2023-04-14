@@ -40,12 +40,10 @@ public class ProductRegistrationService {
                     return productCategory;
                 });
     }
-
-
+    
     //product 상품 등록
     public void productRegistration(Long sellerId, ProductDto productDto, MultipartFile multipartFile) {
         ProductCategoryStatus productCategoryStatus = ProductCategoryStatus.valueOf(productDto.getCategoryDto());
-
 
         //품목이름,이미지,상세설명 등록
         Product product = new Product(
@@ -60,7 +58,18 @@ public class ProductRegistrationService {
         productRepository.save(product);
     }
 
-
-
-
+    private Seller getSeller(Long sellerId) {
+        return sellerRepository.findById(sellerId).orElseThrow(() -> new RuntimeException("shop id ."));
+    }
+    /**
+     * DB에 값이 존재하지 않으면 만들어줌(enum은있어야함)
+     * */
+    private ProductCategory getCategory(ProductCategoryStatus status) {
+        return productCategoryRepository.findByStatus(status)
+                .orElseGet(() -> {
+                    ProductCategory productCategory = new ProductCategory(status);
+                    productCategoryRepository.save(productCategory);
+                    return productCategory;
+                });
+    }
 }

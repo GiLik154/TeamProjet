@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("shop/list")
+@RequestMapping("/shop/list")
 public class ShopListController {
 
     private final ShopRepository shopRepository;
@@ -24,6 +24,5 @@ public class ShopListController {
         List<Shop> shopList = shopRepository.findBySellerId(sellerId);
         model.addAttribute("shopList",shopList);
         return "thymeleaf/shop/shopList";
-
     }
 }

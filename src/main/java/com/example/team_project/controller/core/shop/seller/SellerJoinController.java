@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("seller/join-form")
+@RequestMapping("/seller/join-form")
 public class SellerJoinController {
 
     private final SellerJoinService sellerJoinService;
@@ -17,14 +17,11 @@ public class SellerJoinController {
     @GetMapping("")
     public String joinForm() {
         return "thymeleaf/seller/sellerJoinForm";
-
     }
-
 
     @PostMapping("")
     public String join(SellerJoinDto sellerJoinDto) {
         sellerJoinService.sellerJoin(sellerJoinDto);
         return "redirect:/";
     }
-
 }
