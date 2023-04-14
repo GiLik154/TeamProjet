@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("shop/delete")
+@RequestMapping("/shop/delete")
 public class ShopDeleteController {
 
     private final ShopDeleteService shopDeleteService;
@@ -25,14 +25,13 @@ public class ShopDeleteController {
     public String delForm(@RequestParam("shopId") Long shopId, Model model) {
         model.addAttribute("shopIds", shopId);
         return "thymeleaf/shop/shopDeleteForm";
-
     }
 
     @PostMapping("")
     public String del(@RequestParam("shopId") Long shopId, @SessionAttribute("ownerId") String ownerId, @RequestParam("password") String password) {
 
-            shopDeleteService.delete(shopId, ownerId, password);
-            return "redirect:/";
+        shopDeleteService.delete(shopId, ownerId, password);
+        return "redirect:/";
 
     }
 }

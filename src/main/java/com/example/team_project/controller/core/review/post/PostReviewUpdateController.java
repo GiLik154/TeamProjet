@@ -9,6 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.concurrent.atomic.AtomicReference;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/post/review/update")
@@ -18,7 +20,7 @@ public class PostReviewUpdateController {
     private final BaseReviewRepository baseReviewRepository;
 
     @GetMapping("")
-    public String get(Long baseReviewId,
+    public String get(@RequestParam("reviewId") Long baseReviewId,
                       Model model){
 
         baseReviewRepository.findById(baseReviewId).ifPresent(baseReview -> {
@@ -32,7 +34,9 @@ public class PostReviewUpdateController {
                        @SessionAttribute("userId") Long userId,
                        ReviewDto dto,
                        MultipartFile file){
+
         baseReviewUpdateService.update(baseReviewId,userId,dto,file);
+
         return "redirect:/post/read?postId="+dto.getKindsId();
     }
 }

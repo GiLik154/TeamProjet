@@ -14,7 +14,7 @@ public interface ReviewRecommendRepository extends JpaRepository<ReviewRecommend
 
     List<ReviewRecommend> findByUser(User user);
 
-    List<ReviewRecommend> findByBaseReview_ReviewToKinds_PostReview_PostIdAndBaseReview_Situation(Long postId, String create);
-
     Optional<ReviewRecommend> findByBaseReview_IdAndUser_Id(Long baseReviewId, Long userId);
+
+    List<ReviewRecommend> findByBaseReview_ReviewToKinds_PostReview_PostIdAndUser_Id(Long postId, Long userId);
 }

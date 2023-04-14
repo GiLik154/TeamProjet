@@ -22,11 +22,6 @@ public class PostUpdateServiceImpl implements PostUpdateService {
     private final PostCategoryRepository postCategoryRepository;
     private final ImageUploadService imageUploadService;
 
-    /**
-     * 유저의 고유번호,게시글의 고유번호,postDto,이미지 파일을 입력받음
-     * 게시글의 고유번호로 게시글을 가져옴
-     * update()함수를 실행하여 변경
-     */
     @Override
     public boolean update(Long userId, Long postId, PostDto dto, MultipartFile file) {
         AtomicBoolean result = new AtomicBoolean(false); // boolean 값을 저장할 AtomicBoolean 객체 생성

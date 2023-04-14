@@ -5,6 +5,12 @@
     <title>Title</title>
 </head>
 <body>
-에러 페이지
+<span th:if="${errorMessage!= null}">
+	    <script type="text/javascript">
+            const text = "[[${errorMessage}]]";
+            top.alert(text);
+            window.history.back();
+        </script>
+    </span>
 </body>
 </html>

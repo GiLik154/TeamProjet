@@ -30,14 +30,8 @@ public class ProductUpdateController {
                          ProductDto productDto,
                          MultipartFile multipartFile
     ) {
-        try {
-
-            productUpdateService.update(sellerId, productId, password, productDto, multipartFile);
-            return "redirect:/product/seller/list";
-        } catch (NotPasswordException ex) {
-            throw new NotPasswordException("비밀번호 를 다시 확인하세요.");
-        }
-
+        productUpdateService.update(sellerId, productId, password, productDto, multipartFile);
+        return "redirect:/product/seller/list";
     }
-
 }
+

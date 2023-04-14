@@ -24,7 +24,7 @@ public class SellerUpdateService {
 
         // 판매자 비밀번호 검증
         if (!seller.isValidPassword(passwordEncoder, password)) {
-            throw new NotPasswordException("Invalid password");
+            throw new NotPasswordException("비밀번호를 다시 확인해주세요");
         }
 
         //판매자 이름, 판매자 번호 수정

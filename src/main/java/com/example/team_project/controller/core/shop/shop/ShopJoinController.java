@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("shop/join")
+@RequestMapping("/shop/join")
 public class ShopJoinController {
 
     private final ShopJoinService shopJoinService;

@@ -9,8 +9,6 @@ import com.example.team_project.domain.domain.product.product.domain.ProductRepo
 import com.example.team_project.domain.domain.product.product.service.dto.ProductDto;
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
-import com.example.team_project.domain.domain.shop.shop.domain.Shop;
-import com.example.team_project.domain.domain.shop.shop.domain.ShopRepository;
 import com.example.team_project.enums.ProductCategoryStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,10 +21,10 @@ import org.springframework.web.multipart.MultipartFile;
 public class ProductRegistrationService {
 
     private final ProductRepository productRepository;
-    private final ShopRepository shopRepository;
     private final ProductCategoryRepository productCategoryRepository;
     private final SellerRepository sellerRepository;
     private final ImageUploadService imageUploadService;
+
 
     //product 상품 등록
     public void productRegistration(Long sellerId, ProductDto productDto, MultipartFile multipartFile) {
