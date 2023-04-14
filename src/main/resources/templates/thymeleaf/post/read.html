@@ -1,86 +1,153 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:tb="http://www.w3.org/1999/xhtml">
 <head>
+    <script src="https://unpkg.com/htmx.org@1.8.6"></script>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!-- 부트스트랩 CSS 링크 추가 -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-제목 :
-<div th:text="${post.getTitle()}"></div>
-유저 아이디 :
-<div th:text="${post.getUser().getUserId()}"></div>
-시간 :
-<div th:text="${post.getTime()}"></div>
-게시글의 종류:
-<div th:text="${post.getPostCategory().getName()}"></div>
-이미지 :
-<img th:src="${post.getImagePath()}">
-내용 :
-<div th:text="${post.getContent()}"></div>
+<div class="container mt-5">
+    <h3>제목 :</h3>
+    <div th:text="${post.getTitle()}"></div>
+    <h3>유저 아이디 :</h3>
+    <div th:text="${post.getUser().getUserId()}"></div>
+    <h3>시간 :</h3>
+    <div th:text="${post.getTime()}"></div>
+    <h3>게시글의 종류:</h3>
+    <div th:text="${post.getPostCategory().getName()}"></div>
+    <h3>이미지 :</h3>
+    <img th:src="${post.getImagePath()}" class="img-fluid">
+    <h3>내용 :</h3>
+    <div th:text="${post.getContent()}"></div>
 
-<a th:href="@{/post/delete(postId=${post.getId()})}">삭제</a>
-<a th:href="@{/post/update(postId=${post.getId()})}">수정</a>
-=========================================
-게시글 리뷰
-<a th:href="@{/post/read(reviewLink=true,postId=${post.getId()})}">리뷰 작성</a>
-<div th:if="${reviewLink}">
-    <form th:action="@{/post/review/add}" method="post" enctype="multipart/form-data">
-        제목<input type="text" name="title">
-        내용<input type="text" name="content">
-        이미지<input type="file" name="file" accept="image/*">
-        <input type="hidden" name="kinds" value="PostReview">
-        <input type="hidden" name="kindsId" th:value="${post.getId()}">
-        <input type="submit" value="작성">
-    </form>
-</div>
-<div th:each="reviewList:${postReviewList}">
-    제목 :
-    <div th:text="${reviewList.getTitle()}"></div>
-    유저 아이디:
-    <div th:text="${reviewList.getUser().getUserId()}"></div>
-    시간:
-    <div th:text="${reviewList.getTime()}"></div>
-    이미지:
-    <img th:src="${reviewList.getImagePath()}">
-    내용:
-    <div th:text="${reviewList.getContent()}"></div>
-    
-    <!--    id result 값이 "Best" 일때-->
-    <form th:action="@{/review/recommend}" method="post">
-        <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
-        <input type="hidden" name="trueOrFalse" th:value="CANCEL">
-        <input type="submit" value="👍" style="background-color: blue">
-    </form>
-    <form th:action="@{/review/recommend}" method="post">
-        <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
-        <input type="hidden" name="trueOrFalse" th:value="WOREST">
-        <input type="submit" value="👎">
-    </form>
-    <!--id result 값이 "Worst" 일때-->
-    <form th:action="@{/review/recommend}" method="post">
-        <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
-        <input type="hidden" name="trueOrFalse" th:value="BEST">
-        <input type="submit" value="👍">
-    </form>
-    <form th:action="@{/review/recommend}" method="post">
-        <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
-        <input type="hidden" name="trueOrFalse" th:value="CANCEL">
-        <input type="submit" value="👎" style="background-color: red">
-    </form>
-    <!--    id result 값이 "Cancel" 일때-->
-    <form th:action="@{/review/recommend}" method="post">
-        <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
-        <input type="hidden" name="trueOrFalse" th:value="BEST">
-        <input type="submit" value="👍">
-    </form>
-    <form th:action="@{/review/recommend}" method="post">
-        <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
-        <input type="hidden" name="trueOrFalse" th:value="WORST">
-        <input type="submit" value="👎">
-    </form>
+    <a th:href="@{/post/delete(postId=${post.getId()})}" class="btn btn-danger">삭제</a>
+    <a th:href="@{/post/update(postId=${post.getId()})}" class="btn btn-primary">수정</a>
 
-    <a th:href="@{/post/review/delete(baseReviewId=${reviewList.getId()},postId=${post.getId()})}">삭제</a>
-    <a th:href="@{/post/review/update(baseReviewId=${reviewList.getId()})}">수정</a>
+    <hr>
+
+    <h3>게시글 리뷰</h3>
+    <a th:href="@{/post/read(reviewLink=true,postId=${post.getId()})}" class="btn btn-info">리뷰 작성</a>
+    <div th:if="${reviewLink}">
+        <form th:action="@{/post/review/add}" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="title">제목</label>
+                <input type="text" name="title" id="title" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="content">내용</label>
+                <input type="text" name="content" id="content" class="form-control">
+            </div>
+            <div class="form-group">
+                <label for="file">이미지</label>
+                <input type="file" name="file" id="file" accept="image/*" class="form-control-file">
+            </div>
+            <input type="hidden" name="kinds" value="PostReview">
+            <input type="hidden" name="kindsId" th:value="${post.getId()}">
+            <input type="submit" value="작성" class="btn btn-success">
+        </form>
+    </div>
+    <div th:each="reviewList:${postReviewList}">
+        <h4>제목 :</h4>
+        <div th:text="${reviewList.getTitle()}"></div>
+        <h4>유저 아이디:</h4>
+        <div th:text="${reviewList.getUser().getUserId()}"></div>
+        <h4>시간:</h4>
+        <div th:text="${reviewList.getTime()}"></div>
+        <h4>이미지 :</h4>
+        <img th:src="${reviewList.getImagePath()}" class="img-fluid">
+        <h4>내용 :</h4>
+        <div th:text="${reviewList.getContent()}"></div>
+        <!--    id result 값이 "Best" 일때-->
+        <div th:if="${recommendList==null}">
+            <form th:action="@{/review/recommend}" method="post">
+                <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
+                <input type="hidden" name="trueOrFalse" th:value="BEST">
+                <input type="submit" value="👍">
+            </form>
+            <form th:action="@{/review/recommend}" method="post">
+                <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
+                <input type="hidden" name="trueOrFalse" th:value="CANCEL">
+                <input type="submit" value="👎">
+            </form>
+        </div>
+        <div th:each="recommend:${recommendList}">
+            <div th:if="${reviewList.getId()==recommend.getBaseReview().getId()}" onclick="toggleVisibility()"
+                 id="isExist">
+                <div th:if="${recommend.getRecommend().equals('Best')}">
+                    <form th:action="@{/review/recommend}" method="post">
+                        <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
+                        <input type="hidden" name="trueOrFalse" th:value="CANCEL">
+                        <input type="submit" value="👍" style="background-color: blue">
+                    </form>
+                    <form th:action="@{/review/recommend}" method="post">
+                        <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
+                        <input type="hidden" name="trueOrFalse" th:value="WOREST">
+                        <input type="submit" value="👎">
+                    </form>
+                </div>
+                <!--id result 값이 "Worst" 일때-->
+                <div th:if="${recommend.getRecommend().equals('Worst')}">
+                    <form th:action="@{/review/recommend}" method="post">
+                        <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
+                        <input type="hidden" name="trueOrFalse" th:value="BEST">
+                        <input type="submit" value="👍">
+                    </form>
+                    <form th:action="@{/review/recommend}" method="post">
+                        <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
+                        <input type="hidden" name="trueOrFalse" th:value="CANCEL">
+                        <input type="submit" value="👎" style="background-color: red">
+                    </form>
+                </div>
+                <!--    id result 값이 "Cancel" 일때-->
+                <div th:if="${recommend.getRecommend().equals('Cancel')}">
+                    <form th:action="@{/review/recommend}" method="post">
+                        <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
+                        <input type="hidden" name="trueOrFalse" th:value="BEST">
+                        <input type="submit" value="👍">
+                    </form>
+                    <form th:action="@{/review/recommend}" method="post">
+                        <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
+                        <input type="hidden" name="trueOrFalse" th:value="WORST">
+                        <input type="submit" value="👎">
+                    </form>
+                </div>
+            </div>
+            <!--여기부분!!!-->
+            <span th:if="${reviewList.getId()!=recommend.getBaseReview().getId()}" id="isEmpty">
+            <script>
+        function toggleVisibility() {
+            var isExistDiv = document.getElementById("isExist");
+            var isEmptyDiv = document.getElementById("isEmpty");
+
+            if (isEmptyDiv.style.display === "none") {
+                isExistDiv.style.display = "none";
+                isEmptyDiv.style.display = "block";
+            } else {
+                isExistDiv.style.display = "block";
+                isEmptyDiv.style.display = "none";
+            }
+        }
+    </script>
+            <form th:action="@{/review/recommend}" method="post">
+                <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
+                <input type="hidden" name="trueOrFalse" th:value="BEST">
+                <input type="submit" value="👍">
+            </form>
+            <form th:action="@{/review/recommend}" method="post">
+                <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
+                <input type="hidden" name="trueOrFalse" th:value="CANCEL">
+                <input type="submit" value="👎">
+            </form>
+        </span>
+
+        </div>
+
+        <a th:href="@{/post/review/delete(reviewId=${reviewList.getId()})}" class="btn btn-danger">삭제</a>
+        <a th:href="@{/post/review/update(reviewId=${reviewList.getId()})}" class="btn btn-primary">수정</a>
+        <hr>
+    </div>
 </div>
 </body>
 </html>

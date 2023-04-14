@@ -3,13 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.14/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </head>
 <body>
-<form th:action="@{/post/review/delete}" method="post">
-    <input type="hidden" name="baseReviewId" th:value="${baseReviewId}">
-    <input type="hidden" name="postId" th:value="${postId}">
-    비밀번호<input name="password" type="text">
-    <input type="submit" value="확인">
-</form>
+<script>
+    // 팝업 창 띄우기
+    $(document).ready(function(){
+        $('#deleteModal').modal('show');
+    });
+
+    // 확인 버튼 클릭 시 비밀번호 서버로 전송 및 모달 닫기
+    $('#deleteForm').on('submit', function(e){
+        e.preventDefault();
+        var password = $('#password').val();
+        // 비밀번호 서버로 전송하는 로직 추가
+        // ...
+        // 모달 닫기
+        $('#deleteModal').modal('hide');
+    });
+</script>
+
+<!-- 팝업 모달 -->
+<div class="modal" tabindex="-1" role="dialog" id="deleteModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">비밀번호 확인</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/post/review/delete}" method="post" id="deleteForm">
+                    <input type="hidden" name="baseReviewId" th:value="${baseReviewId}">
+                    <input type="hidden" name="postId" th:value="${postId}">
+                    <div class="form-group">
+                        <label for="password">비밀번호:</label>
+                        <input type="password" name="password" id="password" class="form-control">
+                    </div>
+                    <button type="submit" class="btn btn-primary">확인</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

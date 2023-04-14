@@ -28,6 +28,19 @@ public class ProductRegistrationService {
     private final SellerRepository sellerRepository;
     private final ImageUploadService imageUploadService;
 
+    private Seller getSeller(Long sellerId){
+        return sellerRepository.findById(sellerId).orElseThrow(() -> new RuntimeException("shop id ."));
+    }
+
+    private ProductCategory getCategory(ProductCategoryStatus status) {
+        return productCategoryRepository.findByStatus(status)
+                .orElseGet(() -> {
+                    ProductCategory productCategory = new ProductCategory(status);
+                    productCategoryRepository.save(productCategory);
+                    return productCategory;
+                });
+    }
+    
     //product 상품 등록
     public void productRegistration(Long sellerId, ProductDto productDto, MultipartFile multipartFile) {
         ProductCategoryStatus productCategoryStatus = ProductCategoryStatus.valueOf(productDto.getCategoryDto());

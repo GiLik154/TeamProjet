@@ -1,24 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+
 <body>
-<form th:action="@{/post/add}" method="post" enctype="multipart/form-data">
-<label for="category">문의 유형:</label>
-<select id="category" name="category">
-    <option value="ProductInquiry">제품 문의</option>
-    <option value="SHIPPING_INQUIRY">배송 문의</option>
-    <option value="EXCHANGE_RETURN_INQUIRY">교환 및 반품 문의</option>
-    <option value="PAYMENT_INQUIRY">결제 문의</option>
-    <option value="DISCOUNT_COUPON_INQUIRY">할인쿠폰 문의</option>
-    <option value="ETC_INQUIRY">기타 문의</option>
-</select>
-제목:<input type="text" name="title">
-내용:<input type="text" name="content">
-이미지:<input type="file" name="file" accept="image/*">
-    <input type="submit" value="작성">
-</form>
+<div class="container mt-5">
+    <h2>Form Example with Bootstrap</h2>
+    <form th:action="@{/post/add}" method="post" enctype="multipart/form-data">
+        <div class="form-group">
+            <label for="category">문의 유형:</label>
+            <select id="category" name="category" class="form-control">
+                <option value="PRODUCT_INQUIRY">제품 문의</option>
+                <option value="SHIPPING_INQUIRY">배송 문의</option>
+                <option value="EXCHANGE_RETURN_INQUIRY">교환 및 반품 문의</option>
+                <option value="PAYMENT_INQUIRY">결제 문의</option>
+                <option value="DISCOUNT_COUPON_INQUIRY">할인쿠폰 문의</option>
+                <option value="ETC_INQUIRY">기타 문의</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="title">제목:</label>
+            <input type="text" name="title" id="title" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="content">내용:</label>
+            <input type="text" name="content" id="content" class="form-control">
+        </div>
+        <div class="form-group">
+            <label for="file">이미지:</label>
+            <input type="file" name="file" id="file" accept="image/*" class="form-control-file">
+        </div>
+        <input type="submit" value="작성" class="btn btn-primary">
+    </form>
+</div>
+
+<!-- Add Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

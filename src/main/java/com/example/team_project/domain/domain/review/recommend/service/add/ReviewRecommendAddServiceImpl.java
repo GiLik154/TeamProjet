@@ -24,12 +24,6 @@ public class ReviewRecommendAddServiceImpl implements ReviewRecommendAddService 
     private final UserRepository userRepository;
     private final BaseReviewRepository baseReviewRepository;
 
-    /**
-     * 유저의 고유번호로 유저가 있으면 객체를 가져옴
-     * baseReviewValidate 로 리뷰 검증
-     * duplication 이 ture 가 아니면 객체 생성
-     * ture 면 객체 생성 하지않고 false 반환
-     */
     @Override
     public boolean add(Long userId, Long baseReviewId, String trueOrFalse) {
         AtomicBoolean result = new AtomicBoolean(false);

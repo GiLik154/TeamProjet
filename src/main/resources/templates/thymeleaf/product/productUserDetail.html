@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en"  >
+<html lang="en">
 
 <head>
 
@@ -40,12 +40,21 @@
         <table>
             <tr>
                 <th>리뷰</th>
+                <a th:href="@{/product/review/add(productId=${productDetail.get().getId()})}">작성</a>
+            </tr>
+            <tr th:each="productReview:${productReviewList}">
+                <td th:text="${productReview.getTitle()}"></td>
+                <td th:text="${productReview.getContent()}"></td>
+                <td><img th:src="${productReview.getImagePath()}"></td>
+                <td th:text="${productReview.getUser().getUserId()}"></td>
+                <td th:text="${productReview.getTime()}"></td>
+                <a th:href="@{/product/review/delete(reviewId=${productReview.getId()})}" >삭제</a>
+                <a th:href="@{/product/review/update(reviewId=${productReview.getId()})}" >수정</a>
             </tr>
             <tr>
-                <td>리뷰1</td>
+                <td th:if="${productReviewList.getNumber()}"></td>
             </tr>
         </table>
-
 
         <form>
             <input type="hidden" name="productId" th:value="${productId}">
