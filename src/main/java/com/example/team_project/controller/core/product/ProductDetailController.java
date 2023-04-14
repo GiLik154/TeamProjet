@@ -24,7 +24,7 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("product/detail")
+@RequestMapping("/product/detail")
 public class ProductDetailController {
 
     private final ProductRepository productRepository;
@@ -60,14 +60,10 @@ public class ProductDetailController {
         Optional<LikeCountCheck> likeCount = likeCountRepository.findByUserIdAndProductId(user, product);
         boolean isLiked = likeCount.isPresent();
 
-        model.addAttribute("limitPage",limitPage);
-        model.addAttribute("startPage",startPage);
-        model.addAttribute("endPage",endPage);
         model.addAttribute("productDetail", product);
         model.addAttribute("productReviewList", productReview);
         model.addAttribute("isLiked", isLiked);
 
         return "thymeleaf/product/productUserDetail";
     }
-
 }

@@ -19,48 +19,40 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("product/user/list")
+@RequestMapping("/product/user/list")
 public class ProductUserListController {
 
     private final ProductRepository productRepository;
 
-
     @GetMapping("")
-    public String list( Pageable pageable, Model model) {
+    public String list(Pageable pageable, Model model) {
 
-        int page = Math.max(pageable.getPageNumber(),1);
+        int page = Math.max(pageable.getPageNumber(), 1);
         int limitPage = 8;
-        Page<Product> list = productRepository.findAll(PageRequest.of(page-1, limitPage, Sort.Direction.DESC, "id"));
+        Page<Product> list = productRepository.findAll(PageRequest.of(page - 1, limitPage, Sort.Direction.DESC, "id"));
         int totalPage = list.getTotalPages();
 
         model.addAttribute("productList", list);
-        model.addAttribute("totalPage",totalPage);
-        model.addAttribute("page",page);
+        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("page", page);
 
         return "thymeleaf/product/productUserList";
-
     }
 
-
     @GetMapping("{categoryId}")
-    public String categoryList(Pageable pageable, Model model, @PathVariable("categoryId")Long categoryId) {
+    public String categoryList(Pageable pageable, Model model, @PathVariable("categoryId") Long categoryId) {
 
-        int page = Math.max(pageable.getPageNumber(),1);
+        int page = Math.max(pageable.getPageNumber(), 1);
         int limitPage = 8;
 
-        Page<Product> list = productRepository.findByCategoryId(categoryId,PageRequest.of(page-1, limitPage, Sort.Direction.DESC, "id"));
+        Page<Product> list = productRepository.findByCategoryId(categoryId, PageRequest.of(page - 1, limitPage, Sort.Direction.DESC, "id"));
 
         int totalPage = list.getTotalPages();
 
         model.addAttribute("productList", list);
-        model.addAttribute("totalPage",totalPage);
-        model.addAttribute("page",page);
-
+        model.addAttribute("totalPage", totalPage);
+        model.addAttribute("page", page);
 
         return "thymeleaf/product/categoryList";
-
     }
-
-
-
 }
