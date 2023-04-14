@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>My Coupons</title>
+
+    <!-- Font Awesome 라이브러리 추가 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+
+    <!-- 부트스트랩 CDN 추가 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+
+</head>
+
+<body>
+<div class="container mt-5">
+    <h1 class="mb-3">My Coupons</h1>
+    <div class="mb-3">
+        <button type="button" class="btn btn-primary" id="getAllCoupon">모든 쿠폰 보기</button>
+        <button type="button" class="btn btn-success" id="getUnusedCoupon">사용 가능한 쿠폰</button>
+        <button type="button" class="btn btn-danger" id="getUsedCoupon">사용 한 쿠폰</button>
+        <button type="button" class="btn btn-secondary" id="getExpiredCoupon">만료 된 쿠폰</button>
+    </div>
+    <table class="table table-striped table-bordered table-hover text-center" id="couponTable">
+        <thead>
+        <tr class="text-center">
+            <th scope="col">#</th>
+            <th scope="col">쿠폰 이름</th>
+            <th scope="col">할인율</th>
+            <th scope="col">만료일</th>
+            <th scope="col">상태</th>
+            <th scope="col">사용한 날짜</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- Coupon data will be dynamically populated here -->
+        </tbody>
+    </table>
+</div>
+
+<!-- 부트스트랩 JS 파일 추가 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+
+    // Define helper function to clear coupon table and show error message
+    function showError(message) {
+        const couponTableBody = $("#couponTable > tbody");
+        couponTableBody.empty();
+        couponTableBody.append(`<tr><td colspan="6">${message}</td></tr>`);
+    }
+
+    $(document).ready(function () {
+      $("#getAllCoupon").click(function () {
+        getAllCoupon();
+      });
+
+      $("#getUnusedCoupon").click(function () {
+        getUnusedCoupon();
+      });
+
+      $("#getUsedCoupon").click(function () {
+        getUsedCoupon();
+      });
+
+      $("#getExpiredCoupon").click(function () {
+        getExpiredCoupon();
+      });
+    });
+
+    function getAllCoupon() {
+        $.ajax({
+            type: "GET",
+            url: "/coupon/my-coupon/all" ,
+            success: function (coupons) {
+                const couponTableBody = $("#couponTable > tbody");
+                couponTableBody.empty();
+                if (coupons.length === 0) {
+                    showError("No coupons found.");
+                } else {
+                    $.each(coupons, function (index, coupon) {
+                        const statusText = coupon.status === "USED" ? "사용 완료" :
+                            coupon.status === "UNUSED" ? "사용 전" :
+                                "만료됨";
+                        const row = "<tr>" +
+                            "<th scope='row'>" + (index + 1) + "</th>" +
+                            "<td>" + coupon.coupon.name + "</td>" +
+                            "<td>" + coupon.coupon.discountRate + "%</td>" +
+                            "<td>" + coupon.expirationDate + "</td>" +
+                            "<td>" + statusText + "</td>" +
+                            "<td>" + (coupon.usedDate ? coupon.usedDate : "") + "</td>" +
+                            "</tr>";
+                        couponTableBody.append(row);
+                    });
+                }
+            },
+            error: function () {
+                showError("Failed to get coupons.");
+            }
+        });
+    }
+
+    // Define function to get unused coupons
+    function getUnusedCoupon() {
+        $.ajax({
+            url: "/coupon/my-coupon/unused",
+            type: "GET",
+            success: function (coupons) {
+                const couponTableBody = $("#couponTable > tbody");
+                couponTableBody.empty();
+                if (coupons.length === 0) {
+                    showError("No coupons found.");
+                } else {
+                    $.each(coupons, function (index, coupon) {
+                        const statusText = coupon.status === "USED" ? "사용 완료" :
+                            coupon.status === "UNUSED" ? "사용 전" :
+                                "만료됨";
+                        const row = "<tr>" +
+                            "<th scope='row'>" + (index + 1) + "</th>" +
+                            "<td>" + coupon.coupon.name + "</td>" +
+                            "<td>" + coupon.coupon.discountRate + "%</td>" +
+                            "<td>" + coupon.expirationDate + "</td>" +
+                            "<td>" + statusText + "</td>" +
+                            "<td>" + (coupon.usedDate ? coupon.usedDate : "") + "</td>" +
+                            "</tr>";
+                        couponTableBody.append(row);
+                    });
+                }
+            },
+            error: function () {
+                showError("Failed to get coupons.");
+            }
+        });
+    }
+
+    // Define function to get used coupons
+    function getUsedCoupon() {
+        $.ajax({
+            url: "/coupon/my-coupon/used",
+            type: "GET",
+            success: function (coupons) {
+                const couponTableBody = $("#couponTable > tbody");
+                couponTableBody.empty();
+                if (coupons.length === 0) {
+                    showError("No coupons found.");
+                } else {
+                    $.each(coupons, function (index, coupon) {
+                        const statusText = coupon.status === "USED" ? "사용 완료" :
+                            coupon.status === "UNUSED" ? "사용 전" :
+                                "만료됨";
+                        const row = "<tr>" +
+                            "<th scope='row'>" + (index + 1) + "</th>" +
+                            "<td>" + coupon.coupon.name + "</td>" +
+                            "<td>" + coupon.coupon.discountRate + "%</td>" +
+
+
+
+
+                            "<td>" + coupon.expirationDate + "</td>" +
+                            "<td>" + statusText + "</td>" +
+                            "<td>" + (coupon.usedDate ? coupon.usedDate : "") + "</td>" +
+                            "</tr>";
+                        couponTableBody.append(row);
+                    });
+                }
+            },
+            error: function () {
+                showError("Failed to get coupons.");
+            }
+        });
+    }
+
+    // Define function to get expired coupons
+    function getExpiredCoupon() {
+        $.ajax({
+            url: "/coupon/my-coupon/expired",
+            type: "GET",
+            success: function (coupons) {
+                const couponTableBody = $("#couponTable > tbody");
+                couponTableBody.empty();
+                if (coupons.length === 0) {
+                    showError("No coupons found.");
+                } else {
+                    $.each(coupons, function (index, coupon) {
+                        const statusText = coupon.status === "USED" ? "사용 완료" :
+                            coupon.status === "UNUSED" ? "사용 전" :
+                                "만료됨";
+                        const row = "<tr>" +
+                            "<th scope='row'>" + (index + 1) + "</th>" +
+                            "<td>" + coupon.coupon.name + "</td>" +
+                            "<td>" + coupon.coupon.discountRate + "%</td>" +
+                            "<td>" + coupon.expirationDate + "</td>" +
+                            "<td>" + statusText + "</td>" +
+                            "<td>" + (coupon.usedDate ? coupon.usedDate : "") + "</td>" +
+                            "</tr>";
+                        couponTableBody.append(row);
+                    });
+                }
+            },
+            error: function () {
+                showError("Failed to get coupons.");
+            }
+        });
+    }
+</script>

@@ -9,8 +9,17 @@ import java.util.List;
 import java.util.Optional;
 
 public interface UserCouponRepository extends JpaRepository<UserCoupon, Long> {
-    @Query("SELECT u FROM UserCoupon u WHERE u.user.id = :userId AND u.id = :id AND u.status = 'UNUSED'")
+    @Query("SELECT u FROM UserCoupon u WHERE u.user.id = :userId AND u.id = :id AND u.status = '0'")
     Optional<UserCoupon> findByUserIdAndIdAndStatusUnused(@Param("userId") Long userId, @Param("id") Long id);
+
+    @Query("SELECT u FROM UserCoupon u WHERE u.user.id = :userId AND u.status = '0'")
+    List<UserCoupon> findByUserIdAndStatusUnused(@Param("userId") Long userId);
+
+    @Query("SELECT u FROM UserCoupon u WHERE u.user.id = :userId AND u.status = '1'")
+    List<UserCoupon> findByUserIdAndStatusUsed(@Param("userId") Long userId);
+
+    @Query("SELECT u FROM UserCoupon u WHERE u.user.id = :userId AND u.status = '2'")
+    List<UserCoupon> findByUserIdAndStatusExpired(@Param("userId") Long userId);
 
     List<UserCoupon> findByUserId(Long userId);
 

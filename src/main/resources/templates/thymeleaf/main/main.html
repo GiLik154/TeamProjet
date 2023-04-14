@@ -1,121 +1,138 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/html">
 <head>
-  <meta charset="UTF-8">
-  <title>메인 페이지</title>
-  <!-- 부트스트랩 JS 파일 추가 -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <meta charset="UTF-8">
+    <title>메인 페이지</title>
+    <!-- 구글 폰트 라이브러리 추가 -->
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
 
-  <!-- Font Awesome 라이브러리 추가 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <!-- 부트스트랩 JS 파일 추가 -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-  <!-- 부트스트랩 CDN 추가 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+    <!-- Font Awesome 라이브러리 추가 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
 
-  <!-- 커스텀 CSS -->
-  <link rel="stylesheet" href="/static/css/main.css">
+    <!-- 부트스트랩 CDN 추가 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+
+    <!-- 커스텀 CSS -->
+    <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
 <header>
-  <div class="container">
-    <div class="row align-items-center">
-      <div class="col-6">
-        <a href="/main" style="text-decoration: none; color: white;">
-          <h1>우리 회사명</h1>
-        </a>
-      </div>
-      <div class="col-6">
-        <nav class="text-right">
-          <ul class="list-inline">
-            <li class="list-inline-item" th:if="${session.userId eq null and session.sellerId eq null}"><a th:href="@{/user/login}">로그인</a></li>
-            <li class="list-inline-item" th:if="${session.userId ne null or session.sellerId ne null}"><a th:href="@{/user/logout}">로그아웃</a></li>
-            <li class="list-inline-item" th:if="${session.userId eq null and session.sellerId eq null}"><a th:href="@{/user/signup}">회원가입</a></li>
-            <li class="list-inline-item" th:if="${session.userId ne null or session.sellerId ne null}"><a th:href="@{/user/mypage}">마이페이지</a></li>
-            <li class="list-inline-item" th:if="${session.userId ne null or session.sellerId ne null}"><a th:href="@{/post/list}">문의 게시판</a></li>
-            <li class="list-inline-item" th:if="${session.sellerId != null}"><a href="/product/seller/list">셀러 메인</a></li>
-          </ul>
-        </nav>
-      </div>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-6">
+                <a href="/main" style="text-decoration: none; color: white;">
+                    <h1>우리 회사명</h1>
+                </a>
+            </div>
+            <div class="col-6">
+                <nav class="text-right">
+                    <ul class="list-inline">
+                        <li class="list-inline-item" th:if="${session.userId eq null and session.sellerId eq null}"><a
+                                th:href="@{/user/login}">로그인</a></li>
+                        <li class="list-inline-item" th:if="${session.userId ne null or session.sellerId ne null}"><a
+                                th:href="@{/user/logout}">로그아웃</a></li>
+                        <li class="list-inline-item" th:if="${session.userId eq null and session.sellerId eq null}"><a
+                                th:href="@{/user/signup}">회원가입</a></li>
+                        <li class="list-inline-item" th:if="${session.userId ne null or session.sellerId ne null}"><a
+                                th:href="@{/user/mypage}">마이페이지</a></li>
+                        <li class="list-inline-item"><a th:href="@{/board}">문의 게시판</a></li>
+                        <li class="list-inline-item" th:if="${session.sellerId != null}"><a href="/product/seller/list">셀러
+                            메인</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
-  </div>
 </header>
 <main>
-  <section class="banner">
-    <!-- 쿠폰 발급 사이트를 배너 API로 연결할 수 있도록 해주세요 -->
-  </section>
-  <section class="products">
-    <div class="container">
-      <h2 class="text-center mb-4">판매하는 상품들</h2>
-      <div class="row">
-        <th:block th:each="product : ${productList}">
-          <div class="col-md-4 mb-4">
-            <div class="card h-100">
-              <a th:href="@{/product/detail/{productId}(productId=${product.id})}">
-                <img class="card-img-top mx-auto my-1 rounded" style="max-width: 97%;" th:src="@{${product.image}}" alt="Card image cap">
-              </a>
-              <div class="card-body">
-                <h5 class="card-title" th:text="${product.name}">상품명</h5>
-                <p class="card-text" th:text="${product.description}">상품 설명</p>
-              </div>
-              <div class="card-footer">
-                <div class="row justify-content-center">
-                  <div class="card-footer d-flex justify-content-center" style="transform: scale(0.7);">
-                    <a th:href="@{/product/detail/{productId}(productId=${product.id})}" class="btn btn-primary btn-lg mx-2" style="white-space: nowrap;">상세보기</a>
-                    <a th:href="@{/order/create/{productId}(productId=${product.id})}" class="btn btn-success btn-lg mx-2" style="white-space: nowrap;">구매하기</a>
-                  </div>
-                </div>
-              </div>
+    <section class="banner" style="height: 100px;">
+        <a href="/coupon/issue">
+            <h2>쿠폰발급</h2>
+        </a>
+    </section>
+    <section class="products" style="margin-top: 10px;">
+        <div class="container">
+            <h2 class="text-center mb-4">판매하는 상품들</h2>
+            <div class="row">
+                <th:block th:each="product : ${productList}">
+                    <div class="col-md-4 mb-4">
+                        <div class="card h-100">
+                            <a th:href="@{/product/detail/{productId}(productId=${product.id})}">
+                                <img class="card-img-top mx-auto my-1 rounded" style="max-width: 97%;"
+                                     th:src="@{${product.image}}" alt="Card image cap">
+                            </a>
+                            <div class="card-body">
+                                <h5 class="card-title" th:text="${product.name}">상품명</h5>
+                                <p class="card-text" th:text="${product.description}">상품 설명</p>
+                            </div>
+                            <div class="card-footer">
+                                <div class="row justify-content-center">
+                                    <div class="card-footer d-flex justify-content-center"
+                                         style="transform: scale(0.7);">
+                                        <a th:href="@{/product/detail/{productId}(productId=${product.id})}"
+                                           class="btn btn-primary btn-lg mx-2" style="white-space: nowrap;">상세보기</a>
+                                        <a th:href="@{/order/create/{productId}(productId=${product.id})}"
+                                           class="btn btn-success btn-lg mx-2" style="white-space: nowrap;">구매하기</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </th:block>
             </div>
-          </div>
-        </th:block>
-      </div>
-      <!-- 페이지 링크 추가 -->
-      <div class="row">
-        <div class="col-12">
-          <nav aria-label="Page navigation">
-            <ul class="pagination justify-content-center">
-              <li class="page-item"><a class="page-link" href="#">이전</a></li>
-              <li class="page-item"><a class="page-link" href="#">1</a></li>
-              <li class="page-item"><a class="page-link" href="#">2</a></li>
-              <li class="page-item"><a class="page-link" href="#">3</a></li>
-              <li class="page-item"><a class="page-link" href="#">4</a></li>
-              <li class="page-item"><a class="page-link" href="#">5</a></li>
-              <li class="page-item"><a class="page-link" href="#">다음</a></li>
-            </ul>
-          </nav>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 </main>
+            <!-- 페이지 링크 추가 -->
 <footer>
-  <div class="container">
-    <div class="row">
-      <div class="col-6">
-        <p>&copy; 2023 우리 회사명. All rights reserved.</p>
-      </div>
-      <div class="col-6">
-        <nav class="text-right">
-          <ul class="list-inline">
-            <li class="list-inline-item"><a href="#">이용약관</a></li>
-            <li class="list-inline-item"><a href="#">개인정보 처리방침</a></li>
-          </ul>
-        </nav>
-      </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <nav aria-label="Page navigation">
+                    <nav class="pagination justify-content-center">
+                        <ul class="pagination">
+                            <li class="page-item"><a class="page-link" href="#">이전</a></li>
+                            <li class="page-item"><a class="page-link" href="#">1</a></li>
+                            <li class="page-item"><a class="page-link" href="#">2</a></li>
+                            <li class="page-item"><a class="page-link" href="#">3</a></li>
+                            <li class="page-item"><a class="page-link" href="#">4</a></li>
+                            <li class="page-item"><a class="page-link" href="#">5</a></li>
+                            <li class="page-item"><a class="page-link" href="#">다음</a></li>
+                        </ul>
+                    </nav>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6">
+                <p>&copy; 2023 우리 회사명. All rights reserved.</p>
+            </div>
+            <div class="col-6">
+                <nav class="text-right">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="#">이용약관</a></li>
+                        <li class="list-inline-item"><a href="#">개인정보 처리방침</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <nav class="text-center">
+                    <ul class="list-inline">
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
     </div>
-    <div class="row">
-      <div class="col-12">
-        <nav class="text-center">
-          <ul class="list-inline">
-            <li class="list-inline-item"><a href="#"><i class="fab fa-facebook"></i></a></li>
-            <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
-            <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
-          </ul>
-        </nav>
-      </div>
-    </div>
-  </div>
 </footer>
 </body>
 </html>
