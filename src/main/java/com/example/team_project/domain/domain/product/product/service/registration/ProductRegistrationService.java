@@ -25,7 +25,6 @@ public class ProductRegistrationService {
     private final SellerRepository sellerRepository;
     private final ImageUploadService imageUploadService;
 
-
     //product 상품 등록
     public void productRegistration(Long sellerId, ProductDto productDto, MultipartFile multipartFile) {
         ProductCategoryStatus productCategoryStatus = ProductCategoryStatus.valueOf(productDto.getCategoryDto());

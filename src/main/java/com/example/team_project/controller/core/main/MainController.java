@@ -20,7 +20,6 @@ public class MainController {
     private final ProductRepository productRepository;
 
     @GetMapping
-
     public String get(@SessionAttribute Long userId, Pageable pageable, Model model) {
 
         int page = Math.max(pageable.getPageNumber(), 1);
