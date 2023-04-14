@@ -32,7 +32,7 @@
             <li class="list-inline-item" th:if="${session.userId ne null or session.sellerId ne null}"><a th:href="@{/user/logout}">로그아웃</a></li>
             <li class="list-inline-item" th:if="${session.userId eq null and session.sellerId eq null}"><a th:href="@{/user/signup}">회원가입</a></li>
             <li class="list-inline-item" th:if="${session.userId ne null or session.sellerId ne null}"><a th:href="@{/user/mypage}">마이페이지</a></li>
-            <li class="list-inline-item"><a th:href="@{/board}">문의 게시판</a></li>
+            <li class="list-inline-item" th:if="${session.userId ne null or session.sellerId ne null}"><a th:href="@{/post/list}">문의 게시판</a></li>
             <li class="list-inline-item" th:if="${session.sellerId != null}"><a href="/product/seller/list">셀러 메인</a></li>
           </ul>
         </nav>
