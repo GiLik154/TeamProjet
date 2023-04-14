@@ -6,8 +6,6 @@
     <meta charset="UTF-8">
     <title>Product User Detail</title>
     <link rel="stylesheet" href="/static/css/productUserDetail.css">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script th:src="@{/js/button.js}"></script>
 
 </head>
 
@@ -39,30 +37,13 @@
             </tr>
 
         </table>
-        <table>
-            <tr>
-                <th>리뷰</th>
-                <a th:href="@{/product/review/add(productId=${productDetail.get().getId()})}">작성</a>
-            </tr>
-            <tr th:each="productReview:${productReviewList}">
-                <td th:text="${productReview.getTitle()}"></td>
-                <td th:text="${productReview.getContent()}"></td>
-                <td><img th:src="${productReview.getImagePath()}"></td>
-                <td th:text="${productReview.getUser().getUserId()}"></td>
-                <td th:text="${productReview.getTime()}"></td>
-                <a th:href="@{/product/review/delete(reviewId=${productReview.getId()})}">삭제</a>
-                <a th:href="@{/product/review/update(reviewId=${productReview.getId()})}">수정</a>
-            </tr>
-            <tr>
-                <td th:if="${productReviewList.getNumber()}"></td>
-            </tr>
-        </table>
 
-        <form th:action="@{/order/create}" method="get">
+
+        <form>
             <input type="hidden" name="productId" th:value="${productId}">
             수량 :&nbsp;&nbsp;<input type="number" name="salesCount" min="1" max="100"
                                    style="width: 35px;height: 35px; border-radius: 9px; border-style: double" value="1">
-            <button type="button" class="btn btn-primary btn-lg float-right" id="buy-button">구매하기</button>
+            <button type="submit">구매하기</button>
         </form>
 
         <form th:action="@{/update/like}">
@@ -73,6 +54,50 @@
             </button>
         </form>
 
+
+        <table>
+            <tr>
+                <th>제목</th>
+                <th>내용</th>
+                <th>사진</th>
+                <th>유저</th>
+                <th>시간</th>
+                <a th:href="@{/product/review/add(productId=${productDetail.get().getId()})}">작성</a>
+            </tr>
+            <tr th:each="productReview:${productReviewList}">
+                <td th:text="${productReview.getTitle()}"></td>
+                <td th:text="${productReview.getContent()}"></td>
+                <td><img th:src="${productReview.getImagePath()}"></td>
+                <td th:text="${productReview.getUser().getUserId()}"></td>
+                <td th:text="${productReview.getTime()}"></td>
+                <td>
+                    <a th:href="@{/product/review/delete(reviewId=${productReview.getId()})}">삭제</a>
+                    <a th:href="@{/product/review/update(reviewId=${productReview.getId()})}">수정</a>
+                </td>
+            </tr>
+        </table>
+
+        <div class="pagination">
+            <div th:if="${startPage != 1}">
+                <a th:href="@{/product/detail/{productId}(productId=${productDetail.get().getId()},page=${startPage - limitPage})}">
+                    이전
+                </a>
+            </div>
+            <div th:each="page:${#numbers.sequence(startPage, endPage)}">
+        <span th:if="${page} == ${productReviewList.getNumber() + 1}">
+            <span th:text="${page}">페이지</span>
+        </span>
+                <a th:if="${page != productReviewList.getNumber() + 1 && page <= productReviewList.getTotalPages()}"
+                   th:href="@{/product/detail/{productId}(productId=${productDetail.get().getId()},page=${page})}">
+                    <span th:text="${page}">페이지</span>
+                </a>
+            </div>
+            <div th:if="${endPage < productReviewList.totalPages}">
+                <a th:href="@{/product/detail/{productId}(productId=${productDetail.get().getId()},page=${startPage + limitPage})}">
+                    다음
+                </a>
+            </div>
+        </div>
 
     </div>
 </div>

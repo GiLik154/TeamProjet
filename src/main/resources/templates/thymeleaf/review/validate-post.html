@@ -39,7 +39,6 @@
             <div class="modal-body">
                 <form th:action="@{/post/review/delete}" method="post" id="deleteForm">
                     <input type="hidden" name="baseReviewId" th:value="${baseReviewId}">
-                    <input type="hidden" name="postId" th:value="${postId}">
                     <div class="form-group">
                         <label for="password">비밀번호:</label>
                         <input type="password" name="password" id="password" class="form-control">

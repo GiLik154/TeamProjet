@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.14/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</head>
+<body>
+<script>
+    // 팝업 창 띄우기
+    $(document).ready(function () {
+        $('#updateModal').modal('show');
+    });
+
+    // 수정 폼 제출 시 서버로 전송 및 모달 닫기
+    $('#updateForm').on('submit', function (e) {
+        e.preventDefault();
+        var form = new FormData(this);
+        // 서버로 폼 데이터 전송하는 로직 추가
+        // ...
+        // 모달 닫기
+        $('#updateModal').modal('hide');
+    });
+</script>
+
+<div class="modal" tabindex="-1" role="dialog" id="updateModal">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">수정</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form th:action="@{/product/review/update}" method="post" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="title">제목</label>
+                        <input type="text" name="title" id="title" class="form-control"
+                               th:value="${baseReview.getTitle()}">
+                    </div>
+                    <div class="form-group">
+                        <label for="content">내용</label>
+                        <input type="text" name="content" id="content" class="form-control"
+                               th:value="${baseReview.getContent()}">
+                    </div>
+                    <div class="form-group">
+                        <label for="file">이미지</label>
+                        <input type="file" name="file" id="file" accept="image/*" class="form-control-file"
+                               th:value="${baseReview.getImagePath()}">
+                    </div>
+                    <input type="hidden" name="baseReviewId" th:value="${baseReview.getId()}">
+                    <input type="hidden" name="kinds" value="ProductReview">
+                    <input type="hidden" name="kindsId"
+                           th:value="${baseReview.getReviewToKinds().getProductReview().getProduct().getId()}">
+                    <input type="submit" value="작성" class="btn btn-success">
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
