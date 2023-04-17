@@ -3,6 +3,7 @@ package com.example.team_project.domain.domain.payment.domain;
 import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.enums.PaymentType;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@AllArgsConstructor
 public class Payment {
         @Id
         @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -14,6 +14,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -64,13 +65,20 @@ public class User {
      * 기존의 유저를 삭제하거나, 추가적인 유저를 생성하지 않고
      * 유저 정보만 변경하기 위한 생성자
      */
-    public User(Long id, String userId, String password, String name, String phoneNumber, UserGrade userGrade) {
+    public User(Long id, String userId, String password, String userName, String phoneNumber, UserGrade userGrade) {
         this.id = id;
         this.userId = userId;
         this.password = password;
-        this.userName = name;
+        this.userName = userName;
         this.phoneNumber = phoneNumber;
         this.userGrade = userGrade;
+    }
+
+    public User(String userId, String password, String userName, String phoneNumber) {
+        this.userId = userId;
+        this.password = password;
+        this.userName = userName;
+        this.phoneNumber = phoneNumber;
     }
 
     public void encodePassword(PasswordEncoder passwordEncoder) {

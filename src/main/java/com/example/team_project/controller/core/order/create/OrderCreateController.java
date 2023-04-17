@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -40,7 +41,7 @@ public class OrderCreateController {
         if (userAddressList.isEmpty()) {
             throw new InvalidAddressException();
         }
-        List<Payment> paymentList = paymentRepository.findByUserId(userId);
+        Optional<Payment> paymentList = paymentRepository.findByUserId(userId);
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
 
         modelAndView.addObject("userId", userId);
