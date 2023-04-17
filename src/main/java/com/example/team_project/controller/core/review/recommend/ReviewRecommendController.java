@@ -22,6 +22,6 @@ public class ReviewRecommendController {
             reviewRecommendUpdateService.update(userId,baseReviewId,trueOrFalse);
         }
 
-        return "redirect:/post/list";
+        return "redirect:/main";
     }
 }
