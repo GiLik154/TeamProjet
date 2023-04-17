@@ -17,7 +17,7 @@ public class Seller {
     private Long id;
 
     //판매자 아이디
-    @Column
+    @Column(unique = true)
     private String ownerId;
 
     //비밀번호
@@ -29,7 +29,7 @@ public class Seller {
     private String ownerName;
 
     //판매자 핸드폰 번호
-    @Column
+    @Column(unique = true)
     private String phoneNumber;
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
@@ -71,5 +71,9 @@ public class Seller {
     public void update(String ownerName, String phoneNumber) {
         this.ownerName = ownerName;
         this.phoneNumber = phoneNumber;
+    }
+
+    public void passwordUpdate(String password ) {
+        this.password=password;
     }
 }
