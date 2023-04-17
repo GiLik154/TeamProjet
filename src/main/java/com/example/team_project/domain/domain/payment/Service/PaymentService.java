@@ -10,5 +10,4 @@ public interface PaymentService {
     Payment updatePayment(Long userId, Long paymentId, PaymentType paymentType, String cardNumber, String accountNumber);
     void deletePayment(Long userId, Long paymentId);
     List<Payment> getPaymentsByUserId(Long userId);
-    Payment addPaymentToOrderList(Long orderListId, Long paymentId);
 }

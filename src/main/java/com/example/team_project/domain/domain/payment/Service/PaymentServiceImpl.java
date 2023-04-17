@@ -7,6 +7,8 @@ import com.example.team_project.domain.domain.payment.domain.PaymentRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.PaymentType;
+import com.example.team_project.exception.OrderListNotFoundException;
+import com.example.team_project.exception.UserNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -62,24 +64,4 @@ public class PaymentServiceImpl implements PaymentService {
         return paymentRepository.findAll();
     }
 
-
-    @Override
-    public Payment addPaymentToOrderList(Long userId, Long orderListId, Long paymentId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
-        OrderList orderList = orderListRepository.findByUserIdAndId(userId, orderListId).orElseThrow(() -> new IllegalArgumentException("Invalid order list id"));
-        Payment payment = paymentRepository.findByUserIdAndId(userId, paymentId).orElse(null);
-
-        if (payment != null && !payment.getUser().equals(user)) {
-            throw new IllegalArgumentException("Invalid payment id");
-        }
-
-        if (payment == null) {
-            payment = new Payment(user);
-        }
-
-        orderList.setPayment(payment);
-        orderListRepository.save(orderList);
-
-        return paymentRepository.save(payment);
-    }
 }
