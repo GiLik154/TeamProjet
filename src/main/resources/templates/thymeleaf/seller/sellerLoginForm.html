@@ -11,6 +11,15 @@
     <input name="ownerId">
     <label>비밀번호 :</label>
     <input type="password" name="password">
+    <a href="/seller/searchId"
+       onclick="window.open('/seller/searchId', 'popup', 'width=800,, top=50%, left=50%, height=600'); return false;">
+        아이디 찾기
+    </a>
+
+    <a href="/seller/searchPassword"
+       onclick="window.open('/seller/searchPassword', 'popup', 'width=800,, top=50%, left=50%, height=600'); return false;">
+        비밀번호 찾기
+    </a>
     <div class="button-container">
         <button id="submit-btn" type="submit">확인</button>
         <button type="button" onclick="back()">취소</button>
@@ -20,7 +29,7 @@
 
 
 <script>
-    function back(){
+    function back() {
         history.back();
     }
 
