@@ -28,6 +28,6 @@ public class ProductDeleteController {
 
 
         productDeleteService.delete(sellerId, productId, password);
-        return "redirect:product/seller/list";
+        return "redirect:/product/seller/list";
     }
 }
