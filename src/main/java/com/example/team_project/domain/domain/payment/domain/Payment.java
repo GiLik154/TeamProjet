@@ -40,4 +40,12 @@ public class Payment {
                 this.accountNumber = accountNumber;
         }
 
+        public Payment(Long id, User user, PaymentType paymentType, String cardNumber, String accountNumber) {
+                this.id = id;
+                this.user = user;
+                this.paymentType = paymentType;
+                this.cardNumber = cardNumber;
+                this.accountNumber = accountNumber;
+        }
+
 }
