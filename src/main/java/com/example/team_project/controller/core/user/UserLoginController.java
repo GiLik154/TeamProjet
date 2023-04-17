@@ -2,7 +2,7 @@ package com.example.team_project.controller.core.user;
 
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
-import com.example.team_project.domain.domain.user.service.login.UserLogin;
+import com.example.team_project.domain.domain.user.service.auth.UserLogin;
 import com.example.team_project.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

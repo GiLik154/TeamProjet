@@ -17,11 +17,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     Optional<User> findByUserId(String userId);
 
+    Optional<User> findByUserIdAndPassword(String userId, String password);
 
-//    @Query("SELECT u.userAddress FROM User u WHERE u.id = ?")
-//    List<UserAddress> findAddressListByUserId(Long userId);
-
-    void delete(User user);
 
     default User validateUserId(Long userId) {
         Optional<User> userOptional = findById(userId);
