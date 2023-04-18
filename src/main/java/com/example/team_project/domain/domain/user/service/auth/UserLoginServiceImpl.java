@@ -2,9 +2,11 @@ package com.example.team_project.domain.domain.user.service.auth;
 
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class UserLoginServiceImpl implements UserLoginService {
     private final UserRepository userRepository;
 

@@ -9,12 +9,14 @@ import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.PaymentType;
 import com.example.team_project.exception.OrderListNotFoundException;
 import com.example.team_project.exception.UserNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Transactional
+@Service
 public class PaymentServiceImpl implements PaymentService {
     private final UserRepository userRepository;
     private final PaymentRepository paymentRepository;

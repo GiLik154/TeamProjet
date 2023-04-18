@@ -5,9 +5,11 @@ import com.example.team_project.domain.domain.address.domain.UserAddressReposito
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.UserGrade;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Transactional
+@Service
 public class UserSignUpServiceImpl implements UserSignUpService {
     private final UserRepository userRepository;
     private final UserAddressRepository userAddressRepository;

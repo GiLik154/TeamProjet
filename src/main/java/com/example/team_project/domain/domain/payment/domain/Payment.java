@@ -29,7 +29,7 @@ public class Payment {
 
         private String accountNumber;
 
-        @OneToMany(mappedBy = "orderList")
+        @OneToMany(mappedBy = "payment")
         private List<OrderList> orderLists;
 
         protected Payment() {

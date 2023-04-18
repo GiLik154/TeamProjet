@@ -4,11 +4,13 @@ import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 
 @Transactional
+@Service
 public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
     private final UserRepository userRepository;
 
