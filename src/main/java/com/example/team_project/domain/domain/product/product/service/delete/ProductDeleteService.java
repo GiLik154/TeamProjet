@@ -24,17 +24,13 @@ public class ProductDeleteService {
     private final SellerRepository sellerRepository;
     private final PasswordEncoder passwordEncoder;
 
-
-
     //삭제
-    public void delete(Long sellerId, Long productId,String password) {
+    public void delete(Long sellerId, Long productId, String password) {
         Seller seller = sellerRepository.validateSellerId(sellerId);
-
         // 판매자 비밀번호 검증
         if (!seller.isValidPassword(passwordEncoder, password)) {
             throw new NotPasswordException("비밀번호를 다시 확인해주세요");
         }
-
         productRepository.deleteById(productId);
     }
 }

@@ -9,24 +9,25 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.Optional;
 
-public interface ProductRepository extends JpaRepository<Product,Long> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    default Product validateProductId(Long productId){
+    default Product validateProductId(Long productId) {
         Optional<Product> productOptional = findById(productId);
-        if (productOptional.isPresent()){
+        if (productOptional.isPresent()) {
             return productOptional.get();
         }
         throw new ProductNotFoundException();
     }
 
-    Product findBySellerId (Long sellerId);
+    Product findBySellerId(Long sellerId);
 
     Optional<Product> findBySeller(Seller seller);
+
     Page<Product> findBySellerId(Long sellerId, PageRequest id);
 
-    default Product validateSellerId(Seller seller){
+    default Product validateSellerId(Seller seller) {
         Optional<Product> productOptional = findBySeller(seller);
-        if (productOptional.isPresent()){
+        if (productOptional.isPresent()) {
             return productOptional.get();
         }
         throw new UsernameNotFoundException("Invalid sellerID");
@@ -34,7 +35,7 @@ public interface ProductRepository extends JpaRepository<Product,Long> {
 
     Optional<Product> findByName(String name);
 
+    Page<Product> findByCategoryId(Long categoryId, PageRequest id);
 
-    Page<Product> findByCategoryId(Long categoryId,PageRequest id);
-    Page<Product> findBySellerIdAndCategoryId(Long seller,Long categoryId,PageRequest id);
+    Page<Product> findBySellerIdAndCategoryId(Long seller, Long categoryId, PageRequest id);
 }

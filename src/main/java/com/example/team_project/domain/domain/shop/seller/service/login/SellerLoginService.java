@@ -30,11 +30,10 @@ public class SellerLoginService {
     public String sellerLogin(String ownerId, String password) {
 
         Seller seller = sellerRepository.validateSeller(ownerId);
-        
+
         if (!seller.isValidPassword(bCryptPasswordEncoder, password)) {
             throw new NotPasswordException("비밀번호를 다시 확인해주세요");
         }
-
         return seller.getOwnerId();
     }
 }
