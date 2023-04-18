@@ -24,6 +24,6 @@ public class CouponIssueController {
     @PostMapping("{couponName}")
     public String post(@SessionAttribute Long userId, @PathVariable String couponName) {
         userCouponIssueService.issue(userId, couponName);
-        return "thymeleaf/coupon/issue";
+        return "redirect:/main";
     }
 }

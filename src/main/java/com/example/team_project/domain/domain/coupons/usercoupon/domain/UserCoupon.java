@@ -3,6 +3,7 @@ package com.example.team_project.domain.domain.coupons.usercoupon.domain;
 import com.example.team_project.domain.domain.coupons.coupon.domain.Coupon;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.enums.CouponStatus;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -19,11 +20,12 @@ public class UserCoupon {
      * 쿠폰을 가지고 있을 유저의 정보
      */
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnore
     private User user;
     /**
      * 유저가 가지고 있는 쿠폰의 종류
      */
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.EAGER)
     private Coupon coupon;
     /**
      * 쿠폰의 사용 기한
@@ -32,6 +34,7 @@ public class UserCoupon {
     private LocalDate expirationDate;
 
     @Column(name = "status")
+    @Enumerated(EnumType.ORDINAL)
     private CouponStatus status;
 
     private LocalDate usedDate;

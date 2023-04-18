@@ -96,7 +96,7 @@ class OrderListUpdateServiceImplTest {
         Long orderListId = orderList.getId();
 
         //when
-        orderListUpdateServiceImpl.update(userId, orderListId, userAddress1);
+        orderListUpdateServiceImpl.update(userId, orderListId, userAddress1.getId());
         List<OrderList> orderListOptional = orderListRepository.findByUserId(userId);
         OrderList orderList1 = orderListOptional.get(0);
 
