@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <title>Product User Detail</title>
     <link rel="stylesheet" href="/static/css/productUserDetail.css">
-
+    <script src="https://unpkg.com/htmx.org@latest/dist/htmx.js"></script>
 </head>
 
 <body>
@@ -38,7 +38,6 @@
 
         </table>
 
-
         <form>
             <input type="hidden" name="productId" th:value="${productId}">
             수량 :&nbsp;&nbsp;<input type="number" name="salesCount" min="1" max="100"
@@ -53,7 +52,6 @@
                 <span th:if="${!isLiked}">🖤</span>
             </button>
         </form>
-
 
         <table>
             <tr>
@@ -73,6 +71,11 @@
                 <td>
                     <a th:href="@{/product/review/delete(reviewId=${productReview.getId()})}">삭제</a>
                     <a th:href="@{/product/review/update(reviewId=${productReview.getId()})}">수정</a>
+                </td>
+                <td th:id="recommendInfo"
+                    th:hx-get="@{/product/detail/reviewId/{reviewId}(reviewId=${productReview.getId()})}"
+                    hx-trigger="load"
+                    th:data-reviewId="${productReview.getId()}">
                 </td>
             </tr>
         </table>
@@ -100,6 +103,71 @@
         </div>
 
     </div>
+
+    <script>
+        // 데이터를 가져올 URL
+        var reviewId = document.getElementById('recommendInfo').getAttribute('data-reviewId');
+        var url = '/post/read/' + reviewId; // reviewId에 실제 리뷰 아이디를 대입해야 함
+
+        // GET 요청을 통해 데이터를 가져옴
+        fetch(url)
+            .then(function (response) {
+                return response.json();
+            })
+            .then(function (data) {
+                // 가져온 데이터를 기반으로 HTML 요소를 동적으로 생성
+                var recommendInfo = document.getElementById('recommendInfo');
+                var html = '';
+
+                // recommend 값에 따라 HTML을 동적으로 생성
+                if (data.recommend === 'Best') {
+                    html = '<form action="/review/recommend" method="post">' +
+                        '<input type="hidden" id="baseReviewId" name="baseReviewId" value="' + reviewId + '">' +
+                        '<input type="hidden" id="trueOrFalse" name="trueOrFalse" value="CANCEL">' +
+                        '<input type="submit" value="👍" style="background-color: blue" >' +
+                        '</form>' +
+                        '<form action="/review/recommend" method="post">' +
+                        '<input type="hidden" name="baseReviewId" value="' + reviewId + '">' +
+                        '<input type="hidden" name="trueOrFalse" value="WORST">' +
+                        '<input type="submit" value="👎">' +
+                        '</form>' +
+                        '<p>추천수:' + data.recommendBestCount + '</p>' +
+                        '<p>비추천수:' + data.recommendWorstCount + '</p>';
+                } else if (data.recommend === 'Worst') {
+                    html = '<form action="/review/recommend" method="post">' +
+                        '<input type="hidden" id="baseReviewId" name="baseReviewId" value="' + reviewId + '">' +
+                        '<input type="hidden" id="trueOrFalse" name="trueOrFalse" value="BEST">' +
+                        '<input type="submit" value="👍">' +
+                        '</form>' +
+                        '<form action="/review/recommend" method="post">' +
+                        '<input type="hidden" name="baseReviewId" value="' + reviewId + '">' +
+                        '<input type="hidden" name="trueOrFalse" value="CANCEL">' +
+                        '<input type="submit" value="👎" style="background-color: red" >' +
+                        '</form>' +
+                        '<p>추천수:' + data.recommendBestCount + '</p>' +
+                        '<p>비추천수:' + data.recommendWorstCount + '</p>';
+                } else if (data.recommend === 'Cancel') {
+                    html = '<form action="/review/recommend" method="post">' +
+                        '<input type="hidden" id="baseReviewId" name="baseReviewId" value="' + reviewId + '">' +
+                        '<input type="hidden" id="trueOrFalse" name="trueOrFalse" value="BEST">' +
+                        '<input type="submit" value="👍">' +
+                        '</form>' +
+                        '<form action="/review/recommend" method="post">' +
+                        '<input type="hidden" name="baseReviewId" value="' + reviewId + '">' +
+                        '<input type="hidden" name="trueOrFalse" value="WORST">' +
+                        '<input type="submit" value="👎">' +
+                        '</form>' +
+                        '<p>추천수:' + data.recommendBestCount + '</p>' +
+                        '<p>비추천수:' + data.recommendWorstCount + '</p>';
+                }
+
+                // 생성한 HTML을 요소에 할당
+                recommendInfo.innerHTML = html;
+            })
+            .catch(function (error) {
+                console.error('데이터 가져오기 실패:', error);
+            });
+    </script>
 </div>
 
 </body>
