@@ -12,9 +12,9 @@ public interface OrderListUpdateService {
      *
      * @param userId:      사용자 고유 Id
      * @param orderListId: 주문리스트 고유 Id
-     * @param userAddress: 사용자 주소
+     * @param userAddressId: 사용자 주소 고유 Id
      * @throws OrderListNotFoundException: 해당 주문리스트를 찾을 수 없을 떄
      **/
-    void update(Long userId, Long orderListId, UserAddress userAddress);
+    void update(Long userId, Long orderListId, Long userAddressId);
 
 }

@@ -12,7 +12,7 @@ import javax.transaction.Transactional;
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class OrderCancelServiceImpl implements OrderCancelService{
+public class OrderCancelServiceImpl implements OrderCancelService {
 
     private final OrderRepository orderRepository;
 
@@ -21,9 +21,17 @@ public class OrderCancelServiceImpl implements OrderCancelService{
         if (!orderRepository.existsById(orderId)) {
             throw new OrderNotFoundException();
         }
-
+        validateOrder(orderId);
         Order order = orderRepository.validateOrderId(orderId);
         order.getOrderToProduct().cancel(orderToProductId);
+    }
+
+    private void validateOrder(Long orderId) {
+        Order order = orderRepository.validateOrderId(orderId);
+        String orderStatus = order.getOrderToProduct().getStatus().toString();
+        if (orderStatus.equals("CANCELED")) {
+            throw new OrderNotFoundException();
+        }
 
     }
 }

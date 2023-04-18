@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>주문 상세보기</title>
+    <link rel="stylesheet" href="/static/css/order_detail.css">
     <!-- 부트스트랩 링크 추가 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -35,6 +36,7 @@
             <th scope="col">전화번호</th>
             <th scope="col">총상품금액</th>
             <th scope="col">취소</th>
+            <th scope="col">상태확인</th>
         </tr>
         </thead>
         <tbody>
@@ -49,14 +51,35 @@
             <td th:text="${order.orderList.userAddress.phone}"></td>
             <td th:text="${order.orderToProduct.totalPrice}"></td>
             <td>
-                <form th:action="@{/order/cancel/{orderId}(orderId=${order.id})}" method="get">
+                <form th:action="@{/order/cancel}" method="post">
+                    <input type="hidden" name="orderId" th:value="${order.id}">
+                    <input type="hidden" name="orderListId" th:value="${order.orderList.id}">
                     <button type="submit" class="btn btn-danger">취소</button>
                 </form>
             </td>
+            <td th:text="${order.orderToProduct.status}"></td>
         </tr>
         </tbody>
     </table>
+    <div class="text-center">
+        <button onclick="history.back()" class="btn btn-secondary">이전 페이지로 돌아가기</button>
+    </div>
 </div>
+<div class="pagination-links">
+    <a th:if="${page >= 1}"
+       th:href="@{/order/view/detail/{orderListId}(orderListId=${order_list.id}, page=${page - 1})}">이전</a>
+
+    <form th:action="@{/order/view/detail/{orderListId}(orderListId=${order_list.id})}">
+        <input type="number" name="page" min="1" th:max="${total_page}" th:value="${page}"/>
+        /<a th:text="${total_page}"></a>
+        <button type="submit" style="width:60px;height:31px;border-style:none;border-radius:10px">이동</button>
+    </form>
+
+    <a th:if="${page < total_page}"
+       th:href="@{/order/view/detail/{orderListId}(orderListId=${order_list.id}, page=${page + 1})}">다음</a>
+</div>
+
+
 <!-- 부트스트랩 자바스크립트 및 jQuery 추가 -->
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
         integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
@@ -67,3 +90,5 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
         integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
         crossorigin="anonymous"></script>
+</body>
+</html>

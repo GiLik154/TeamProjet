@@ -151,7 +151,7 @@ class OrderCancelServiceImplTest {
         Order order = new Order(user, orderList, orderToProduct);
         orderRepository.save(order);
 
-        orderToProduct.updateStatus(OrderStatus.CANCELED);
+        orderToProduct.updateStatus(OrderStatus.SHIPPED);
 
         //when
         CannotCancelOrderException exception = assertThrows(CannotCancelOrderException.class, () ->

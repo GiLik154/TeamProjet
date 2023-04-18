@@ -6,3 +6,10 @@ $(document).ready(function () {
         window.location.href = "/order/create/" + productId + "/" + salesCount;
     });
 });
+
+// $(document).ready(function () {
+//     $('#cancel-button').click(function () {
+//         var orderId = $('input[name="orderId"]').val();
+//         window.location.href = "/order/cancel/"
+//     });
+// });

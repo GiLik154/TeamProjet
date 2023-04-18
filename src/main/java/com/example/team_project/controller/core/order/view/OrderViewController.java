@@ -7,6 +7,10 @@ import com.example.team_project.domain.domain.order.list.domain.OrderListReposit
 import com.example.team_project.exception.OrderListNotFoundException;
 import com.example.team_project.exception.OrderNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -22,13 +26,20 @@ public class OrderViewController {
     private final OrderListRepository orderListRepository;
 
     @GetMapping("/detail/{orderListId}")
-    public ModelAndView detail(@PathVariable Long orderListId, @SessionAttribute("userId") Long userId) {
+    public ModelAndView detail(@PathVariable Long orderListId, @SessionAttribute("userId") Long userId, Pageable pageable) {
         ModelAndView modelAndView = new ModelAndView("thymeleaf/order/order_detail");
-        List<Order> orders = orderRepository.findByOrderListId(orderListId).orElseThrow(OrderNotFoundException::new);
+        int page = Math.max(pageable.getPageNumber(), 1);
+        int limitPage = 8;
+        Page<Order> orders = orderRepository.findByOrderListId(orderListId, PageRequest.of(page - 1, limitPage, Sort.Direction.DESC, "id"));
+//        List<Order> orders = orderRepository.findListByOrderListId(orderListId).orElseThrow(OrderNotFoundException::new);
         OrderList orderList = orderListRepository.findById(orderListId).orElseThrow(OrderListNotFoundException::new);
+        int totalPage = orders.getTotalPages();
+
+        modelAndView.addObject("page", page);
+        modelAndView.addObject("total_page", totalPage);
+        modelAndView.addObject("orders", orders);
         modelAndView.addObject("order_list", orderList);
         modelAndView.addObject("userId", userId.toString());
-        modelAndView.addObject("orders", orders);
 
         return modelAndView;
     }

@@ -30,6 +30,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -95,9 +96,9 @@ class OrderListUpdateServiceImplTest {
         Long orderListId = orderList.getId();
 
         //when
-        orderListUpdateServiceImpl.update(userId, orderListId, userAddress1);
-        Optional<OrderList> orderListOptional = orderListRepository.findByUserId(userId);
-        OrderList orderList1 = orderListOptional.get();
+        orderListUpdateServiceImpl.update(userId, orderListId, userAddress1.getId());
+        List<OrderList> orderListOptional = orderListRepository.findByUserId(userId);
+        OrderList orderList1 = orderListOptional.get(0);
 
         //then
         assertEquals(orderList.getId(), orderList1.getId());

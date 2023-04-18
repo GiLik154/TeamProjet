@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -57,8 +58,8 @@ class OrderListAddServiceImplTest {
 
         //when
         orderListAddServiceImpl.add(userId, userAddressId, paymentId);
-        Optional<OrderList> orderListOptional = orderListRepository.findByUserId(userId);
-        OrderList orderList = orderListOptional.get();
+        List<OrderList> orderListOptional = orderListRepository.findByUserId(userId);
+        OrderList orderList = orderListOptional.get(0);
 
         //then
         assertNotNull(orderList.getId());
