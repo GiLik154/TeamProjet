@@ -10,19 +10,19 @@
 <body>
 <div class="container">
     <h1>배송지 수정</h1>
-    <form method="post" th:action="@{/order_list/update/{userAddressId}(userAddressId=${userAddress.id})}">
+    <form method="post" th:action="@{/order_list/update_address}">
         <div class="form-group">
-            <label for="streetAddress">주소</label>
-            <input type="text" class="form-control" id="streetAddress" name="streetAddress"
-                   th:value="${userAddress.streetAddress}">
+            <label for="address">주소</label>
+            <input type="hidden" id="orderListId" name="orderListId" th:value="${orderList.id}">
+            <select class="form-control" id="address" name="userAddressId" required>
+                <option value="" selected disabled
+                        th:text="${orderList.userAddress.streetAddress} + ${orderList.userAddress.detailedAddress}"></option>
+                <option th:each="address : ${user_address_list}" th:value="${address.id}"
+                        th:text="${address.streetAddress+ ' ' + address.detailedAddress}"
+                        th:if="${address.id != orderList.userAddress.id}">
+                </option>
+            </select>
         </div>
-        <div class="form-group">
-            <label for="detailedAddress">상세 주소</label>
-            <input type="text" class="form-control" id="detailedAddress" name="detailedAddress"
-                   th:value="${userAddress.detailedAddress}">
-        </div>
-        <input type="hidden" name="userId" th:value="${userId}">
-        <input type="hidden" name="orderListId" th:value="${order_list_id}">
         <button type="submit" class="btn btn-primary">저장</button>
         <button type="button" class="btn btn-primary" onclick="window.history.back()">취소</button>
     </form>

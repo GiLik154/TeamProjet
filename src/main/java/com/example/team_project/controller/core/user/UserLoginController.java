@@ -29,6 +29,6 @@ public class UserLoginController {
         userLoginService.loginUser(user.getUserId(),user.getPassword());
         model.addAttribute("userId", user.getId());
 
-        return "thymeleaf/user/loginForm";
+        return "redirect:/main";
     }
 }

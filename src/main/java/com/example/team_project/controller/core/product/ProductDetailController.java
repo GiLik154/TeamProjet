@@ -52,12 +52,12 @@ public class ProductDetailController {
         Page<BaseReview> productReview = baseReviewRepository.findByReviewToKinds_ProductReview_ProductIdAndSituation(productId,
                 "create",
                 pageable
-                );
+        );
 
-        List<ReviewRecommend>reviewRecommendList = reviewRecommendRepository.findByBaseReview_ReviewToKinds_ProductReview_ProductIdAndUser_Id(productId,userId);
+        List<ReviewRecommend> reviewRecommendList = reviewRecommendRepository.findByBaseReview_ReviewToKinds_ProductReview_ProductIdAndUser_Id(productId, userId);
 
-        int pageBlock = (int)Math.ceil(((double)productReview.getNumber()+1)/limitPage);
-        int startPage = ((pageBlock-1) * limitPage)+1;
+        int pageBlock = (int) Math.ceil(((double) productReview.getNumber() + 1) / limitPage);
+        int startPage = ((pageBlock - 1) * limitPage) + 1;
         int endPage = (pageBlock) * limitPage;
 
         //좋아요 누르면 빨간하트 아니면 검은하트!
@@ -78,7 +78,7 @@ public class ProductDetailController {
     @ResponseBody
     public ResponseEntity<Map<String, Object>> recommendInfo(@SessionAttribute("userId") Long userId, @PathVariable Long reviewId) {
         Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("recommend","Cancel");
+        resultMap.put("recommend", "Cancel");
         reviewRecommendRepository.findByBaseReview_IdAndUser_Id(reviewId, userId).ifPresent(reviewRecommend -> {
             String recommend = reviewRecommend.getRecommend();
             if (recommend != null) {
@@ -90,8 +90,8 @@ public class ProductDetailController {
             }
         });
 
-        resultMap.put("recommendBestCount", reviewRecommendRepository.countByBaseReview_IdAndRecommend(reviewId,"Best"));
-        resultMap.put("recommendWorstCount", reviewRecommendRepository.countByBaseReview_IdAndRecommend(reviewId,"Worst"));
+        resultMap.put("recommendBestCount", reviewRecommendRepository.countByBaseReview_IdAndRecommend(reviewId, "Best"));
+        resultMap.put("recommendWorstCount", reviewRecommendRepository.countByBaseReview_IdAndRecommend(reviewId, "Worst"));
         System.out.println("실행 됌???");
         return ResponseEntity.ok(resultMap);
     }
