@@ -1,19 +1,17 @@
 package com.example.team_project.domain.domain.payment.Service;
 
-import com.example.team_project.domain.domain.order.list.domain.OrderList;
+
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
 import com.example.team_project.domain.domain.payment.domain.Payment;
 import com.example.team_project.domain.domain.payment.domain.PaymentRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.PaymentType;
-import com.example.team_project.exception.OrderListNotFoundException;
-import com.example.team_project.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Transactional
 @Service
