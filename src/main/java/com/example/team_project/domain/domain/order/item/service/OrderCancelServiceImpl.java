@@ -2,6 +2,7 @@ package com.example.team_project.domain.domain.order.item.service;
 
 import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
+import com.example.team_project.exception.CannotCancelOrderException;
 import com.example.team_project.exception.OrderNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -26,11 +27,12 @@ public class OrderCancelServiceImpl implements OrderCancelService {
         order.getOrderToProduct().cancel(orderToProductId);
     }
 
+    /** 취소 가능 상품 검증하기 **/
     private void validateOrder(Long orderId) {
         Order order = orderRepository.validateOrderId(orderId);
         String orderStatus = order.getOrderToProduct().getStatus().toString();
-        if (orderStatus.equals("CANCELED")) {
-            throw new OrderNotFoundException();
+        if (orderStatus.equals("CANCELED") || orderStatus.equals("DELIVERED") || orderStatus.equals("SHIPPED")) {
+            throw new CannotCancelOrderException();
         }
 
     }

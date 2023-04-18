@@ -38,8 +38,7 @@
 
         </table>
 
-        <form>
-           <input type="hidden" name="productId" th:value="${productId}">
+        <form th:action="@{/order/create/{productId}(productId=${productId})}">
             수량 :&nbsp;&nbsp;<input type="number" name="salesCount" min="1" max="100"
                                    style="width: 35px;height: 35px; border-radius: 9px; border-style: double" value="1">
             <button type="submit">구매하기</button>

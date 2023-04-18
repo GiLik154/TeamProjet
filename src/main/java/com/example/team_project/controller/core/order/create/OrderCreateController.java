@@ -33,8 +33,9 @@ public class OrderCreateController {
     private final ProductRepository productRepository;
     private final OrderCreateService orderCreateService;
 
-    @GetMapping("/{productId}/{salesCount}")
-    public ModelAndView createForm(@PathVariable Long productId, @SessionAttribute("userId") Long userId, @PathVariable("salesCount") int quantity) {
+//    @GetMapping("/{productId}/{salesCount}")
+    @GetMapping("/{productId}")
+    public ModelAndView createForm(@PathVariable Long productId, @SessionAttribute("userId") Long userId, @RequestParam("salesCount") int quantity) {
         ModelAndView modelAndView = new ModelAndView("thymeleaf/order/order_create");
         List<UserAddress> userAddressList = userAddressRepository.findByUserId(userId);
 
