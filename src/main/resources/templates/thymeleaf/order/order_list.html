@@ -25,35 +25,32 @@
             <th scope="col">주문리스트 번호</th>
             <th scope="col">주문 날짜</th>
             <th scope="col">배송지</th>
-            <th scope="col">결제 방법</th>
             <th scope="col">주소 수정</th>
-            <th scope="col">취소</th>
+            <th scope="col">취소 여부</th>
         </tr>
         </thead>
         <tbody>
-        <tr>
+        <tr th:each="order_list : ${order_list}">
             <td>
-                <a th:href="@{/order_list/view/{userId}/detail/{orderListId}(userId=${userId}, orderListId=${order_list.id})}">
+                <a th:href="@{/order_list/view/detail/{orderListId}(orderListId=${order_list.id})}">
                     <span th:text="${order_list.id}"></span>
                 </a>
             </td>
             <td th:text="${order_list.orderDate}"></td>
             <td th:text="${order_list.userAddress.streetAddress} + ${order_list.userAddress.detailedAddress}"></td>
-            <td th:text="${order_list.payment.paymentType}"></td>
             <td>
-                <form th:action="@{/order_list/update/{userAddressId}(userAddressId=${order_list.userAddress.id})}"
-                      method="get">
-                    <input type="hidden" name="userId" th:value="${userId}">
+                <form th:action="@{/order_list/update_address}" method="get">
                     <input type="hidden" name="orderListId" th:value="${order_list.id}">
                     <button type="submit" class="btn btn-danger btn-sm">수정하기</button>
                 </form>
             </td>
-            <td>
-                <form th:action="@{/order_list/cancel/{userId}/{orderListId}(userId=${userId}, orderListId=${order_list.id})}"
+            <td th:if="${order_list.status}">
+                <form th:action="@{/order_list/cancel/{orderListId}(orderListId=${order_list.id})}"
                       method="get">
                     <button type="submit" class="btn btn-danger btn-sm">취소</button>
                 </form>
             </td>
+            <td th:if="${not order_list.status}">처리완료</td>
         </tr>
         </tbody>
     </table>

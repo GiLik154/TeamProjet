@@ -18,10 +18,10 @@ public class OrderListCancelController {
 
 
     @GetMapping("/{orderListId}")
-    public ModelAndView cancel(@SessionAttribute("userId") Long userId, @PathVariable Long orderListId) {
+    public ModelAndView cancel( @PathVariable Long orderListId) {
         orderListCancelService.cancel(orderListId);
 
-        return new ModelAndView("redirect:/order_list/view/" + userId);
+        return new ModelAndView("redirect:/order_list/view/");
     }
 
 }

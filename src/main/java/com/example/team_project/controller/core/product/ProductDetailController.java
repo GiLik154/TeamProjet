@@ -36,19 +36,23 @@ public class ProductDetailController {
 
     @GetMapping("{productId}")
     public String detail(@PathVariable Long productId, Model model, @SessionAttribute("userId") Long userId,
-                         int page) {
+                         Integer page) {
         Optional<Product> product = productRepository.findById(productId);
         Optional<User> user = userRepository.findById(userId);
+        /** 페이지 null처리 잠시해놨어요 **/
+        if (page == null) {
+            page = 1;
+        }
 
         int limitPage = 5;
         Pageable pageable = PageRequest.of(page - 1, limitPage, Sort.Direction.DESC, "id");
         Page<BaseReview> productReview = baseReviewRepository.findByReviewToKinds_ProductReview_ProductIdAndSituation(productId,
                 "create",
                 pageable
-                );
+        );
 
-        int pageBlock = (int)Math.round((double)productReview.getTotalPages()/limitPage);
-        int startPage = (pageBlock-1) * limitPage;
+        int pageBlock = (int) Math.round((double) productReview.getTotalPages() / limitPage);
+        int startPage = (pageBlock - 1) * limitPage;
         int EndPage = (pageBlock) * limitPage;
 
         //좋아요 누르면 빨간하트 아니면 검은하트!

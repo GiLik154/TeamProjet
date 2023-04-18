@@ -26,6 +26,6 @@ public class ProductDeleteController {
                       @RequestParam("productId") Long productId,
                       @RequestParam("password") String password) {
         productDeleteService.delete(sellerId, productId, password);
-        return "redirect:product/seller/list";
+        return "redirect:/seller/list";
     }
 }

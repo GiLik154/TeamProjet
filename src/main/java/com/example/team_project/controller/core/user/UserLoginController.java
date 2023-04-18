@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/user/login")
 @SessionAttributes("userId")
-public class userLoginController {
+public class UserLoginController {
 
     private final UserLogin userLogin;
     private final UserRepository userRepository;
@@ -29,6 +29,6 @@ public class userLoginController {
         userLogin.userLogin(user.getId());
         model.addAttribute("userId", user.getId());
 
-        return "thymeleaf/user/loginForm";
+        return "redirect:/main";
     }
 }

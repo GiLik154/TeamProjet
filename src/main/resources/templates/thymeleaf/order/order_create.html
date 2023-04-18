@@ -51,6 +51,7 @@
                     <!-- 결제페이지로 이동 -->
                     <form th:action="@{#}" method="get">
                         <button type="submit" class="btn btn-primary">주문하기</button>
+                        <button type="button" class="btn btn-primary" onclick="window.history.back()">취소</button>
                     </form>
                 </div>
             </div>
