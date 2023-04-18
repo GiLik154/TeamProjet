@@ -64,6 +64,13 @@ public class ProductDetailController {
         Optional<LikeCountCheck> likeCount = likeCountRepository.findByUserIdAndProductId(user, product);
         boolean isLiked = likeCount.isPresent();
         model.addAttribute("isLiked", isLiked);
+        //review
+        model.addAttribute("limitPage",limitPage);
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("endPage",endPage);
+        model.addAttribute("productDetail", product);
+        model.addAttribute("productReviewList", productReview);
+        model.addAttribute("recommendList",reviewRecommendList.isEmpty() ? null : reviewRecommendList);
         return "thymeleaf/product/productUserDetail";
     }
 
