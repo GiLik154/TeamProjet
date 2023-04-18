@@ -55,4 +55,14 @@ public class UserAddress {
         this.detailedAddress = detailedAddress;
         this.zipCode = zipCode;
     }
+
+    /**
+     *  회원가입 시 주소를 입력하는 생성자
+     */
+    public UserAddress(String zipCode, String streetAddress, String detailedAddress, User user) {
+        this.zipCode = zipCode;
+        this.streetAddress = streetAddress;
+        this.detailedAddress = detailedAddress;
+        this.user = user;
+    }
 }

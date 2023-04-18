@@ -40,6 +40,11 @@ public class OrderList {
         this.status = true;
     }
 
+    public OrderList(User user, Payment payment) {
+        this.user = user;
+        this.payment = payment;
+    }
+
     public void update(UserAddress userAddress) {
         this.userAddress = userAddress;
 
