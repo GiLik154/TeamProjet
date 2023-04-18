@@ -26,6 +26,8 @@ import org.springframework.mock.web.MockMultipartFile;
 
 import javax.transaction.Transactional;
 
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest

@@ -22,11 +22,7 @@ public class BaseReviewUpdateServiceImpl<T> implements BaseReviewUpdateService {
     private final Map<String, ReviewJoinKindsService> reviewJoinKindsServiceMap;
     private final ImageUploadService imageUploadService;
 
-    /**
-     * 베이스 리뷰의 고유번호롤 베이스리뷰가 있으면 가져옴
-     * 베이스리뷰의 유저와 받아온 유저의 고유번호가 같으면
-     * 정보를 입력받아 업데이트
-     */
+
     @Override
     public void update(Long baseReviewId, Long userId, ReviewDto reviewDto, MultipartFile file) {
 

@@ -45,7 +45,7 @@ class OrderCreateServiceImplTest {
     private final SellerRepository sellerRepository;
     private final OrderRepository orderRepository;
     private final ProductRepository productRepository;
-    private final OrderCreateServiceImpl orderCreateServiceImpl;
+    private final OrderCreateService orderCreateService;
     private final OrderListRepository orderListRepository;
     private final ProductCategoryRepository productCategoryRepository;
 
@@ -53,16 +53,15 @@ class OrderCreateServiceImplTest {
     @Autowired
     OrderCreateServiceImplTest(
             SellerRepository sellerRepository,
-            OrderCreateServiceImpl orderCreateServiceImpl,
             UserRepository userRepository,
             UserAddressRepository userAddressRepository,
             PaymentRepository paymentRepository,
             OrderRepository orderRepository,
             ProductRepository productRepository,
-            OrderListRepository orderListRepository,
+            OrderCreateService orderCreateService, OrderListRepository orderListRepository,
             ProductCategoryRepository productCategoryRepository) {
         this.sellerRepository = sellerRepository;
-        this.orderCreateServiceImpl = orderCreateServiceImpl;
+        this.orderCreateService = orderCreateService;
         this.userRepository = userRepository;
         this.userAddressRepository = userAddressRepository;
         this.paymentRepository = paymentRepository;
@@ -99,9 +98,9 @@ class OrderCreateServiceImplTest {
         Long productId = product.getId();
 
         //when
-        orderCreateServiceImpl.create(userId, productId, 10, userAddressId, paymentId);
-        Optional<Order> orderOptional = orderRepository.findByUserId(userId);
-        Order order = orderOptional.get();
+        Order order = orderCreateService.create(userId, productId, 10, userAddressId, paymentId);
+//        Optional<Order> orderOptional = orderRepository.findByUserId(userId);
+//        Order order = orderOptional.get();
 
         //then
         assertNotNull(order.getId());
@@ -143,7 +142,7 @@ class OrderCreateServiceImplTest {
 
         //when
         UserNotFoundException exception = assertThrows(UserNotFoundException.class, () ->
-                orderCreateServiceImpl.create(userId + 1L, productId, 10, userAddressId, paymentId)
+                orderCreateService.create(userId + 1L, productId, 10, userAddressId, paymentId)
         );
 
         //then
@@ -224,7 +223,7 @@ class OrderCreateServiceImplTest {
 
         //when
         ProductNotFoundException exception = assertThrows(ProductNotFoundException.class, () ->
-                orderCreateServiceImpl.create(userId, productId + 1L, 10, userAddressId, paymentId)
+                orderCreateService.create(userId, productId + 1L, 10, userAddressId, paymentId)
         );
 
         //then
@@ -261,7 +260,7 @@ class OrderCreateServiceImplTest {
 
         //when
         InvalidQuantityException exception = assertThrows(InvalidQuantityException.class, () ->
-                orderCreateServiceImpl.create(userId, productId, 0, userAddressId, paymentId)
+                orderCreateService.create(userId, productId, 0, userAddressId, paymentId)
         );
 
         //then
@@ -298,7 +297,7 @@ class OrderCreateServiceImplTest {
 
         //when
         OutOfStockException exception = assertThrows(OutOfStockException.class, () ->
-                orderCreateServiceImpl.create(userId, productId, 10, userAddressId, paymentId)
+                orderCreateService.create(userId, productId, 10, userAddressId, paymentId)
         );
 
         //then

@@ -1,8 +1,9 @@
 $(document).ready(function () {
     $('#user-login-button').click(function () {
         // 유저 로그인 버튼 클릭 시 '/user/login'으로 POST 방식으로 폼 데이터 전송
-        $.post("/user/login", $("form").serialize());
-        window.location.href = "/main";
+        $.post("/user/login", $("form").serialize(), function (data) {
+            window.location.href = "/main";
+        });
     });
 
     $('#seller-login-button').click(function () {

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form th:action="@{/product/review/add}" method="post" enctype="multipart/form-data">
+  <div class="form-group">
+    <label for="title">제목</label>
+    <input type="text" name="title" id="title" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="content">내용</label>
+    <input type="text" name="content" id="content" class="form-control">
+  </div>
+  <div class="form-group">
+    <label for="file">이미지</label>
+    <input type="file" name="file" id="file" accept="image/*" class="form-control-file">
+  </div>
+  <input type="hidden" name="kinds" value="ProductReview">
+  <input type="hidden" name="kindsId" th:value="${productId}">
+  <input type="submit" value="작성" class="btn btn-success">
+</form>
+
+</body>
+</html>

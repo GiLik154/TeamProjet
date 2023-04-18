@@ -6,11 +6,13 @@ import com.example.team_project.domain.domain.review.base.domain.BaseReviewRepos
 import com.example.team_project.domain.domain.review.recommend.domain.ReviewRecommend;
 import com.example.team_project.domain.domain.review.recommend.domain.ReviewRecommendRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Controller
@@ -22,43 +24,43 @@ public class PostReadController {
     private final ReviewRecommendRepository reviewRecommendRepository;
 
     @GetMapping("")
-    public String get(@RequestParam("postId")Long postId,
+    public String get(@RequestParam("postId") Long postId,
                       @SessionAttribute("userId") Long userId,
                       @RequestParam(value = "reviewLink", defaultValue = "false") Boolean reviewLink,
-                      Model model){
+                      Model model) {
 
         postRepository.findById(postId).ifPresent(post -> {
-            List<BaseReview>baseReviewList = baseReviewRepository.findByReviewToKinds_PostReview_PostIdAndSituation(postId,"create");
-            List<ReviewRecommend>reviewRecommendList = reviewRecommendRepository.findByBaseReview_ReviewToKinds_PostReview_PostIdAndBaseReview_Situation(postId,"create");
+            List<BaseReview> baseReviewList = baseReviewRepository.findByReviewToKinds_PostReview_PostIdAndSituation(postId, "create");
+            List<ReviewRecommend> reviewRecommendList = reviewRecommendRepository.findByBaseReview_ReviewToKinds_PostReview_PostIdAndUser_Id(postId, userId);
 
-            model.addAttribute("reviewLink",reviewLink);
-            model.addAttribute("post",post);
-            model.addAttribute("postReviewList",baseReviewList);
-            model.addAttribute("userId",userId);
-            model.addAttribute("recommendList",reviewRecommendList.isEmpty() ? null : reviewRecommendList);
-//            model.addAttribute("recommendCount",recommendCountList);
+            model.addAttribute("reviewLink", reviewLink);
+            model.addAttribute("post", post);
+            model.addAttribute("postReviewList", baseReviewList);
+            model.addAttribute("recommendList", reviewRecommendList.isEmpty() ? null : reviewRecommendList);
         });
         return "thymeleaf/post/read";
     }
 
-    @GetMapping("/recommend/{baseReviewId}")
+    @GetMapping("{reviewId}")
     @ResponseBody
-    public String recommendInfo(@PathVariable Long baseReviewId,Long userId) {
-        System.out.println("sdfdsfsdf"+baseReviewId);
-        // Handle post update logic here
-            AtomicReference<String> result = new AtomicReference<>("Cancel");
-        reviewRecommendRepository.findByBaseReview_IdAndUser_Id(baseReviewId,151L).ifPresent(reviewRecommend -> {
-            if(reviewRecommend.getRecommend().equals("Best")){
-                result.set("Best");
-            }else if (reviewRecommend.getRecommend().equals("Worst")){
-                result.set("Worst");
-            }else{
-                result.set("Cancel");
+    public ResponseEntity<Map<String, Object>> recommendInfo(@SessionAttribute("userId") Long userId, @PathVariable Long reviewId) {
+        Map<String, Object> resultMap = new HashMap<>();
+        resultMap.put("recommend","Cancel");
+        reviewRecommendRepository.findByBaseReview_IdAndUser_Id(reviewId, userId).ifPresent(reviewRecommend -> {
+            String recommend = reviewRecommend.getRecommend();
+            if (recommend != null) {
+                if (recommend.equals("Best")) {
+                    resultMap.put("recommend", "Best");
+                } else if (recommend.equals("Worst")) {
+                    resultMap.put("recommend", "Worst");
+                }
             }
         });
 
-        System.out.println(result.get() + "ASdfasdfadsfas");
-
-        return result.get();
+        resultMap.put("recommendBestCount", reviewRecommendRepository.countByBaseReview_IdAndRecommend(reviewId,"Best"));
+        resultMap.put("recommendWorstCount", reviewRecommendRepository.countByBaseReview_IdAndRecommend(reviewId,"Worst"));
+        System.out.println("실행 됌???");
+        return ResponseEntity.ok(resultMap);
     }
+
 }

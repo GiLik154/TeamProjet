@@ -39,6 +39,5 @@ public class SellerLoginController {
 
         //성공하면 seller 메인페이지로이동
         return "thymeleaf/seller/sellerIndex";
-
     }
 }

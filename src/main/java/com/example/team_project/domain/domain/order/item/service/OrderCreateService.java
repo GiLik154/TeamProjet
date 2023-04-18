@@ -1,5 +1,6 @@
 package com.example.team_project.domain.domain.order.item.service;
 
+import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.exception.OutOfStockException;
 import com.example.team_project.exception.ProductNotFoundException;
 import com.example.team_project.exception.UserNotFoundException;
@@ -22,5 +23,5 @@ public interface OrderCreateService {
      * @throws ProductNotFoundException :해당 상품을 찾을 수 없을 때
      * @throws OutOfStockException      : 주문하려는 상품의 재고가 떨어졌거나 부족할 때
      **/
-    void create(Long userId, Long productId, int quantity, Long userAddressId, Long paymentId);
+    Order create(Long userId, Long productId, int quantity, Long userAddressId, Long paymentId);
 }

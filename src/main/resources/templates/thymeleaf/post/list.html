@@ -1,16 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <!-- Add Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+
 <body>
-<div th:each="list:${postList}">
-    <a th:href="@{/post/read(postId=${list.getId()})}" th:text="${list.getTitle()}"></a>
-    <div th:text="${list.getTime()}"></div>
-    <div th:text="${list.getUser().getUserId()}"></div>
-    <div th:text="${list.getPostCategory().getName()}"></div>
+<div class="container mt-5">
+    <h2>Post List Example with Bootstrap</h2>
+    <div th:each="list:${postList}" class="card mt-3">
+        <div class="card-body">
+            <a th:href="@{/post/read(postId=${list.getId()})}" th:text="${list.getTitle()}"
+               class="card-title"></a>
+            <div th:text="${list.getTime()}" class="card-text"></div>
+            <div th:text="${list.getUser().getUserId()}" class="card-text"></div>
+            <div th:text="${list.getPostCategory().getName()}" class="card-text"></div>
+        </div>
+    </div>
+    <a th:href="@{/post/add}" class="btn btn-primary mt-3">게시글 작성</a>
 </div>
-<a th:href="@{/post/add}">게시글 작성</a>
+
+<!-- Add Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+
 </html>

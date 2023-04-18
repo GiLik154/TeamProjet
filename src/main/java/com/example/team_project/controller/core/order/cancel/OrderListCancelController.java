@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
@@ -16,8 +17,8 @@ public class OrderListCancelController {
     private final OrderListCancelService orderListCancelService;
 
 
-    @GetMapping("/{userId}/{orderListId}")
-    public ModelAndView cancel(@PathVariable Long userId, @PathVariable Long orderListId) {
+    @GetMapping("/{orderListId}")
+    public ModelAndView cancel(@SessionAttribute("userId") Long userId, @PathVariable Long orderListId) {
         orderListCancelService.cancel(orderListId);
 
         return new ModelAndView("redirect:/order_list/view/" + userId);
