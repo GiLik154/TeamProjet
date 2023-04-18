@@ -35,9 +35,7 @@ public class ProductDetailController {
         //좋아요 누르면 빨간하트 아니면 검은하트!
         Optional<LikeCountCheck> likeCount = likeCountRepository.findByUserIdAndProductId(user, product);
         boolean isLiked = likeCount.isPresent();
-
         model.addAttribute("isLiked", isLiked);
-
         return "thymeleaf/product/productUserDetail";
     }
 }

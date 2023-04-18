@@ -24,15 +24,9 @@ public class SellerEmailCheck {
 
     @PostMapping("")
     public String emailCheck(@RequestParam("token") String token, @RequestParam("ownerId") String ownerId, Model model) {
-
-        System.out.println("==토큰번호===" + token);
-
         confirmationTokenRepository.validate(token);
-
         Optional<Seller> seller = sellerRepository.findByOwnerId(ownerId);
-
         model.addAttribute("ownerId", seller.get().getOwnerId());
         return "thymeleaf/seller/sellerPasswordUpdateForm";
-
     }
 }

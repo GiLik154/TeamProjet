@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ProductSalesCountService {
     private final OrderRepository orderRepository;
 
-    public void updateSalesCount(){
+    public void updateSalesCount() {
 
     }
 
