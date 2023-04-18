@@ -21,13 +21,13 @@ public class SellerJoinService {
     private final PasswordEncoder bCryptPasswordEncoder;
 
     //회원가입
-    public void sellerJoin(SellerJoinDto sellerJoinDto){
-        
+    public void sellerJoin(SellerJoinDto sellerJoinDto) {
+
         /**
          * seller 에 ownerId가 존재하는지 검색하고 이미 ownerId가 존재한다면,
          * @SellerDuplicateSellerException 예외발생
          * */
-        sellerRepository.duplication(sellerJoinDto.getOwnerId());
+        sellerRepository.duplication(sellerJoinDto.getOwnerId(), sellerJoinDto.getPhoneNumber());
 
         /**
          * 아이디가 존재하지 않으면 값을받아와서 seller 에 저장
@@ -38,13 +38,13 @@ public class SellerJoinService {
                 sellerJoinDto.getOwnerName(),
                 sellerJoinDto.getPhoneNumber());
 
-        checkEncodingPw(seller,sellerJoinDto.getPassword());
+        checkEncodingPw(seller, sellerJoinDto.getPassword());
         sellerRepository.save(seller);
     }
 
-    /** 
+    /**
      * 비밀번호 암호화
-     * */
+     */
     private void checkEncodingPw(Seller seller, String password) {
         if (!seller.isEncodePassword(bCryptPasswordEncoder, password)) {
             throw new PasswordEncodingFailedException();

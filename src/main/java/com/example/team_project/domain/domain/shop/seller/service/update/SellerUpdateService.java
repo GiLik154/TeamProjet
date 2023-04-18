@@ -3,8 +3,10 @@ package com.example.team_project.domain.domain.shop.seller.service.update;
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.exception.NotPasswordException;
+import com.example.team_project.exception.PasswordEncodingFailedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,6 +33,19 @@ public class SellerUpdateService {
         seller.update(ownerName, phoneNumber);
 
     }
+
+    public void passwordUpdate(String ownerId,String password) {
+        System.out.println(ownerId);
+        Seller seller = sellerRepository.validateSeller(ownerId);
+
+        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+        String encodedPassword = encoder.encode(password);
+        //패스워드변경
+        seller.passwordUpdate(encodedPassword);
+
+    }
+
+
 
 
 }
