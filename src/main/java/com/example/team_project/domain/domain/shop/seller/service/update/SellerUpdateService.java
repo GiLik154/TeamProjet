@@ -34,7 +34,7 @@ public class SellerUpdateService {
 
     }
 
-    public void passwordUpdate(String ownerId,String password) {
+    public void passwordUpdate(String ownerId, String password) {
         System.out.println(ownerId);
         Seller seller = sellerRepository.validateSeller(ownerId);
 
@@ -42,10 +42,5 @@ public class SellerUpdateService {
         String encodedPassword = encoder.encode(password);
         //패스워드변경
         seller.passwordUpdate(encodedPassword);
-
     }
-
-
-
-
 }

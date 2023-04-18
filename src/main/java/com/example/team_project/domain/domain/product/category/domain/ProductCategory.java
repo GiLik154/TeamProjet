@@ -23,5 +23,6 @@ public class ProductCategory {
 
     }
 
-    protected ProductCategory(){}
+    protected ProductCategory() {
+    }
 }

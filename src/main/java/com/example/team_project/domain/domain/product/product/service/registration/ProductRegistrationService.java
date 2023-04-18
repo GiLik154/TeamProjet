@@ -46,6 +46,10 @@ public class ProductRegistrationService {
         return sellerRepository.findById(sellerId).orElseThrow(() -> new RuntimeException("shop id ."));
     }
 
+    /**
+     * DB에 값이 존재하지 않으면 만들어줌(enum은있어야함)
+     */
+
     private ProductCategory getCategory(ProductCategoryStatus status) {
         return productCategoryRepository.findByStatus(status)
                 .orElseGet(() -> {

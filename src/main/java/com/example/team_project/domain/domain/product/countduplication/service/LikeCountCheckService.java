@@ -26,26 +26,18 @@ public class LikeCountCheckService {
         Optional<Product> product = productRepository.findById(productId);
 
         //db에서 userid productid 와 맞는 값 검색
-        Optional<LikeCountCheck> countCheckOptional = likeCountRepository.findByUserIdAndProductId(user,product);
+        Optional<LikeCountCheck> countCheckOptional = likeCountRepository.findByUserIdAndProductId(user, product);
 
-
-        if(countCheckOptional.isPresent()){
-       //값이존재하면 return false
+        if (countCheckOptional.isPresent()) {
+            //값이존재하면 return false
             return false;
-        }else{
-
+        } else {
             LikeCountCheck likeCountCheck = LikeCountCheck.builder().userId(user.get()).productId(product.get()).build();
             likeCountRepository.save(likeCountCheck);
-
             Product updateProduct = product.get();
             updateProduct.updateLikeCount();
             productRepository.save(updateProduct);
             return true;
-
         }
-
     }
-
-
-
 }

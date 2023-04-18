@@ -15,8 +15,8 @@ import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/seller/login-form")
 @SessionAttributes({"sellerId", "ownerId"})
+@RequestMapping("/seller/login-form")
 public class SellerLoginController {
 
     private final SellerRepository sellerRepository;

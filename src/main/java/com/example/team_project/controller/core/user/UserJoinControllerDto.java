@@ -1,5 +1,6 @@
 package com.example.team_project.controller.core.user;
 
+import lombok.Data;
 import lombok.Getter;
 
 @Getter

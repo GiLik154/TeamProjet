@@ -30,15 +30,13 @@ public class ProductUpdateService {
     private final ProductCategoryRepository productCategoryRepository;
     private final ImageUploadService imageUploadService;
 
-    private ProductCategory getCategory(ProductCategoryStatus status){
+    private ProductCategory getCategory(ProductCategoryStatus status) {
 
         return productCategoryRepository.findByStatus(status)
                 .orElseThrow(() -> new RuntimeException("해당 카테고리를 찾을 수 없습니다."));
     }
 
-
     //판매자 고유번호로 수정해야함.
-
     //이름,이미지,가격,재고,상세설명,카테고리 수정
     public void update(Long sellerId, Long productId, String password, ProductDto productDto, MultipartFile multipartFile) {
         Seller seller = sellerRepository.validateSellerId(sellerId);
@@ -50,16 +48,11 @@ public class ProductUpdateService {
 
         ProductCategoryStatus productCategoryStatus = ProductCategoryStatus.valueOf(productDto.getCategoryDto());
 
-
-
         productRepository.findById(productId).ifPresent(product -> {
             product.update(productDto.getName(), productDto.getImage(), productDto.getDescription(),
                     productDto.getStock(), productDto.getPrice(), getCategory(productCategoryStatus));
-        imageUploadService.upload(productDto.getName(), multipartFile, product);
+            imageUploadService.upload(productDto.getName(), multipartFile, product);
 
         });
-
     }
-
-
 }

@@ -22,14 +22,10 @@ public class SellerSearchPasswordController {
         return "thymeleaf/seller/sellerSearchPasswordForm";
     }
 
-
     @PostMapping("")
     public String searchId(@RequestParam("ownerId") String ownerId, Model model) {
         Seller seller = sellerRepository.validateSeller(ownerId);
-        model.addAttribute("ownerId",seller.getOwnerId());
-
+        model.addAttribute("ownerId", seller.getOwnerId());
         return "thymeleaf/seller/sellerEmailInputForm";
-
-
     }
 }

@@ -25,16 +25,7 @@ public class SellerEmailInputFormController {
     public String searchId(@RequestParam("sellerEmail") String sellerEmail, @RequestParam("sellerDomain") String domain, @RequestParam("ownerId") String ownerId) {
         String title = ("비밀번호 찾기 토큰입니다.");
         String email = sellerEmail + "@" + domain;
-
-        System.out.println("-----" + email+ "-----" +ownerId);
-
-
-            mailService.sendEmailToken(email, title, ownerId);
-
-            return "thymeleaf/seller/sellerEmailInputForm";
-        }
-
-
-
-
+        mailService.sendEmailToken(email, title, ownerId);
+        return "thymeleaf/seller/sellerEmailInputForm";
+    }
 }

@@ -2,7 +2,7 @@ package com.example.team_project.controller.core.user;
 
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
-import com.example.team_project.domain.domain.user.service.login.UserLogin;
+import com.example.team_project.domain.domain.user.service.auth.UserLoginService;
 import com.example.team_project.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 @SessionAttributes("userId")
 public class UserLoginController {
 
-    private final UserLogin userLogin;
+    private final UserLoginService userLoginService;
     private final UserRepository userRepository;
 
     @GetMapping("")
@@ -26,7 +26,7 @@ public class UserLoginController {
     @PostMapping("")
     public String login(@RequestParam("userId") String userId, Model model) {
         User user = userRepository.findByUserId(userId).orElseThrow(UserNotFoundException::new);
-        userLogin.userLogin(user.getId());
+        userLoginService.loginUser(user.getUserId(),user.getPassword());
         model.addAttribute("userId", user.getId());
 
         return "redirect:/main";

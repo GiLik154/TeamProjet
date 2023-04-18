@@ -32,21 +32,15 @@ public class Product implements ImageUpload {
 
     private Integer price;
 
-
     //정규화 1:1연결
-
     @OneToOne(fetch = FetchType.LAZY)
     private ProductCategory category;
-
-    //
-
-
 
     private int salesCount;
 
     private int likeCount;
 
-    protected Product(){
+    protected Product() {
     }
 
     public Product(String name, Seller seller, String description, int stock, int price, ProductCategory category) {
@@ -56,25 +50,22 @@ public class Product implements ImageUpload {
         this.stock = stock;
         this.price = price;
         this.category = category;
-        this.likeCount=0;
-        this.salesCount=0;
+        this.likeCount = 0;
+        this.salesCount = 0;
     }
 
-
-
     //판매량
-    public void updateSalesCount(){
+    public void updateSalesCount() {
         this.salesCount++;
     }
 
-    
     //좋아요수
-    public void updateLikeCount(){
+    public void updateLikeCount() {
         this.likeCount++;
     }
 
     public void downLikeCount() {
-        this.likeCount -- ;
+        this.likeCount--;
     }
 
     public void update(String name, String image, String description, int stock, int price, ProductCategory category) {
@@ -86,15 +77,13 @@ public class Product implements ImageUpload {
         this.category = category;
     }
 
-
     //재고량
-    public void decreaseSalesCount(Long orderId){
+    public void decreaseSalesCount(Long orderId) {
         this.salesCount--;
     }
 
     @Override
     public void uploadImage(String image) {
-        this.image=image;
+        this.image = image;
     }
-
 }

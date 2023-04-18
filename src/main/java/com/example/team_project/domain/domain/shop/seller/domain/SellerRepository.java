@@ -11,6 +11,7 @@ public interface SellerRepository extends JpaRepository<Seller, Long> {
 
     Seller findByOwnerName(String name);
 
+    //sellerId로 유무확인
     Optional<Seller> findById(Long sellerId);
 
     //아이디찾기
@@ -18,10 +19,12 @@ public interface SellerRepository extends JpaRepository<Seller, Long> {
 
     //로그인체크
     Optional<Seller> findByOwnerId(String ownerId);
+
     //전화번호체크
     Optional<Seller> findByPhoneNumber(String phoneNumber);
 
 
+    //오너아이디로 검색해서 아이디가 존재하지않으면 Exeption 을 띄어줌
     default Seller validateSeller(String ownerId) {
         Optional<Seller> optionalSeller = findByOwnerId(ownerId);
 
@@ -31,8 +34,8 @@ public interface SellerRepository extends JpaRepository<Seller, Long> {
 
     }
 
-    //아이디있나확인
-    default void duplication(String ownerId,String phoneNumber) {
+    //아이디 전화번호 확인
+    default void duplication(String ownerId, String phoneNumber) {
         Optional<Seller> optionalSeller = findByOwnerId(ownerId);
         Optional<Seller> optionalPhoneNumber = findByPhoneNumber(phoneNumber);
 
@@ -47,14 +50,13 @@ public interface SellerRepository extends JpaRepository<Seller, Long> {
         }
     }
 
+    //판매자 아이디 확인
     default Seller validateSellerId(Long sellerId) {
         Optional<Seller> optionalSeller = findById(sellerId);
 
         return optionalSeller.orElseThrow(() ->
-                new UsernameNotFoundException("Invalid seller")
+                new UsernameNotFoundException("판매자 아아디가 없습니다.")
         );
 
     }
-
-    void deleteByOwnerId(String ownerId);
 }
