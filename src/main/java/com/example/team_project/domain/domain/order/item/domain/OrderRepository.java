@@ -53,9 +53,12 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      **/
     @Query("SELECT o FROM Order o WHERE o.orderList.id = :orderListId " +
             "AND o.orderToProduct.status != 'SHIPPED' " +
-            "AND o.orderToProduct.status != 'DELIVERED' ")
-//            +"AND o.orderToProduct.status != 'CANCELED'")
+            "or o.orderToProduct.status != 'DELIVERED' ")
     List<Order> findCancelableOrders(@Param("orderListId") Long orderListId);
+    @Query("SELECT o FROM Order o WHERE o.orderList.id = :orderListId " +
+            "AND o.orderToProduct.status = 'SHIPPED' " +
+            "or o.orderToProduct.status = 'DELIVERED' ")
+    List<Order> findNotCancelableOrders(@Param("orderListId") Long orderListId);
 
     /**
      * 같은 주문리스트 안에서 각 주문 상태가 PAYMENT_COMPLETED 인것을 찾습니다
@@ -87,7 +90,7 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      * @return 해당 orderListId를 가진 order객체들의 List
      **/
 
-    Optional<List<Order>> findListByOrderListId(Long orderListId);
+    List<Order> findListByOrderListId(Long orderListId);
 
     Page<Order> findByOrderListId(Long orderListId, PageRequest id);//todo 페이징처리
 

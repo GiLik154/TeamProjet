@@ -22,12 +22,12 @@ public class OrderListCancelServiceImpl implements OrderListCancelService {
     private final OrderRepository orderRepository;
     private final OrderListRepository orderListRepository;
 
-
     @Override
     public void cancel(Long orderListId) {
         List<Order> cancelableOrders = orderRepository.findCancelableOrders(orderListId);
+        List<Order> notCancelableOrders = orderRepository.findNotCancelableOrders(orderListId);
 
-        if (validateCancelableOrders(cancelableOrders)) {
+        if (!validateNotCancelableOrders(notCancelableOrders)) {
             throw new CannotCancelOrderException();
         }
 
@@ -42,9 +42,9 @@ public class OrderListCancelServiceImpl implements OrderListCancelService {
     }
 
     /**
-     * 취소 가능한 주문들이 없으면(비어있으면) true, 취소 가능한 주문들이 있으면 false
+     * 취소 불가능한 주문들이 없으면(비어있으면) true, 취소 불가능한 주문들이 있으면 false
      **/
-    private boolean validateCancelableOrders(List<Order> cancelableOrders) {
-        return cancelableOrders.isEmpty();
+    private boolean validateNotCancelableOrders(List<Order> notCancelableOrders) {
+        return notCancelableOrders.isEmpty();
     }
 }

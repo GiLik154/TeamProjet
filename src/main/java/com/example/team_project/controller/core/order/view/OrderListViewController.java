@@ -32,7 +32,7 @@ public class OrderListViewController {
     @GetMapping("/detail/{orderListId}")
     public ModelAndView detail(@PathVariable Long orderListId) {
         ModelAndView modelAndView = new ModelAndView("thymeleaf/order/order_list_detail");
-        List<Order> orders = orderRepository.findListByOrderListId(orderListId).orElseThrow(OrderNotFoundException::new);
+        List<Order> orders = orderRepository.findListByOrderListId(orderListId);
         modelAndView.addObject("orders", orders);
 
         return modelAndView;
