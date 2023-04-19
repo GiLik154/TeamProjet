@@ -1,4 +1,4 @@
-package com.example.team_project.domain.domain.coupons.couponIncategory.service.delete;
+package com.example.team_project.domain.domain.coupons.couponincategory.service.delete;
 
 import com.example.team_project.domain.domain.coupons.coupon.domain.Coupon;
 

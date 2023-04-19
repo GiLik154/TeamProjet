@@ -8,5 +8,8 @@ import java.util.Optional;
 
 public interface CouponRepository extends JpaRepository<Coupon, String> {
     Optional<Coupon> findByName(String name);
+
     List<Coupon> findByDeadlineIsAfter(LocalDate localDate);
+
+    List<Coupon> findByMinPriceAfter(int price);
 }

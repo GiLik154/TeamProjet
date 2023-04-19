@@ -1,6 +1,6 @@
-package com.example.team_project.domain.domain.coupons.couponIncategory.service.delete;
+package com.example.team_project.domain.domain.coupons.couponincategory.service.delete;
 
-import com.example.team_project.domain.domain.coupons.couponIncategory.domain.CouponInCategoryRepository;
+import com.example.team_project.domain.domain.coupons.couponincategory.domain.CouponInCategoryRepository;
 import com.example.team_project.domain.domain.coupons.coupon.domain.Coupon;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

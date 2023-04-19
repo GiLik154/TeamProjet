@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<form th:hx-post="@{/coupon/apply-coupon-list}"
+      hx-trigger="change"
+      hx-target="#price">
+    <div class="form-group">
+        <label for="coupon">결제 방법:</label>
+        <select class="form-control" id="coupon" name="coupon" required>
+            <option value="">
+            </option>
+            <option th:each="item : ${list}" th:value="${item.id}" th:text="${item.coupon.name}"></option>
+        </select>
+    </div>
+</form>
+
+<div class="form-group" id="price">
+    <span class="original-price">$50.00</span>
+    <span class="discounted-price">$40.00</span>
+    <span class="discount">(20% off)</span>
+</div>
+
+<script src="https://unpkg.com/htmx.org@1.8.6"></script>
