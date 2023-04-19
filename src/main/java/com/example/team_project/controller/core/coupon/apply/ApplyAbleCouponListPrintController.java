@@ -9,6 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/coupon/apply-coupon-list")
@@ -28,14 +32,22 @@ public class ApplyAbleCouponListPrintController {
         return "thymeleaf/coupon/apply-coupon-list";
     }
 
-    @PostMapping()
-    public String post(@ModelAttribute("totalPrice") int totalPrice,
-                       @RequestParam Long coupon, Model model) {
+    @PostMapping("/{price}/{quantity}")
+    public String post(@PathVariable int price,
+                       @PathVariable int quantity,
+                       @RequestParam String couponName,
+                       HttpServletResponse response,
+                       Model model) {
 
-        System.out.println(coupon);
+        couponRepository.findByName(couponName).ifPresent(coupon ->
+                model.addAttribute("totalPrice", price * quantity * (100 - coupon.getDiscountRate()) / 100)
+        );
 
-//        model.addAttribute("price", totalPrice * (100 - Integer.parseInt(discountRate)) / 100);
+        Cookie cookie = new Cookie("couponName", couponName);
+        cookie.setPath("/");
+        cookie.setMaxAge(60);
+        response.addCookie(cookie);
 
-        return "thymeleaf/coupon/apply-coupon-list";
+        return "thymeleaf/coupon/apply-coupon-price";
     }
 }

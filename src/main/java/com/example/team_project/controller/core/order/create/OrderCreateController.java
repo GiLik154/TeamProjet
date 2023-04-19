@@ -56,7 +56,8 @@ public class OrderCreateController {
     }
 
     @PostMapping
-    public ModelAndView create(@SessionAttribute("userId") Long userId, @Validated OrderCreateDto orderCreateDto) {
+    public ModelAndView create(@SessionAttribute("userId") Long userId, @Validated OrderCreateDto orderCreateDto, @CookieValue(name = "couponName", required = false) String couponName) {
+        System.out.println(couponName);
 
         Order order = orderCreateService.create(userId,
                 orderCreateDto.getProductId(),
