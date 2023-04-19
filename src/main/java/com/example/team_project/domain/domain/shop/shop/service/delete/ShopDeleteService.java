@@ -21,17 +21,13 @@ public class ShopDeleteService {
     private final SellerRepository sellerRepository;
     private final PasswordEncoder passwordEncoder;
 
-
     public void delete(Long shopId, String ownerId, String password) {
         Seller seller = sellerRepository.validateSeller(ownerId);
 
+        //비밀번호 체크
         if (!seller.isValidPassword(passwordEncoder, password)) {
             throw new NotPasswordException("비밀번호를 다시 확인해주세요");
         }
-
-
         shopRepository.deleteById(shopId);
-
     }
-
 }

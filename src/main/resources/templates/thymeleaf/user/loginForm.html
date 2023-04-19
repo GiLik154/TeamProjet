@@ -11,7 +11,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
 
     <!-- Font Awesome 라이브러리 추가 -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />'
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    '
 
     <!-- 부트스트랩 CDN 추가 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
@@ -41,8 +42,11 @@
                                    id="password" required="">
                             <div class="invalid-feedback">비밀번호를 입력해주세요.</div>
                         </div>
-                        <button type="button" class="btn btn-primary btn-lg float-right" id="user-login-button">유저 로그인</button>
-                        <button type="button" class="btn btn-secondary btn-lg float-right mr-2" id="seller-login-button">샐러 로그인</button>
+                        <button type="button" class="btn btn-primary btn-lg float-right" id="user-login-button">유저 로그인
+                        </button>
+                        <button type="button" class="btn btn-secondary btn-lg float-right mr-2" id="seller-login-button"
+                                onclick="sellerLogin()">샐러 로그인
+                        </button>
                         <button type="button" class="btn btn-link btn-lg" id="find-id-button">아이디 찾기</button>
                         <button type="button" class="btn btn-link btn-lg" id="find-password-button">비밀번호 찾기</button>
                     </form>
@@ -52,4 +56,9 @@
     </div>
 </div>
 </body>
+<script>
+    function sellerLogin() {
+        location.href = "/seller/login-form";
+    }
+</script>
 </html>

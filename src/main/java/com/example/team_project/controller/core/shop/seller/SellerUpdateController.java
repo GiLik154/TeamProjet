@@ -37,8 +37,8 @@ public class SellerUpdateController {
     }
 
     @PostMapping("{ownerId}")
-    public String passwordUpdate(@PathVariable("ownerId") String ownerId,@RequestParam("password") String password) {
-        sellerUpdateService.passwordUpdate(ownerId,password);
+    public String passwordUpdate(@PathVariable("ownerId") String ownerId, @RequestParam("password") String password) {
+        sellerUpdateService.passwordUpdate(ownerId, password);
         return "redirect:/";
     }
 

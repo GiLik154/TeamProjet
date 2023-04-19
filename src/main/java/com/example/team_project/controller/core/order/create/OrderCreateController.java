@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,13 +37,13 @@ public class OrderCreateController {
     @GetMapping("/{productId}")
     public ModelAndView createForm(@PathVariable Long productId, @SessionAttribute("userId") Long userId, @RequestParam("salesCount") int quantity) {
         ModelAndView modelAndView = new ModelAndView("thymeleaf/order/order_create");
-        Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
-        List<Payment> paymentList = paymentRepository.findByUserId(userId);
         List<UserAddress> userAddressList = userAddressRepository.findByUserId(userId);
 
         if (userAddressList.isEmpty()) {
             throw new InvalidAddressException();
         }
+        Optional<Payment> paymentList = paymentRepository.findByUserId(userId);
+        Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
 
         modelAndView.addObject("userId", userId);
         modelAndView.addObject("user_address_list", userAddressList);

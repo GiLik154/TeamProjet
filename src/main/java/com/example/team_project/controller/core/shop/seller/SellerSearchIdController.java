@@ -30,13 +30,9 @@ public class SellerSearchIdController {
         try {
             Optional<Seller> seller = sellerRepository.findByOwnerNameAndPhoneNumber(ownerName, phoneNumber);
             model.addAttribute("sellerInformation", seller);
-
             return "thymeleaf/seller/sellerId";
-
         } catch (SellerNameNotFoundException ex) {
             throw new SellerNameNotFoundException("존재하지 않는 이름입니다.");
         }
-
-
     }
 }

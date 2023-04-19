@@ -15,12 +15,12 @@ public class ProductRegistrationCategoryService {
 
     private final ProductCategoryRepository productCategoryRepository;
 
-    public ProductCategory insertCategory(String category){
+    public ProductCategory insertCategory(String category) {
 
         //품목 카테고리
         ProductCategory productCategory = new ProductCategory(
                 ProductCategoryStatus.valueOf(category));
-                return productCategoryRepository.save(productCategory);
+        return productCategoryRepository.save(productCategory);
     }
 
 

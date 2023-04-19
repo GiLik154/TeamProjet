@@ -63,15 +63,14 @@ public class ProductDetailController {
         //좋아요 누르면 빨간하트 아니면 검은하트!
         Optional<LikeCountCheck> likeCount = likeCountRepository.findByUserIdAndProductId(user, product);
         boolean isLiked = likeCount.isPresent();
-
-        model.addAttribute("limitPage", limitPage);
-        model.addAttribute("startPage", startPage);
-        model.addAttribute("endPage", endPage);
+        model.addAttribute("isLiked", isLiked);
+        //review
+        model.addAttribute("limitPage",limitPage);
+        model.addAttribute("startPage",startPage);
+        model.addAttribute("endPage",endPage);
         model.addAttribute("productDetail", product);
         model.addAttribute("productReviewList", productReview);
-        model.addAttribute("isLiked", isLiked);
-        model.addAttribute("recommendList", reviewRecommendList.isEmpty() ? null : reviewRecommendList);
-
+        model.addAttribute("recommendList",reviewRecommendList.isEmpty() ? null : reviewRecommendList);
         return "thymeleaf/product/productUserDetail";
     }
 

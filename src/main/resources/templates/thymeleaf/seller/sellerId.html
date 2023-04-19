@@ -8,7 +8,7 @@
 
 
 <div th:if="${sellerInformation.isPresent()}">
-  <a th:text="${sellerInformation.get().getOwnerId()}"></a>
+ 당신의 아이디 입니다 :  <a th:text="${sellerInformation.get().getOwnerId()}"></a>
 </div>
 
 <div th:unless="${sellerInformation.isPresent()}">

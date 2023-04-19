@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Entity
 @Getter
 @Builder
-@Table(uniqueConstraints=@UniqueConstraint(columnNames={"userId", "productId"}))
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"userId", "productId"}))
 @AllArgsConstructor
 public class LikeCountCheck {
 
@@ -30,7 +30,6 @@ public class LikeCountCheck {
     @JoinColumn(name = "productId")
     private Product productId;
 
-
-
-    public LikeCountCheck() {}
+    public LikeCountCheck() {
+    }
 }

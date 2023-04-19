@@ -20,9 +20,9 @@ public class ShopListController {
     private final ShopRepository shopRepository;
 
     @GetMapping("")
-    public String list (@SessionAttribute("sellerId")Long sellerId, Model model){
+    public String list(@SessionAttribute("sellerId") Long sellerId, Model model) {
         List<Shop> shopList = shopRepository.findBySellerId(sellerId);
-        model.addAttribute("shopList",shopList);
+        model.addAttribute("shopList", shopList);
         return "thymeleaf/shop/shopList";
     }
 }

@@ -4,6 +4,7 @@ import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.shop.shop.domain.Shop;
 import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,16 +36,12 @@ public class Seller {
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     private List<Shop> shops = new ArrayList<>();
 
-
-
-
     public Seller(String ownerId, String password, String ownerName, String phoneNumber) {
         this.ownerId = ownerId;
         this.password = password;
         this.ownerName = ownerName;
         this.phoneNumber = phoneNumber;
     }
-
 
     protected Seller() {
     }
@@ -54,26 +51,21 @@ public class Seller {
         this.password = password;
     }
 
-
     public boolean isEncodePassword(PasswordEncoder passwordEncoder, String password) {
         this.password = passwordEncoder.encode(password);
         return passwordEncoder.matches(password, this.password);
     }
 
-
     public boolean isValidPassword(PasswordEncoder passwordEncoder, String password) {
         return passwordEncoder.matches(password, this.password);
     }
-
-
-
 
     public void update(String ownerName, String phoneNumber) {
         this.ownerName = ownerName;
         this.phoneNumber = phoneNumber;
     }
 
-    public void passwordUpdate(String password ) {
-        this.password=password;
+    public void passwordUpdate(String password) {
+        this.password = password;
     }
 }
