@@ -8,9 +8,9 @@ $(document).ready(function () {
 
     $('#seller-login-button').click(function () {
         // 셀러 로그인 버튼 클릭 시 '/seller/login-form'으로 POST 방식으로 폼 데이터 전송 후 페이지 이동
-        $.post("/seller/login-form", $("form").serialize(), function (data) {
-            window.location.href = "/main";
-        });
+       // $.post("/seller/login-form", $("form").serialize(), function (data) {
+            location.href = "/seller/login-form";
+
     });
 
     $('#find-id-button').click(function () {
