@@ -1,20 +1,16 @@
 package com.example.team_project.domain.domain.user.domain;
-
-import com.example.team_project.domain.domain.address.domain.UserAddress;
-import com.example.team_project.domain.domain.order.list.domain.OrderList;
-import com.example.team_project.domain.domain.payment.domain.Payment;
 import com.example.team_project.enums.UserGrade;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
 @AllArgsConstructor
 @ToString
-public class User {
+@Builder
+public class User{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,32 +25,44 @@ public class User {
     private String userName;
 
     @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
     private String phoneNumber;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Payment> payments;
-
-    @Column(nullable = false)
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<UserAddress> userAddresses;
-
-    @Column(nullable = false)
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<OrderList> orderLists;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserGrade userGrade = UserGrade.SILVER;
+    private UserGrade userGrade;
+
+    private boolean del;
+
+    private boolean social;
 
     protected User() {}
 
     /**
      * 회원가입 시 유저의 정보를 담는 생성자
      */
-    public User(String userId, String password, String name, String phoneNumber) {
+    public User(String userId, String password, String userName, String email, String phoneNumber) {
         this.userId = userId;
         this.password = password;
-        this.userName = name;
+        this.userName = userName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.userGrade = UserGrade.SILVER;
+
+    }
+
+    public User(Long id, String password, String phoneNumber) {
+        this.id = id;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
+    }
+
+    public User(String userId, String password, String userName, String phoneNumber) {
+        this.userId = userId;
+        this.password = password;
+        this.userName = userName;
         this.phoneNumber = phoneNumber;
     }
 
@@ -63,28 +71,32 @@ public class User {
      * 기존의 유저를 삭제하거나, 추가적인 유저를 생성하지 않고
      * 유저 정보만 변경하기 위한 생성자
      */
-    public User(Long id, String userId, String password, String userName, String phoneNumber) {
-        this.id = id;
-        this.userId = userId;
-        this.password = password;
-        this.userName = userName;
-        this.phoneNumber = phoneNumber;
-    }
 
     public void encodePassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
     }
 
-    public User(String userId, String password, String userName, String phoneNumber, UserGrade userGrade, PasswordEncoder passwordEncoder) {
-        this.userId = userId;
+    public void changePassword(String password) {
         this.password = password;
+    }
+
+    public void changeUserName(String userName) {
         this.userName = userName;
-        this.phoneNumber = phoneNumber;
-        this.userGrade = userGrade;
-        encodePassword(passwordEncoder);
+    }
+
+    public void changeEmail(String email) {
+        this.email = email;
+    }
+
+    public void changeDel(boolean del) {
+        this.del = del;
     }
 
     public void updateUserGrade(UserGrade userGrade) {
         this.userGrade = userGrade;
+    }
+
+    public void changeSocial(boolean social) {
+        this.social = social;
     }
 }

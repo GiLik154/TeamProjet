@@ -19,13 +19,13 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
     }
 
     @Override
-    public User updateUserInfo(String password, String newUserName, String newPhoneNumber) {
+    public void updateUserInfo(String password, String newUserName, String newPhoneNumber) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String userId = authentication.getName();
 
         Optional<User> userOptional = userRepository.findByUserIdAndPassword(userId, password);
         User user = userOptional.orElseThrow(() -> new IllegalArgumentException("Invalid password"));
 
-        return userRepository.save(new User(user.getId(), user.getUserId(), user.getPassword(), newUserName, newPhoneNumber));
+        userRepository.save(new User(user.getId(), newUserName, newPhoneNumber));
     }
 }

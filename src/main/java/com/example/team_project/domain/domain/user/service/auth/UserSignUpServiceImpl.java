@@ -22,8 +22,8 @@ public class UserSignUpServiceImpl implements UserSignUpService {
     }
 
     @Override
-    public void signUpUser(String userId, String password, String userName, String phoneNumber) {
-        User user = new User(userId, password, userName, phoneNumber);
+    public void signUpUser(String userId, String password, String userName, String email, String phoneNumber) {
+        User user = new User(userId, password, userName, email, phoneNumber);
         userRepository.save(user);
     }
 }

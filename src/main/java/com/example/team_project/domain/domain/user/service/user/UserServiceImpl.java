@@ -19,8 +19,8 @@ public class UserServiceImpl implements UserService {
 
     //회원가입 메서드
     @Override
-    public User createUser(String userId, String password, String userName, String phoneNumber) {
-        User user = new User(userId, password, userName, phoneNumber);
+    public User createUser(String userId, String password, String userName, String email, String phoneNumber) {
+        User user = new User(userId, password, userName, email, phoneNumber);
         return userRepository.save(user);
     }
 
