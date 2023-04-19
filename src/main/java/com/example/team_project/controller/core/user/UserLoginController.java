@@ -31,7 +31,7 @@ public class UserLoginController {
     @PostMapping("")
     public String login(@RequestParam("userId") String userId, Model model) {
         User user = userRepository.findByUserId(userId).orElseThrow(UserNotFoundException::new);
-        userLoginService.loginUser(user.getUserId(),user.getPassword());
+        userLoginService.login(user.getUserId(),user.getPassword());
         model.addAttribute("userId", user.getId());
 
         return "redirect:/main";

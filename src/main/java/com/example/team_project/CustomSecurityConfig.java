@@ -1,5 +1,6 @@
 package com.example.team_project;
 
+import com.example.team_project.security.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -10,11 +11,17 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
+
+import javax.sql.DataSource;
 
 @Configuration
 @RequiredArgsConstructor
 @EnableGlobalMethodSecurity
 public class CustomSecurityConfig {
+    private final DataSource dataSource;
+    private final CustomUserDetailsService userDetailsService;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -28,6 +35,12 @@ public class CustomSecurityConfig {
 
         http.csrf().disable();
 
+        http.rememberMe()
+                .key("12345678")
+                .tokenRepository(persistentTokenRepsository())
+                .userDetailsService(userDetailsService)
+                .tokenValiditySeconds(60 * 60 * 24 * 30);
+
         return http.build();
     }
 
@@ -37,5 +50,12 @@ public class CustomSecurityConfig {
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+    }
+
+    @Bean
+    public PersistentTokenRepository persistentTokenRepository() {
+        JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+        jdbcTokenRepository.setDataSource(dataSource);
+        return jdbcTokenRepository;
     }
 }

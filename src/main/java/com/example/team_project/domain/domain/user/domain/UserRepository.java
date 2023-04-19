@@ -13,15 +13,20 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-
-
-    Optional<User> findByUserId(String userId);
-
     Optional<User> findByUserIdAndPassword(String userId, String password);
-
 
     default User validateUserId(Long userId) {
         Optional<User> userOptional = findById(userId);
+        if (userOptional.isPresent()) {
+            return userOptional.get();
+        }
+        throw new UserNotFoundException();
+    }
+
+    Optional<User> findByUserId(String userId);
+
+    default User validateUserId(String userId) {
+        Optional<User> userOptional = findByUserId(userId);
         if (userOptional.isPresent()) {
             return userOptional.get();
         }

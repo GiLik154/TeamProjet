@@ -1,16 +1,17 @@
 package com.example.team_project.domain.domain.user.domain;
+import com.example.team_project.enums.Role;
 import com.example.team_project.enums.UserGrade;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
-@AllArgsConstructor
-@ToString
-@Builder
-public class User{
+@ToString(exclude = "roleSet")
+public class User extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,6 +38,10 @@ public class User{
     private boolean del;
 
     private boolean social;
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @Builder.Default
+    private Set<Role> roleSet = new HashSet<>();
 
     protected User() {}
 
@@ -67,36 +72,42 @@ public class User{
     }
 
     /**
-     * 유저 정보 변경 시
-     * 기존의 유저를 삭제하거나, 추가적인 유저를 생성하지 않고
-     * 유저 정보만 변경하기 위한 생성자
+     * 유저의 패스워드를 암호화
      */
-
     public void encodePassword(PasswordEncoder passwordEncoder) {
         this.password = passwordEncoder.encode(this.password);
     }
 
-    public void changePassword(String password) {
-        this.password = password;
+    /**
+     * 입력 받은 비밀번호를 검증하는 메서드
+     */
+    public boolean isValidPassword(String password, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches((password), this.password);
     }
 
-    public void changeUserName(String userName) {
-        this.userName = userName;
+    /**
+     * 유저의 정보를 변경하는 메서드들
+     */
+    public void changePassword(String password) { this.password = password; }
+
+    public void changeUserName(String userName) { this.userName = userName; }
+
+    public void changeEmail(String email) { this.email = email; }
+
+    public void changePhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
+
+    public void changeDel(boolean del) { this.del = del; }
+
+    public void changeSocial(boolean social) { this.social = social; }
+
+    public void updateUserGrade(UserGrade userGrade) { this.userGrade = userGrade; }
+
+    public void addRole(Role role){
+        this.roleSet.add(role);
     }
 
-    public void changeEmail(String email) {
-        this.email = email;
+    public void clearRoles() {
+        this.roleSet.clear();
     }
 
-    public void changeDel(boolean del) {
-        this.del = del;
-    }
-
-    public void updateUserGrade(UserGrade userGrade) {
-        this.userGrade = userGrade;
-    }
-
-    public void changeSocial(boolean social) {
-        this.social = social;
-    }
 }
