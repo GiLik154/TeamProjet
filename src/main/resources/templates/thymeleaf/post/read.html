@@ -68,7 +68,7 @@
             </div>
             <input type="hidden" name="kinds" value="PostReview">
             <input type="hidden" name="kindsId" th:value="${post.getId()}">
-            <input style="margin-left: 80px" value="작성" class="btn btn-success">
+            <input type="submit" style="margin-left: 80px" value="작성" class="btn btn-success">
         </form>
     </div>
     <div th:each="reviewList:${postReviewList}">
