@@ -1,45 +1,40 @@
-/*!* order_detail.css *!*/
+/* Pagination style */
+.pagination-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
 
-/*!* Table style *!*/
-/*table {*/
-/*    border-collapse: collapse;*/
-/*    margin: 30px 0;*/
-/*    width: 100%;*/
-/*    max-width: 800px;*/
-/*}*/
+.pagination-links a {
+    display: inline-block;
+    margin: 0 10px;
+    padding: 5px 10px;
+    color: #666;
+    text-decoration: none;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
 
-/*th, td {*/
-/*    padding: 12px;*/
-/*    text-align: center;*/
-/*    border: 1px solid #ddd;*/
-/*    font-size: 16px;*/
-/*}*/
+.pagination-links a.active,
+.pagination-links a:hover.active {
+    background-color: #4CAF50;
+    color: #fff;
+}
 
-/*th {*/
-/*    background-color: #f2f2f2;*/
-/*}*/
+.pagination-links a:hover {
+    background-color: #ddd;
+}
 
-/*!* Image style *!*/
-/*img {*/
-/*    max-width: 100%;*/
-/*    height: auto;*/
-/*}*/
+.pagination-links a.active {
+    background-color: #4CAF50;
+    color: #fff;
+}
 
-/*!* Cancel button style *!*/
-/*button {*/
-/*    background-color: #ff4d4d;*/
-/*    border: none;*/
-/*    color: white;*/
-/*    padding: 12px 20px;*/
-/*    text-align: center;*/
-/*    text-decoration: none;*/
-/*    display: inline-block;*/
-/*    font-size: 16px;*/
-/*    margin: 4px 2px;*/
-/*    cursor: pointer;*/
-/*    border-radius: 8px;*/
-/*}*/
+.pagination-links form {
+    display: inline-block;
+}
 
-/*button:hover {*/
-/*    background-color: #ff3333;*/
-/*}*/
+.pagination-links form input[type="text"] {
+    width: 30px;
+}

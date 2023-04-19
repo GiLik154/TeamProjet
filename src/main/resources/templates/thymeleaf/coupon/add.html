@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Coupon Add Page</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <style>
         /* CSS */
         body {
@@ -77,12 +76,12 @@
     <form action="#" method="post">
         <div class="form-group">
             <label for="name">쿠폰 이름:</label>
-            <input type="text" class="form-control" id="name" placeholder="쿠폰 이름을 입력하세요">
+            <input type="text" class="form-control" id="name" name="name" placeholder="쿠폰 이름을 입력하세요">
         </div>
         <div class="form-group">
             <label for="discountRate">할인율: (%)</label>
             <div class="input-group">
-                <input type="number" class="form-control" id="discountRate" placeholder="할인율을 입력하세요">
+                <input type="number" class="form-control" id="discountRate" name="discountRate" placeholder="할인율을 입력하세요">
                 <div class="input-group-append">
                 </div>
             </div>
@@ -90,24 +89,24 @@
         <div class="form-group">
             <label for="minPrice">최소 가격: (원)</label>
             <div class="input-group">
-                <input type="number" class="form-control" id="minPrice" placeholder="최소 가격을 입력하세요">
+                <input type="number" class="form-control" id="minPrice" name="minPrice" placeholder="최소 가격을 입력하세요">
                 <div class="input-group-append">
                 </div>
             </div>
         </div>
         <div class="form-group">
             <label for="maxCouponCount">최대 쿠폰 수:</label>
-            <input type="number" class="form-control" id="maxCouponCount"
+            <input type="number" class="form-control" id="maxCouponCount" name="maxCouponCount"
                    placeholder="최대 쿠폰 수를 입력하세요">
         </div>
         <div class="form-group">
             <label for="deadline">마감일:</label>
-            <input type="date" class="form-control" id="deadline" placeholder="마감일을 입력하세요">
+            <input type="date" class="form-control" id="deadline" name="deadline" placeholder="마감일을 입력하세요">
         </div>
         <div class="form-group">
             <label for="period">유효기간: (일)</label>
             <div class="input-group">
-                <input type="number" class="form-control" id="period" placeholder="유효기간을 입력하세요">
+                <input type="number" class="form-control" id="period" name="period" placeholder="유효기간을 입력하세요">
                 <div class="input-group-append">
                 </div>
             </div>

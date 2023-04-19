@@ -35,4 +35,12 @@ public class SellerUpdateController {
         sellerUpdateService.sellerUpdate(sellerId, password, ownerName, phoneNumber);
         return "redirect:/";
     }
+
+    @PostMapping("{ownerId}")
+    public String passwordUpdate(@PathVariable("ownerId") String ownerId, @RequestParam("password") String password) {
+        sellerUpdateService.passwordUpdate(ownerId, password);
+        return "redirect:/";
+    }
+
+
 }

@@ -4,6 +4,7 @@ import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.shop.shop.domain.Shop;
 import lombok.Getter;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,7 +18,7 @@ public class Seller {
     private Long id;
 
     //판매자 아이디
-    @Column
+    @Column(unique = true)
     private String ownerId;
 
     //비밀번호
@@ -29,14 +30,11 @@ public class Seller {
     private String ownerName;
 
     //판매자 핸드폰 번호
-    @Column
+    @Column(unique = true)
     private String phoneNumber;
 
     @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     private List<Shop> shops = new ArrayList<>();
-
-
-
 
     public Seller(String ownerId, String password, String ownerName, String phoneNumber) {
         this.ownerId = ownerId;
@@ -44,7 +42,6 @@ public class Seller {
         this.ownerName = ownerName;
         this.phoneNumber = phoneNumber;
     }
-
 
     protected Seller() {
     }
@@ -54,22 +51,21 @@ public class Seller {
         this.password = password;
     }
 
-
     public boolean isEncodePassword(PasswordEncoder passwordEncoder, String password) {
         this.password = passwordEncoder.encode(password);
         return passwordEncoder.matches(password, this.password);
     }
 
-
     public boolean isValidPassword(PasswordEncoder passwordEncoder, String password) {
         return passwordEncoder.matches(password, this.password);
     }
 
-
-
-
     public void update(String ownerName, String phoneNumber) {
         this.ownerName = ownerName;
         this.phoneNumber = phoneNumber;
+    }
+
+    public void passwordUpdate(String password) {
+        this.password = password;
     }
 }

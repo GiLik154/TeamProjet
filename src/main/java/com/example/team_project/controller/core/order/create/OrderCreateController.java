@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -32,15 +33,16 @@ public class OrderCreateController {
     private final ProductRepository productRepository;
     private final OrderCreateService orderCreateService;
 
-    @GetMapping("/{productId}/{salesCount}")
-    public ModelAndView createForm(@PathVariable Long productId, @SessionAttribute("userId") Long userId, @PathVariable("salesCount") int quantity) {
+//    @GetMapping("/{productId}/{salesCount}")
+    @GetMapping("/{productId}")
+    public ModelAndView createForm(@PathVariable Long productId, @SessionAttribute("userId") Long userId, @RequestParam("salesCount") int quantity) {
         ModelAndView modelAndView = new ModelAndView("thymeleaf/order/order_create");
-        //todo 예외처리에 대한 부분
         List<UserAddress> userAddressList = userAddressRepository.findByUserId(userId);
+
         if (userAddressList.isEmpty()) {
             throw new InvalidAddressException();
         }
-        List<Payment> paymentList = paymentRepository.findByUserId(userId);
+        Optional<Payment> paymentList = paymentRepository.findByUserId(userId);
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
 
         modelAndView.addObject("userId", userId);
@@ -61,6 +63,6 @@ public class OrderCreateController {
                 orderCreateDto.getUserAddressId(),
                 orderCreateDto.getPaymentId());
 
-        return new ModelAndView("redirect:/order_list/view" + order.getId());//결제페이지로 이동하게
+        return new ModelAndView("redirect:/order_list/view" + order.getId());//결제페이지로 이동하게 바꿔야함
     }
 }

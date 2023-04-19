@@ -29,9 +29,7 @@ public class ShopDeleteController {
 
     @PostMapping("")
     public String del(@RequestParam("shopId") Long shopId, @SessionAttribute("ownerId") String ownerId, @RequestParam("password") String password) {
-
         shopDeleteService.delete(shopId, ownerId, password);
         return "redirect:/";
-
     }
 }

@@ -31,6 +31,5 @@ public class ShopJoinService {
                     shopJoinDto.getBusinessRegistrationNumber());
             shopRepository.save(shop);
         }
-
     }
 }

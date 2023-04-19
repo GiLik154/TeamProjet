@@ -15,15 +15,15 @@ public class ShopJoinController {
     private final ShopJoinService shopJoinService;
 
     @GetMapping("")
-    public String joinForm(@SessionAttribute("sellerId") Long sellerId, @SessionAttribute("ownerId")String ownerId, Model model) {
-        model.addAttribute("sellerId",sellerId);
-        model.addAttribute("ownerId",ownerId);
+    public String joinForm(@SessionAttribute("sellerId") Long sellerId, @SessionAttribute("ownerId") String ownerId, Model model) {
+        model.addAttribute("sellerId", sellerId);
+        model.addAttribute("ownerId", ownerId);
         return "thymeleaf/shop/shopJoinForm";
     }
 
     @PostMapping("")
-    public String join(@SessionAttribute("sellerId")Long sellerId,ShopJoinDto shopJoinDto){
-        shopJoinService.shopJoin(sellerId,shopJoinDto);
+    public String join(@SessionAttribute("sellerId") Long sellerId, ShopJoinDto shopJoinDto) {
+        shopJoinService.shopJoin(sellerId, shopJoinDto);
         return "thymeleaf/seller/sellerIndex";
     }
 }

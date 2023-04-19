@@ -1,5 +1,6 @@
 package com.example.team_project.controller.advice.order;
 
+import com.example.team_project.exception.CannotCancelOrderException;
 import com.example.team_project.exception.OrderListNotFoundException;
 import com.example.team_project.exception.OrderNotFoundException;
 import com.example.team_project.exception.OutOfStockException;
@@ -30,6 +31,13 @@ public class ControllersAdvice {
 
     @ExceptionHandler(OutOfStockException.class)
     public ModelAndView notExistedStock(OutOfStockException exception) {
+        ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
+        modelAndView.addObject("errorMessage", exception.getMessage());
+
+        return modelAndView;
+    }
+    @ExceptionHandler(CannotCancelOrderException.class)
+    public ModelAndView notExistedStock(CannotCancelOrderException exception) {
         ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
         modelAndView.addObject("errorMessage", exception.getMessage());
 

@@ -45,17 +45,21 @@
         <tbody>
         <tr th:each="order : ${orders}">
             <td>
-                <a th:href="@{/order/create}"><!-- todo 이미지 크기 조정중 -->
+                <!--                <a th:href="@{/order/create/{productId}/{salesCount} (productId=${order.orderToProduct.product.id}, salesCount=${order.orderToProduct.quantity})}">-->
+                <a th:href="@{/order/create/{productId}(productId=${order.orderToProduct.product.id}, salesCount=${order.orderToProduct.quantity})}">
+                    <input type="hidden" name="salesCount" th:value="${order.orderToProduct.quantity}">
                     <img th:src="${order.orderToProduct.product.image}" alt="상품 이미지" class="product-image img-fluid">
                 </a>
             </td>
             <td>
-                <a th:href="@{/order/create}"
-                   th:text="${order.orderToProduct.product.name}"></a>
+                <!--                <a th:href="@{/order/create/{productId}/{salesCount} (productId=${order.orderToProduct.product.id}, salesCount=${order.orderToProduct.quantity})}"-->
+                <a th:href="@{/order/create/{productId}(productId=${order.orderToProduct.product.id}, salesCount=${order.orderToProduct.quantity})}">
+                    <input type="hidden" name="salesCount" th:value="${order.orderToProduct.quantity}"
+                           th:text="${order.orderToProduct.product.name}"></a>
             </td>
             <td th:text="${order.orderToProduct.quantity}"></td>
             <td th:text="${order.orderToProduct.totalPrice}"></td>
-            <td>
+            <td> <!-- todo 주문의 상태가 완료인 경우에만 리뷰를 달게끔 -->
                 <a th:href="@{/product/review/add(productId=${order.getOrderToProduct().getProduct().getId()})}">리뷰작성</a>
             </td>
         </tr>

@@ -17,13 +17,13 @@ public class OrderCancelController {
     private final OrderCancelService orderCancelService;
     private final OrderRepository orderRepository;
 
-    @GetMapping("/{orderId}")
-    public ModelAndView cancel(@SessionAttribute("userId") Long userId, @PathVariable Long orderId) {
+    @PostMapping
+    public ModelAndView cancel(@RequestParam Long orderId, @RequestParam Long orderListId) {
 
         Order order = orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new);
-        orderCancelService.cancel(order.getOrderToProduct().getId(), orderId);
+        orderCancelService.cancel(order.getOrderToProduct().getId(), orderId, orderListId);
 
-        return new ModelAndView("redirect:/order_list/view/" + userId);
+        return new ModelAndView("redirect:/order/view/detail/" + orderListId);
 
     }
 

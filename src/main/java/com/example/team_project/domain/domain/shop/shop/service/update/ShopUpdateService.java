@@ -23,7 +23,6 @@ public class ShopUpdateService {
     private final ShopRepository shopRepository;
     private final PasswordEncoder passwordEncoder;
 
-
     //판매처 매장번호,주소 수정
     public void shopUpdate(Long sellerId, Long shopId, String password, String shopName, String shopAddress) {
         Seller seller = sellerRepository.validateSellerId(sellerId);
@@ -35,13 +34,7 @@ public class ShopUpdateService {
         if (!seller.isValidPassword(passwordEncoder, password)) {
             throw new NotPasswordException("Invalid password");
         }
-
-
         //업데이트
         shop.update(shopName, shopAddress);
-
-
     }
-
-
 }

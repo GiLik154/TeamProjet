@@ -14,7 +14,6 @@ public class Shop {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long shopId;
 
-
     @ManyToOne(fetch = FetchType.LAZY)
     private Seller seller;
 
@@ -29,7 +28,6 @@ public class Shop {
     //사업자번호
     @Column
     private String businessRegistrationNumber;
-
 
     public Shop() {
     }

@@ -1,11 +1,13 @@
 package com.example.team_project.domain.domain.order.list.service;
 
 import com.example.team_project.domain.domain.address.domain.UserAddress;
+import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
 import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
 import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
 import com.example.team_project.enums.OrderStatus;
+import com.example.team_project.exception.NotFoundAddressException;
 import com.example.team_project.exception.OrderListNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,15 +23,16 @@ public class OrderListUpdateServiceImpl implements OrderListUpdateService {
 
     private final OrderRepository orderRepository;
     private final OrderListRepository orderListRepository;
+    private final UserAddressRepository userAddressRepository;
 
 
     @Override
-    public void update(Long userId, Long orderListId, UserAddress userAddress) {
+    public void update(Long userId, Long orderListId, Long userAddressId) {
 
+        UserAddress userAddress = userAddressRepository.findById(userAddressId).orElseThrow(NotFoundAddressException::new);
         Optional<OrderList> orderList = orderListRepository.findByUserIdAndId(userId, orderListId);
-        if (orderList.isEmpty()) {
-            throw new OrderListNotFoundException();
-        }
+        validateOrderList(orderList.get().getId());
+
         orderList.get().update(userAddress);
     }
 
@@ -51,10 +54,20 @@ public class OrderListUpdateServiceImpl implements OrderListUpdateService {
         }
     }
 
-
     private OrderList findByOrderListById(Long orderListId) {
         return orderListRepository.findById(orderListId).orElseThrow(OrderListNotFoundException::new);
     }
 
+    /**
+     * 오더리스트의 상태가 false 즉, 사용할 수 없는 리스트인 경우라면 익셉션 발생
+     **/
+    private void validateOrderList(Long orderListId) {
+        OrderList orderList = orderListRepository.findById(orderListId).orElseThrow(OrderListNotFoundException::new);
+        boolean orderListStatus = orderList.isStatus();
+
+        if (!orderListStatus) {
+            throw new OrderListNotFoundException();
+        }
+    }
 
 }

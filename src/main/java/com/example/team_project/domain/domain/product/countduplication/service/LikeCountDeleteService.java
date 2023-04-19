@@ -22,24 +22,18 @@ public class LikeCountDeleteService {
     private final LikeCountRepository likeCountRepository;
     private final UserRepository userRepository;
 
-
-    public boolean delete(Long productId, Long userId){
+    public boolean delete(Long productId, Long userId) {
         Optional<Product> product = productRepository.findById(productId);
         Optional<User> user = userRepository.findById(userId);
-
-        Optional<LikeCountCheck> likeCount = likeCountRepository.findByUserIdAndProductId(user,product);
-
-        if(likeCount.isPresent()){
+        Optional<LikeCountCheck> likeCount = likeCountRepository.findByUserIdAndProductId(user, product);
+        if (likeCount.isPresent()) {
             likeCountRepository.deleteByProductId(product);
             Product updateProduct = product.get();
             updateProduct.downLikeCount();
             productRepository.save(updateProduct);
             return true;
-        }else{
+        } else {
             return false;
         }
-
-
     }
-
 }

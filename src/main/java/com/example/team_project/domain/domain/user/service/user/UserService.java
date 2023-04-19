@@ -7,7 +7,7 @@ public interface UserService {
 
     public User login(String userId, String password);
 
-    public User updateUser(String password, String userName, String phoneNumber, Long userId);
+//    public User updateUser(String password, String userName, String phoneNumber, Long userId);
 
     public void deleteUser(String userId, String password);
 }

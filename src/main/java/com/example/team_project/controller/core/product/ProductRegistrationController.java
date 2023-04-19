@@ -22,9 +22,8 @@ public class ProductRegistrationController {
 
     @PostMapping("")
     public String registration(@SessionAttribute("sellerId") Long sellerId, ProductDto productDto, MultipartFile multipartFile) {
-        System.out.println("사진: " + multipartFile);
         productRegistrationService.productRegistration(sellerId, productDto, multipartFile);
 
-        return "redirect:/product/registration";
+        return "redirect:/product/seller/list";
     }
 }
