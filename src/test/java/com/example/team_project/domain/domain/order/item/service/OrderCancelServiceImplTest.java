@@ -103,6 +103,7 @@ class OrderCancelServiceImplTest {
 
         OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
+        Long orderListId = orderList.getId();
 
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
 
@@ -112,7 +113,7 @@ class OrderCancelServiceImplTest {
         Long orderToProductId = orderToProduct.getId();
 
         //when
-        orderCancelServiceImpl.cancel(orderToProductId, orderId);
+        orderCancelServiceImpl.cancel(orderToProductId, orderId, orderListId);
 
         //then
         assertEquals("CANCELED", order.getOrderToProduct().getStatus().toString());

@@ -31,7 +31,8 @@ public class OrderListAddServiceImpl implements OrderListAddService {
     public OrderList add(Long userId, Long userAddressId, Long paymentId) {
 
         User user = userRepository.validateUserId(userId);
-        UserAddress userAddress = userAddressRepository.findByUserIdAndId(userId, userAddressId).orElseThrow(InvalidAddressException::new);
+        UserAddress userAddress = userAddressRepository.findByUserIdAndId(userId,
+                userAddressId).orElseThrow(InvalidAddressException::new);
         Payment payment = paymentRepository.findById(paymentId).orElseThrow(InvalidPaymentMethodException::new);
 
         OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());

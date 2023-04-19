@@ -21,7 +21,7 @@ public class OrderCancelController {
     public ModelAndView cancel(@RequestParam Long orderId, @RequestParam Long orderListId) {
 
         Order order = orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new);
-        orderCancelService.cancel(order.getOrderToProduct().getId(), orderId);
+        orderCancelService.cancel(order.getOrderToProduct().getId(), orderId, orderListId);
 
         return new ModelAndView("redirect:/order/view/detail/" + orderListId);
 
