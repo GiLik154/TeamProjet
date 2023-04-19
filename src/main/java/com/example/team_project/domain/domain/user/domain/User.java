@@ -4,9 +4,7 @@ import com.example.team_project.domain.domain.address.domain.UserAddress;
 import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.payment.domain.Payment;
 import com.example.team_project.enums.UserGrade;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
@@ -15,6 +13,7 @@ import java.util.List;
 @Entity
 @Getter
 @AllArgsConstructor
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -45,19 +44,18 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserGrade userGrade;
+    private UserGrade userGrade = UserGrade.SILVER;
 
     protected User() {}
 
     /**
      * 회원가입 시 유저의 정보를 담는 생성자
      */
-    public User(String userId, String password, String name, String phoneNumber, UserGrade userGrade) {
+    public User(String userId, String password, String name, String phoneNumber) {
         this.userId = userId;
         this.password = password;
         this.userName = name;
         this.phoneNumber = phoneNumber;
-        this.userGrade = userGrade;
     }
 
     /**
@@ -65,16 +63,8 @@ public class User {
      * 기존의 유저를 삭제하거나, 추가적인 유저를 생성하지 않고
      * 유저 정보만 변경하기 위한 생성자
      */
-    public User(Long id, String userId, String password, String userName, String phoneNumber, UserGrade userGrade) {
+    public User(Long id, String userId, String password, String userName, String phoneNumber) {
         this.id = id;
-        this.userId = userId;
-        this.password = password;
-        this.userName = userName;
-        this.phoneNumber = phoneNumber;
-        this.userGrade = userGrade;
-    }
-
-    public User(String userId, String password, String userName, String phoneNumber) {
         this.userId = userId;
         this.password = password;
         this.userName = userName;

@@ -25,4 +25,10 @@ public class AddressAddServiceDto {
         this.detailedAddress = detailedAddress;
         this.zipCode = zipCode;
     }
+
+    public AddressAddServiceDto(String streetAddress, String detailedAddress, String zipCode) {
+        this.streetAddress = streetAddress;
+        this.detailedAddress = detailedAddress;
+        this.zipCode = zipCode;
+    }
 }

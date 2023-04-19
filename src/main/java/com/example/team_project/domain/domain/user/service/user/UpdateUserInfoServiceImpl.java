@@ -26,6 +26,6 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
         Optional<User> userOptional = userRepository.findByUserIdAndPassword(userId, password);
         User user = userOptional.orElseThrow(() -> new IllegalArgumentException("Invalid password"));
 
-        return userRepository.save(new User(user.getId(), user.getUserId(), user.getPassword(), newUserName, newPhoneNumber, user.getUserGrade()));
+        return userRepository.save(new User(user.getId(), user.getUserId(), user.getPassword(), newUserName, newPhoneNumber));
     }
 }

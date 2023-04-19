@@ -15,8 +15,8 @@ public class UserLoginServiceImpl implements UserLoginService {
     }
 
     @Override
-    public User loginUser(String userId, String password) {
+    public Optional<User> loginUser(String userId, String password) {
         Optional<User> userOptional = userRepository.findByUserIdAndPassword(userId, password);
-        return userOptional.orElse(null);
+        return userOptional;
     }
 }

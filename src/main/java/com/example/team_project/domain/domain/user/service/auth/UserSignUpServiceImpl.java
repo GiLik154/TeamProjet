@@ -2,6 +2,8 @@ package com.example.team_project.domain.domain.user.service.auth;
 
 import com.example.team_project.domain.domain.address.domain.UserAddress;
 import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
+import com.example.team_project.domain.domain.address.service.add.AddressAddServiceImpl;
+import com.example.team_project.domain.domain.address.service.add.dto.AddressAddServiceDto;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.UserGrade;
@@ -20,15 +22,8 @@ public class UserSignUpServiceImpl implements UserSignUpService {
     }
 
     @Override
-    public User signUpUser(String userId, String password, String userName, String phoneNumber, String zipcode, String streetAddress, String detailedAddress) {
-        User user = new User(userId, password, userName, phoneNumber, UserGrade.SILVER);
+    public void signUpUser(String userId, String password, String userName, String phoneNumber) {
+        User user = new User(userId, password, userName, phoneNumber);
         userRepository.save(user);
-
-        UserAddress userAddress = new UserAddress(zipcode, streetAddress, detailedAddress, user);
-        userAddressRepository.save(userAddress);
-
-        user.getUserAddresses().add(userAddress);
-
-        return user;
     }
 }

@@ -3,6 +3,7 @@ package com.example.team_project.domain.domain.user.service.user;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.domain.domain.user.service.user.UserService;
+import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.PasswordNotMatchedException;
 import com.example.team_project.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -66,5 +67,7 @@ public class UserServiceImpl implements UserService {
 
         userRepository.delete(user);
     }
+
+
 }
 
