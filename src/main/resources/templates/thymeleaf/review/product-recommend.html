@@ -1,0 +1,44 @@
+<tr th:fragment="todoItem">
+    <td th:if="${recommend}=='Cancel'" style="display: flex; flex-direction: row; align-items: center; width: 100%; border: none; margin-left: 10px;">
+        <form th:action="@{/review/recommend/product/{productId}(productId=${productId})}" method="post">
+            <input type="hidden" name="baseReviewId" th:value="${reviewId}">
+            <input type="hidden" name="trueOrFalse" th:value="BEST">
+            <input type="submit" value="👍" style="margin-left: 10px">
+        </form>
+        <p th:text="${bestCount}" style="margin-left: 10px;"></p>
+        <form th:action="@{/review/recommend/product/{productId}(productId=${productId})}" method="post">
+            <input type="hidden" name="baseReviewId" th:value="${reviewId}">
+            <input type="hidden" name="trueOrFalse" th:value="WORST">
+            <input type="submit" value="👎" style="margin-left: 10px">
+        </form>
+        <p th:text="${worstCount}" style="margin-left: 10px;"></p>
+    </td>
+    <td th:if="${recommend}=='Best'" style="display: flex; flex-direction: row; align-items: center; width: 100%; border: none; margin-left: 10px;">
+        <form th:action="@{/review/recommend/product/{productId}(productId=${productId})}" method="post">
+            <input type="hidden" name="baseReviewId" th:value="${reviewId}">
+            <input type="hidden" name="trueOrFalse" th:value="CANCEL">
+            <input type="submit" value="👍" style="background-color: blue; margin-left: 10px">
+        </form>
+        <p th:text="${bestCount}"style="margin-left: 10px;"></p>
+        <form th:action="@{/review/recommend/product/{productId}(productId=${productId})}" method="post">
+            <input type="hidden" name="baseReviewId" th:value="${reviewId}">
+            <input type="hidden" name="trueOrFalse" th:value="WORST">
+            <input type="submit" value="👎" style="margin-left: 10px">
+        </form>
+        <p th:text="${worstCount}" style="margin-left: 10px;"></p>
+    </td>
+    <td th:if="${recommend}=='Worst'" style="display: flex; flex-direction: row; align-items: center; width: 100%; border: none; margin-left: 10px;">
+        <form th:action="@{/review/recommend/product/{productId}(productId=${productId})}" method="post">
+            <input type="hidden" name="baseReviewId" th:value="${reviewId}">
+            <input type="hidden" name="trueOrFalse" th:value="BEST">
+            <input type="submit" value="👍" style="margin-left: 10px">
+        </form>
+        <p th:text="${bestCount}" style="margin-left: 10px;"></p>
+        <form th:action="@{/review/recommend/product/{productId}(productId=${productId})}" method="post">
+            <input type="hidden" name="baseReviewId" th:value="${reviewId}">
+            <input type="hidden" name="trueOrFalse" th:value="CANCEL">
+            <input type="submit" value="👎" style="background-color: red; margin-left: 10px">
+        </form>
+        <p th:text="${worstCount}" style="margin-left: 10px;"></p>
+    </td>
+</tr>

@@ -1,36 +1,58 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:tb="http://www.w3.org/1999/xhtml">
 <head>
-    <script src="https://unpkg.com/htmx.org@1.8.6"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <meta charset="UTF-8">
     <title>Title</title>
     <!-- 부트스트랩 CSS 링크 추가 -->
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container mt-5">
-    <h3>제목 :</h3>
-    <div th:text="${post.getTitle()}"></div>
-    <h3>유저 아이디 :</h3>
-    <div th:text="${post.getUser().getUserId()}"></div>
-    <h3>시간 :</h3>
-    <div th:text="${post.getTime()}"></div>
-    <h3>게시글의 종류:</h3>
-    <div th:text="${post.getPostCategory().getName()}"></div>
-    <h3>이미지 :</h3>
-    <img th:src="${post.getImagePath()}" class="img-fluid">
-    <h3>내용 :</h3>
-    <div th:text="${post.getContent()}"></div>
+    <div class="card">
+        <div class="card-header d-flex">
+            <div class="col-md-3 flex-fill">
+                <p><strong>제목</strong></p>
+                <p th:text="${post.getTitle()}"></p>
+            </div>
+            <div class="col-md-3 flex-fill">
+                <p style="margin-left: 50px"><strong>유저 아이디</strong></p>
+                <p style="margin-left: 50px" th:text="${post.getUser().getUserId()}"></p>
+            </div>
+            <div class="col-md-3 flex-fill">
+                <p style="margin-left: 100px"><strong>시간</strong></p>
+                <p style="margin-left: 100px" th:text="${post.getTime()}"></p>
+            </div>
+            <div class="col-md-3 flex-fill">
+                <p><strong>게시글의 종류</strong></p>
+                <p th:text="${post.getPostCategory().getName()}"></p>
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
 
-    <a th:href="@{/post/delete(postId=${post.getId()})}" class="btn btn-danger">삭제</a>
-    <a th:href="@{/post/update(postId=${post.getId()})}" class="btn btn-primary">수정</a>
+            </div>
+            <div class="row">
+                <div class="col-md-3">
+                    <img style="width: 100px; height: 100px;" th:src="${post.getImagePath()}" class="img-fluid">
+                </div>
+                <div class="col-md-9">
+                    <p><strong>내용</strong></p>
+                    <p th:text="${post.getContent()}"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="display: flex; justify-content: center; margin-top: 20px">
+        <a th:href="@{/post/delete(postId=${post.getId()})}" class="btn btn-danger">삭제</a>
+        <a th:href="@{/post/update(postId=${post.getId()})}" class="btn btn-primary">수정</a>
+    </div>
 
     <hr>
-
-    <h3>게시글 리뷰</h3>
-    <a th:href="@{/post/read(reviewLink=true,postId=${post.getId()})}" class="btn btn-info">리뷰 작성</a>
-    <div th:if="${reviewLink}">
+    <div style="display: flex; justify-content: center;">
+        <h3>게시글 리뷰</h3>
+        <a th:href="@{/post/read/{postId}(reviewLink=true,postId=${post.getId()})}" class="btn btn-info" style="margin-left: 10px;">리뷰 작성</a>
+    </div>
+    <div th:if="${reviewLink}" style="display: flex; justify-content: center;">
         <form th:action="@{/post/review/add}" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="title">제목</label>
@@ -46,107 +68,38 @@
             </div>
             <input type="hidden" name="kinds" value="PostReview">
             <input type="hidden" name="kindsId" th:value="${post.getId()}">
-            <input type="submit" value="작성" class="btn btn-success">
+            <input style="margin-left: 80px" value="작성" class="btn btn-success">
         </form>
     </div>
     <div th:each="reviewList:${postReviewList}">
-        <h4>제목 :</h4>
-        <div th:text="${reviewList.getTitle()}"></div>
-        <h4>유저 아이디:</h4>
-        <div th:text="${reviewList.getUser().getUserId()}"></div>
-        <h4>시간:</h4>
-        <div th:text="${reviewList.getTime()}"></div>
-        <h4>이미지 :</h4>
-        <img th:src="${reviewList.getImagePath()}" class="img-fluid">
-        <h4>내용 :</h4>
-        <div th:text="${reviewList.getContent()}"></div>
-        <!--    id result 값이 "Best" 일때-->
-        <div th:if="${recommendList==null}">
-            <form th:action="@{/review/recommend}" method="post">
-                <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
-                <input type="hidden" name="trueOrFalse" th:value="BEST">
-                <input type="submit" value="👍">
-            </form>
-            <form th:action="@{/review/recommend}" method="post">
-                <input type="hidden" name="baseReviewId" th:value="${reviewList.getId()}">
-                <input type="hidden" name="trueOrFalse" th:value="WORST">
-                <input type="submit" value="👎">
-            </form>
+        <div class="card mb-3">
+            <div class="card-body">
+                <h5 class="card-title" th:text="${reviewList.getTitle()}"></h5>
+                <div class="d-flex justify-content-between">
+                    <p class="card-text"><small class="text-muted" th:text="${reviewList.getUser().getUserId()}"></small></p>
+                    <p class="card-text"><small class="text-muted" th:text="${reviewList.getTime()}"></small></p>
+                </div>
+                <p class="card-text" th:text="${reviewList.getContent()}"></p>
+                <div class="d-flex justify-content-left">
+                    <img style="width: 100px; height: 100px" th:src="${reviewList.getImagePath()}" class="img-fluid">
+                </div>
+                <div class="d-flex justify-content-end">
+                    <div th:id="'recommend' + ${reviewList.id}" class="mt-3"></div>
+                    <div th:id="recommendInfo"
+                         th:hx-get="@{/post/read/{postId}/{reviewId}(postId=${post.id}, reviewId=${reviewList.id})}"
+                         hx-trigger="load"
+                         th:attr="hx-target=&#39;#recommend&#39; + ${reviewList.id}">
+                    </div>
+                </div>
+                <div class="d-flex justify-content-end">
+                    <a th:href="@{/post/review/delete(reviewId=${reviewList.getId()})}" class="btn btn-danger mr-2">삭제</a>
+                    <a th:href="@{/post/review/update(reviewId=${reviewList.getId()})}" class="btn btn-primary">수정</a>
+                </div>
+            </div>
         </div>
-        <div th:id="recommendInfo" th:hx-get="@{/post/read/{reviewId}(reviewId=${reviewList.getId()})}"
-             hx-trigger="load"
-             th:data-reviewId="${reviewList.getId()}">
-        </div>
-
-        <a th:href="@{/post/review/delete(reviewId=${reviewList.getId()})}" class="btn btn-danger">삭제</a>
-        <a th:href="@{/post/review/update(reviewId=${reviewList.getId()})}" class="btn btn-primary">수정</a>
         <hr>
     </div>
-
-    <script>
-        // 데이터를 가져올 URL
-        var reviewId = document.getElementById('recommendInfo').getAttribute('data-reviewId');
-        var url = '/post/read/' + reviewId; // reviewId에 실제 리뷰 아이디를 대입해야 함
-
-        // GET 요청을 통해 데이터를 가져옴
-        fetch(url)
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                // 가져온 데이터를 기반으로 HTML 요소를 동적으로 생성
-                var recommendInfo = document.getElementById('recommendInfo');
-                var html = '';
-
-                // recommend 값에 따라 HTML을 동적으로 생성
-                if (data.recommend === 'Best') {
-                    html = '<form action="/review/recommend" method="post">' +
-                        '<input type="hidden" id="baseReviewId" name="baseReviewId" value="' + reviewId + '">' +
-                        '<input type="hidden" id="trueOrFalse" name="trueOrFalse" value="CANCEL">' +
-                        '<input type="submit" value="👍" style="background-color: blue" >' +
-                        '</form>' +
-                        '<form action="/review/recommend" method="post">' +
-                        '<input type="hidden" name="baseReviewId" value="' + reviewId + '">' +
-                        '<input type="hidden" name="trueOrFalse" value="WORST">' +
-                        '<input type="submit" value="👎">' +
-                        '</form>' +
-                        '<p>추천수:' + data.recommendBestCount + '</p>' +
-                        '<p>비추천수:' + data.recommendWorstCount + '</p>';
-                } else if (data.recommend === 'Worst') {
-                    html = '<form action="/review/recommend" method="post">' +
-                        '<input type="hidden" id="baseReviewId" name="baseReviewId" value="' + reviewId + '">' +
-                        '<input type="hidden" id="trueOrFalse" name="trueOrFalse" value="BEST">' +
-                        '<input type="submit" value="👍">' +
-                        '</form>' +
-                        '<form action="/review/recommend" method="post">' +
-                        '<input type="hidden" name="baseReviewId" value="' + reviewId + '">' +
-                        '<input type="hidden" name="trueOrFalse" value="CANCEL">' +
-                        '<input type="submit" value="👎" style="background-color: red" >' +
-                        '</form>' +
-                        '<p>추천수:' + data.recommendBestCount + '</p>' +
-                        '<p>비추천수:' + data.recommendWorstCount + '</p>';
-                } else if (data.recommend === 'Cancel') {
-                    html = '<form action="/review/recommend" method="post">' +
-                        '<input type="hidden" id="baseReviewId" name="baseReviewId" value="' + reviewId + '">' +
-                        '<input type="hidden" id="trueOrFalse" name="trueOrFalse" value="BEST">' +
-                        '<input type="submit" value="👍">' +
-                        '</form>' +
-                        '<form action="/review/recommend" method="post">' +
-                        '<input type="hidden" name="baseReviewId" value="' + reviewId + '">' +
-                        '<input type="hidden" name="trueOrFalse" value="WORST">' +
-                        '<input type="submit" value="👎">' +
-                        '</form>' +
-                        '<p>추천수:' + data.recommendBestCount + '</p>' +
-                        '<p>비추천수:' + data.recommendWorstCount + '</p>';
-                }
-
-                // 생성한 HTML을 요소에 할당
-                recommendInfo.innerHTML = html;
-            })
-            .catch(function (error) {
-                console.error('데이터 가져오기 실패:', error);
-            });
-    </script>
 </div>
+<script src="https://unpkg.com/htmx.org@1.8.6"></script>
 </body>
 </html>

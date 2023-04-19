@@ -26,6 +26,6 @@ public class PostReviewAddController {
         System.out.println("!!"+dto.getKindsId());
         System.out.println("!!"+dto.getContent());
         baseReviewAddService.add(userId,dto,file);
-            return "redirect:/post/read?postId="+dto.getKindsId();
+            return "redirect:/post/read"+"/"+dto.getKindsId();
     }
 }
