@@ -49,7 +49,6 @@ public class OrderToProduct {
         this.status = OrderStatus.ORDERED;
         this.quantity = quantity;
         this.totalPrice = product.getPrice() * quantity;
-
     }
 
     /**

@@ -38,29 +38,29 @@
             <th>상품 이미지</th>
             <th>상품명</th>
             <th>주문 수량</th>
-            <th>총 가격</th>
             <th>리뷰 작성</th>
         </tr>
         </thead>
         <tbody>
         <tr th:each="order : ${orders}">
             <td>
-                <!--                <a th:href="@{/order/create/{productId}/{salesCount} (productId=${order.orderToProduct.product.id}, salesCount=${order.orderToProduct.quantity})}">-->
                 <a th:href="@{/order/create/{productId}(productId=${order.orderToProduct.product.id}, salesCount=${order.orderToProduct.quantity})}">
                     <input type="hidden" name="salesCount" th:value="${order.orderToProduct.quantity}">
                     <img th:src="${order.orderToProduct.product.image}" alt="상품 이미지" class="product-image img-fluid">
                 </a>
             </td>
             <td>
-                <!--                <a th:href="@{/order/create/{productId}/{salesCount} (productId=${order.orderToProduct.product.id}, salesCount=${order.orderToProduct.quantity})}"-->
                 <a th:href="@{/order/create/{productId}(productId=${order.orderToProduct.product.id}, salesCount=${order.orderToProduct.quantity})}">
                     <input type="hidden" name="salesCount" th:value="${order.orderToProduct.quantity}"
                            th:text="${order.orderToProduct.product.name}"></a>
             </td>
             <td th:text="${order.orderToProduct.quantity}"></td>
-            <td th:text="${order.orderToProduct.totalPrice}"></td>
-            <td> <!-- todo 주문의 상태가 완료인 경우에만 리뷰를 달게끔 -->
+
+            <td th:if="${order.orderToProduct.status.isEquals('DELIVERED')}">
                 <a th:href="@{/product/review/add(productId=${order.getOrderToProduct().getProduct().getId()})}">리뷰작성</a>
+            </td>
+            <td th:unless="${order.orderToProduct.status.isEquals('DELIVERED')}">
+                배송완료된 상품 리뷰 작성 가능
             </td>
         </tr>
         </tbody>

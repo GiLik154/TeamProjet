@@ -82,7 +82,7 @@ class OrderCreateServiceImplTest {
         userAddressRepository.save(userAddress);
         Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
         paymentRepository.save(payment);
         Long paymentId = payment.getId();
 
@@ -99,8 +99,6 @@ class OrderCreateServiceImplTest {
 
         //when
         Order order = orderCreateService.create(userId, productId, 10, userAddressId, paymentId);
-//        Optional<Order> orderOptional = orderRepository.findByUserId(userId);
-//        Order order = orderOptional.get();
 
         //then
         assertNotNull(order.getId());
@@ -123,7 +121,7 @@ class OrderCreateServiceImplTest {
         userAddressRepository.save(userAddress);
         Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
         paymentRepository.save(payment);
         Long paymentId = payment.getId();
 
@@ -158,7 +156,7 @@ class OrderCreateServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
         paymentRepository.save(payment);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -199,7 +197,7 @@ class OrderCreateServiceImplTest {
         userAddressRepository.save(userAddress);
         Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
         paymentRepository.save(payment);
         Long paymentId = payment.getId();
 
@@ -241,7 +239,7 @@ class OrderCreateServiceImplTest {
         userAddressRepository.save(userAddress);
         Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
         paymentRepository.save(payment);
         Long paymentId = payment.getId();
 
@@ -278,7 +276,7 @@ class OrderCreateServiceImplTest {
         userAddressRepository.save(userAddress);
         Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
         paymentRepository.save(payment);
         Long paymentId = payment.getId();
 

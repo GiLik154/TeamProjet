@@ -31,7 +31,7 @@ public class OrderCancelServiceImpl implements OrderCancelService {
         }
 
         Order order = validateCancelableOrder(orderId);
-        order.getOrderToProduct().cancel(orderToProductId);
+        order.getOrderToProduct().cancel(orderId);
         cancelOrderListOnAllItemsCancelled(orderListId);
     }
 
@@ -41,7 +41,6 @@ public class OrderCancelServiceImpl implements OrderCancelService {
     private Order validateCancelableOrder(Long orderId) {
         Order order = orderRepository.validateOrderId(orderId);
         String orderStatus = order.getOrderToProduct().getStatus().toString();
-
         if (orderStatus.equals("CANCELED") || orderStatus.equals("DELIVERED") || orderStatus.equals("SHIPPED")) {
             throw new CannotCancelOrderException();
         }
