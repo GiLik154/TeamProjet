@@ -1,15 +1,14 @@
 package com.example.team_project.domain.domain.user.service.auth;
 
-import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.domain.domain.user.service.auth.dto.UserSignUpDTO;
 import com.example.team_project.enums.Role;
-import com.example.team_project.exception.EmailAlreadyExistsException;
-import com.example.team_project.exception.UserIdAlreadyExistsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -26,15 +25,9 @@ public class UserSignUpServiceImpl implements UserSignUpService {
     }
 
     @Override
-    public void signUp(UserSignUpDTO userSignUpDTO) throws UserIdAlreadyExistsException, EmailAlreadyExistsException {
+    public void signUp(UserSignUpDTO userSignUpDTO) {
 
-        if(userRepository.existsByUserId(userSignUpDTO.getUserId())) {
-            throw new UserIdAlreadyExistsException();
-        }
-
-        if (userRepository.existsByEmail(userSignUpDTO.getEmail())) {
-            throw new EmailAlreadyExistsException();
-        }
+        userRepository.duplication(userSignUpDTO);
 
         User user = new User(userSignUpDTO.getUserId(), userSignUpDTO.getPassword(),
                 userSignUpDTO.getUserName(), userSignUpDTO.getEmail(), userSignUpDTO.getPhoneNumber());

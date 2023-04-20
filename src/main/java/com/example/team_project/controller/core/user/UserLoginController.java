@@ -23,11 +23,6 @@ public class UserLoginController {
         return "thymeleaf/user/loginForm";
     }
 
-    @GetMapping("")
-    public void loginGET(String errorCode, String logout) {
-
-    }
-
     @PostMapping("")
     public String login(@RequestParam("userId") String userId, Model model) {
         User user = userRepository.findByUserId(userId).orElseThrow(UserNotFoundException::new);

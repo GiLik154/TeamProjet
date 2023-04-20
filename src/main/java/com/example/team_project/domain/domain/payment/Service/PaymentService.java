@@ -6,8 +6,13 @@ import com.example.team_project.enums.PaymentType;
 import java.util.List;
 
 public interface PaymentService {
-    Payment registerPayment(Long userId, PaymentType paymentType, String cardNumber, String accountNumber);
-    Payment updatePayment(Long userId, Long paymentId, PaymentType paymentType, String cardNumber, String accountNumber);
+    void registerPayment(Long userId, PaymentType paymentType, String number);
+
+    void updatePayment(Long userId, Long paymentId, PaymentType paymentType, String number);
+
     void deletePayment(Long userId, Long paymentId);
-    List<Payment> getPaymentsByUserId(Long userId);
+
+    String pay(Long userId, Long orderListId, Long paymentId);
+
+    String refund(Long userId, Long orderListId);
 }
