@@ -1,7 +1,8 @@
 package com.example.team_project.domain.domain.user.service.auth;
 
 import com.example.team_project.domain.domain.user.domain.User;
+import com.example.team_project.domain.domain.user.service.auth.dto.UserSignUpDTO;
 
 public interface UserSignUpService {
-    void signUp(String userId, String password, String userName, String email, String phoneNumber);
+    void signUp(UserSignUpDTO userSignUpDTO) throws ;
 }

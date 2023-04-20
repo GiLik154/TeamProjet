@@ -1,6 +1,7 @@
 package com.example.team_project;
 
 import com.example.team_project.security.CustomUserDetailsService;
+import com.example.team_project.security.handler.Custom403Handler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 
@@ -37,9 +39,11 @@ public class CustomSecurityConfig {
 
         http.rememberMe()
                 .key("12345678")
-                .tokenRepository(persistentTokenRepsository())
+                .tokenRepository(persistentTokenRepository())
                 .userDetailsService(userDetailsService)
                 .tokenValiditySeconds(60 * 60 * 24 * 30);
+
+        http.exceptionHandling().accessDeniedHandler(accessDeniedHandler());
 
         return http.build();
     }
@@ -57,5 +61,10 @@ public class CustomSecurityConfig {
         JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
         jdbcTokenRepository.setDataSource(dataSource);
         return jdbcTokenRepository;
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new Custom403Handler();
     }
 }

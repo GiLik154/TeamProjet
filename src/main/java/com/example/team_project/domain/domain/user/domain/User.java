@@ -40,10 +40,11 @@ public class User extends BaseEntity{
     private boolean social;
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @Builder.Default
     private Set<Role> roleSet = new HashSet<>();
 
-    protected User() {}
+    protected User() {
+        this.roleSet = new HashSet<>();
+    }
 
     /**
      * 회원가입 시 유저의 정보를 담는 생성자
