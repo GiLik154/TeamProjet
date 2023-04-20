@@ -1,4 +1,4 @@
-package com.example.team_project.domain.domain.coupons.couponIncategory.domain;
+package com.example.team_project.domain.domain.coupons.couponincategory.domain;
 
 import com.example.team_project.domain.domain.coupons.coupon.domain.Coupon;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
