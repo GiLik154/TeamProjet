@@ -25,13 +25,11 @@ public class PaymentServiceImpl implements PaymentService {
     private final UserRepository userRepository;
     private final PaymentRepository paymentRepository;
     private final OrderRepository orderRepository;
-    private final OrderListRepository orderListRepository;
 
-    PaymentServiceImpl(UserRepository userRepository, PaymentRepository paymentRepository, OrderRepository orderRepository, OrderListRepository orderListRepository) {
+    PaymentServiceImpl(UserRepository userRepository, PaymentRepository paymentRepository, OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.paymentRepository = paymentRepository;
         this.orderRepository = orderRepository;
-        this.orderListRepository = orderListRepository;
     }
 
 
@@ -61,6 +59,8 @@ public class PaymentServiceImpl implements PaymentService {
         }
 
         paymentRepository.findByOrderListId(orderListId).subtractBilling(cost);
+
+        return cost + "is refunded";
     }
 
     @Override

@@ -23,18 +23,18 @@ public class PurchaseCancelService {
     private final OrderListRepository orderListRepository;
 
 
-    @Transactional
-    public void cancelOrder(Long orderId) {
-        Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderNotFoundException("주문을 찾을 수 없습니다. 주문 ID: " + orderId));
-
-        order.cancel();
-
-        List<OrderToProduct> orderToProducts = order.getOrderToProduct();
-        for (OrderToProduct orderToProduct : orderToProducts) {
-            Product product = orderToProduct.getProduct();
-            int orderCount = orderToProduct.getOrderCount();
-            product.increaseStock(orderCount);
-        }
-    }
+//    @Transactional
+//    public void cancelOrder(Long orderId) {
+//        Order order = orderRepository.findById(orderId)
+//                .orElseThrow(() -> new OrderNotFoundException("주문을 찾을 수 없습니다. 주문 ID: " + orderId));
+//
+//        order.cancel();
+//
+//        List<OrderToProduct> orderToProducts = order.getOrderToProduct();
+//        for (OrderToProduct orderToProduct : orderToProducts) {
+//            Product product = orderToProduct.getProduct();
+//            int orderCount = orderToProduct.getOrderCount();
+//            product.increaseStock(orderCount);
+//        }
+//    }
 }

@@ -23,8 +23,4 @@ public interface OrderListRepository extends JpaRepository<OrderList, Long> {
 
     List<OrderList> findByUserIdOrderByStatusDesc(Long userId);
 
-    OrderList findById(Long userId, Long orderListId);
-
-
-
 }
