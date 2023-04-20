@@ -1,4 +1,4 @@
-package com.example.team_project.domain.domain.coupons.couponIncategory.service.add;
+package com.example.team_project.domain.domain.coupons.couponincategory.service.add;
 
 import com.example.team_project.exception.NotFoundCouponException;
 import com.example.team_project.exception.NotMatchCouponCategoryException;
