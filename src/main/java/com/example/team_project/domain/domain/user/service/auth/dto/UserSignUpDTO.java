@@ -1,5 +1,8 @@
 package com.example.team_project.domain.domain.user.service.auth.dto;
 
+import lombok.Getter;
+
+@Getter
 public class UserSignUpDTO {
     private String userId;
 

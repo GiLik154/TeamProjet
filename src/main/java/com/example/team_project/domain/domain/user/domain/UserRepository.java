@@ -44,4 +44,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
         return validateUserId(userId).getUserGrade().equals(UserGrade.VIP);
     }
 
+    boolean existsByUserId(String userId);
+
+    boolean existsByEmail(String email);
+
 }
