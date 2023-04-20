@@ -36,6 +36,6 @@ public class PostReviewDeleteController {
             postId.set(baseReview.getReviewToKinds().getPostReview().getPost().getId());
         });
 
-        return "redirect:/post/read?postId=" + postId;
+        return "redirect:/post/read"+ "/" + postId;
     }
 }

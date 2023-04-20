@@ -6,34 +6,33 @@
     <meta charset="UTF-8">
     <title>Product User Detail</title>
     <link rel="stylesheet" href="/static/css/productUserDetail.css">
-    <script src="https://unpkg.com/htmx.org@latest/dist/htmx.js"></script>
 </head>
 
 <body>
 
 <div class="container">
     <div class="image">
-        <img th:src="${productDetail.get().getImage()}" alt="Product Image">
+        <img th:src="${productDetail.image}" alt="Product Image">
     </div>
 
     <div class="product-info">
         <table>
             <tr>
                 <th>이름</th>
-                <td th:text="${productDetail.get().getName()}"></td>
+                <td th:text="${productDetail.name}"></td>
             </tr>
             <tr>
                 <th>가격</th>
                 <!--  <td th:text="${productDetail.get().getPrice()}"></td> -->
-                <td><span th:text="${#numbers.formatInteger(productDetail.get().getPrice(), 3, 'COMMA')}"></span> 원</td>
+                <td><span th:text="${#numbers.formatInteger(productDetail.price, 3, 'COMMA')}"></span> 원</td>
             </tr>
             <tr>
                 <th>설명</th>
-                <td th:text="${productDetail.get().getDescription()}"></td>
+                <td th:text="${productDetail.description}"></td>
             </tr>
             <tr>
                 <th>재고</th>
-                <td th:text="${productDetail.get().getStock()}"></td>
+                <td th:text="${productDetail.stock}"></td>
             </tr>
 
         </table>
@@ -52,123 +51,71 @@
             </button>
         </form>
 
-        <table>
-            <tr>
-                <th>제목</th>
-                <th>내용</th>
-                <th>사진</th>
-                <th>유저</th>
-                <th>시간</th>
-                <a th:href="@{/product/review/add(productId=${productDetail.get().getId()})}">작성</a>
-            </tr>
-            <tr th:each="productReview:${productReviewList}">
-                <td th:text="${productReview.getTitle()}"></td>
-                <td th:text="${productReview.getContent()}"></td>
-                <td><img th:src="${productReview.getImagePath()}"></td>
-                <td th:text="${productReview.getUser().getUserId()}"></td>
-                <td th:text="${productReview.getTime()}"></td>
-                <td>
-                    <a th:href="@{/product/review/delete(reviewId=${productReview.getId()})}">삭제</a>
-                    <a th:href="@{/product/review/update(reviewId=${productReview.getId()})}">수정</a>
-                </td>
-                <td th:id="recommendInfo"
-                    th:hx-get="@{/product/detail/reviewId/{reviewId}(reviewId=${productReview.getId()})}"
-                    hx-trigger="load"
-                    th:data-reviewId="${productReview.getId()}">
-                </td>
-            </tr>
-        </table>
+    </div>
+</div>
+<!--여기는 리뷰 리스트-->
+<div style="display: flex; justify-content: center;">
+    <table style="margin-right: 100px; margin-left: 100px; width: 70%; ">
+        <tr>
+            <th style="width: 15%; text-align: center">제목</th>
+            <th style="width: 25%; text-align: center">내용</th>
+            <th style="width: 20%; text-align: center">사진</th>
+            <th style="width: 5%; text-align: center">유저</th>
+            <th style="width: 10%; text-align: center">시간</th>
+            <th style="width: 10%; text-align: center">삭제/수정</th>
+            <th style="width: 15%; text-align: center">추천</th>
+        </tr>
+        <tr th:each="productReview:${productReviewList}">
+            <td th:text="${productReview.getTitle()}"></td>
+            <td th:text="${productReview.getContent()}"></td>
+            <td><img th:src="${productReview.getImagePath()}"></td>
+            <td th:text="${productReview.getUser().getUserId()}"></td>
+            <td th:text="${productReview.getTime()}" style="font-size: 12px;"></td>
+            <td style="text-align: center;">
+                <form th:action="@{/product/review/delete}">
+                <input type="hidden" name="reviewId" th:value="${productReview.id}">
+                <button type="submit">삭제</button>
+                </form>
+                <form th:action="@{/product/review/update}">
+                <input type="hidden" name="reviewId" th:value="${productReview.id}">
+                <button type="submit">수정</button>
+                </form>
+            </td>
 
-        <div class="pagination">
-            <div th:if="${startPage != 1}">
-                <a th:href="@{/product/detail/{productId}(productId=${productDetail.get().getId()},page=${startPage - limitPage})}">
-                    이전
-                </a>
-            </div>
-            <div th:each="page:${#numbers.sequence(startPage, endPage)}">
+            <!--여기는 recommend html 받아옴-->
+            <ul id="recommendInfo"
+                th:hx-get="@{/product/detail/{productId}/{reviewId}(productId=${productDetail.id}, reviewId=${productReview.getId()})}"
+                hx-trigger="load"
+                th:attr="hx-target=&#39;#recommend&#39; + ${productReview.getId()}"
+                style="display: none">
+                <td id="recommend" th:id="'recommend' + ${productReview.getId()}">
+                </td>
+            </ul>
+        </tr>
+    </table>
+</div>
+<div class=" pagination">
+    <div th:if="${startPage != 1}">
+        <a th:href="@{/product/detail/{productId}(productId=${productDetail.id},page=${startPage - limitPage})}">
+            이전
+        </a>
+    </div>
+    <div th:each="page:${#numbers.sequence(startPage, endPage)}">
         <span th:if="${page} == ${productReviewList.getNumber() + 1}">
             <span th:text="${page}">페이지</span>
         </span>
-                <a th:if="${page != productReviewList.getNumber() + 1 && page <= productReviewList.getTotalPages()}"
-                   th:href="@{/product/detail/{productId}(productId=${productDetail.get().getId()},page=${page})}">
-                    <span th:text="${page}">페이지</span>
-                </a>
-            </div>
-            <div th:if="${endPage < productReviewList.totalPages}">
-                <a th:href="@{/product/detail/{productId}(productId=${productDetail.get().getId()},page=${startPage + limitPage})}">
-                    다음
-                </a>
-            </div>
-        </div>
-
+        <a th:if="${page != productReviewList.getNumber() + 1 && page <= productReviewList.getTotalPages()}"
+           th:href="@{/product/detail/{productId}(productId=${productDetail.id},page=${page})}">
+            <span th:text="${page}">페이지</span>
+        </a>
     </div>
-
-    <script>
-        // 데이터를 가져올 URL
-        var reviewId = document.getElementById('recommendInfo').getAttribute('data-reviewId');
-        var url = '/post/read/' + reviewId; // reviewId에 실제 리뷰 아이디를 대입해야 함
-
-        // GET 요청을 통해 데이터를 가져옴
-        fetch(url)
-            .then(function (response) {
-                return response.json();
-            })
-            .then(function (data) {
-                // 가져온 데이터를 기반으로 HTML 요소를 동적으로 생성
-                var recommendInfo = document.getElementById('recommendInfo');
-                var html = '';
-
-                // recommend 값에 따라 HTML을 동적으로 생성
-                if (data.recommend === 'Best') {
-                    html = '<form action="/review/recommend" method="post">' +
-                        '<input type="hidden" id="baseReviewId" name="baseReviewId" value="' + reviewId + '">' +
-                        '<input type="hidden" id="trueOrFalse" name="trueOrFalse" value="CANCEL">' +
-                        '<input type="submit" value="👍" style="background-color: blue" >' +
-                        '</form>' +
-                        '<form action="/review/recommend" method="post">' +
-                        '<input type="hidden" name="baseReviewId" value="' + reviewId + '">' +
-                        '<input type="hidden" name="trueOrFalse" value="WORST">' +
-                        '<input type="submit" value="👎">' +
-                        '</form>' +
-                        '<p>추천수:' + data.recommendBestCount + '</p>' +
-                        '<p>비추천수:' + data.recommendWorstCount + '</p>';
-                } else if (data.recommend === 'Worst') {
-                    html = '<form action="/review/recommend" method="post">' +
-                        '<input type="hidden" id="baseReviewId" name="baseReviewId" value="' + reviewId + '">' +
-                        '<input type="hidden" id="trueOrFalse" name="trueOrFalse" value="BEST">' +
-                        '<input type="submit" value="👍">' +
-                        '</form>' +
-                        '<form action="/review/recommend" method="post">' +
-                        '<input type="hidden" name="baseReviewId" value="' + reviewId + '">' +
-                        '<input type="hidden" name="trueOrFalse" value="CANCEL">' +
-                        '<input type="submit" value="👎" style="background-color: red" >' +
-                        '</form>' +
-                        '<p>추천수:' + data.recommendBestCount + '</p>' +
-                        '<p>비추천수:' + data.recommendWorstCount + '</p>';
-                } else if (data.recommend === 'Cancel') {
-                    html = '<form action="/review/recommend" method="post">' +
-                        '<input type="hidden" id="baseReviewId" name="baseReviewId" value="' + reviewId + '">' +
-                        '<input type="hidden" id="trueOrFalse" name="trueOrFalse" value="BEST">' +
-                        '<input type="submit" value="👍">' +
-                        '</form>' +
-                        '<form action="/review/recommend" method="post">' +
-                        '<input type="hidden" name="baseReviewId" value="' + reviewId + '">' +
-                        '<input type="hidden" name="trueOrFalse" value="WORST">' +
-                        '<input type="submit" value="👎">' +
-                        '</form>' +
-                        '<p>추천수:' + data.recommendBestCount + '</p>' +
-                        '<p>비추천수:' + data.recommendWorstCount + '</p>';
-                }
-
-                // 생성한 HTML을 요소에 할당
-                recommendInfo.innerHTML = html;
-            })
-            .catch(function (error) {
-                console.error('데이터 가져오기 실패:', error);
-            });
-    </script>
+    <div th:if="${endPage < productReviewList.totalPages}">
+        <a th:href="@{/product/detail/{productId}(productId=${productDetail.id},page=${startPage + limitPage})}">
+            다음
+        </a>
+    </div>
 </div>
-
+<script src="https://unpkg.com/htmx.org@1.8.6"></script>
 </body>
 
 </html>
