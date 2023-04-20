@@ -83,7 +83,7 @@ class OrderUpdateServiceImplTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -128,7 +128,7 @@ class OrderUpdateServiceImplTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -174,7 +174,7 @@ class OrderUpdateServiceImplTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -219,7 +219,7 @@ class OrderUpdateServiceImplTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -263,7 +263,7 @@ class OrderUpdateServiceImplTest {
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();

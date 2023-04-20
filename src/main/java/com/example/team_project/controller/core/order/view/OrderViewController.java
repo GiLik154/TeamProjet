@@ -31,7 +31,6 @@ public class OrderViewController {
         int page = Math.max(pageable.getPageNumber(), 1);
         int limitPage = 8;
         Page<Order> orders = orderRepository.findByOrderListId(orderListId, PageRequest.of(page - 1, limitPage, Sort.Direction.DESC, "id"));
-//        List<Order> orders = orderRepository.findListByOrderListId(orderListId).orElseThrow(OrderNotFoundException::new);
         OrderList orderList = orderListRepository.findById(orderListId).orElseThrow(OrderListNotFoundException::new);
         int totalPage = orders.getTotalPages();
 
