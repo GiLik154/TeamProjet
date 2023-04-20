@@ -57,6 +57,8 @@ public class OrderCreateController {
                 orderCreateDto.getUserAddressId(),
                 orderCreateDto.getPaymentId());
 
-        return new ModelAndView("redirect:/order_list/view" + order.getId());//결제페이지로 이동하게 바꿔야함
+        System.out.println(order.getId());
+
+        return new ModelAndView("redirect:/order_list/view");//결제페이지로 이동하게 바꿔야함
     }
 }

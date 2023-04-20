@@ -17,6 +17,16 @@ public class OrderCancelController {
     private final OrderCancelService orderCancelService;
     private final OrderRepository orderRepository;
 
+    @GetMapping("/{orderId}/{orderListId}")
+    public ModelAndView cancelConfirm(@PathVariable Long orderId, @PathVariable Long orderListId) {
+
+        ModelAndView modelAndView = new ModelAndView("thymeleaf/order/order_cancel_confirm");
+        modelAndView.addObject("order_id", orderId);
+        modelAndView.addObject("order_list_id", orderListId);
+
+        return modelAndView;
+    }
+
     @PostMapping
     public ModelAndView cancel(@RequestParam Long orderId, @RequestParam Long orderListId) {
 

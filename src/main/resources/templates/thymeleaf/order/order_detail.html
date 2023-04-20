@@ -62,10 +62,8 @@
             <td th:text="${order.orderToProduct.quantity}"></td>
             <td th:text="${order.orderToProduct.totalPrice}"></td>
             <td><!-- todo 취소 버튼 페이지 나눠서 처리하기 -->
-                <form id="cancel-form" th:action="@{/order/cancel}" method="post">
-                    <input type="hidden" name="orderId" th:value="${order.id}">
-                    <input type="hidden" name="orderListId" th:value="${orderListId}">
-                    <button type="button" class="btn btn-danger" id="cancel-button">취소</button>
+                <form th:action="@{/order/cancel/{orderId}/{orderListId}(orderId=${order.id}, orderListId=${orderListId})}" method="get">
+                    <button type="submit" class="btn btn-danger" >취소</button>
                 </form>
             </td>
             <td th:text="${order.orderToProduct.status}"></td>
@@ -73,7 +71,7 @@
         </tbody>
     </table>
     <div class="text-center">
-        <button onclick="history.back()" class="btn btn-secondary">이전 페이지로 돌아가기</button>
+        <a th:href="@{/order_list/view/detail/{orderListId}(orderListId=${orderListId})}" class="btn btn-primary">이전으로</a>
     </div>
 </div>
 <div class="pagination-links">

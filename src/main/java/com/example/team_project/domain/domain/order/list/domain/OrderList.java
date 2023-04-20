@@ -27,7 +27,7 @@ public class OrderList {
 
     private LocalDateTime orderDate;
 
-    private boolean status;
+    private boolean status = true;
 
     protected OrderList() {
     }
@@ -37,7 +37,6 @@ public class OrderList {
         this.userAddress = userAddress;
         this.payment = payment;
         this.orderDate = orderDate;
-        this.status = true;
     }
 
     public OrderList(User user, Payment payment) {

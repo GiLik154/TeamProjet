@@ -69,7 +69,7 @@ public class OrderToProduct {
      * 주문 재고 부족 익셉션 발생
      **/
     private void validateQuantityAndProductStock(Product product, int quantity) {
-        if (quantity <= 0) {
+        if (quantity <= 0 || quantity > 1000000) {
             throw new InvalidQuantityException();
         } else if (product.getStock() < quantity) {
             throw new OutOfStockException();
