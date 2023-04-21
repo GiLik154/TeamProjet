@@ -26,6 +26,10 @@ public class PaymentServiceImpl implements PaymentService {
         this.orderListRepository = orderListRepository;
     }
 
+    /**
+     * 어카운트랑 카드 넘버는 왜 같이 받나요?
+     */
+    //todo 여기 물어봐야함
     @Override
     public Payment registerPayment(Long userId, PaymentType paymentType, String cardNumber, String accountNumber) {
         User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user id"));

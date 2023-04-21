@@ -6,14 +6,11 @@ import com.example.team_project.domain.domain.review.base.domain.BaseReviewRepos
 import com.example.team_project.domain.domain.review.recommend.domain.ReviewRecommend;
 import com.example.team_project.domain.domain.review.recommend.domain.ReviewRecommendRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicReference;
 
 @Controller
 @RequiredArgsConstructor
@@ -23,44 +20,37 @@ public class PostReadController {
     private final BaseReviewRepository baseReviewRepository;
     private final ReviewRecommendRepository reviewRecommendRepository;
 
-    @GetMapping("")
-    public String get(@RequestParam("postId") Long postId,
+    @GetMapping("{postId}")
+    public String get(@PathVariable Long postId,
                       @SessionAttribute("userId") Long userId,
                       @RequestParam(value = "reviewLink", defaultValue = "false") Boolean reviewLink,
                       Model model) {
 
         postRepository.findById(postId).ifPresent(post -> {
             List<BaseReview> baseReviewList = baseReviewRepository.findByReviewToKinds_PostReview_PostIdAndSituation(postId, "create");
-            List<ReviewRecommend> reviewRecommendList = reviewRecommendRepository.findByBaseReview_ReviewToKinds_PostReview_PostIdAndUser_Id(postId, userId);
 
             model.addAttribute("reviewLink", reviewLink);
             model.addAttribute("post", post);
             model.addAttribute("postReviewList", baseReviewList);
-            model.addAttribute("recommendList", reviewRecommendList.isEmpty() ? null : reviewRecommendList);
         });
         return "thymeleaf/post/read";
     }
 
-    @GetMapping("{reviewId}")
-    @ResponseBody
-    public ResponseEntity<Map<String, Object>> recommendInfo(@SessionAttribute("userId") Long userId, @PathVariable Long reviewId) {
-        Map<String, Object> resultMap = new HashMap<>();
-        resultMap.put("recommend","Cancel");
+    @GetMapping(value = "/{postId}/{reviewId}")
+    public String recommendInfo(Model model, @SessionAttribute("userId") Long userId, @PathVariable Long reviewId, @PathVariable Long postId) {
+        System.out.println("여기 오나???++++" + postId);
+        model.addAttribute("recommend", "Cancel");
+
         reviewRecommendRepository.findByBaseReview_IdAndUser_Id(reviewId, userId).ifPresent(reviewRecommend -> {
-            String recommend = reviewRecommend.getRecommend();
-            if (recommend != null) {
-                if (recommend.equals("Best")) {
-                    resultMap.put("recommend", "Best");
-                } else if (recommend.equals("Worst")) {
-                    resultMap.put("recommend", "Worst");
-                }
-            }
+            model.addAttribute("recommend", reviewRecommend.getRecommend());
         });
 
-        resultMap.put("recommendBestCount", reviewRecommendRepository.countByBaseReview_IdAndRecommend(reviewId,"Best"));
-        resultMap.put("recommendWorstCount", reviewRecommendRepository.countByBaseReview_IdAndRecommend(reviewId,"Worst"));
-        System.out.println("실행 됌???");
-        return ResponseEntity.ok(resultMap);
+        int bestCount = reviewRecommendRepository.countByBaseReview_IdAndRecommend(reviewId,"Best");
+        int worstCount = reviewRecommendRepository.countByBaseReview_IdAndRecommend(reviewId,"Worst");
+
+        model.addAttribute("bestCount",bestCount);
+        model.addAttribute("worstCount",worstCount);
+        return "thymeleaf/review/post-recommend";
     }
 
 }

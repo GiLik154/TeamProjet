@@ -45,7 +45,7 @@ public class User {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserGrade userGrade=UserGrade.GOLD;
+    private UserGrade userGrade = UserGrade.GOLD;
 
     protected User() {}
 

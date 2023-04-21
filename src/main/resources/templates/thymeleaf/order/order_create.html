@@ -17,7 +17,7 @@
                 </div>
                 <div class="col-md-8">
                     <label for="productId">상품명:</label>
-                    <input type="text" class="form-control" id="productId" name="productId" th:value="${product.name}"
+                    <input type="text" class="form-control" id="productId" name="productId" th:value="${product.id}"
                            readonly>
                     <div class="form-group">
                         <label for="quantity">주문 수량:</label>
@@ -42,6 +42,12 @@
                             </option>
                         </select>
                     </div>
+
+                    <div class="form-group"
+                         th:hx-get="@{'/coupon/apply-coupon-list/' + ${productId} + '/' + ${quantity}(price=${product.price})}"
+                         hx-trigger="load">
+                    </div>
+
                     <div class="form-group">
                         <label for="totalPrice">총 가격</label>
                         <input type="text" class="form-control" id="totalPrice" name="totalPrice"
@@ -62,6 +68,6 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
+<script src="https://unpkg.com/htmx.org@1.8.6"></script>
 </body>
 </html>

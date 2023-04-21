@@ -25,6 +25,9 @@ public interface UserCouponRepository extends JpaRepository<UserCoupon, Long> {
 
     Optional<UserCoupon> findByCouponName(String couponName);
 
+    @Query("SELECT u FROM UserCoupon u WHERE u.user.id = :userId AND u.status = '0' AND u.coupon.minPrice <= :price")
+    List<UserCoupon> findByUserIdAndCouponMinPriceAfterAndStatusUnused(@Param("userId") Long userId, @Param("price") int price);
+
     void deleteByUserIdAndId(Long couponId, Long userId);
 
     // 쿠폰 만료일(expirationDate)이 현재 날짜보다 이전인 쿠폰을 조회

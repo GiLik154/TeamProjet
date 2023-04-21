@@ -2,8 +2,8 @@ package com.example.team_project.domain.domain.coupons.coupon.service.apply;
 
 import com.example.team_project.domain.domain.address.domain.UserAddress;
 import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
-import com.example.team_project.domain.domain.coupons.couponIncategory.domain.CouponInCategory;
-import com.example.team_project.domain.domain.coupons.couponIncategory.domain.CouponInCategoryRepository;
+import com.example.team_project.domain.domain.coupons.couponincategory.domain.CouponInCategory;
+import com.example.team_project.domain.domain.coupons.couponincategory.domain.CouponInCategoryRepository;
 import com.example.team_project.domain.domain.coupons.usercoupon.domain.UserCoupon;
 import com.example.team_project.domain.domain.coupons.usercoupon.domain.UserCouponRepository;
 import com.example.team_project.domain.domain.coupons.coupon.domain.Coupon;

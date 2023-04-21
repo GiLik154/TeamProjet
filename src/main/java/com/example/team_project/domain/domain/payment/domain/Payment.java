@@ -14,40 +14,39 @@ import java.util.List;
 @Getter
 @AllArgsConstructor
 public class Payment {
-        @Id
-        @GeneratedValue(strategy = GenerationType.IDENTITY)
-        private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-        @ManyToOne(fetch = FetchType.LAZY)
-        @JoinColumn(name = "user_id")
-        private User user;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-        @Enumerated(EnumType.STRING)
-        private PaymentType paymentType;
+    @Enumerated(EnumType.STRING)
+    private PaymentType paymentType;
 
-        private String cardNumber;
+    private String cardNumber;
 
-        private String accountNumber;
+    private String accountNumber;
 
-        @OneToMany(mappedBy = "payment")
-        private List<OrderList> orderLists;
+    @OneToMany(mappedBy = "payment")
+    private List<OrderList> orderLists;
 
-        protected Payment() {
-        }
+    protected Payment() {
+    }
 
-        public Payment(User user, PaymentType paymentType, String cardNumber, String accountNumber) {
-                this.user = user;
-                this.paymentType = paymentType;
-                this.cardNumber = cardNumber;
-                this.accountNumber = accountNumber;
-        }
+    public Payment(User user, PaymentType paymentType, String cardNumber, String accountNumber) {
+        this.user = user;
+        this.paymentType = paymentType;
+        this.cardNumber = cardNumber;
+        this.accountNumber = accountNumber;
+    }
 
-        public Payment(Long id, User user, PaymentType paymentType, String cardNumber, String accountNumber) {
-                this.id = id;
-                this.user = user;
-                this.paymentType = paymentType;
-                this.cardNumber = cardNumber;
-                this.accountNumber = accountNumber;
-        }
-
+    public Payment(Long id, User user, PaymentType paymentType, String cardNumber, String accountNumber) {
+        this.id = id;
+        this.user = user;
+        this.paymentType = paymentType;
+        this.cardNumber = cardNumber;
+        this.accountNumber = accountNumber;
+    }
 }

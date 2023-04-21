@@ -49,6 +49,20 @@ public class ControllersAdvice {
 
         return modelAndView;
     }
+    @ExceptionHandler(InvalidAddressException.class)
+    public ModelAndView notExistedProduct(InvalidAddressException exception) {
+        ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
+        modelAndView.addObject("errorMessage", exception.getMessage());
+
+        return modelAndView;
+    }
+    @ExceptionHandler(InvalidPaymentMethodException.class)
+    public ModelAndView notExistedProduct(InvalidPaymentMethodException exception) {
+        ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
+        modelAndView.addObject("errorMessage", exception.getMessage());
+
+        return modelAndView;
+    }
 }
 
 

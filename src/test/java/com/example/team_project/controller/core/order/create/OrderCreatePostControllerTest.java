@@ -178,6 +178,7 @@ public class OrderCreatePostControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("thymeleaf/error/error-page"));
     }
+
     @Test
     void 주문_추가_주문개수초과() throws Exception {
         User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.GOLD);
@@ -216,4 +217,84 @@ public class OrderCreatePostControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(forwardedUrl("thymeleaf/error/error-page"));
     }
+
+    @Test
+    void 주문_추가_주소고유번호다름() throws Exception {
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.GOLD);
+        userRepository.save(user);
+        Long userId = user.getId();
+
+        MockHttpSession mockHttpSession = new MockHttpSession();
+        mockHttpSession.setAttribute("userId", userId);
+
+        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
+        userAddressRepository.save(userAddress);
+        Long userAddressId = userAddress.getId();
+
+        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
+        paymentRepository.save(payment);
+        Long paymentId = payment.getId();
+
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
+        productCategoryRepository.save(productCategory);
+
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct", seller, "testDes", 20, 1000, productCategory);
+        productRepository.save(product);
+        Long productId = product.getId();
+
+        MockHttpServletRequestBuilder builder = post("/order/create")
+                .param("productId", String.valueOf(productId))
+                .param("quantity", String.valueOf(99))
+                .param("userAddressId", String.valueOf(userAddressId + 1L))
+                .param("paymentId", String.valueOf(paymentId))
+                .session(mockHttpSession);
+
+        mockMvc.perform(builder)
+                .andExpect(status().isOk())
+                .andExpect(forwardedUrl("thymeleaf/error/error-page"));
+    }
+
+    @Test
+    void 주문_추가_결제고유번호다름() throws Exception {
+        User user = new User("testId", "testPw", "testNane", "testNumber", UserGrade.GOLD);
+        userRepository.save(user);
+        Long userId = user.getId();
+
+        MockHttpSession mockHttpSession = new MockHttpSession();
+        mockHttpSession.setAttribute("userId", userId);
+
+        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
+        userAddressRepository.save(userAddress);
+        Long userAddressId = userAddress.getId();
+
+        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
+        paymentRepository.save(payment);
+        Long paymentId = payment.getId();
+
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
+        productCategoryRepository.save(productCategory);
+
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct", seller, "testDes", 20, 1000, productCategory);
+        productRepository.save(product);
+        Long productId = product.getId();
+
+        MockHttpServletRequestBuilder builder = post("/order/create")
+                .param("productId", String.valueOf(productId))
+                .param("quantity", String.valueOf(99))
+                .param("userAddressId", String.valueOf(userAddressId))
+                .param("paymentId", String.valueOf(paymentId + 1L))
+                .session(mockHttpSession);
+
+        mockMvc.perform(builder)
+                .andExpect(status().isOk())
+                .andExpect(forwardedUrl("thymeleaf/error/error-page"));
+    }
+
+
 }

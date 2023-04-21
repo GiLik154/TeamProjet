@@ -38,8 +38,12 @@ public class OrderCreateController {
         ModelAndView modelAndView = new ModelAndView("thymeleaf/order/order_create");
         List<UserAddress> userAddressList = userAddressRepository.findByUserId(userId);
         List<Payment> paymentList = paymentRepository.findListByUserId(userId);
+
+
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
 
+        System.out.println("============================" + userAddressList);
+        System.out.println("============================" + paymentList);
         modelAndView.addObject("user_address_list", userAddressList);
         modelAndView.addObject("payment_list", paymentList);
         modelAndView.addObject("product", product);
@@ -49,7 +53,7 @@ public class OrderCreateController {
     }
 
     @PostMapping
-    public ModelAndView create(@SessionAttribute("userId") Long userId, @Validated OrderCreateDto orderCreateDto) {
+    public ModelAndView create(@SessionAttribute("userId") Long userId, @Validated OrderCreateDto orderCreateDto, @CookieValue(name = "couponName", required = false) String couponName) {
 
         Order order = orderCreateService.create(userId,
                 orderCreateDto.getProductId(),
@@ -57,7 +61,6 @@ public class OrderCreateController {
                 orderCreateDto.getUserAddressId(),
                 orderCreateDto.getPaymentId());
 
-        System.out.println(order.getId());
 
         return new ModelAndView("redirect:/order_list/view");//결제페이지로 이동하게 바꿔야함
     }

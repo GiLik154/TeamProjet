@@ -61,7 +61,7 @@
             <td th:text="${order.orderList.userAddress.phone}"></td>
             <td th:text="${order.orderToProduct.quantity}"></td>
             <td th:text="${order.orderToProduct.totalPrice}"></td>
-            <td><!-- todo 취소 버튼 페이지 나눠서 처리하기 -->
+            <td>
                 <form th:action="@{/order/cancel/{orderId}/{orderListId}(orderId=${order.id}, orderListId=${orderListId})}" method="get">
                     <button type="submit" class="btn btn-danger" >취소</button>
                 </form>
