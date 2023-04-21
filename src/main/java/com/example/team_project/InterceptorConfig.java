@@ -41,5 +41,3 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/user/join/**");
     }
 }
-// java 서블릿 mvc
-//Html -> 언어 x ->>

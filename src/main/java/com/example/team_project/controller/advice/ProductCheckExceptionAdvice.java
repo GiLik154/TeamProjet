@@ -2,20 +2,12 @@ package com.example.team_project.controller.advice;
 
 
 import com.example.team_project.exception.*;
-import org.springframework.beans.TypeMismatchException;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.HashMap;
-import java.util.Map;
 
 @ControllerAdvice
 @Order(Ordered.HIGHEST_PRECEDENCE)
@@ -63,13 +55,7 @@ public class ProductCheckExceptionAdvice {
     }
 
 
-//
-//    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    public ResponseEntity<ValidMessageResponse> methodValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
-//        log.warn("MethodArgumentNotValidException 발생!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
-//        ValidMessageResponse errorResponse = makeErrorResponse(e.getBindingResult());
-//        return new ResponseEntity<ValidMessageResponse>(errorResponse, HttpStatus.BAD_REQUEST);
-//    }
+
 
 
 }
