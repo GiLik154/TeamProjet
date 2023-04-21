@@ -14,5 +14,5 @@ public interface PaymentService {
 
     String pay(Long userId, Long orderListId, Long paymentId);
 
-    String refund(Long userId, Long orderListId);
+    String refund(Long userId, Long orderListId, Long paymentId);
 }

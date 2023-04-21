@@ -91,8 +91,8 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      **/
 
     List<Order> findListByOrderListId(Long orderListId);
+    List<Order> findByUserIdAndOrderListId(Long userId, Long orderListId);
 
     Page<Order> findByOrderListId(Long orderListId, PageRequest id);//todo 페이징처리
-
 
 }

@@ -35,7 +35,7 @@ public class PaymentServiceImpl implements PaymentService {
 
 
     @Override
-    public String pay(Long userId, Long orderListId, Long paymentId) {
+    public int pay(Long userId, Long orderListId, Long paymentId) {
         List<Order> orders = orderRepository.findListByOrderListId(orderListId);
 
         int cost = 0;
@@ -45,11 +45,11 @@ public class PaymentServiceImpl implements PaymentService {
         }
         paymentRepository.getReferenceById(paymentId).addBilling(cost);
 
-        return cost + " is Charged";
+        return cost;
     }
 
     @Override
-    public String refund(Long userId, Long orderListId) {
+    public String refund(Long userId, Long orderListId, Long paymentId) {
         List<Order> orders = orderRepository.findListByOrderListId(orderListId);
 
         int cost = 0;
@@ -58,14 +58,14 @@ public class PaymentServiceImpl implements PaymentService {
             cost += order.getTotalPrice();
         }
 
-        paymentRepository.findByOrderListId(orderListId).subtractBilling(cost);
+        or
 
         return cost + "is refunded";
     }
 
     @Override
     public void registerPayment(Long userId, PaymentType paymentType, String number) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new UserNotFoundException());
+        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
         Payment payment = new Payment(paymentType, number);
         paymentRepository.save(payment);
     }
