@@ -7,6 +7,7 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -61,22 +62,14 @@ public class ProductCheckExceptionAdvice {
         return modelAndView;
     }
 
+
+//
 //    @ExceptionHandler(MethodArgumentNotValidException.class)
-//    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex){
-//        Map<String, String> errors = new HashMap<>();
-//        ex.getBindingResult().getAllErrors()
-//                .forEach(c -> errors.put(((FieldError) c).getField(), c.getDefaultMessage()));
-//        return ResponseEntity.badRequest().body(errors);
+//    public ResponseEntity<ValidMessageResponse> methodValidException(MethodArgumentNotValidException e, HttpServletRequest request) {
+//        log.warn("MethodArgumentNotValidException 발생!! url:{}, trace:{}",request.getRequestURI(), e.getStackTrace());
+//        ValidMessageResponse errorResponse = makeErrorResponse(e.getBindingResult());
+//        return new ResponseEntity<ValidMessageResponse>(errorResponse, HttpStatus.BAD_REQUEST);
 //    }
 
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
-        Map<String, String> errors = new HashMap<>();
-        ex.getBindingResult().getAllErrors().forEach(error -> {
-            String fieldName = ((FieldError) error).getField();
-            String errorMessage = error.getDefaultMessage();
-            errors.put(fieldName, errorMessage);
-        });
-        return ResponseEntity.badRequest().body(errors);
-    }
+
 }
