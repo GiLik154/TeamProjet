@@ -18,8 +18,8 @@ public class CouponApplyServiceImpl implements CouponApplyService {
     private final CouponIsApplicableForPriceAndProductService applicable;
 
     @Override
-    public int apply(Long userId, Long couponId, Order order) {
-        Coupon coupon = getCoupon(userId, couponId).getCoupon();
+    public int apply(Long userId, Long userCouponId, Order order) {
+        Coupon coupon = getCoupon(userId, userCouponId).getCoupon();
         ProductCategory productCategory = order.getOrderToProduct().getProduct().getCategory();
         int totalPrice = order.getOrderToProduct().getTotalPrice();
 
@@ -30,8 +30,8 @@ public class CouponApplyServiceImpl implements CouponApplyService {
         return totalPrice * (100 - coupon.getDiscountRate()) / 100;
     }
 
-    private UserCoupon getCoupon(Long userId, Long couponId) {
-        return userCouponRepository.findByUserIdAndIdAndStatusUnused(userId, couponId).orElseThrow(() ->
-                new NotFoundCouponException(("User does not have the coupon. Coupon ID:" + couponId)));
+    private UserCoupon getCoupon(Long userId, Long userCouponId) {
+        return userCouponRepository.findByUserIdAndIdAndStatusUnused(userId, userCouponId).orElseThrow(() ->
+                new NotFoundCouponException(("User does not have the coupon. Coupon ID:" + userCouponId)));
     }
 }

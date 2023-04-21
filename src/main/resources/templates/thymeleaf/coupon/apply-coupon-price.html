@@ -1,8 +1,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
+</style>
 <div class="form-group">
-    <label for="totalPrice">⭐⭐할인 가격⭐⭐</label>
-    <input type="text" class="form-control" id="totalPrice" name="totalPrice"
-           th:value="${totalPrice}"
-           readonly>
+    <p>가격</p>
+    <div class="price-wrapper">
+        <span class="original-price" th:if="${discountRate != null}" th:text="${price}"
+              th:classappend="${discountRate == null} ? 'text-dark' : ''"></span>
+        <span class="discounted-price" th:text="${totalPrice}"></span>
+        <span class="discount" th:if="${discountRate != null}" th:text="'(' + ${discountRate} + '% 할인)'"></span>
+    </div>
 </div>
