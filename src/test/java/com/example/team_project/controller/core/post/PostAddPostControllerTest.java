@@ -8,6 +8,7 @@ import com.example.team_project.domain.domain.post.post.domain.Post;
 import com.example.team_project.domain.domain.post.post.domain.PostRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.PostCategoryStatus;
 import com.example.team_project.enums.UserGrade;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -69,9 +70,6 @@ class PostAddPostControllerTest {
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 
-        PostCategory postCategory = new PostCategory("testCategory");
-        postCategoryRepository.save(postCategory);
-
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("userId", user.getId());
 
@@ -79,7 +77,7 @@ class PostAddPostControllerTest {
                 .file(file)
                 .param("title", "testTitle")
                 .param("content", "testContent")
-                .param("category", "testCategory")
+                .param("category", "PRODUCT_INQUIRY")
                 .session(session);
 
         mockMvc.perform(builder)
@@ -90,7 +88,7 @@ class PostAddPostControllerTest {
 
         assertEquals("testTitle", post.getTitle());
         assertEquals("testContent", post.getContent());
-        assertEquals("testCategory", post.getPostCategory().getName());
+        assertEquals(PostCategoryStatus.PRODUCT_INQUIRY, post.getPostCategory().getName());
         assertEquals(user.getId(), post.getUser().getId());
         assertNotNull(post.getImagePath());
     }
@@ -106,9 +104,6 @@ class PostAddPostControllerTest {
 
         Long userId = 100L;
 
-        PostCategory postCategory = new PostCategory("testCategory");
-        postCategoryRepository.save(postCategory);
-
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("userId", userId);
 
@@ -116,7 +111,7 @@ class PostAddPostControllerTest {
                 .file(file)
                 .param("title", "testTitle")
                 .param("content", "testContent")
-                .param("category", "testCategory")
+                .param("category", "PRODUCT_INQUIRY")
                 .session(session);
 
         mockMvc.perform(builder)

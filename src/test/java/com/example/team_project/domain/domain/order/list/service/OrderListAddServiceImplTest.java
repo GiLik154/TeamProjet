@@ -48,7 +48,7 @@ class OrderListAddServiceImplTest {
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
         Long paymentId = payment.getId();
 
@@ -78,7 +78,7 @@ class OrderListAddServiceImplTest {
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
         Long paymentId = payment.getId();
 

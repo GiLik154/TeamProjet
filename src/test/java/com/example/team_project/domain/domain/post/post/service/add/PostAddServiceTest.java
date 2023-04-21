@@ -7,6 +7,7 @@ import com.example.team_project.domain.domain.post.post.domain.PostRepository;
 import com.example.team_project.domain.domain.post.post.service.PostDto;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.PostCategoryStatus;
 import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -49,16 +50,13 @@ class PostAddServiceTest {
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 
-        PostCategory postCategory = new PostCategory("testCategory");
-        postCategoryRepository.save(postCategory);
-
-        PostDto dto = new PostDto("title", "content", "testCategory");
+        PostDto dto = new PostDto("title", "content", "PRODUCT_INQUIRY");
 
         boolean isAdd = postAddService.add(user.getId(), dto, file);
 
         List<Post> post = postRepository.findByUserId(user.getId());
         assertTrue(isAdd);
-        assertEquals("testCategory", post.get(0).getPostCategory().getName());
+        assertEquals(PostCategoryStatus.PRODUCT_INQUIRY, post.get(0).getPostCategory().getName());
         assertEquals("content", post.get(0).getContent());
         assertEquals(user.getId(), post.get(0).getUser().getId());
         assertEquals("create", post.get(0).getSituation());
@@ -74,9 +72,6 @@ class PostAddServiceTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        PostCategory postCategory = new PostCategory("testCategory");
-        postCategoryRepository.save(postCategory);
-
         PostDto dto = new PostDto("title", "content", "fail");
 
         boolean isAdd = postAddService.add(user.getId(), dto, file);
@@ -90,10 +85,7 @@ class PostAddServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        PostCategory postCategory = new PostCategory("testCategory");
-        postCategoryRepository.save(postCategory);
-
-        PostDto dto = new PostDto("title", "content", "testCategory");
+        PostDto dto = new PostDto("title", "content", "PRODUCT_INQUIRY");
 
         Exception e = assertThrows(UserNotFoundException.class, () ->
                 postAddService.add(0L, dto, file)

@@ -9,6 +9,7 @@ import com.example.team_project.domain.domain.post.post.service.PostDto;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.PostCategoryStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,9 +30,15 @@ public class PostAddServiceImpl implements PostAddService {
 
     @Override
     public boolean add(Long userId, PostDto dto, MultipartFile file) {
+        PostCategoryStatus getStatus;
+        try {
+            getStatus = PostCategoryStatus.valueOf(dto.getCategory());
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
             User user = userRepository.validateUserId(userId);
 
-            Post post = new Post(dto.getTitle(), dto.getContent(), getTime(), user, getCategory(dto.getCategory())); //점검
+            Post post = new Post(dto.getTitle(), dto.getContent(), getTime(), user, getCategory(getStatus)); //점검
 
             imageUploadService.upload(post.getTitle(), file, post);
             postRepository.save(post);
@@ -48,7 +55,7 @@ public class PostAddServiceImpl implements PostAddService {
         return localDateTime.format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:ss"));
     }
 
-    private PostCategory getCategory(String status){
+    private PostCategory getCategory(PostCategoryStatus status){
         return postCategoryRepository.findByName(status)
                 .orElseGet(() -> {
                     PostCategory postCategory = new PostCategory(status);

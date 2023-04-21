@@ -2,8 +2,8 @@ package com.example.team_project.domain.domain.coupons.coupon.service.apply;
 
 import com.example.team_project.domain.domain.address.domain.UserAddress;
 import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
-import com.example.team_project.domain.domain.coupons.couponIncategory.domain.CouponInCategory;
-import com.example.team_project.domain.domain.coupons.couponIncategory.domain.CouponInCategoryRepository;
+import com.example.team_project.domain.domain.coupons.couponincategory.domain.CouponInCategory;
+import com.example.team_project.domain.domain.coupons.couponincategory.domain.CouponInCategoryRepository;
 import com.example.team_project.domain.domain.coupons.usercoupon.domain.UserCoupon;
 import com.example.team_project.domain.domain.coupons.usercoupon.domain.UserCouponRepository;
 import com.example.team_project.domain.domain.coupons.coupon.domain.Coupon;
@@ -80,7 +80,7 @@ class CouponApplyServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
@@ -122,7 +122,7 @@ class CouponApplyServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
@@ -172,7 +172,7 @@ class CouponApplyServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
@@ -216,7 +216,7 @@ class CouponApplyServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
@@ -260,7 +260,7 @@ class CouponApplyServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
@@ -304,7 +304,7 @@ class CouponApplyServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
@@ -350,7 +350,7 @@ class CouponApplyServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
