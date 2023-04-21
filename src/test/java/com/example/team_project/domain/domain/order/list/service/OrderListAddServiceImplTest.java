@@ -16,6 +16,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,7 +48,7 @@ class OrderListAddServiceImplTest {
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
         paymentRepository.save(payment);
         Long paymentId = payment.getId();
 
@@ -57,8 +58,8 @@ class OrderListAddServiceImplTest {
 
         //when
         orderListAddServiceImpl.add(userId, userAddressId, paymentId);
-        Optional<OrderList> orderListOptional = orderListRepository.findByUserId(userId);
-        OrderList orderList = orderListOptional.get();
+        List<OrderList> orderListOptional = orderListRepository.findByUserId(userId);
+        OrderList orderList = orderListOptional.get(0);
 
         //then
         assertNotNull(orderList.getId());
@@ -77,7 +78,7 @@ class OrderListAddServiceImplTest {
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
         paymentRepository.save(payment);
         Long paymentId = payment.getId();
 

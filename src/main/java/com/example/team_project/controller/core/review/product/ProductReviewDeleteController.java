@@ -19,7 +19,7 @@ public class ProductReviewDeleteController {
 
     @GetMapping("")
     public String get(@RequestParam("reviewId") Long baseReviewId,
-                      Model model){
+                      Model model) {
         model.addAttribute("baseReviewId", baseReviewId);
         return "thymeleaf/review/validate-product";
     }
@@ -27,15 +27,14 @@ public class ProductReviewDeleteController {
     @PostMapping("")
     public String post(@SessionAttribute("userId") Long userId,
                        @RequestParam("baseReviewId") Long baseReviewId,
-                       @RequestParam("password") String password){
+                       @RequestParam("password") String password) {
         AtomicReference<Long> productId = new AtomicReference<>(0L);
-        System.out.println("뭐가 문제야");
-        System.out.println("유저가 없닥???"+userId);
+
         baseReviewDeleteService.delete(baseReviewId, userId);
         baseReviewRepository.findById(baseReviewId).ifPresent(baseReview -> {
             productId.set(baseReview.getReviewToKinds().getProductReview().getProduct().getId());
         });
 
-        return "redirect:/product/detail/"+ productId.get();
+        return "redirect:/product/detail/" + productId.get();
     }
 }

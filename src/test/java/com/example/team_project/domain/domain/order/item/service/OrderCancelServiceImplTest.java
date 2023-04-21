@@ -83,7 +83,7 @@ class OrderCancelServiceImplTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -103,6 +103,7 @@ class OrderCancelServiceImplTest {
 
         OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
+        Long orderListId = orderList.getId();
 
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
 
@@ -112,7 +113,7 @@ class OrderCancelServiceImplTest {
         Long orderToProductId = orderToProduct.getId();
 
         //when
-        orderCancelServiceImpl.cancel(orderToProductId, orderId);
+        orderCancelServiceImpl.cancel(orderToProductId, orderId, orderListId);
 
         //then
         assertEquals("CANCELED", order.getOrderToProduct().getStatus().toString());
@@ -124,7 +125,7 @@ class OrderCancelServiceImplTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -151,7 +152,7 @@ class OrderCancelServiceImplTest {
         Order order = new Order(user, orderList, orderToProduct);
         orderRepository.save(order);
 
-        orderToProduct.updateStatus(OrderStatus.CANCELED);
+        orderToProduct.updateStatus(OrderStatus.SHIPPED);
 
         //when
         CannotCancelOrderException exception = assertThrows(CannotCancelOrderException.class, () ->
@@ -168,7 +169,7 @@ class OrderCancelServiceImplTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();

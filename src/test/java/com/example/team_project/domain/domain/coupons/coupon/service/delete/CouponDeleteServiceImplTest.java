@@ -1,10 +1,9 @@
 package com.example.team_project.domain.domain.coupons.coupon.service.delete;
 
-import com.example.team_project.domain.domain.coupons.couponIncategory.domain.CouponInCategory;
-import com.example.team_project.domain.domain.coupons.couponIncategory.domain.CouponInCategoryRepository;
+import com.example.team_project.domain.domain.coupons.couponincategory.domain.CouponInCategory;
+import com.example.team_project.domain.domain.coupons.couponincategory.domain.CouponInCategoryRepository;
 import com.example.team_project.domain.domain.coupons.coupon.domain.Coupon;
 import com.example.team_project.domain.domain.coupons.coupon.domain.CouponRepository;
-import com.example.team_project.domain.domain.coupons.coupon.service.delete.CouponDeleteService;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
 import com.example.team_project.domain.domain.product.product.domain.Product;

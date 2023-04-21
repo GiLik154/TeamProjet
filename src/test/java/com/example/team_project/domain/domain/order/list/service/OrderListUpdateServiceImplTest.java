@@ -30,6 +30,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -81,7 +82,7 @@ class OrderListUpdateServiceImplTest {
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
         paymentRepository.save(payment);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
@@ -95,9 +96,9 @@ class OrderListUpdateServiceImplTest {
         Long orderListId = orderList.getId();
 
         //when
-        orderListUpdateServiceImpl.update(userId, orderListId, userAddress1);
-        Optional<OrderList> orderListOptional = orderListRepository.findByUserId(userId);
-        OrderList orderList1 = orderListOptional.get();
+        orderListUpdateServiceImpl.update(userId, orderListId, userAddress1.getId());
+        List<OrderList> orderListOptional = orderListRepository.findByUserId(userId);
+        OrderList orderList1 = orderListOptional.get(0);
 
         //then
         assertEquals(orderList.getId(), orderList1.getId());
@@ -115,7 +116,7 @@ class OrderListUpdateServiceImplTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>회원가입</title>
@@ -25,6 +25,18 @@
       <label for="phoneNumber">전화번호:</label>
       <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" required>
     </div>
+    <div class="form-group">
+      <label th:for="zipcode">우편번호</label>
+      <input type="text" th:field="*{zipcode}" class="form-control" placeholder="우편번호를 입력하세요." readonly onclick="findAddress">
+    </div>
+    <div class="form-group">
+      <label th:for="streetAddress">도로명 주소</label>
+      <input type="text" th:field="*{streetAddress}" class="form-control" placeholder="도로명 주소를 입력하세요." readonly>
+    </div>
+    <div class="form-group">
+      <label th:for="detailedAddress">상세 주소</label>
+      <input type="text" th:field="*{detailedAddress}" class="form-control" placeholder="상세주소를 입력하세요.">
+    </div>
     <button type="submit" class="btn btn-primary">회원가입</button>
   </form>
 </div>
@@ -33,4 +45,50 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </body>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/.v2.js"></script>
+<script>
+  function execPostCode() {
+    new daum.Postcode({
+      oncomplete: function(data) {
+        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+        // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+        // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+        var fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+        var extraRoadAddr = ''; // 도로명 조합형 주소 변수
+
+        // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+        // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+        if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+          extraRoadAddr += data.bname;
+        }
+        // 건물명이 있고, 공동주택일 경우 추가한다.
+        if(data.buildingName !== '' && data.apartment === 'Y'){
+          extraRoadAddr += (extraRoadAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+        }
+        // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+        if(extraRoadAddr !== ''){
+          extraRoadAddr = ' (' + extraRoadAddr + ')';
+        }
+        // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+        if(fullRoadAddr !== ''){
+          fullRoadAddr += extraRoadAddr;
+        }
+
+        // 우편번호와 주소 정보를 해당 필드에 넣는다.
+        console.log(data.zonecode);
+        console.log(fullRoadAddr);
+
+
+        $("[name=addr1]").val(data.zonecode);
+        $("[name=addr2]").val(fullRoadAddr);
+
+        /* document.getElementById('signUpUserPostNo').value = data.zonecode; //5자리 새우편번호 사용
+        document.getElementById('signUpUserCompanyAddress').value = fullRoadAddr;
+        document.getElementById('signUpUserCompanyAddressDetail').value = data.jibunAddress; */
+      }
+    }).open();
+  }
+
+</script>
 </html>

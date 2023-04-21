@@ -1,6 +1,9 @@
 package com.example.team_project.domain.domain.order.item.domain;
 
 import com.example.team_project.exception.OrderNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -43,16 +46,19 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     Optional<Order> findByUserId(Long userId);
 
     /**
-     * 같은 주문리스트 안에서 각 주문 상태가 SHIPPED, DELIVERED, CANCELED 가 아닌 것들을 찾습니다
+     * 같은 주문리스트 안에서 각 주문 상태가 SHIPPED, DELIVERED가 아닌 것들을 찾습니다(취소가 가능한 상품의 상태인것들)
      *
      * @param orderListId: 주문리스트의 고유 Id
      * @return 주문의 status(상태)가 ORDERED, PAYMENT_COMPLETED, PREPARING_FOR_SHIPPING인 order객체들의 List
      **/
     @Query("SELECT o FROM Order o WHERE o.orderList.id = :orderListId " +
             "AND o.orderToProduct.status != 'SHIPPED' " +
-            "AND o.orderToProduct.status != 'DELIVERED' " +
-            "AND o.orderToProduct.status != 'CANCELED'")
+            "or o.orderToProduct.status != 'DELIVERED' ")
     List<Order> findCancelableOrders(@Param("orderListId") Long orderListId);
+    @Query("SELECT o FROM Order o WHERE o.orderList.id = :orderListId " +
+            "AND o.orderToProduct.status = 'SHIPPED' " +
+            "or o.orderToProduct.status = 'DELIVERED' ")
+    List<Order> findNotCancelableOrders(@Param("orderListId") Long orderListId);
 
     /**
      * 같은 주문리스트 안에서 각 주문 상태가 PAYMENT_COMPLETED 인것을 찾습니다
@@ -63,6 +69,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     @Query("SELECT o FROM Order o where o.orderList.id = :orderListId " +
             "AND o.orderToProduct.status = 'PAYMENT_COMPLETED'")
     List<Order> findPaymentCompletedOrders(@Param("orderListId") Long orderListId);
+
+    @Query("SELECT o FROM Order o where o.orderList.id = :orderListId " +
+            "AND o.orderToProduct.status = 'CANCELED'")
+    List<Order> findCanceledOrdersInOrderList(@Param("orderListId") Long orderListId);
 
     /**
      * userId와 orderId를 통해 해당 Id값을 가진 order객체를 optional로 리턴받습니다
@@ -80,7 +90,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      * @return 해당 orderListId를 가진 order객체들의 List
      **/
 
-    Optional<List<Order>> findByOrderListId(Long orderListId);
+    List<Order> findListByOrderListId(Long orderListId);
+
+    Page<Order> findByOrderListId(Long orderListId, PageRequest id);//todo 페이징처리
 
 
 }

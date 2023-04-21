@@ -13,7 +13,7 @@
     <h2>Post List Example with Bootstrap</h2>
     <div th:each="list:${postList}" class="card mt-3">
         <div class="card-body">
-            <a th:href="@{/post/read(postId=${list.getId()})}" th:text="${list.getTitle()}"
+            <a th:href="@{/post/read/{postId}(postId=${list.getId()})}" th:text="${list.getTitle()}"
                class="card-title"></a>
             <div th:text="${list.getTime()}" class="card-text"></div>
             <div th:text="${list.getUser().getUserId()}" class="card-text"></div>

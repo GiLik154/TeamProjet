@@ -1,7 +1,7 @@
 package com.example.team_project.domain.domain.coupons.coupon.service.delete;
 
 import com.example.team_project.domain.domain.coupons.coupon.domain.CouponRepository;
-import com.example.team_project.domain.domain.coupons.couponIncategory.service.delete.CouponInCategoryDeleteService;
+import com.example.team_project.domain.domain.coupons.couponincategory.service.delete.CouponInCategoryDeleteService;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.exception.UserNotCouponLevelException;
 import lombok.RequiredArgsConstructor;

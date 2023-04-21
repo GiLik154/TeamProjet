@@ -2,15 +2,12 @@ package com.example.team_project.controller.advice;
 
 
 import com.example.team_project.exception.*;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
 
 
 @ControllerAdvice
-@Order(Ordered.HIGHEST_PRECEDENCE)
 public class ProductCheckExceptionAdvice {
 
     @ExceptionHandler({NotPasswordException.class})
@@ -44,18 +41,5 @@ public class ProductCheckExceptionAdvice {
         modelAndView.addObject("errorMessage", errorMessage);
         return modelAndView;
     }
-
-    //테스트
-    @ExceptionHandler({MinMaxException.class})
-    public ModelAndView MinMaxCheck(MinMaxException ex) {
-        String errorMessage = ex.getMessage();
-        ModelAndView modelAndView = new ModelAndView("thymeleaf/error/error-page");
-        modelAndView.addObject("errorMessage", errorMessage);
-        return modelAndView;
-    }
-
-
-
-
 
 }
