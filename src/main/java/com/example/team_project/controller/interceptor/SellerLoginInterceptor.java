@@ -9,19 +9,21 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 @Component
-public class UserLoginInterceptor implements HandlerInterceptor {
+public class SellerLoginInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         HttpSession session = request.getSession();
 
-        Optional<Object> checkUserId = Optional.ofNullable(session.getAttribute("userId"));
+        Optional<Object> checkUserId = Optional.ofNullable(session.getAttribute("sellerId"));
 
         if (checkUserId.isEmpty()) {
             session.setAttribute("isNotLogin", true);
             response.sendRedirect("/main");
             return false;
         }
+
+
         session.removeAttribute("isNotLogin");
         return true;
     }
