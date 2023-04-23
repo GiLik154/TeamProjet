@@ -27,9 +27,6 @@ import javax.sql.DataSource;
 @EnableWebSecurity
 public class SecurityConfig {
     private final AuthenticationSuccess authenticationSuccess;
-    private final AuthenticationFailure authenticationFailure;
-    private final LogoutExecute logoutExecute;
-    private final LogoutSuccess logoutSuccess;
     private final UserDetailsService userDetailsService;
     private final AuthenticationEntryPointException authenticationEntryException;
     private final AccessDeniedHandlerException accessDeniedHandlerException;
