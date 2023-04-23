@@ -1,23 +1,14 @@
-package com.example.team_project.domain.domain.user.service.auth.dto;
+package com.example.team_project.controller.core.user.dto;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.Data;
 
-@Getter
-@RequiredArgsConstructor
-public class UserSignUpDTO {
+@Data
+public class UserJoinDTO {
     private String userId;
-
     private String password;
-
     private String userName;
-
     private String email;
-
     private String phoneNumber;
-
     private boolean del;
-
     private boolean social;
-
 }

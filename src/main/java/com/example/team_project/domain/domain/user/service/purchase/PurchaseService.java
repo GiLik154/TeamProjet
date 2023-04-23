@@ -27,18 +27,18 @@ public class PurchaseService {
     private final OrderRepository orderRepository;
 
 
-    public void purchase(Long userId, Long orderListId) {
-        Optional<OrderList> orderListOptional = orderListRepository.findByUserIdAndId(userId, orderListId);
-        if (orderListOptional.isPresent()) {
-            List<Order> orders = orderRepository.findListByOrderListId(orderListId);
-            for (Order order : orders) {
-                order.getOrderToProduct().updateStatus(OrderStatus.ORDERED);
-
-            }
-        }
-
-        orderRepository.findByUserIdAndOrderListId(userId, orderListId)
-                .forEach(order ->
-                        order.getOrderToProduct().updateStatus(OrderStatus.ORDERED));
-    }
+//    public void purchase(Long userId, Long orderListId) {
+//        Optional<OrderList> orderListOptional = orderListRepository.findByUserIdAndId(userId, orderListId);
+//        if (orderListOptional.isPresent()) {
+//            List<Order> orders = orderRepository.findListByOrderListId(orderListId);
+//            for (Order order : orders) {
+//                order.getOrderToProduct().updateStatus(OrderStatus.ORDERED);
+//
+//            }
+//        }
+//
+//        orderRepository.findByUserIdAndOrderListId(userId, orderListId)
+//                .forEach(order ->
+//                        order.getOrderToProduct().updateStatus(OrderStatus.ORDERED));
+//    }
 }

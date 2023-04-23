@@ -3,19 +3,19 @@ package com.example.team_project.domain.domain.payment.Service;
 
 import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
-import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
 import com.example.team_project.domain.domain.payment.domain.Payment;
 import com.example.team_project.domain.domain.payment.domain.PaymentRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.PaymentType;
-import com.example.team_project.exception.PaymentNotFountException;
+import com.example.team_project.exception.InvalidCostException;
+import com.example.team_project.exception.OrderNotFoundException;
+import com.example.team_project.exception.PaymentNotFoundException;
 import com.example.team_project.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Optional;
 
 
@@ -25,42 +25,62 @@ public class PaymentServiceImpl implements PaymentService {
     private final UserRepository userRepository;
     private final PaymentRepository paymentRepository;
     private final OrderRepository orderRepository;
+    private final OrderListRepository orderListRepository;
 
-    PaymentServiceImpl(UserRepository userRepository, PaymentRepository paymentRepository, OrderRepository orderRepository) {
+    PaymentServiceImpl(UserRepository userRepository, PaymentRepository paymentRepository,
+                       OrderRepository orderRepository, OrderListRepository orderListRepository) {
         this.userRepository = userRepository;
         this.paymentRepository = paymentRepository;
         this.orderRepository = orderRepository;
+        this.orderListRepository = orderListRepository;
     }
 
 
 
     @Override
     public int pay(Long userId, Long orderListId, Long paymentId) {
-        List<Order> orders = orderRepository.findListByOrderListId(orderListId);
+        Optional<Order> orders = orderRepository.findByOrderListId(orderListId);
 
         int cost = 0;
 
-        for (Order order : orders) {
-            cost += order.getTotalPrice();
+        if (orders.isPresent()) {
+
+            cost = orders.stream().mapToInt(Order::getTotalPrice).sum();
+
+            Payment payment = orderListRepository.findPaymentByIdAndPaymentId(orderListId, paymentId)
+                    .orElseThrow(() -> new PaymentNotFoundException());
+
+            payment.addBilling(cost);
         }
-        paymentRepository.getReferenceById(paymentId).addBilling(cost);
+
+        new OrderNotFoundException();
 
         return cost;
     }
 
     @Override
-    public String refund(Long userId, Long orderListId, Long paymentId) {
-        List<Order> orders = orderRepository.findListByOrderListId(orderListId);
+    public int refund(Long userId, Long orderListId, Long paymentId) {
+        Optional<Order> orders = orderRepository.findByOrderListId(orderListId);
 
         int cost = 0;
 
-        for (Order order : orders) {
-            cost += order.getTotalPrice();
-        }
+        if (orders.isPresent()) {
+            cost = orders.stream().mapToInt(Order::getTotalPrice).sum();
 
-        or
+            Payment payment = orderListRepository.findPaymentByIdAndPaymentId(orderListId, paymentId)
+                    .orElseThrow(() -> new PaymentNotFoundException());
 
-        return cost + "is refunded";
+            payment.subtractBilling(cost);
+
+            if (payment.getBilling()<0) {
+                throw new InvalidCostException();
+            }
+
+            }
+
+        new OrderNotFoundException();
+
+        return cost;
     }
 
     @Override
@@ -72,8 +92,10 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public void updatePayment(Long userId, Long paymentId, PaymentType paymentType, String number) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
-        Payment payment = paymentRepository.findById(paymentId).orElseThrow(() -> new IllegalArgumentException("Invalid payment id"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
+        Payment payment = paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid payment id"));
 
         payment.changePayment(paymentType, number);
         paymentRepository.save(payment);
@@ -81,8 +103,10 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     public void deletePayment(Long userId, Long paymentId) {
-        User user = userRepository.findById(userId).orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
-        Payment payment = paymentRepository.findById(paymentId).orElseThrow(() -> new IllegalArgumentException("Invalid payment id"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
+        Payment payment = paymentRepository.findById(paymentId)
+                .orElseThrow(() -> new IllegalArgumentException("Invalid payment id"));
 
         paymentRepository.delete(payment);
     }

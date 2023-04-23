@@ -5,13 +5,12 @@ import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-
 @Entity
 @Getter
-@ToString(exclude = "roleSet")
-public class User extends BaseEntity{
+@Builder
+@AllArgsConstructor
+@RequiredArgsConstructor
+public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -35,16 +34,9 @@ public class User extends BaseEntity{
     @Column(nullable = false)
     private UserGrade userGrade;
 
-    private boolean del;
-
-    private boolean social;
-
-    @ElementCollection(fetch = FetchType.LAZY)
-    private Set<Role> roleSet = new HashSet<>();
-
-    protected User() {
-        this.roleSet = new HashSet<>();
-    }
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
 
     /**
      * 회원가입 시 유저의 정보를 담는 생성자
@@ -56,7 +48,7 @@ public class User extends BaseEntity{
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.userGrade = UserGrade.SILVER;
-
+        this.role = Role.USER;
     }
 
     public User(Long id, String password, String phoneNumber) {
@@ -89,26 +81,14 @@ public class User extends BaseEntity{
     /**
      * 유저의 정보를 변경하는 메서드들
      */
-    public void changePassword(String password) { this.password = password; }
-
-    public void changeUserName(String userName) { this.userName = userName; }
-
-    public void changeEmail(String email) { this.email = email; }
-
-    public void changePhoneNumber(String phoneNumber) { this.phoneNumber = phoneNumber; }
-
-    public void changeDel(boolean del) { this.del = del; }
-
-    public void changeSocial(boolean social) { this.social = social; }
-
-    public void updateUserGrade(UserGrade userGrade) { this.userGrade = userGrade; }
-
-    public void addRole(Role role){
-        this.roleSet.add(role);
+    public void modify(String password, String userName, String email, String PhoneNumber) {
+        this.password = password;
+        this.userName = userName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
     }
 
-    public void clearRoles() {
-        this.roleSet.clear();
-    }
+
+
 
 }

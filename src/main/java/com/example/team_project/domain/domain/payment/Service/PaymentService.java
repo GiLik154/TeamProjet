@@ -12,7 +12,7 @@ public interface PaymentService {
 
     void deletePayment(Long userId, Long paymentId);
 
-    String pay(Long userId, Long orderListId, Long paymentId);
+    int pay(Long userId, Long orderListId, Long paymentId);
 
-    String refund(Long userId, Long orderListId, Long paymentId);
+    int refund(Long userId, Long orderListId, Long paymentId);
 }

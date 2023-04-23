@@ -5,5 +5,5 @@ import com.example.team_project.domain.domain.user.domain.User;
 import java.util.Optional;
 
 public interface UserLoginService {
-    Long login(String userName, String password);
+    User login(String userId, String password);
 }
