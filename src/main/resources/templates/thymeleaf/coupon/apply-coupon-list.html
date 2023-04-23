@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+
+<iframe id="iframe1" name="iframe1" style="display:none"></iframe>
+<form id="form" name="form" method="post" target="iframe1"
+          th:hx-post="@{/coupon/apply-coupon-list/{price}/{quantity}(price=${param.price}, quantity=${quantity})}"
+          hx-trigger="change"
+          hx-target="#price">
+    <div class="form-group">
+        <label for="couponName">결제 방법:</label>
+        <select class="form-control" id="couponName" name="couponName" onchange="this.form.submit()" required>
+                <option value="">
+                </option>
+                <option th:each="item : ${list}" th:value="${item.coupon.name}"
+                        th:text="${item.coupon.name}"></option>
+            </select>
+    </div>
+</form>
+
+<div id="price" class="form-group">
+</div>
+
+<script src="https://unpkg.com/htmx.org@1.8.6"></script>

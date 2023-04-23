@@ -37,6 +37,6 @@ public class PostReviewUpdateController {
 
         baseReviewUpdateService.update(baseReviewId,userId,dto,file);
 
-        return "redirect:/post/read?postId="+dto.getKindsId();
+        return "redirect:/post/read"+"/"+dto.getKindsId();
     }
 }

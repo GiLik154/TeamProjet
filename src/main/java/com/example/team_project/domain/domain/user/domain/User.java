@@ -32,7 +32,7 @@ public class User extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserGrade userGrade;
+    private UserGrade userGrade = UserGrade.GOLD;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
