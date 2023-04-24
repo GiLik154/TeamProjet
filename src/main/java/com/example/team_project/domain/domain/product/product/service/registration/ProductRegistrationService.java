@@ -10,10 +10,14 @@ import com.example.team_project.domain.domain.product.product.service.dto.Produc
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.enums.ProductCategoryStatus;
+import com.example.team_project.exception.MinMaxException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.validation.Valid;
 
 @Service
 @Transactional
@@ -26,8 +30,10 @@ public class ProductRegistrationService {
     private final ImageUploadService imageUploadService;
 
     //product 상품 등록
-    public void productRegistration(Long sellerId, ProductDto productDto, MultipartFile multipartFile) {
+    public void productRegistration(Long sellerId,ProductDto productDto, MultipartFile multipartFile) {
         ProductCategoryStatus productCategoryStatus = ProductCategoryStatus.valueOf(productDto.getCategoryDto());
+
+
 
         //품목이름,이미지,상세설명 등록
         Product product = new Product(
