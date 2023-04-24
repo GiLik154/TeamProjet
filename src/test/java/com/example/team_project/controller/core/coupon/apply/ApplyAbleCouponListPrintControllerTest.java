@@ -105,7 +105,7 @@ class ApplyAbleCouponListPrintControllerTest {
                 .param("price", String.valueOf(product.getPrice()))
                 .session(session);
 
-        List<UserCoupon> userCouponList = userCouponRepository.findAll();
+        List<UserCoupon> userCouponList = userCouponRepository.findByUserId(userId);
 
         mockMvc.perform(builder)
                 .andExpect(status().isOk())

@@ -71,4 +71,3 @@ public class CouponAddServiceImpl implements CouponAddService {
                 couponInCategoryAddService.add(couponName, id));
     }
 }
-

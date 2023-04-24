@@ -18,9 +18,9 @@ public class ExpiredCouponUpdateServiceImpl implements ExpiredCouponUpdateServic
 
     @Override
     public void delete() {
-        List<UserCoupon> deleteList = userCouponRepository.findExpiredCoupons(LocalDate.now());
+        List<UserCoupon> expiredCoupons = userCouponRepository.findExpiredCoupons(LocalDate.now());
 
-        deleteList.forEach(userCoupon ->
+        expiredCoupons.forEach(userCoupon ->
                 userCoupon.updateStatus(CouponStatus.EXPIRED));
     }
 }

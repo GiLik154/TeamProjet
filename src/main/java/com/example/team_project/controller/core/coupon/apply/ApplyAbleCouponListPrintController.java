@@ -52,7 +52,6 @@ public class ApplyAbleCouponListPrintController {
         });
 
         session.setAttribute(result, couponName); // 토큰값을 KEY로 해서 우리가 전달하고 싶은 값을 세션으로 전달
-
         Cookie cookie = new Cookie("couponName", result);
         cookie.setPath("/");
         cookie.setMaxAge(60);
