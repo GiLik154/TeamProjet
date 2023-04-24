@@ -1,5 +1,6 @@
 package com.example.team_project.domain.domain.user.domain;
 import com.example.team_project.enums.Role;
+import com.example.team_project.enums.SocialType;
 import com.example.team_project.enums.UserGrade;
 import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -24,6 +25,8 @@ public class User extends BaseTimeEntity {
     @Column(nullable = false)
     private String userName;
 
+    private String imageUrl;
+
     @Column(unique = true, nullable = false)
     private String email;
 
@@ -32,11 +35,36 @@ public class User extends BaseTimeEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserGrade userGrade = UserGrade.GOLD;
+    private UserGrade userGrade;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType; // KAKAO, NAVER, GOOGLE
+
+    private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
+
+    private String refreshToken; // 리프레시 토큰
+
+    /**
+     *유저 권한 설정 메소드
+     */
+    public void authorizeUser() {
+        this.role = Role.USER;
+    }
+
+    /**
+     * 비밀번호 암호화 메서드
+     */
+    public void passwordEncode(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+    }
+
+    public void updateRefreshToken(String updateRefreshToken) {
+        this.refreshToken = updateRefreshToken;
+    }
 
     /**
      * 회원가입 시 유저의 정보를 담는 생성자
@@ -65,13 +93,6 @@ public class User extends BaseTimeEntity {
     }
 
     /**
-     * 유저의 패스워드를 암호화
-     */
-    public void encodePassword(PasswordEncoder passwordEncoder) {
-        this.password = passwordEncoder.encode(this.password);
-    }
-
-    /**
      * 입력 받은 비밀번호를 검증하는 메서드
      */
     public boolean isValidPassword(String password, PasswordEncoder passwordEncoder) {
@@ -89,6 +110,7 @@ public class User extends BaseTimeEntity {
     }
 
 
-
-
+    public void updateUserGrade(UserGrade userGrade) {
+        this.userGrade = userGrade;
+    }
 }

@@ -1,9 +1,28 @@
 package com.example.team_project.domain.domain.user.service.auth;
 
 import com.example.team_project.domain.domain.user.domain.User;
+import com.example.team_project.domain.domain.user.domain.UserRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+@Service
+@RequiredArgsConstructor
+public class UserLoginService implements UserDetailsService {
 
-public interface UserLoginService {
-    User login(String userId, String password);
+    private final UserRepository userRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+        User user = userRepository.findByUserId(userId)
+                .orElseThrow(() -> new UsernameNotFoundException("해당 ID가 존재하지 않습니다."));
+
+        return org.springframework.security.core.userdetails.User.builder()
+                .username(user.getUserId())
+                .password(user.getPassword())
+                .roles(user.getRole().name())
+                .build();
+    }
 }

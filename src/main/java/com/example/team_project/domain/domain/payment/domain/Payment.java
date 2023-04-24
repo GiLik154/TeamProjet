@@ -87,6 +87,4 @@ public class Payment {
                 this.billing -= cost;
         }
 
-
-
 }
