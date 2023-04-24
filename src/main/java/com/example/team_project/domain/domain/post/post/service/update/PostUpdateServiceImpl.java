@@ -5,6 +5,8 @@ import com.example.team_project.domain.domain.post.category.domain.PostCategory;
 import com.example.team_project.domain.domain.post.category.domain.PostCategoryRepository;
 import com.example.team_project.domain.domain.post.post.domain.PostRepository;
 import com.example.team_project.domain.domain.post.post.service.PostDto;
+import com.example.team_project.enums.PostCategoryStatus;
+import jdk.jfr.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,12 +26,19 @@ public class PostUpdateServiceImpl implements PostUpdateService {
 
     @Override
     public boolean update(Long userId, Long postId, PostDto dto, MultipartFile file) {
+
+        PostCategoryStatus getStatus;
+        try {
+            getStatus = PostCategoryStatus.valueOf(dto.getCategory());
+        } catch (IllegalArgumentException e) {
+            return false;
+        }
+
         AtomicBoolean result = new AtomicBoolean(false); // boolean 값을 저장할 AtomicBoolean 객체 생성
 
         postRepository.findById(postId).ifPresent(post -> {
             if (post.getUser().getId().equals(userId)) {
-                PostCategory getP_C = getPostCategory(dto.getCategory());
-                post.update(dto.getTitle(), dto.getContent(), getTime(), getP_C);
+                post.update(dto.getTitle(), dto.getContent(), getTime(), getCategory(getStatus));
                 imageUploadService.upload(post.getTitle(), file, post);
                 result.set(true);
             }
@@ -51,8 +60,11 @@ public class PostUpdateServiceImpl implements PostUpdateService {
      * postCategoryRepository 에서 게시글을 찾음
      * 존재하지 않으면 IllegalArgumentException 이 발생
      */
-    private PostCategory getPostCategory(String postCategory) {
-        return postCategoryRepository.findByName(postCategory)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid PostCategory: " + postCategory));
+    private PostCategory getCategory(PostCategoryStatus status) {
+        return postCategoryRepository.findByName(status)
+                .orElseGet(() -> {
+                    PostCategory postCategory = new PostCategory(status);
+                    return postCategoryRepository.save(postCategory);
+                });
     }
 }

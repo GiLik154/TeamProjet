@@ -65,7 +65,7 @@ class BaseReviewUpdateServiceTest {
 
         PostCategoryStatus status = PostCategoryStatus.valueOf("PRODUCT_INQUIRY");
 
-        Post post = new Post("postTitle","postContent", "postTime", user, new PostCategory(status.getName()));
+        Post post = new Post("postTitle","postContent", "postTime", user,new PostCategory(status));
         postRepository.save(post);
 
         BaseReview baseReview = new BaseReview(user,"reviewTitle","reviewContent","reviewTime", new ReviewToKinds(new PostReview()));
@@ -129,7 +129,7 @@ class BaseReviewUpdateServiceTest {
 
         PostCategoryStatus status = PostCategoryStatus.valueOf("PRODUCT_INQUIRY");
 
-        Post post = new Post("postTitle","postContent", "postTime", user, new PostCategory(status.getName()));
+        Post post = new Post("postTitle","postContent", "postTime", user, new PostCategory(status));
         postRepository.save(post);
 
         BaseReview baseReview = new BaseReview(user,"title","content","time", new ReviewToKinds(new PostReview()));

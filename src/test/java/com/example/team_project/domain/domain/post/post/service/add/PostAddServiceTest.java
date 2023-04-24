@@ -7,6 +7,7 @@ import com.example.team_project.domain.domain.post.post.domain.PostRepository;
 import com.example.team_project.domain.domain.post.post.service.PostDto;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.PostCategoryStatus;
 import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.UserNotFoundException;
 import org.junit.jupiter.api.Test;
@@ -17,6 +18,7 @@ import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -45,22 +47,20 @@ class PostAddServiceTest {
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
         User user = new User("testId", "testPw", "testNane", "testNumber");
+        user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 
-        PostCategory postCategory = new PostCategory("testCategory");
-        postCategoryRepository.save(postCategory);
-
-        PostDto dto = new PostDto("title", "content", "testCategory");
+        PostDto dto = new PostDto("title", "content", "PRODUCT_INQUIRY");
 
         boolean isAdd = postAddService.add(user.getId(), dto, file);
 
-        Optional<Post> post = postRepository.findByUserId(user.getId());
+        List<Post> post = postRepository.findByUserId(user.getId());
         assertTrue(isAdd);
-        assertEquals("testCategory", post.get().getPostCategory().getName());
-        assertEquals("content", post.get().getContent());
-        assertEquals(user.getId(), post.get().getUser().getId());
-        assertEquals("create", post.get().getSituation());
-        assertNotNull(post.get().getImagePath());
+        assertEquals(PostCategoryStatus.PRODUCT_INQUIRY, post.get(0).getPostCategory().getName());
+        assertEquals("content", post.get(0).getContent());
+        assertEquals(user.getId(), post.get(0).getUser().getId());
+        assertEquals("create", post.get(0).getSituation());
+        assertNotNull(post.get(0).getImagePath());
     }
 
     @Test
@@ -71,9 +71,6 @@ class PostAddServiceTest {
 
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
-
-        PostCategory postCategory = new PostCategory("testCategory");
-        postCategoryRepository.save(postCategory);
 
         PostDto dto = new PostDto("title", "content", "fail");
 
@@ -88,10 +85,7 @@ class PostAddServiceTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        PostCategory postCategory = new PostCategory("testCategory");
-        postCategoryRepository.save(postCategory);
-
-        PostDto dto = new PostDto("title", "content", "testCategory");
+        PostDto dto = new PostDto("title", "content", "PRODUCT_INQUIRY");
 
         Exception e = assertThrows(UserNotFoundException.class, () ->
                 postAddService.add(0L, dto, file)
