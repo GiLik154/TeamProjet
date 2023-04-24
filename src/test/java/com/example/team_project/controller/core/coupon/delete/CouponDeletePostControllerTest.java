@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -65,8 +66,8 @@ class CouponDeletePostControllerTest {
         mockMvc.perform(builder)
                 .andExpect(status().isOk());
 
-        List<Coupon> couponList = couponRepository.findAll();
+        Optional<Coupon> testCouponOptional = couponRepository.findByName(coupon.getName());
 
-        assertTrue(couponList.isEmpty());
+        assertTrue(testCouponOptional.isEmpty());
     }
 }

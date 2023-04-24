@@ -20,6 +20,10 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import javax.xml.ws.soap.SOAPBinding;
+import java.net.http.HttpRequest;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,9 +37,11 @@ public class OrderCreateController {
     private final ProductRepository productRepository;
     private final OrderCreateService orderCreateService;
 
-//    @GetMapping("/{productId}/{salesCount}")
+    //    @GetMapping("/{productId}/{salesCount}")
     @GetMapping("/{productId}")
-    public ModelAndView createForm(@PathVariable Long productId, @SessionAttribute("userId") Long userId, @RequestParam("salesCount") int quantity) {
+    public ModelAndView createForm(@PathVariable Long productId,
+                                   @SessionAttribute("userId") Long userId,
+                                   @RequestParam("salesCount") int quantity) {
         ModelAndView modelAndView = new ModelAndView("thymeleaf/order/order_create");
         List<UserAddress> userAddressList = userAddressRepository.findByUserId(userId);
 
@@ -56,8 +62,12 @@ public class OrderCreateController {
     }
 
     @PostMapping
-    public ModelAndView create(@SessionAttribute("userId") Long userId, @Validated OrderCreateDto orderCreateDto, @CookieValue(name = "couponName", required = false) String couponName) {
-        System.out.println(couponName);
+    public ModelAndView create(@SessionAttribute("userId") Long userId,
+                               @Validated OrderCreateDto orderCreateDto,
+                               @CookieValue(name = "couponName", required = false) String couponName,
+                               HttpSession httpSession) {
+
+        String id = (String) httpSession.getAttribute(couponName);
 
         Order order = orderCreateService.create(userId,
                 orderCreateDto.getProductId(),

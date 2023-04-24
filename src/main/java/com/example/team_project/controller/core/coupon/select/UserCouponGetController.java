@@ -25,7 +25,7 @@ public class UserCouponGetController {
     @GetMapping("/all")
     @ResponseBody
     public List<UserCoupon> getAllCoupon(@SessionAttribute Long userId) {
-        return userCouponRepository.findByUserId(userId);
+        return userCouponRepository.findByUserIdForFetchJoin(userId);
     }
 
     @GetMapping("/unused")

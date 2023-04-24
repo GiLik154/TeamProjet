@@ -4,6 +4,8 @@ import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.user.domain.User;
 import lombok.Getter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 
 import javax.persistence.*;
 
@@ -25,7 +27,8 @@ public class Order {
     /**
      * (cascade = CascadeType.PERSIST)을 붙여줌으로써 Order 와 OrderToProduct 는 서로 함께 저장, 삭제 됩니다
      */
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
+    @Fetch(FetchMode.JOIN)
     private OrderToProduct orderToProduct;
 
     /**

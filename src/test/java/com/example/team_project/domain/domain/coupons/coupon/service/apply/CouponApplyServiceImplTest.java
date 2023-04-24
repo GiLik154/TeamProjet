@@ -90,6 +90,7 @@ class CouponApplyServiceImplTest {
         couponRepository.save(coupon);
 
         UserCoupon userCoupon = new UserCoupon(user, coupon, LocalDate.now());
+        userCoupon.updateExpirationDate(LocalDate.now().plusDays(7));
         userCouponRepository.save(userCoupon);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -132,6 +133,7 @@ class CouponApplyServiceImplTest {
         couponRepository.save(coupon);
 
         UserCoupon userCoupon = new UserCoupon(user, coupon, LocalDate.now());
+        userCoupon.updateExpirationDate(LocalDate.now().plusDays(+7));
         userCouponRepository.save(userCoupon);
 
         ProductCategory a = new ProductCategory(ProductCategoryStatus.TOP);
