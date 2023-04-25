@@ -34,13 +34,6 @@ public class Payment {
         protected Payment() {
         }
 
-        public Payment(User user, PaymentType paymentType, String cardNumber, String accountNumber) {
-                this.user = user;
-                this.paymentType = paymentType;
-                this.cardNumber = cardNumber;
-                this.accountNumber = accountNumber;
-        }
-
         public Payment(User user, PaymentType paymentType, String cardNumber) {
                 this.user = user;
                 this.paymentType = paymentType;
