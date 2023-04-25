@@ -12,7 +12,20 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new UserLoginInterceptor())
-             
+                .order(1)
+                .excludePathPatterns("/static/css/**")
+                .excludePathPatterns("/static/js/**")
+                .excludePathPatterns("/*.ico")
+                .addPathPatterns("/product/detail/**") // 제외 대신 포함시킴
+                .excludePathPatterns("/product/detail/**") // 제외 대신 포함시킴
+                .excludePathPatterns("/shop/**")
+                .excludePathPatterns("/seller/**")
+                .excludePathPatterns("/main/**")
+                .excludePathPatterns("/seller/sellerEmailInputForm/**")
+                .excludePathPatterns("/seller/sellerPasswordUpdateForm/**")
+                .excludePathPatterns("/user/login/**")
+                .excludePathPatterns("/seller/join-form/**")
+                .excludePathPatterns("/user/join/**");
 
         registry.addInterceptor(new SellerLoginInterceptor())
                 .order(1).excludePathPatterns("/static/css/**")
@@ -23,9 +36,12 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/seller/searchPassword/**")
                 .excludePathPatterns("/seller/join-form/**")
                 .excludePathPatterns("/seller/sellerEmailInputForm/**")
-                .excludePathPatterns("/seller/sellerPasswordUpdateForm/**")
+                .addPathPatterns("/product/detail/**") // 제외 대신 포함시킴
                 .excludePathPatterns("/product/detail/**")
-                .excludePathPatterns("/product/**")
+                .excludePathPatterns("/seller/sellerPasswordUpdateForm/**")
+                .excludePathPatterns("/seller/update/**")
+                .excludePathPatterns("/seller/join-form/**")
+                //.excludePathPatterns("/product/**")
                 .excludePathPatterns("/update/like/**")
                 .excludePathPatterns("/shop/join/**")
                 .excludePathPatterns("/main/**")
