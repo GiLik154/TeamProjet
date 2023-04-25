@@ -25,5 +25,4 @@ public class AddressAddServiceDto {
         this.detailedAddress = detailedAddress;
         this.zipCode = zipCode;
     }
-
 }

@@ -9,7 +9,6 @@ import com.example.team_project.domain.domain.order.list.domain.OrderListReposit
 import com.example.team_project.domain.domain.order.list.service.OrderListAddService;
 import com.example.team_project.domain.domain.order.list.service.OrderListAddServiceImpl;
 import com.example.team_project.domain.domain.payment.Service.PaymentService;
-import com.example.team_project.domain.domain.payment.Service.PaymentServiceImpl;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import com.example.team_project.domain.domain.user.domain.User;
@@ -32,14 +31,10 @@ public class OrderCreateServiceImpl implements OrderCreateService {
     private final OrderListAddServiceImpl orderListAddServiceImpl;
     private final PaymentService paymentService;
 
-
     @Override
     public Long create(Long userId, Long productId, int quantity, Long couponId) {
         User user = userRepository.validateUserId(userId);
         OrderList orderList = findAvailableOrderList(userId);
-        Product product = productRepository.validateProductId(productId);
-
-        OrderToProduct orderToProduct = new OrderToProduct(product, quantity);
 
         Order order = new Order(user, orderList, createOrderToProduct(productId, quantity));
         orderRepository.save(order);
