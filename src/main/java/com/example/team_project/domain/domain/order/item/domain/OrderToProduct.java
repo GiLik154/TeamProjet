@@ -49,7 +49,6 @@ public class OrderToProduct {
         this.status = OrderStatus.ORDERED;
         this.quantity = quantity;
         this.totalPrice = product.getPrice() * quantity;
-
     }
 
     /**
@@ -70,7 +69,7 @@ public class OrderToProduct {
      * 주문 재고 부족 익셉션 발생
      **/
     private void validateQuantityAndProductStock(Product product, int quantity) {
-        if (quantity <= 0) {
+        if (quantity <= 0 || quantity > 1000000) {
             throw new InvalidQuantityException();
         } else if (product.getStock() < quantity) {
             throw new OutOfStockException();
@@ -81,7 +80,7 @@ public class OrderToProduct {
      * 주문 상태 변경
      **/
     public void updateStatus(OrderStatus status) {
-        this.status = OrderStatus.valueOf(status.toString());
+        this.status = OrderStatus.valueOf(status.name());
     }
 
     /**

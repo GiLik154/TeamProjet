@@ -13,11 +13,9 @@ public interface OrderListAddService {
      * 만약 해당 userId를 가진 user가 없을경우 UserNotFoundException을 발생시킵니다
      *
      * @param userId:사용자     고유 Id
-     * @param userAddressId: 사용자 주소 고유 Id
-     * @param paymentId:     결제방법 고유 Id
      * @return userId를 통해 가져온 user객체와 매개변수로 받은 userAddress와 paymentMethod를 가진 orderList
      * @throws UserNotFoundException:유저를 찾을 수 없을 때
      **/
-    OrderList add(Long userId, Long userAddressId, Long paymentId);
+    OrderList add(Long userId);
 
 }

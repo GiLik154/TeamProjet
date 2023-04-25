@@ -14,15 +14,20 @@ public class OrderCreateDto {
     @Min(value = 0)
     @Max(value = 100)
     private final int quantity;
-    @NotNull
-    private final Long userAddressId;
-    @NotNull
-    private final Long paymentId;
+//    @NotNull
+//    private final Long userAddressId;
+//    @NotNull
+//    private final Long paymentId;
 
-    public OrderCreateDto(Long productId, int quantity, Long userAddressId, Long paymentId) {
+    public OrderCreateDto(Long productId, int quantity) {
         this.productId = productId;
         this.quantity = quantity;
-        this.userAddressId = userAddressId;
-        this.paymentId = paymentId;
     }
+
+//    public OrderCreateDto(Long productId, int quantity, Long userAddressId, Long paymentId) {
+//        this.productId = productId;
+//        this.quantity = quantity;
+//        this.userAddressId = userAddressId;
+//        this.paymentId = paymentId;
+//    }
 }

@@ -16,5 +16,7 @@ public interface OrderListUpdateService {
      * @throws OrderListNotFoundException: 해당 주문리스트를 찾을 수 없을 떄
      **/
     void update(Long userId, Long orderListId, Long userAddressId);
+    void update(Long userId, Long orderListId, Long userAddressId, Long paymentId);
+
 
 }
