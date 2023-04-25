@@ -1,16 +1,12 @@
-import com.example.team_project.domain.domain.order.item.domain.Order;
+package com.example.team_project.domain.domain.user.service.purchase;
+
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
-import com.example.team_project.domain.domain.order.item.domain.OrderToProduct;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
-import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
-import com.example.team_project.exception.OrderNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
 
 @Service
 @Transactional

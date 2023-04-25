@@ -24,6 +24,7 @@ import java.util.Optional;
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/user")
+@SessionAttributes("userId")
 public class UserController {
 
     private final UserSignUpService userSignUpService;
@@ -32,6 +33,12 @@ public class UserController {
 
     @GetMapping("/login")
     public String loginGet() {
+        return "thymeleaf/user/loginForm";
+    }
+
+    @PostMapping("/login")
+    public String post(@RequestParam String userId, Model model) {
+        model.addAttribute("userId", userId);
         return "thymeleaf/user/loginForm";
     }
 
