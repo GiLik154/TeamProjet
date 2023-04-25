@@ -54,5 +54,8 @@ public class Order {
     public void couponUpdate(UserCoupon userCoupon) {
         this.userCoupon = userCoupon;
     }
+    public int getTotalPrice() {
+        return this.orderToProduct.getTotalPrice();
+    }
 
 }
