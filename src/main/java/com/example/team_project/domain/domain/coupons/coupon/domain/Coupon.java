@@ -41,7 +41,7 @@ public class Coupon {
      * 데드라인 (이 쿠폰의 종류가 언제 만료되는지)
      * null일 경우 데드라인 없음.
      */
-    private LocalDate deadline = LocalDate.of(2999, 12, 31);
+    private LocalDate deadline;
 
     protected Coupon() {
     }

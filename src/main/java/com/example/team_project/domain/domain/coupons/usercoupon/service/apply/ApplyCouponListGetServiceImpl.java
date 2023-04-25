@@ -31,7 +31,7 @@ public class ApplyCouponListGetServiceImpl implements ApplyCouponListGetService 
         return userCouponRepository.findByUserIdAndStatusUnused(userId)
                 .stream()
                 .filter(userCoupon -> userCoupon.getStatus() == CouponStatus.UNUSED &&
-                        couponIsApplicable.isApplicableForPriceAndProduct(userCoupon.getCoupon(),
+                        couponIsApplicable.isApplicableForPriceAndProduct(userCoupon,
                                 productCategory,
                                 totalPrice))
                 .collect(Collectors.toList());

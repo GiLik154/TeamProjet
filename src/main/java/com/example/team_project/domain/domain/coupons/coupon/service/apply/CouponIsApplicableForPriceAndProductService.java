@@ -1,6 +1,7 @@
 package com.example.team_project.domain.domain.coupons.coupon.service.apply;
 
 import com.example.team_project.domain.domain.coupons.coupon.domain.Coupon;
+import com.example.team_project.domain.domain.coupons.usercoupon.domain.UserCoupon;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
 
 public interface CouponIsApplicableForPriceAndProductService {
@@ -12,5 +13,5 @@ public interface CouponIsApplicableForPriceAndProductService {
      *
      * @return
      */
-    boolean isApplicableForPriceAndProduct(Coupon coupon, ProductCategory productCategory, int totalPrice);
+    boolean isApplicableForPriceAndProduct(UserCoupon userCoupon, ProductCategory productCategory, int totalPrice);
 }

@@ -21,16 +21,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class CouponAddGetControllerTest {
     private final CouponAddController couponAddController;
-    private final UserRepository userRepository;
-    private final CouponRepository couponRepository;
 
     private MockMvc mockMvc;
 
     @Autowired
-    public CouponAddGetControllerTest(CouponAddController couponAddController, UserRepository userRepository, CouponRepository couponRepository) {
+    public CouponAddGetControllerTest(CouponAddController couponAddController) {
         this.couponAddController = couponAddController;
-        this.userRepository = userRepository;
-        this.couponRepository = couponRepository;
     }
 
     @BeforeEach

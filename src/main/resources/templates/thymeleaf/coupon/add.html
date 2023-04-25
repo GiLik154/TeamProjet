@@ -81,7 +81,8 @@
         <div class="form-group">
             <label for="discountRate">할인율: (%)</label>
             <div class="input-group">
-                <input type="number" class="form-control" id="discountRate" name="discountRate" placeholder="할인율을 입력하세요">
+                <input type="number" class="form-control" id="discountRate" name="discountRate"
+                       placeholder="할인율을 입력하세요">
                 <div class="input-group-append">
                 </div>
             </div>
@@ -93,6 +94,18 @@
                 <div class="input-group-append">
                 </div>
             </div>
+        </div>
+        <div class="form-group">
+            <legend>카테고리 선택</legend>
+            <ul>
+                <!-- 카테고리 목록을 출력하는 반복문 -->
+                <li th:each="category : ${categoryList}">
+                    <label>
+                        <input type="checkbox" name="categoryIdList" th:value="${category.id}"/>
+                        <span th:text="${category.status}"></span>
+                    </label>
+                </li>
+            </ul>
         </div>
         <div class="form-group">
             <label for="maxCouponCount">최대 쿠폰 수:</label>

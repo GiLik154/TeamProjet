@@ -3,8 +3,13 @@ package com.example.team_project.controller.core.coupon.add;
 import com.example.team_project.controller.advice.UserExceptionAdvice;
 import com.example.team_project.domain.domain.coupons.coupon.domain.Coupon;
 import com.example.team_project.domain.domain.coupons.coupon.domain.CouponRepository;
+import com.example.team_project.domain.domain.coupons.couponincategory.domain.CouponInCategory;
+import com.example.team_project.domain.domain.coupons.couponincategory.domain.CouponInCategoryRepository;
+import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
+import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.ProductCategoryStatus;
 import com.example.team_project.enums.UserGrade;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,15 +34,19 @@ class CouponAddPostControllerTest {
     private final UserRepository userRepository;
     private final CouponRepository couponRepository;
     private final UserExceptionAdvice userExceptionAdvice;
+    private final ProductCategoryRepository productCategoryRepository;
+    private final CouponInCategoryRepository couponInCategoryRepository;
 
     private MockMvc mockMvc;
 
     @Autowired
-    public CouponAddPostControllerTest(CouponAddController couponAddController, UserRepository userRepository, CouponRepository couponRepository, UserExceptionAdvice userExceptionAdvice) {
+    public CouponAddPostControllerTest(CouponAddController couponAddController, UserRepository userRepository, CouponRepository couponRepository, UserExceptionAdvice userExceptionAdvice, ProductCategoryRepository productCategoryRepository, CouponInCategoryRepository couponInCategoryRepository) {
         this.couponAddController = couponAddController;
         this.userRepository = userRepository;
         this.couponRepository = couponRepository;
         this.userExceptionAdvice = userExceptionAdvice;
+        this.productCategoryRepository = productCategoryRepository;
+        this.couponInCategoryRepository = couponInCategoryRepository;
     }
 
     @BeforeEach
@@ -53,6 +62,9 @@ class CouponAddPostControllerTest {
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
+        productCategoryRepository.save(productCategory);
+
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("userId", user.getId());
 
@@ -61,6 +73,7 @@ class CouponAddPostControllerTest {
                 .param("discountRate", "5")
                 .param("minPrice", "1000")
                 .param("maxCouponCount", "1")
+                .param("categoryIdList", String.valueOf(productCategory.getId()))
                 .session(session);
 
         mockMvc.perform(builder)
@@ -68,10 +81,13 @@ class CouponAddPostControllerTest {
                 .andExpect(forwardedUrl("thymeleaf/coupon/add"));
 
         Coupon coupon = couponRepository.findByName("testCoupon").get();
+        CouponInCategory couponInCategory = couponInCategoryRepository.findByCouponName("testCoupon").get(0);
 
         assertEquals("testCoupon", coupon.getName());
         assertEquals(5, coupon.getDiscountRate());
         assertEquals(1000, coupon.getMinPrice());
+        assertEquals(coupon, couponInCategory.getCoupon());
+        assertEquals(productCategory, couponInCategory.getProductCategory());
     }
 
     @Test
@@ -82,8 +98,6 @@ class CouponAddPostControllerTest {
 
         MockHttpSession session = new MockHttpSession();
         session.setAttribute("userId", userId);
-
-        System.out.println(userId + "Asdasda");
 
         MockHttpServletRequestBuilder builder = post("/coupon/add")
                 .param("name", "testCoupon")

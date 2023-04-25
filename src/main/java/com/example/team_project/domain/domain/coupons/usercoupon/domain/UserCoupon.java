@@ -5,6 +5,9 @@ import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.enums.CouponStatus;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+import org.springframework.data.jpa.repository.EntityGraph;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,12 +23,11 @@ public class UserCoupon {
      * 쿠폰을 가지고 있을 유저의 정보
      */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JsonIgnore
     private User user;
     /**
      * 유저가 가지고 있는 쿠폰의 종류
      */
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne(fetch = FetchType.LAZY)
     private Coupon coupon;
     /**
      * 쿠폰의 사용 기한
@@ -33,10 +35,16 @@ public class UserCoupon {
     @Column(name = "expiration_date")
     private LocalDate expirationDate;
 
-    @Column(name = "status")
+    /**
+     * 쿠폰의 상태
+     * (사용 전, 사용 완료, 만료됨)
+     */
     @Enumerated(EnumType.ORDINAL)
     private CouponStatus status;
 
+    /**
+     * 쿠폰이 사용된 날짜
+     */
     private LocalDate usedDate;
 
     protected UserCoupon() {
@@ -57,6 +65,11 @@ public class UserCoupon {
      */
     public void updateExpirationDate(LocalDate expirationDate) {
         this.expirationDate = expirationDate;
+    }
+
+    public void updateStatusWhenUsed() {
+        this.status = CouponStatus.USED;
+        this.usedDate = LocalDate.now();
     }
 
     public void updateStatus(CouponStatus couponStatus) {

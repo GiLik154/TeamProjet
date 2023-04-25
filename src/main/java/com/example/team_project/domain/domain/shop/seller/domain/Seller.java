@@ -51,6 +51,7 @@ public class Seller {
         this.password = password;
     }
 
+    //패스워드 함호화 관련
     public boolean isEncodePassword(PasswordEncoder passwordEncoder, String password) {
         this.password = passwordEncoder.encode(password);
         return passwordEncoder.matches(password, this.password);
