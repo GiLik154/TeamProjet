@@ -12,7 +12,6 @@ public class ConfirmationToken {
 
     private static final long EMAIL_TOKEN_EXPIRATION_TIME_VALUE = 1L;    //토큰 만료 시간
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

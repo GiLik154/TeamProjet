@@ -1,6 +1,5 @@
 package com.example.team_project.domain.domain.order.item.service;
 
-import com.example.team_project.domain.domain.coupons.coupon.domain.CouponRepository;
 import com.example.team_project.domain.domain.coupons.usercoupon.domain.UserCouponRepository;
 import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
@@ -8,7 +7,6 @@ import com.example.team_project.domain.domain.order.item.domain.OrderToProduct;
 import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
 import com.example.team_project.domain.domain.order.list.service.OrderListAddService;
-import com.example.team_project.domain.domain.order.list.service.OrderListAddServiceImpl;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import com.example.team_project.domain.domain.user.domain.User;

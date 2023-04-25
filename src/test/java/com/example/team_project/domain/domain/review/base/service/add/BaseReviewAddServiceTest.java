@@ -15,6 +15,7 @@ import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.PostCategoryStatus;
 import com.example.team_project.enums.ProductCategoryStatus;
 import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.UserNotFoundException;
@@ -69,7 +70,7 @@ class BaseReviewAddServiceTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        PostCategory postCategory = new PostCategory("category");
+        PostCategory postCategory = new PostCategory(PostCategoryStatus.PRODUCT_INQUIRY);
         postCategoryRepository.save(postCategory);
 
         Post post = new Post("postTitle", "postContent", "time", user, postCategory);
@@ -127,7 +128,7 @@ class BaseReviewAddServiceTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        PostCategory postCategory = new PostCategory("category");
+        PostCategory postCategory = new PostCategory(PostCategoryStatus.PRODUCT_INQUIRY);
         postCategoryRepository.save(postCategory);
 
         Post post = new Post("postTitle", "postContent", "time", user, postCategory);

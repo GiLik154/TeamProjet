@@ -7,6 +7,7 @@ import com.example.team_project.domain.domain.post.post.domain.PostRepository;
 import com.example.team_project.domain.domain.post.post.service.PostDto;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.PostCategoryStatus;
 import com.example.team_project.enums.UserGrade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,13 +44,12 @@ class PostUpdateServiceTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        PostCategory postCategory = new PostCategory("PRODUCT_INQUIRY");
-        PostCategory postCategory2 = new PostCategory("SHIPPING_INQUIRY");
+        PostCategory postCategory = new PostCategory(PostCategoryStatus.PRODUCT_INQUIRY);
         postCategoryRepository.save(postCategory);
-        postCategoryRepository.save(postCategory2);
 
-        Post post = new Post("title", "content", "time", user, new PostCategory("PRODUCT_INQUIRY"));
+        Post post = new Post("title", "content", "time", user, postCategory);
         postRepository.save(post);
+        System.out.println("sdfsdf"+postRepository.findById(post.getId()).get().getContent());
 
         PostDto dto = new PostDto("title2", "content2", "SHIPPING_INQUIRY");
 
@@ -60,7 +60,7 @@ class PostUpdateServiceTest {
         assertTrue(isTrue);
         assertEquals("title2", testPost.getTitle());
         assertEquals("content2", testPost.getContent());
-        assertEquals("SHIPPING_INQUIRY", testPost.getPostCategory().getName());
+        assertEquals(PostCategoryStatus.SHIPPING_INQUIRY, testPost.getPostCategory().getName());
     }
 
     @Test
@@ -74,12 +74,9 @@ class PostUpdateServiceTest {
         User user2 = new User("testId2", "testPw2", "testNane", "testNumber");
         userRepository.save(user2);
 
-        PostCategory postCategory = new PostCategory("PRODUCT_INQUIRY");
-        PostCategory postCategory2 = new PostCategory("SHIPPING_INQUIRY");
-        postCategoryRepository.save(postCategory);
-        postCategoryRepository.save(postCategory2);
+        PostCategory postCategory = new PostCategory(PostCategoryStatus.PRODUCT_INQUIRY);
 
-        Post post = new Post("title", "content", "time", user, new PostCategory("PRODUCT_INQUIRY"));
+        Post post = new Post("title", "content", "time", user, postCategory);
         postRepository.save(post);
 
         PostDto dto = new PostDto("title2", "content2", "SHIPPING_INQUIRY");
@@ -90,7 +87,7 @@ class PostUpdateServiceTest {
 
         assertFalse(isFalse);
         assertNotEquals("content2", testPost.getContent());
-        assertNotEquals("SHIPPING_INQUIRY", testPost.getPostCategory().getName());
+        assertNotEquals(PostCategoryStatus.SHIPPING_INQUIRY, testPost.getPostCategory().getName());
     }
 
 }

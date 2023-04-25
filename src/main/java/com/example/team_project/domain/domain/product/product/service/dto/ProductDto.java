@@ -4,6 +4,9 @@ import com.example.team_project.domain.domain.product.category.domain.ProductCat
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import lombok.Getter;
 
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+
 @Getter
 public class ProductDto {
 
@@ -15,8 +18,12 @@ public class ProductDto {
     private String description;
 
     //재고
+    @Min(1)
+    @Max(1000)
     private Integer stock;
     //가격
+    @Min(1)
+    @Max(100000000)
     private Integer price;
 
     //카테고리

@@ -21,9 +21,9 @@ public class CouponInCategoryAddServiceImpl implements CouponInCategoryAddServic
     private final CouponInCategoryRepository couponInCategoryRepository;
 
     @Override
-    public void add(String couponKindsName, Long productCategoryId) {
+    public void add(String couponName, Long productCategoryId) {
         CouponInCategory couponInCategory = new CouponInCategory(
-                getCouponKinds(couponKindsName),
+                getCouponKinds(couponName),
                 getProductCategory(productCategoryId)
         );
         couponInCategoryRepository.save(couponInCategory);

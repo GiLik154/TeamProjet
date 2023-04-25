@@ -2,10 +2,10 @@ package com.example.team_project.controller.advice;
 
 
 import com.example.team_project.exception.*;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
+
 
 @ControllerAdvice
 public class ProductCheckExceptionAdvice {
@@ -42,10 +42,4 @@ public class ProductCheckExceptionAdvice {
         return modelAndView;
     }
 
-    @ExceptionHandler(ProductNotFoundException.class)
-    public ModelAndView notFoundProduct(ProductNotFoundException exception) {
-        ModelAndView modelAndView = new ModelAndView("thymeleaf/seller/error-page");
-        modelAndView.addObject("errorMessage", exception.getMessage());
-        return modelAndView;
-    }
 }

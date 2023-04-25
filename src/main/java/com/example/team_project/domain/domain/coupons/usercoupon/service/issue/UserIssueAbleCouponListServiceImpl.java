@@ -29,6 +29,7 @@ public class UserIssueAbleCouponListServiceImpl implements UserIssueAbleCouponLi
 
     private boolean canUserGetCoupon(Long userId, Coupon coupon) {
         int userGetCouponCount = userCouponRepository.countByUserIdAndCouponName(userId, coupon.getName());
+        System.out.println(userGetCouponCount);
         return userGetCouponCount < coupon.getMaxCouponCount();
     }
 }
