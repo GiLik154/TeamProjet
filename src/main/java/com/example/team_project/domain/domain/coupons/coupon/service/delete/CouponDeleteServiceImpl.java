@@ -20,9 +20,9 @@ public class CouponDeleteServiceImpl implements CouponDeleteService {
     public void delete(Long userId, String couponName) {
         validUser(userId);
 
-        couponRepository.findByName(couponName).ifPresent(couponKinds -> {
-            couponInCategoryDeleteService.deleteByCouponId(couponKinds);
-            couponRepository.delete(couponKinds);
+        couponRepository.findByName(couponName).ifPresent(coupon -> {
+            couponInCategoryDeleteService.deleteByCouponId(coupon);
+            couponRepository.delete(coupon);
         });
     }
 

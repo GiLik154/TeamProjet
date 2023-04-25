@@ -79,7 +79,7 @@ class OrderListCancelServiceImplTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -125,7 +125,7 @@ class OrderListCancelServiceImplTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -160,7 +160,6 @@ class OrderListCancelServiceImplTest {
 
         order.getOrderToProduct().updateStatus(OrderStatus.SHIPPED);
         order.getOrderToProduct().updateStatus(OrderStatus.SHIPPED);
-//        order1.getOrderToProduct().updateStatus(OrderStatus.DELIVERED);
 
         //when
         CannotCancelOrderException exception = assertThrows(CannotCancelOrderException.class, () ->

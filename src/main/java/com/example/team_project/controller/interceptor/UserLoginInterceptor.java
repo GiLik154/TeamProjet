@@ -23,7 +23,6 @@ public class UserLoginInterceptor implements HandlerInterceptor {
             return false;
         }
         session.removeAttribute("isNotLogin");
-
         return true;
     }
 

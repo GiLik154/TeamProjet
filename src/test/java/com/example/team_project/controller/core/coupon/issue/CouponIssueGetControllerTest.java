@@ -91,7 +91,7 @@ class CouponIssueGetControllerTest {
         MockHttpServletRequestBuilder builder = get("/coupon/issue")
                 .session(session);
 
-        List<Coupon> list = couponRepository.findAll();
+        List<UserCoupon> userCouponList = userCouponRepository.findByUserId(userId);
         List<Coupon> emptyList = new ArrayList<>();
 
         mockMvc.perform(builder)
@@ -99,7 +99,7 @@ class CouponIssueGetControllerTest {
                 .andExpect(forwardedUrl("thymeleaf/coupon/issue"))
                 .andExpect(model().attribute("couponList", emptyList));
 
-        assertFalse(list.isEmpty());
+        assertFalse(userCouponList.isEmpty());
     }
 
     @Test
@@ -121,7 +121,7 @@ class CouponIssueGetControllerTest {
         MockHttpServletRequestBuilder builder = get("/coupon/issue")
                 .session(session);
 
-        List<Coupon> list = couponRepository.findAll();
+        List<UserCoupon> userCouponList = userCouponRepository.findByUserId(userId);
         List<Coupon> emptyList = new ArrayList<>();
 
         mockMvc.perform(builder)
@@ -129,6 +129,6 @@ class CouponIssueGetControllerTest {
                 .andExpect(forwardedUrl("thymeleaf/coupon/issue"))
                 .andExpect(model().attribute("couponList", emptyList));
 
-        assertFalse(list.isEmpty());
+        assertFalse(userCouponList.isEmpty());
     }
 }

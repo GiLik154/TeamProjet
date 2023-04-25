@@ -74,8 +74,8 @@ class CouponIssuePostControllerTest {
 
 
         mockMvc.perform(builder)
-                .andExpect(status().isOk())
-                .andExpect(forwardedUrl("thymeleaf/coupon/issue"));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/main"));
 
         List<UserCoupon> list = userCouponRepository.findByUserId(userId);
         UserCoupon userCoupon = list.get(0);
@@ -106,8 +106,8 @@ class CouponIssuePostControllerTest {
                 .session(session);
 
         mockMvc.perform(builder)
-                .andExpect(status().isOk())
-                .andExpect(forwardedUrl("thymeleaf/coupon/issue"));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/main"));
 
         List<UserCoupon> list = userCouponRepository.findByUserId(userId);
         UserCoupon testUserCoupon = list.get(1);
@@ -165,8 +165,8 @@ class CouponIssuePostControllerTest {
                 .session(session);
 
         mockMvc.perform(builder)
-                .andExpect(status().isOk())
-                .andExpect(forwardedUrl("thymeleaf/coupon/issue"));
+                .andExpect(status().is3xxRedirection())
+                .andExpect(redirectedUrl("/main"));
 
         List<UserCoupon> list = userCouponRepository.findByUserId(userId);
 

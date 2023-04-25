@@ -1,9 +1,6 @@
 package com.example.team_project.controller.advice.order;
 
-import com.example.team_project.exception.CannotCancelOrderException;
-import com.example.team_project.exception.OrderListNotFoundException;
-import com.example.team_project.exception.OrderNotFoundException;
-import com.example.team_project.exception.OutOfStockException;
+import com.example.team_project.exception.*;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
@@ -36,8 +33,31 @@ public class ControllersAdvice {
 
         return modelAndView;
     }
+
     @ExceptionHandler(CannotCancelOrderException.class)
-    public ModelAndView notExistedStock(CannotCancelOrderException exception) {
+    public ModelAndView cannotCancelOrder(CannotCancelOrderException exception) {
+        ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
+        modelAndView.addObject("errorMessage", exception.getMessage());
+
+        return modelAndView;
+    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public ModelAndView notExistedProduct(ProductNotFoundException exception) {
+        ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
+        modelAndView.addObject("errorMessage", exception.getMessage());
+
+        return modelAndView;
+    }
+    @ExceptionHandler(InvalidAddressException.class)
+    public ModelAndView notExistedProduct(InvalidAddressException exception) {
+        ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
+        modelAndView.addObject("errorMessage", exception.getMessage());
+
+        return modelAndView;
+    }
+    @ExceptionHandler(InvalidPaymentMethodException.class)
+    public ModelAndView notExistedProduct(InvalidPaymentMethodException exception) {
         ModelAndView modelAndView = new ModelAndView(ERROR_PAGE);
         modelAndView.addObject("errorMessage", exception.getMessage());
 

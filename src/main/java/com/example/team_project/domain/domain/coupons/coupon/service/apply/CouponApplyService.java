@@ -12,7 +12,7 @@ public interface CouponApplyService {
      * 적용이 가능하면 오더의 가격에 쿠폰의 할인율을 적용한다.
      *
      * @param userId   유저의 ID
-     * @param couponId 쿠폰의 ID
+     * @param userCouponId 쿠폰의 ID
      * @param order    쿠폰을 적용할 주문
      * @return 주문의 총 가격에 쿠폰의 할인율을 적용해서 리턴
      * @throws NotFoundCouponException 유저의 ID와 쿠폰의 ID로 쿠폰이 존재하는지
@@ -20,5 +20,5 @@ public interface CouponApplyService {
      * @throws NotApplyCouponException 쿠폰의 적용 여부를 확인할 때
      *                                 적용할 수 없으면 발생.
      */
-    int apply(Long userId, Long couponId, Order order);
+    int apply(Long userId, Long userCouponId, Order order);
 }

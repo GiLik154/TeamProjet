@@ -46,7 +46,11 @@ class UserCouponAddServiceImplTest {
         Coupon coupon = new Coupon("testName", 50, 10000, 1);
         couponRepository.save(coupon);
 
+        System.out.println("============================================================");
+
         couponAddService.add(user.getId(), coupon.getName());
+
+        System.out.println("============================================================");
 
         UserCoupon userCoupon = userCouponRepository.findByCouponName(coupon.getName()).get();
 

@@ -6,6 +6,7 @@ import com.example.team_project.domain.domain.post.post.domain.Post;
 import com.example.team_project.domain.domain.post.post.domain.PostRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.PostCategoryStatus;
 import com.example.team_project.enums.UserGrade;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +39,7 @@ class PostDeleteServiceTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        PostCategory postCategory = new PostCategory("testCategory");
+        PostCategory postCategory = new PostCategory(PostCategoryStatus.PRODUCT_INQUIRY);
         postCategoryRepository.save(postCategory);
 
         Post post = new Post("testTitle", "testContent", "testTime", user, postCategory);
@@ -56,7 +57,7 @@ class PostDeleteServiceTest {
         User user2 = new User("testId2", "testPw2", "testNane", "testNumber");
         userRepository.save(user2);
 
-        PostCategory postCategory = new PostCategory("testCategory");
+        PostCategory postCategory = new PostCategory(PostCategoryStatus.PRODUCT_INQUIRY);
         postCategoryRepository.save(postCategory);
 
         Post post = new Post("testTitle", "testContent", "testTime", user, postCategory);

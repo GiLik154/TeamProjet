@@ -1,6 +1,5 @@
 package com.example.team_project.domain.domain.coupons.coupon.service.apply;
 
-import com.example.team_project.domain.domain.coupons.couponincategory.domain.CouponInCategoryRepository;
 import com.example.team_project.domain.domain.coupons.usercoupon.domain.UserCoupon;
 import com.example.team_project.domain.domain.coupons.usercoupon.domain.UserCouponRepository;
 import com.example.team_project.domain.domain.coupons.coupon.domain.Coupon;
@@ -17,21 +16,32 @@ public class CouponApplyServiceImpl implements CouponApplyService {
     private final UserCouponRepository userCouponRepository;
     private final CouponIsApplicableForPriceAndProductService applicable;
 
+
     @Override
-    public int apply(Long userId, Long couponId, Order order) {
-        Coupon coupon = getCoupon(userId, couponId).getCoupon();
-        ProductCategory productCategory = order.getOrderToProduct().getProduct().getCategory();
+    public int apply(Long userId, Long userCouponId, Order order) {
+        UserCoupon userCoupon = getCoupon(userId, userCouponId);
+        Coupon coupon = userCoupon.getCoupon();
+
         int totalPrice = order.getOrderToProduct().getTotalPrice();
 
-        if (!applicable.isApplicableForPriceAndProduct(coupon, productCategory, totalPrice)) {
+        if (!isValidUserCoupon(userCoupon, order, totalPrice)) {
             throw new NotApplyCouponException();
         }
+
+        userCoupon.updateStatusWhenUsed();
 
         return totalPrice * (100 - coupon.getDiscountRate()) / 100;
     }
 
-    private UserCoupon getCoupon(Long userId, Long couponId) {
-        return userCouponRepository.findByUserIdAndIdAndStatusUnused(userId, couponId).orElseThrow(() ->
-                new NotFoundCouponException(("User does not have the coupon. Coupon ID:" + couponId)));
+
+    private UserCoupon getCoupon(Long userId, Long userCouponId) {
+        return userCouponRepository.findByUserIdAndIdAndStatusUnused(userId, userCouponId).orElseThrow(() ->
+                new NotFoundCouponException(("User does not have the coupon. Coupon ID:" + userCouponId)));
+    }
+
+    private boolean isValidUserCoupon(UserCoupon userCoupon, Order order, int totalPrice) {
+        ProductCategory productCategory = order.getOrderToProduct().getProduct().getCategory();
+
+        return applicable.isApplicableForPriceAndProduct(userCoupon, productCategory, totalPrice);
     }
 }

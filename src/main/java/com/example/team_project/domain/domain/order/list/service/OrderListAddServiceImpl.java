@@ -22,24 +22,16 @@ import java.time.LocalDateTime;
 public class OrderListAddServiceImpl implements OrderListAddService {
 
     private final UserRepository userRepository;
-    private final UserAddressRepository userAddressRepository;
-    private final PaymentRepository paymentRepository;
     private final OrderListRepository orderListRepository;
 
 
     @Override
-    public OrderList add(Long userId, Long userAddressId, Long paymentId) {
-
+    public OrderList add(Long userId) {
         User user = userRepository.validateUserId(userId);
-        UserAddress userAddress = userAddressRepository.findByUserIdAndId(userId,
-                userAddressId).orElseThrow(InvalidAddressException::new);
-        Payment payment = paymentRepository.findById(paymentId).orElseThrow(InvalidPaymentMethodException::new);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+        OrderList orderList = new OrderList(user, LocalDateTime.now());
         orderListRepository.save(orderList);
 
         return orderList;
     }
-
-
 }

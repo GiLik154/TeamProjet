@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
 
+import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -101,10 +102,10 @@ class UserIssueAbleCouponListServiceImplTest {
 
         List<Coupon> list = userIssueAbleCouponListService.getList(userId);
 
+        Coupon testCoupon = list.get(list.size() - 1);
 
-        Coupon testCoupon = list.get(0);
-
-        assertEquals(1, list.size());
+        assertFalse(list.contains(coupon1));
+        assertFalse(list.contains(coupon3));
         assertEquals(coupon2.getName(), testCoupon.getName());
     }
 

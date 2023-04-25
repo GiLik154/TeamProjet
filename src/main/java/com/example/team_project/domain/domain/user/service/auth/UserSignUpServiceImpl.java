@@ -1,35 +1,76 @@
 package com.example.team_project.domain.domain.user.service.auth;
 
-import com.example.team_project.domain.domain.address.domain.UserAddress;
-import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
-import com.example.team_project.domain.domain.address.service.add.AddressAddService;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.domain.domain.user.dto.UserSignUpDto;
+import com.example.team_project.enums.Role;
 import com.example.team_project.enums.UserGrade;
+import com.example.team_project.exception.UserInfoAlreadyExistsException;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.validation.Errors;
+import org.springframework.validation.FieldError;
 
-@Transactional
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
+
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class UserSignUpServiceImpl implements UserSignUpService {
-    private final UserRepository userRepository;
-    private final UserAddressRepository userAddressRepository;
 
-    public UserSignUpServiceImpl(UserRepository userRepository, UserAddressRepository userAddressRepository) {
-        this.userRepository = userRepository;
-        this.userAddressRepository = userAddressRepository;
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
+    public void signUp(UserSignUpDto userSignUpDto) {
+
+        User user = new User(userSignUpDto.getUserId(),
+                userSignUpDto.getPassword(),
+                userSignUpDto.getUserName(),
+                userSignUpDto.getEmail(),
+                userSignUpDto.getPhoneNumber(),
+                Role.USER,
+                UserGrade.SILVER);
+
+        user.passwordEncode(passwordEncoder);
+        userRepository.save(user);
     }
 
+    /**
+     * 회원가입 유효성 체크
+     */
     @Override
-    public User signUpUser(String userId, String password, String userName, String phoneNumber, String zipcode, String streetAddress, String detailedAddress) {
-        User user = new User(userId, password, userName, phoneNumber, UserGrade.SILVER);
-        userRepository.save(user);
+    public Map<String, String> validateHandler(Errors errors) {
+        Map<String, String> validateResult = new HashMap<>();
 
-        UserAddress userAddress = new UserAddress(zipcode, streetAddress, detailedAddress, user);
-        userAddressRepository.save(userAddress);
+        for (FieldError error : errors.getFieldErrors()) {
+            String validKeyName = "valid_" + error.getField();
+            validateResult.put(validKeyName, error.getDefaultMessage());
+        }
 
-        user.getUserAddresses().add(userAddress);
+        if (errors.hasGlobalErrors()) {
+            validateResult.put("error", errors.getGlobalErrors().get(0).getDefaultMessage());
+        }
 
-        return user;
+        return validateResult;
+    }
+
+    public boolean isUserIdDuplicated(String userId) {
+        Optional<User> user = userRepository.findByUserId(userId);
+        return user.isPresent();
+    }
+
+    public boolean isEmailDuplicated(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        return user.isPresent();
+    }
+
+    public boolean isPhoneNumberDuplicated(String phoneNumber) {
+        Optional<User> user = userRepository.findByPhoneNumber(phoneNumber);
+        return user.isPresent();
     }
 }

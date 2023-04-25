@@ -3,6 +3,8 @@ package com.example.team_project.domain.domain.product.product.domain;
 import com.example.team_project.domain.domain.image.ImageUpload;
 import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
+import com.example.team_project.exception.MinMaxException;
+import com.example.team_project.exception.SellerDuplicateSellerException;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -44,11 +46,15 @@ public class Product implements ImageUpload {
     }
 
     public Product(String name, Seller seller, String description, int stock, int price, ProductCategory category) {
+        if (stock > 0 || stock < 1001) {
+            this.stock = stock;
+        }
+        if (price > 0 || price < 100000001) {
+            this.price = price;
+        }
         this.name = name;
         this.seller = seller;
         this.description = description;
-        this.stock = stock;
-        this.price = price;
         this.category = category;
         this.likeCount = 0;
         this.salesCount = 0;
@@ -86,4 +92,10 @@ public class Product implements ImageUpload {
     public void uploadImage(String image) {
         this.image = image;
     }
+
+    public void increaseSalesCountAndDecreaseStock(int quantity) {
+        this.salesCount += quantity;
+        this.stock -= quantity;
+    }
+
 }

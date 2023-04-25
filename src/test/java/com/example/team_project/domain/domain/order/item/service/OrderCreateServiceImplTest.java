@@ -2,6 +2,10 @@ package com.example.team_project.domain.domain.order.item.service;
 
 import com.example.team_project.domain.domain.address.domain.UserAddress;
 import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
+import com.example.team_project.domain.domain.coupons.coupon.domain.Coupon;
+import com.example.team_project.domain.domain.coupons.coupon.domain.CouponRepository;
+import com.example.team_project.domain.domain.coupons.usercoupon.domain.UserCoupon;
+import com.example.team_project.domain.domain.coupons.usercoupon.domain.UserCouponRepository;
 import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
 import com.example.team_project.domain.domain.order.item.domain.OrderToProduct;
@@ -19,18 +23,15 @@ import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.PaymentType;
 import com.example.team_project.enums.ProductCategoryStatus;
-import com.example.team_project.exception.InvalidQuantityException;
-import com.example.team_project.exception.OutOfStockException;
-import com.example.team_project.exception.ProductNotFoundException;
-import com.example.team_project.exception.UserNotFoundException;
+import com.example.team_project.exception.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -41,6 +42,8 @@ class OrderCreateServiceImplTest {
 
     private final UserRepository userRepository;
     private final UserAddressRepository userAddressRepository;
+    private final UserCouponRepository userCouponRepository;
+    private final CouponRepository couponRepository;
     private final PaymentRepository paymentRepository;
     private final SellerRepository sellerRepository;
     private final OrderRepository orderRepository;
@@ -55,12 +58,17 @@ class OrderCreateServiceImplTest {
             SellerRepository sellerRepository,
             UserRepository userRepository,
             UserAddressRepository userAddressRepository,
+            UserCouponRepository userCouponRepository,
+            CouponRepository couponRepository,
             PaymentRepository paymentRepository,
             OrderRepository orderRepository,
             ProductRepository productRepository,
-            OrderCreateService orderCreateService, OrderListRepository orderListRepository,
+            OrderCreateService orderCreateService,
+            OrderListRepository orderListRepository,
             ProductCategoryRepository productCategoryRepository) {
         this.sellerRepository = sellerRepository;
+        this.userCouponRepository = userCouponRepository;
+        this.couponRepository = couponRepository;
         this.orderCreateService = orderCreateService;
         this.userRepository = userRepository;
         this.userAddressRepository = userAddressRepository;
@@ -78,14 +86,12 @@ class OrderCreateServiceImplTest {
         userRepository.save(user);
         Long userId = user.getId();
 
-        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
-        userAddressRepository.save(userAddress);
-        Long userAddressId = userAddress.getId();
+        Coupon coupon = new Coupon("testName", 50, 10000, 1);
+        couponRepository.save(coupon);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
-        paymentRepository.save(payment);
-        Long paymentId = payment.getId();
-
+        UserCoupon userCoupon = new UserCoupon(user, coupon, LocalDate.now());
+        userCouponRepository.save(userCoupon);
+        Long userCouponId = userCoupon.getId();
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
@@ -98,18 +104,18 @@ class OrderCreateServiceImplTest {
         Long productId = product.getId();
 
         //when
-        Order order = orderCreateService.create(userId, productId, 10, userAddressId, paymentId);
-//        Optional<Order> orderOptional = orderRepository.findByUserId(userId);
-//        Order order = orderOptional.get();
+        Long orderId = orderCreateService.create(userId, productId, 10,  userCouponId);
+        Order order = orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new);
 
         //then
         assertNotNull(order.getId());
         assertEquals(userId, order.getUser().getId());
         assertEquals(productId, order.getOrderToProduct().getProduct().getId());
-        assertEquals("CARD", order.getOrderList().getPayment().getPaymentType().toString());
-        assertEquals("1111", order.getOrderList().getPayment().getCardNumber());
         assertEquals("testProduct", order.getOrderToProduct().getProduct().getName());
         assertEquals("testDes", order.getOrderToProduct().getProduct().getDescription());
+        assertEquals(userCoupon, order.getUserCoupon());
+        assertEquals(89, order.getOrderToProduct().getProduct().getStock());
+        assertEquals(10, product.getSalesCount());
     }
 
     @Test
@@ -119,11 +125,18 @@ class OrderCreateServiceImplTest {
         userRepository.save(user);
         Long userId = user.getId();
 
+        Coupon coupon = new Coupon("testName", 50, 10000, 1);
+        couponRepository.save(coupon);
+
+        UserCoupon userCoupon = new UserCoupon(user, coupon, LocalDate.now());
+        userCouponRepository.save(userCoupon);
+        Long userCouponId = userCoupon.getId();
+
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
         Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
         Long paymentId = payment.getId();
 
@@ -142,7 +155,7 @@ class OrderCreateServiceImplTest {
 
         //when
         UserNotFoundException exception = assertThrows(UserNotFoundException.class, () ->
-                orderCreateService.create(userId + 1L, productId, 10, userAddressId, paymentId)
+                orderCreateService.create(userId + 1L, productId, 10, userCouponId)
         );
 
         //then
@@ -150,16 +163,26 @@ class OrderCreateServiceImplTest {
     }
 
     @Test
-    void 주문추가_가격확인_정상작동() {
+    void 주문추가_다수물건구매_정상작동() {
         //given
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
+        Long userId = user.getId();
+
+        Coupon coupon = new Coupon("testName", 50, 10000, 1);
+        couponRepository.save(coupon);
+
+        UserCoupon userCoupon = new UserCoupon(user, coupon, LocalDate.now());
+        userCouponRepository.save(userCoupon);
+        Long userCouponId = userCoupon.getId();
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
+        Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
+        Long paymentId = payment.getId();
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
@@ -167,24 +190,24 @@ class OrderCreateServiceImplTest {
         Seller seller = new Seller("testSellerName", "testSellerPw");
         sellerRepository.save(seller);
 
-        Product product = new Product("testProduct", seller, "testDes", 99, 5000, productCategory);
-        productRepository.save(product);
-        Product product1 = new Product("testProduct", seller, "testDes", 99, 1000, productCategory);
+        Product product1 = new Product("testProduct1", seller, "testDes1", 99, 4000, productCategory);
+        productRepository.save(product1);
+        Product product2 = new Product("testProduct2", seller, "testDes2", 99, 5000, productCategory);
+        productRepository.save(product2);
+        Long product2Id = product2.getId();
+        Product product3 = new Product("testProduct3", seller, "testDes3", 99, 3000, productCategory);
+        productRepository.save(product3);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
-        orderListRepository.save(orderList);
-
-        OrderToProduct orderToProduct = new OrderToProduct(product, 10);
-        OrderToProduct orderToProduct1 = new OrderToProduct(product1, 10);
-
-        Order order = new Order(user, orderList, orderToProduct);
-        Order order1 = new Order(user, orderList, orderToProduct1);
-        orderRepository.save(order);
-        orderRepository.save(order1);
+        //when
+        Long orderId = orderCreateService.create(userId, product2Id, 10, userCouponId);
+        Order order = orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new);
 
         //then
-        assertEquals(50000, orderToProduct.getTotalPrice());
-        assertEquals(10000, orderToProduct1.getTotalPrice());
+        assertEquals("testProduct2", order.getOrderToProduct().getProduct().getName());
+        assertEquals(50000, order.getOrderToProduct().getTotalPrice());
+        assertEquals("testDes2", order.getOrderToProduct().getProduct().getDescription());
+        assertEquals(89, order.getOrderToProduct().getProduct().getStock());
+        assertEquals(10, product2.getSalesCount());
 
     }
 
@@ -195,11 +218,18 @@ class OrderCreateServiceImplTest {
         userRepository.save(user);
         Long userId = user.getId();
 
+        Coupon coupon = new Coupon("testName", 50, 10000, 1);
+        couponRepository.save(coupon);
+
+        UserCoupon userCoupon = new UserCoupon(user, coupon, LocalDate.now());
+        userCouponRepository.save(userCoupon);
+        Long userCouponId = userCoupon.getId();
+
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
         Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
         Long paymentId = payment.getId();
 
@@ -223,7 +253,7 @@ class OrderCreateServiceImplTest {
 
         //when
         ProductNotFoundException exception = assertThrows(ProductNotFoundException.class, () ->
-                orderCreateService.create(userId, productId + 1L, 10, userAddressId, paymentId)
+                orderCreateService.create(userId, productId + 1L, 10, userCouponId)
         );
 
         //then
@@ -237,11 +267,18 @@ class OrderCreateServiceImplTest {
         userRepository.save(user);
         Long userId = user.getId();
 
+        Coupon coupon = new Coupon("testName", 50, 10000, 1);
+        couponRepository.save(coupon);
+
+        UserCoupon userCoupon = new UserCoupon(user, coupon, LocalDate.now());
+        userCouponRepository.save(userCoupon);
+        Long userCouponId = userCoupon.getId();
+
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
         Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
         Long paymentId = payment.getId();
 
@@ -260,7 +297,7 @@ class OrderCreateServiceImplTest {
 
         //when
         InvalidQuantityException exception = assertThrows(InvalidQuantityException.class, () ->
-                orderCreateService.create(userId, productId, 0, userAddressId, paymentId)
+                orderCreateService.create(userId, productId, 0, userCouponId)
         );
 
         //then
@@ -274,11 +311,18 @@ class OrderCreateServiceImplTest {
         userRepository.save(user);
         Long userId = user.getId();
 
+        Coupon coupon = new Coupon("testName", 50, 10000, 1);
+        couponRepository.save(coupon);
+
+        UserCoupon userCoupon = new UserCoupon(user, coupon, LocalDate.now());
+        userCouponRepository.save(userCoupon);
+        Long userCouponId = userCoupon.getId();
+
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
         Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
         Long paymentId = payment.getId();
 
@@ -297,7 +341,7 @@ class OrderCreateServiceImplTest {
 
         //when
         OutOfStockException exception = assertThrows(OutOfStockException.class, () ->
-                orderCreateService.create(userId, productId, 10, userAddressId, paymentId)
+                orderCreateService.create(userId, productId, 10, userCouponId)
         );
 
         //then

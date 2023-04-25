@@ -1,23 +1,18 @@
 .container {
     display: flex;
     margin: 20px;
+    gap: 20px; /* Use gap property to add spacing between elements */
 }
-
 .image {
-    margin-right: 20px;
     flex-basis: 50%;
-    max-width: 600px;
-}
-
-img {
-    max-width: 100%;
-    height: auto;
+    max-width: 300px;
 }
 
 .product-info {
     width: 100%;
 }
 
+/* Update table style */
 table {
     width: 100%;
     border-collapse: collapse;
@@ -33,68 +28,50 @@ td {
 
 th {
     width: 20%;
-    background-color: #eee;
+    background-color: #f0f0f0;
+    font-weight: bold;
 }
 
-
+/* Update form style */
 form {
-    display: inline-flex;
-    justify-content: space-between;
-    align-items: center;
+    margin-bottom: 10px;
 }
 
-button {
-    margin-right: 10px;
+input[type="number"] {
+    width: 35px;
+    height: 35px;
+    border-radius: 9px;
+    border-style: double;
 }
 
-
-form button {
-    padding: 10px;
-    background-color: #cfd9da;
-    color: #281111;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    margin: 20px;
-}
-
-form button:hover {
-    background-color: #3e8e41;
-}
-
-form span {
-    font-size: 20px;
-    cursor: pointer;
-}
-
-form span:hover {
-    transform: scale(1.2);
-}
-
-.pagination {
-    text-align: center;
+button[type="submit"] {
     margin-top: 10px;
+    background-color: #007bff;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+/* Update pagination style */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
 }
 
 .pagination a,
 .pagination span {
-    display: inline-block;
     padding: 5px 10px;
-    color: #337ab7;
+    margin: 0 5px;
+    background-color: #007bff;
+    color: #fff;
     text-decoration: none;
-    cursor: pointer;
+    border-radius: 5px;
 }
 
 .pagination a:hover {
-    color: #23527c;
-}
-
-.pagination span {
-    color: #777;
-}
-
-.pagination div {
-    display: inline-block;
-    margin-right: 5px;
+    background-color: #0056b3;
 }

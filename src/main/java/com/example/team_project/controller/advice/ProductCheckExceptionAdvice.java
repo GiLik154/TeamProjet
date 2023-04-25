@@ -1,11 +1,17 @@
 package com.example.team_project.controller.advice;
 
 
+import com.example.team_project.controller.core.product.ProductRegistrationController;
 import com.example.team_project.exception.*;
-import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
+
 
 @ControllerAdvice
 public class ProductCheckExceptionAdvice {
@@ -39,13 +45,6 @@ public class ProductCheckExceptionAdvice {
         String errorMessage = ex.getMessage();
         ModelAndView modelAndView = new ModelAndView("thymeleaf/seller/sellerEmailInputForm");
         modelAndView.addObject("errorMessage", errorMessage);
-        return modelAndView;
-    }
-
-    @ExceptionHandler(ProductNotFoundException.class)
-    public ModelAndView notFoundProduct(ProductNotFoundException exception) {
-        ModelAndView modelAndView = new ModelAndView("thymeleaf/seller/error-page");
-        modelAndView.addObject("errorMessage", exception.getMessage());
         return modelAndView;
     }
 }

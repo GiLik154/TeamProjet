@@ -1,0 +1,13 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+</style>
+<div class="form-group">
+    <p>가격</p>
+    <div class="price-wrapper">
+        <span class="original-price" th:if="${discountRate != null}" th:text="${price * quantity}"
+              th:classappend="${discountRate == null} ? 'text-dark' : ''"></span>
+        <span class="discounted-price" th:if="${discountRate != null}" th:text="${totalPrice}"></span>
+        <span class="discounted-price" th:if="${discountRate == null}" th:text="${totalPrice * quantity}"></span>
+        <span class="discount" th:if="${discountRate != null}" th:text="'(' + ${discountRate} + '% 할인)'"></span>
+    </div>
+</div>
