@@ -22,59 +22,61 @@ import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.OrderStatus;
 import com.example.team_project.enums.PaymentType;
 import com.example.team_project.enums.ProductCategoryStatus;
-import com.example.team_project.exception.CannotCancelOrderException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import javax.transaction.Transactional;
+
 import java.time.LocalDateTime;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 @Transactional
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class OrderListCancelServiceImplTest {
+class OrderStatusUpdateForPaymentsServiceImplTest {
 
     private final UserRepository userRepository;
+    private final UserAddressRepository userAddressRepository;
     private final PaymentRepository paymentRepository;
     private final ShopRepository shopRepository;
+    private final SellerRepository sellerRepository;
     private final ProductRepository productRepository;
     private final ProductCategoryRepository productCategoryRepository;
-    private final SellerRepository sellerRepository;
     private final OrderRepository orderRepository;
     private final OrderListRepository orderListRepository;
-    private final OrderListCancelServiceImpl orderListCancelServiceImpl;
-    private final UserAddressRepository userAddressRepository;
-
+    private final OrderStatusUpdateForPaymentsService orderStatusUpdateForPaymentsService;
 
     @Autowired
-    OrderListCancelServiceImplTest(UserRepository userRepository,
-                                   PaymentRepository paymentRepository,
-                                   ShopRepository shopRepository,
-                                   ProductRepository productRepository,
-                                   ProductCategoryRepository productCategoryRepository,
-                                   SellerRepository sellerRepository,
-                                   OrderRepository orderRepository,
-                                   OrderListRepository orderListRepository,
-                                   OrderListCancelServiceImpl orderListCancelServiceImpl,
-                                   UserAddressRepository userAddressRepository) {
+    OrderStatusUpdateForPaymentsServiceImplTest(UserRepository userRepository,
+                                                UserAddressRepository userAddressRepository,
+                                                PaymentRepository paymentRepository,
+                                                ShopRepository shopRepository,
+                                                SellerRepository sellerRepository,
+                                                ProductRepository productRepository,
+                                                ProductCategoryRepository productCategoryRepository,
+                                                OrderRepository orderRepository,
+                                                OrderListRepository orderListRepository,
+                                                OrderStatusUpdateForPaymentsService orderStatusUpdateForPaymentsService) {
         this.userRepository = userRepository;
+        this.userAddressRepository = userAddressRepository;
         this.paymentRepository = paymentRepository;
         this.shopRepository = shopRepository;
+        this.sellerRepository = sellerRepository;
         this.productRepository = productRepository;
         this.productCategoryRepository = productCategoryRepository;
-        this.sellerRepository = sellerRepository;
         this.orderRepository = orderRepository;
         this.orderListRepository = orderListRepository;
-        this.orderListCancelServiceImpl = orderListCancelServiceImpl;
-        this.userAddressRepository = userAddressRepository;
+        this.orderStatusUpdateForPaymentsService = orderStatusUpdateForPaymentsService;
     }
 
+
     @Test
-    void 주문리스트_취소_정상작동() {
+    void 주문리스트_결제완료시_사용불가_정상작동() {
         //given
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
@@ -92,7 +94,7 @@ class OrderListCancelServiceImplTest {
         sellerRepository.save(seller);
 
         Product product = new Product("testProduct", seller, "testDes", 99, 20, productCategory);
-        Product product1 = new Product("testProduct", seller, "testDes", 99, 40, productCategory);
+        Product product1 = new Product("testProduct1", seller, "testDes1", 99, 10, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
 
@@ -111,16 +113,18 @@ class OrderListCancelServiceImplTest {
         orderRepository.save(order);
         orderRepository.save(order1);
 
+        orderToProduct.updateStatus(OrderStatus.PAYMENT_COMPLETED);
+        orderToProduct1.updateStatus(OrderStatus.PAYMENT_COMPLETED);
+
         //when
-        orderListCancelServiceImpl.cancel(orderListId);
+        orderStatusUpdateForPaymentsService.update(orderListId);
 
         //then
-        assertEquals("CANCELED", order.getOrderToProduct().getStatus().toString());
-        assertEquals("CANCELED", order1.getOrderToProduct().getStatus().toString());
+        assertFalse(orderList.isStatus());
     }
 
     @Test
-    void 주문리스트_취소불가_정상작동() {
+    void 주문리스트_미결제상품존재() {
         //given
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
@@ -138,13 +142,12 @@ class OrderListCancelServiceImplTest {
         sellerRepository.save(seller);
 
         Product product = new Product("testProduct", seller, "testDes", 99, 20, productCategory);
-        Product product1 = new Product("testProduct", seller, "testDes", 12, 40, productCategory);
+        Product product1 = new Product("testProduct1", seller, "testDes1", 99, 10, productCategory);
         productRepository.save(product);
         productRepository.save(product1);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
-
 
         OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
         orderListRepository.save(orderList);
@@ -158,16 +161,13 @@ class OrderListCancelServiceImplTest {
         orderRepository.save(order);
         orderRepository.save(order1);
 
-        order.getOrderToProduct().updateStatus(OrderStatus.SHIPPED);
-        order.getOrderToProduct().updateStatus(OrderStatus.SHIPPED);
+        orderToProduct.updateStatus(OrderStatus.PAYMENT_COMPLETED);
+        orderToProduct1.updateStatus(OrderStatus.ORDERED);
 
         //when
-        CannotCancelOrderException exception = assertThrows(CannotCancelOrderException.class, () ->
-                orderListCancelServiceImpl.cancel(orderListId)
-        );
+        orderStatusUpdateForPaymentsService.update(orderListId);
 
         //then
-        assertEquals("This order cannot be canceled", exception.getMessage());
+        assertTrue(orderList.isStatus());
     }
-
 }

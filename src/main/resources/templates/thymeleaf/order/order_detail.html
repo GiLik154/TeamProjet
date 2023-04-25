@@ -87,6 +87,5 @@
     <a th:if="${page < total_page}"
        th:href="@{/order/view/detail/{orderListId}(orderListId=${order_list.id}, page=${page + 1})}">다음</a>
 </div>
-<script th:src="@{/static/js/button.js}"></script>
 </body>
 </html>

@@ -2,17 +2,11 @@ package com.example.team_project.controller.core.order.create;
 
 import com.example.team_project.domain.domain.address.domain.UserAddress;
 import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
-import com.example.team_project.domain.domain.order.item.domain.Order;
-import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
 import com.example.team_project.domain.domain.order.item.service.OrderCreateService;
-import com.example.team_project.domain.domain.order.item.service.OrderCreateServiceImpl;
 import com.example.team_project.domain.domain.payment.domain.Payment;
 import com.example.team_project.domain.domain.payment.domain.PaymentRepository;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
-import com.example.team_project.domain.domain.product.product.service.dto.ProductDto;
-import com.example.team_project.exception.InvalidAddressException;
-import com.example.team_project.exception.OrderNotFoundException;
 import com.example.team_project.exception.ProductNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -20,8 +14,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 @RequiredArgsConstructor
@@ -36,16 +30,8 @@ public class OrderCreateController {
     @GetMapping("/{productId}")
     public ModelAndView createForm(@PathVariable Long productId, @SessionAttribute("userId") Long userId, @RequestParam("salesCount") int quantity) {
         ModelAndView modelAndView = new ModelAndView("thymeleaf/order/order_create");
-        List<UserAddress> userAddressList = userAddressRepository.findByUserId(userId);
-        List<Payment> paymentList = paymentRepository.findListByUserId(userId);
-
-
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
 
-        System.out.println("============================" + userAddressList);
-        System.out.println("============================" + paymentList);
-        modelAndView.addObject("user_address_list", userAddressList);
-        modelAndView.addObject("payment_list", paymentList);
         modelAndView.addObject("product", product);
         modelAndView.addObject("quantity", quantity);
 
@@ -53,15 +39,19 @@ public class OrderCreateController {
     }
 
     @PostMapping
-    public ModelAndView create(@SessionAttribute("userId") Long userId, @Validated OrderCreateDto orderCreateDto, @CookieValue(name = "couponName", required = false) String couponName) {
+    public ModelAndView create(@SessionAttribute("userId") Long userId,
+                               @Validated OrderCreateDto orderCreateDto,
+                               @CookieValue(name = "couponName", required = false) String couponName,
+                               HttpSession httpSession) {
 
-        Order order = orderCreateService.create(userId,
+        Long userCouponId = (Long) httpSession.getAttribute(couponName);
+
+        Long order = orderCreateService.create(userId,
                 orderCreateDto.getProductId(),
                 orderCreateDto.getQuantity(),
-                orderCreateDto.getUserAddressId(),
-                orderCreateDto.getPaymentId());
+                userCouponId);
 
 
-        return new ModelAndView("redirect:/order_list/view");//결제페이지로 이동하게 바꿔야함
+        return new ModelAndView("redirect:/order_list/view");
     }
 }

@@ -50,25 +50,18 @@ class OrderListAddServiceImplTest {
 
         Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
         paymentRepository.save(payment);
-        Long paymentId = payment.getId();
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
-        Long userAddressId = userAddress.getId();
 
         //when
-        orderListAddServiceImpl.add(userId, userAddressId, paymentId);
+        orderListAddServiceImpl.add(userId);
         List<OrderList> orderListOptional = orderListRepository.findByUserId(userId);
         OrderList orderList = orderListOptional.get(0);
 
         //then
         assertNotNull(orderList.getId());
         assertEquals(userId, orderList.getUser().getId());
-        assertEquals("서울특별시 강남구", orderList.getUserAddress().getStreetAddress());
-        assertEquals("강남아파드101호", orderList.getUserAddress().getDetailedAddress());
-        assertEquals("11111", orderList.getUserAddress().getZipCode());
-        assertEquals("CARD", orderList.getPayment().getPaymentType().toString());
-        System.out.println("==============================================================" + orderList.getOrderDate());
     }
 
     @Test
@@ -80,16 +73,14 @@ class OrderListAddServiceImplTest {
 
         Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
         paymentRepository.save(payment);
-        Long paymentId = payment.getId();
 
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
-        Long userAddressId = userAddress.getId();
 
         //when
         UserNotFoundException exception = assertThrows(UserNotFoundException.class, () ->
-                orderListAddServiceImpl.add(userId + 1L, userAddressId, paymentId)
+                orderListAddServiceImpl.add(userId + 1L)
         );
 
         //then

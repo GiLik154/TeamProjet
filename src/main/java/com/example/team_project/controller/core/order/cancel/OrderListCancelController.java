@@ -14,7 +14,7 @@ public class OrderListCancelController {
     private final OrderListCancelService orderListCancelService;
 
 
-    @PostMapping("/{orderListId}")
+    @GetMapping("/{orderListId}")
     public ModelAndView cancel( @PathVariable Long orderListId) {
         orderListCancelService.cancel(orderListId);
 

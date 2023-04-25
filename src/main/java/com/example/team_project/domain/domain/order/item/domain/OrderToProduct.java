@@ -80,7 +80,7 @@ public class OrderToProduct {
      * 주문 상태 변경
      **/
     public void updateStatus(OrderStatus status) {
-        this.status = OrderStatus.valueOf(status.toString());
+        this.status = OrderStatus.valueOf(status.name());
     }
 
     /**

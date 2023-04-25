@@ -86,4 +86,10 @@ public class Product implements ImageUpload {
     public void uploadImage(String image) {
         this.image = image;
     }
+
+    public void increaseSalesCountAndDecreaseStock(int quantity) {
+        this.salesCount += quantity;
+        this.stock -= quantity;
+    }
+
 }

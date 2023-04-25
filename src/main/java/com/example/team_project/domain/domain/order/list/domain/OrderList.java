@@ -39,6 +39,11 @@ public class OrderList {
         this.orderDate = orderDate;
     }
 
+    public OrderList(User user, LocalDateTime orderDate) {
+        this.user = user;
+        this.orderDate = orderDate;
+    }
+
     public OrderList(User user, Payment payment) {
         this.user = user;
         this.payment = payment;
@@ -46,7 +51,11 @@ public class OrderList {
 
     public void update(UserAddress userAddress) {
         this.userAddress = userAddress;
+    }
 
+    public void update(UserAddress userAddress, Payment payment) {
+        this.userAddress = userAddress;
+        this.payment = payment;
     }
 
     public void updateStatus() {

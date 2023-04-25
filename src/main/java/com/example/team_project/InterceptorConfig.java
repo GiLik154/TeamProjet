@@ -14,9 +14,13 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .order(1)
                 .excludePathPatterns("/static/css/**")
                 .excludePathPatterns("/static/js/**")
-                .excludePathPatterns("/*.ico")
+                .excludePathPatterns("/**/*.jpg")
+                .excludePathPatterns("/**/*.ico")
                 .excludePathPatterns("/main/**")
                 .excludePathPatterns("/user/login/**")
-                .excludePathPatterns("/user/join/**");
+                .excludePathPatterns("/user/join/**")
+                .excludePathPatterns("/product/**")
+                .excludePathPatterns("/shop/**")
+                .excludePathPatterns("/seller/**");
     }
 }

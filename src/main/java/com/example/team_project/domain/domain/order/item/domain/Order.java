@@ -1,5 +1,7 @@
 package com.example.team_project.domain.domain.order.item.domain;
 
+import com.example.team_project.domain.domain.coupons.coupon.domain.Coupon;
+import com.example.team_project.domain.domain.coupons.usercoupon.domain.UserCoupon;
 import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.user.domain.User;
@@ -28,6 +30,9 @@ public class Order {
     @OneToOne(cascade = CascadeType.PERSIST)
     private OrderToProduct orderToProduct;
 
+    @OneToOne
+    private UserCoupon userCoupon;
+
     /**
      * Protected ->
      * 해당 클래스의 내부 로직을
@@ -43,5 +48,8 @@ public class Order {
         this.orderToProduct = orderToProduct;
     }
 
+    public void couponUpdate(UserCoupon userCoupon) {
+        this.userCoupon = userCoupon;
+    }
 
 }

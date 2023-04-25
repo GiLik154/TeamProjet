@@ -24,25 +24,6 @@
                         <input type="number" class="form-control" id="quantity" name="quantity" th:value="${quantity}"
                                readonly>
                     </div>
-                    <div class="form-group">
-                        <label for="address">배송지:</label>
-                        <select class="form-control" id="address" name="userAddressId" required>
-                            <option value="" selected disabled>배송지를 선택해주세요.</option>
-                            <option th:each="address : ${user_address_list}" th:value="${address.id}"
-                                    th:text="${address.streetAddress + ' ' + address.detailedAddress}">
-                            </option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label for="paymentMethod">결제 방법:</label>
-                        <select class="form-control" id="paymentMethod" name="paymentId" required>
-                            <option value="" selected disabled>결제방법을 선택해주세요.</option>
-                            <option th:each="payment : ${payment_list}" th:value="${payment.id}"
-                                    th:text="${payment.paymentType + ' ' + payment.cardNumber}">결제수단을 선택하세요.
-                            </option>
-                        </select>
-                    </div>
-
                     <div class="form-group"
                          th:hx-get="@{'/coupon/apply-coupon-list/' + ${productId} + '/' + ${quantity}(price=${product.price})}"
                          hx-trigger="load">
@@ -55,10 +36,8 @@
                                readonly>
                     </div>
                     <!-- 결제페이지로 이동 -->
-                    <form th:action="@{#}" method="get">
                         <button type="submit" class="btn btn-primary">주문하기</button>
                         <button type="button" class="btn btn-primary" onclick="window.history.back()">취소</button>
-                    </form>
                 </div>
             </div>
         </div>
