@@ -1,5 +1,6 @@
 package com.example.team_project.domain.domain.order.list.domain;
 
+import com.example.team_project.domain.domain.payment.domain.Payment;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -21,5 +22,7 @@ public interface OrderListRepository extends JpaRepository<OrderList, Long> {
     List<OrderList> findByUserId(Long userId);
 
     List<OrderList> findByUserIdOrderByStatusDesc(Long userId);
+
+    Optional<Payment> findPaymentByIdAndPaymentId(Long Id, Long PaymentId);
 
 }

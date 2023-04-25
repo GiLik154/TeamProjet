@@ -46,5 +46,9 @@ public class Order {
         this.orderToProduct = orderToProduct;
     }
 
+    public int getTotalPrice() {
+        return this.orderToProduct.getTotalPrice();
+    }
+
 
 }

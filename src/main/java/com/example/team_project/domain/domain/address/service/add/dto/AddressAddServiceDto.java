@@ -4,29 +4,17 @@ import lombok.Getter;
 
 @Getter
 public class AddressAddServiceDto {
-    /**
-     * 주소 저장 이름
-     */
+    /** 주소 저장 이름 */
     private final String name;
-    /**
-     * 받는이 이름
-     */
+    /** 받는이 이름 */
     private final String recipientName;
-    /**
-     * 받는이 번호
-     */
+    /** 받는이 번호 */
     private final String phone;
-    /**
-     * 큰 주소
-     */
+    /** 큰 주소 */
     private final String streetAddress;
-    /**
-     * 상세 주소
-     */
+    /** 상세 주소 */
     private final String detailedAddress;
-    /**
-     * 우편 번호
-     */
+    /** 우편 번호 */
     private final String zipCode;
 
     public AddressAddServiceDto(String name, String recipientName, String phone, String streetAddress, String detailedAddress, String zipCode) {
@@ -37,4 +25,5 @@ public class AddressAddServiceDto {
         this.detailedAddress = detailedAddress;
         this.zipCode = zipCode;
     }
+
 }

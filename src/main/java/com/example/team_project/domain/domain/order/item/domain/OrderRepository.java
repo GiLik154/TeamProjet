@@ -90,9 +90,10 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      * @return 해당 orderListId를 가진 order객체들의 List
      **/
 
+    Optional<Order> findByOrderListId(Long orderListId);
+
     List<Order> findListByOrderListId(Long orderListId);
 
     Page<Order> findByOrderListId(Long orderListId, PageRequest id);//todo 페이징처리
-
 
 }
