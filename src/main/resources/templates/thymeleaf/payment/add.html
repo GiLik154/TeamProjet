@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>카드 정보 입력</title>
+</head>
+<body>
+<form method="post" action="/payment/register">
+    <label for="paymentType">결제 수단:</label>
+    <select id="paymentType" name="paymentType">
+        <option value="CARD">신용카드</option>
+        <option value="TRANSFER">계좌이체</option>
+    </select>
+    <br>
+    <label for="number">카드/계좌번호:</label>
+    <input type="text" id="number" name="number">
+    <br>
+    <input type="submit" value="등록">
+</form>
+</body>
+</html>
