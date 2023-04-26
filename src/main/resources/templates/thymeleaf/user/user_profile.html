@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm2r/uR3woOs8vXiTJwEwel1Q"
+          crossorigin="anonymous">
+
+</head>
+<body>
+<h1>User Profile</h1>
+<form method="post" th:action="@{/user/my-page}" th:object="${userFormDto}">
+    <label>User ID: </label>
+    <input type="text" th:value="${userFormDto.userId}" readonly><br>
+
+    <label>Password: </label>
+    <input type="password" th:field="*{password}"><br>
+
+    <label>User Name: </label>
+    <input type="text" th:field="*{userName}"><br>
+
+    <label>Email: </label>
+    <input type="email" th:value="${userFormDto.email}" readonly><br>
+
+    <label>Phone Number: </label>
+    <input type="text" th:field="*{phoneNumber}"><br>
+
+    <button type="submit">Update</button>
+</form>
+</body>
+</html>
+
+
+
+
+
+
