@@ -25,6 +25,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/seller/sellerPasswordUpdateForm/**")
                 .excludePathPatterns("/seller/join-form/**")
                 .excludePathPatterns("/user/**")
+                .excludePathPatterns("/product/detail/**")
                 .excludePathPatterns("/post/list/**")
                 .excludePathPatterns("/post/read/**")
                 .excludePathPatterns("/order_list/**");
@@ -33,7 +34,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
         registry.addInterceptor(new SellerLoginInterceptor())
                 //seller 가 로그인이 되어있으면 add는들어갈수있는거 exclude 로그인이안되어있을때
                 .order(1)
-                .addPathPatterns("/product/detail/**")
                 .addPathPatterns("/product/delete/**")
                 .addPathPatterns("/product/registration/**")
                 .addPathPatterns("/product/seller/**")

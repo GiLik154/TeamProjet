@@ -4,6 +4,7 @@ import com.example.team_project.domain.domain.coupons.usercoupon.domain.UserCoup
 import com.example.team_project.domain.domain.coupons.usercoupon.domain.UserCouponRepository;
 import com.example.team_project.domain.domain.coupons.usercoupon.service.issue.UserCouponIssueService;
 import com.example.team_project.domain.domain.coupons.usercoupon.service.issue.UserIssueAbleCouponListService;
+import com.example.team_project.domain.domain.user.domain.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,10 +16,14 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/coupon/my-coupon")
 public class UserCouponGetController {
+    private final UserRepository userRepository;
     private final UserCouponRepository userCouponRepository;
 
     @GetMapping
-    public String get() {
+    public String get(@SessionAttribute Long userId, Model model) {
+        userRepository.findById(userId).ifPresent(user ->
+                model.addAttribute("userGrade", user.getUserGrade()));
+
         return "thymeleaf/coupon/select";
     }
 
