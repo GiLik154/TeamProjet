@@ -2,12 +2,10 @@ package com.example.team_project.domain.domain.user.service.user;
 
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import com.example.team_project.exception.UserNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
 
 @Transactional
 @Service
@@ -19,13 +17,11 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
     }
 
     @Override
-    public User updateUserInfo(String password, String newUserName, String newPhoneNumber) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String userId = authentication.getName();
+    public void updateUserInfo(Long userId, String password, String userName, String email, String phoneNumber) {
+        User user = userRepository.findByIdAndPassword(userId, password)
+                .orElseThrow(() -> new UserNotFoundException());
 
-        Optional<User> userOptional = userRepository.findByUserIdAndPassword(userId, password);
-        User user = userOptional.orElseThrow(() -> new IllegalArgumentException("Invalid password"));
+        user.modify(password, userName, email, phoneNumber);
 
-        return userRepository.save(new User(user.getId(), user.getUserId(), user.getPassword(), newUserName, newPhoneNumber, user.getUserGrade()));
     }
 }
