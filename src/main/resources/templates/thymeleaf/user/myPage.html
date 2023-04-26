@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="/static/css/myPage.css">
     <!-- jQuery 라이브러리를 로드합니다. -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 
@@ -23,7 +24,7 @@
         <li th:classappend="${activeMenu == '주문 내역' ? 'active' : ''}"><a href="/order_list/view">주문 내역</a></li>
         <li th:classappend="${activeMenu == '게시글' ? 'active' : ''}"><a href="/post/list">게시글</a></li>
         <li th:classappend="${activeMenu == '좋아요 목록' ? 'active' : ''}"><a href="">좋아요 목록</a></li>
-        <li th:classappend="${activeMenu == '내 쿠폰' ? 'active' : ''}"><a href="/coupon/my-coupon/unused">내 쿠폰</a></li>
+        <li th:classappend="${activeMenu == '내 쿠폰' ? 'active' : ''}"><a href="/coupon/my-coupon">내 쿠폰</a></li>
     </ul>
 </div>
 <div class="main-content">
