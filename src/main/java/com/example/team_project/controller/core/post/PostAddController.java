@@ -21,6 +21,7 @@ public class PostAddController {
 
     @GetMapping("")
     public String get(){
+        System.out.println("들어옴???");
         return "thymeleaf/post/add";
     }
 
