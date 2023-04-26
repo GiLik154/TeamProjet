@@ -1,11 +1,9 @@
 package com.example.team_project.controller.core.user;
 
 import com.example.team_project.controller.core.user.dto.UserAddressControllerDto;
-import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
 import com.example.team_project.domain.domain.address.service.add.AddressAddService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +13,8 @@ import javax.validation.Valid;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/user/address/add")
-public class UserAddressAddController {
+@RequestMapping("/user/address/update")
+public class UserAddressUpdateController {
 
     private final AddressAddService addressAddService;
 
