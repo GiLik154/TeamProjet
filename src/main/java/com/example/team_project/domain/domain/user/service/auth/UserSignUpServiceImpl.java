@@ -5,7 +5,6 @@ import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.domain.domain.user.dto.UserSignUpDto;
 import com.example.team_project.enums.Role;
 import com.example.team_project.enums.UserGrade;
-import com.example.team_project.exception.UserInfoAlreadyExistsException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
