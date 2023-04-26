@@ -12,6 +12,7 @@ import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.enums.CouponStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -59,7 +60,10 @@ public class OrderCreateServiceImpl implements OrderCreateService {
     }
 
     private void orderToUpdateApplyCoupon(Long userId, Order order, Long couponId) {
-        userCouponRepository.findByUserIdAndIdAndStatusUnused(userId, couponId).ifPresent(order::couponUpdate);
+        userCouponRepository.findByUserIdAndIdAndStatusUnused(userId, couponId).ifPresent(userCoupon -> {
+            order.couponUpdate(userCoupon);
+            userCoupon.updateStatus(CouponStatus.USED);
+        });
     }
 
 }

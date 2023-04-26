@@ -16,10 +16,10 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/static/css/**")
                 .excludePathPatterns("/static/js/**")
                 .excludePathPatterns("/*.ico")
-                .addPathPatterns("/product/detail/**") // 제외 대신 포함시킴
                 .excludePathPatterns("/product/detail/**") // 제외 대신 포함시킴
                 .excludePathPatterns("/shop/**")
                 .excludePathPatterns("/seller/**")
+                .excludePathPatterns("/product/seller/**")
                 .excludePathPatterns("/main/**")
                 .excludePathPatterns("/seller/sellerEmailInputForm/**")
                 .excludePathPatterns("/seller/sellerPasswordUpdateForm/**")
@@ -28,7 +28,8 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/user/join/**");
 
         registry.addInterceptor(new SellerLoginInterceptor())
-                .order(1).excludePathPatterns("/static/css/**")
+                .order(1)
+                .excludePathPatterns("/static/css/**")
                 .excludePathPatterns("/static/js/**")
                 .excludePathPatterns("/*.ico")
                 .excludePathPatterns("/seller/login-form/**")
@@ -36,7 +37,6 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/seller/searchPassword/**")
                 .excludePathPatterns("/seller/join-form/**")
                 .excludePathPatterns("/seller/sellerEmailInputForm/**")
-                .addPathPatterns("/product/detail/**") // 제외 대신 포함시킴
                 .excludePathPatterns("/product/detail/**")
                 .excludePathPatterns("/seller/sellerPasswordUpdateForm/**")
                 .excludePathPatterns("/seller/update/**")
