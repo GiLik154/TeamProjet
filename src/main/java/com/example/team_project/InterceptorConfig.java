@@ -16,37 +16,33 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/static/css/**")
                 .excludePathPatterns("/static/js/**")
                 .excludePathPatterns("/*.ico")
-                .excludePathPatterns("/product/detail/**") // 제외 대신 포함시킴
                 .excludePathPatterns("/shop/**")
+                .excludePathPatterns("/product/**")
                 .excludePathPatterns("/seller/**")
-                .excludePathPatterns("/product/seller/**")
                 .excludePathPatterns("/main/**")
                 .excludePathPatterns("/seller/sellerEmailInputForm/**")
                 .excludePathPatterns("/seller/sellerPasswordUpdateForm/**")
                 .excludePathPatterns("/user/login/**")
-                .excludePathPatterns("/seller/join-form/**")
                 .excludePathPatterns("/user/join/**");
 
         registry.addInterceptor(new SellerLoginInterceptor())
+                //seller 가 로그인이 되어있으면 add는들어갈수있는거 exclude 로그인이안되어있을때
                 .order(1)
-                .excludePathPatterns("/static/css/**")
-                .excludePathPatterns("/static/js/**")
-                .excludePathPatterns("/*.ico")
-                .excludePathPatterns("/seller/login-form/**")
-                .excludePathPatterns("/seller/searchId/**")
-                .excludePathPatterns("/seller/searchPassword/**")
-                .excludePathPatterns("/seller/join-form/**")
-                .excludePathPatterns("/seller/sellerEmailInputForm/**")
-                .excludePathPatterns("/product/detail/**")
-                .excludePathPatterns("/seller/sellerPasswordUpdateForm/**")
-                .excludePathPatterns("/seller/update/**")
-                .excludePathPatterns("/seller/join-form/**")
-                .excludePathPatterns("/update/like/**")
-                .excludePathPatterns("/shop/join/**")
-                .excludePathPatterns("/main/**")
-                .excludePathPatterns("/user/login/**")
-                .excludePathPatterns("/user/signup/**")
-                .excludePathPatterns("/post/list/**")
-                .excludePathPatterns("/post/read/**");
+                .addPathPatterns("/product/detail/**")
+                .addPathPatterns("/product/delete/**")
+                .addPathPatterns("/product/registration/**")
+                .addPathPatterns("/product/seller/**")
+
+                .addPathPatterns("/product/user/list/**")
+
+                .addPathPatterns("/product/update/**")
+
+                .addPathPatterns("/seller/delete/**")
+                .addPathPatterns("/seller/update/**")
+
+                .addPathPatterns("/shop/join/**")
+                .addPathPatterns("/shop/delete/**")
+                .addPathPatterns("/shop/list/**")
+                .addPathPatterns("/shop/update/**");
     }
 }

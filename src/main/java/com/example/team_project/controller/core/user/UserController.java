@@ -3,24 +3,14 @@ package com.example.team_project.controller.core.user;
 import com.example.team_project.controller.core.user.valid.UserSignUpValidator;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.domain.domain.user.dto.UserSignUpDto;
-import com.example.team_project.domain.domain.user.service.auth.UserLoginService;
 import com.example.team_project.domain.domain.user.service.auth.UserSignUpService;
-import com.example.team_project.exception.AuthenticationException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.bind.support.SessionStatus;
 
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Map;
 
@@ -32,7 +22,7 @@ public class UserController {
 
     private final UserSignUpService userSignUpService;
     private final UserSignUpValidator userSignUpValidator;
-    private final UserLoginService userLoginService;
+    private final UserRepository userRepository;
 
     @GetMapping("/login")
     public String loginGet() {
@@ -40,13 +30,9 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String loginPost(@RequestParam String userId, @RequestParam String password, Model model, HttpSession session) {
-
-            // 현재 사용자의 세션에 userId 저장
-            session.setAttribute("userId", userLoginService.loadUserByUsername(userId, password));
-
-            return "redirect:/main";
-
+    public String post(@RequestParam String userId, Model model) {
+        model.addAttribute("userId", userId);
+        return "thymeleaf/user/loginForm";
     }
 
     /**

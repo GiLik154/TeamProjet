@@ -17,11 +17,11 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
     }
 
     @Override
-    public void updateUserInfo(Long userId, String password, String userName, String phoneNumber) {
+    public void updateUserInfo(Long userId, String password, String userName, String email, String phoneNumber) {
         User user = userRepository.findByIdAndPassword(userId, password)
                 .orElseThrow(() -> new UserNotFoundException());
 
-        user.modify(password, userName, phoneNumber);
+        user.modify(password, userName, email, phoneNumber);
 
     }
 }
