@@ -102,10 +102,9 @@ public class User extends BaseTimeEntity {
     /**
      * 유저의 정보를 변경하는 메서드들
      */
-    public void modify(String password, String userName, String email, String PhoneNumber) {
+    public void modify(String password, String userName, String PhoneNumber) {
         this.password = password;
         this.userName = userName;
-        this.email = email;
         this.phoneNumber = phoneNumber;
     }
 
