@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" href="/css/signup.css">
+    <script src="/js/signup.js"></script>
+
+</head>
+
+<div class="container">
+    <div class="py-5 text-center">
+        <h2 style="text-align:center; color:#333; font-size:28px; font-weight:bold;">회원가입</h2>
+    </div>
+
+    <div class="col-md-12 order-md-1">
+        <form class="needs-validation" novalidate th:href="@{/user/signup}" th:object="${userSignUpDto}" method="POST">
+            <div class="mb-3">
+                <label for="userId">아이디</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"></span>
+                    </div>
+                    <input type="text" class="form-control" id="userId" placeholder="아이디를 입력해주세요." required name="userId">
+                    <div th:if="${#fields.hasErrors('userId')}">
+                        <p th:each="err : ${#fields.errors('userId')}" class="error-message">
+                            <span th:text="${err}"></span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력해주세요." value="" required name="password">
+                <div th:if="${#fields.hasErrors('password')}">
+                    <p th:each="err : ${#fields.errors('password')}" class="error-message">
+                        <span th:text="${err}"></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="userName">이름</label>
+                <input type="text" class="form-control" id="userName" placeholder="예) 김아무개" value="" required name="userName">
+                <div th:if="${#fields.hasErrors('userName')}">
+                    <p th:each="err : ${#fields.errors('userName')}" class="error-message">
+                        <span th:text="${err}"></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email">이메일</label>
+                <input type="email" class="form-control" id="email" placeholder="예) you@example.com" name="email">
+                <div th:if="${#fields.hasErrors('email')}">
+                    <p th:each="err : ${#fields.errors('email')}" class="error-message">
+                        <span th:text="${err}"></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="phoneNumber">전화번호</label>
+                <input type="text" class="form-control" id="phoneNumber" placeholder="예) 123-1234-1234" name="phoneNumber">
+                <div th:if="${#fields.hasErrors('phoneNumber')}">
+                    <p th:each="err : ${#fields.errors('phoneNumber')}" class="error-message">
+                        <span th:text="${err}"></span>
+                    </p>
+                </div>
+            </div>
+
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">가입하기</button>
+            <hr class="mb-4">
+        </form>
+    </div>
+</div>
+
+</body>
+
+</html>

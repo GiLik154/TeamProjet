@@ -21,9 +21,15 @@ public class LikeCountCheckService {
     private final LikeCountRepository likeCountRepository;
 
     public boolean countCheck(Long userId, Long productId) {
+        System.out.println("서비스:" + userId + "게시글"+productId);
 
         Optional<User> user = userRepository.findById(userId);
         Optional<Product> product = productRepository.findById(productId);
+
+        System.out.println("왜못찾지:" + user.get().getUserId());
+
+        User userObj = user.orElseThrow(() -> new IllegalArgumentException("User not found"));
+        Product productObj = product.orElseThrow(() -> new IllegalArgumentException("Product not found"));
 
         //db에서 userid productid 와 맞는 값 검색
         Optional<LikeCountCheck> countCheckOptional = likeCountRepository.findByUserIdAndProductId(user, product);
@@ -33,6 +39,7 @@ public class LikeCountCheckService {
             return false;
         } else {
             LikeCountCheck likeCountCheck = LikeCountCheck.builder().userId(user.get()).productId(product.get()).build();
+            //LikeCountCheck likeCountCheck = LikeCountCheck.builder().userId(userObj).productId(productObj).build();
             likeCountRepository.save(likeCountCheck);
             Product updateProduct = product.get();
             updateProduct.updateLikeCount();
