@@ -8,6 +8,7 @@ import java.util.Map;
 
 
 public interface UserSignUpService {
+
     Map<String, String> validateHandler(Errors errors);
 
     boolean isUserIdDuplicated(String userId);
@@ -15,8 +16,6 @@ public interface UserSignUpService {
     boolean isEmailDuplicated(String email);
 
     boolean isPhoneNumberDuplicated(String phoneNumber);
-
-    static class UidExistException extends Exception { }
 
     void signUp(UserSignUpDto userSignUpDto) throws Exception ;
 

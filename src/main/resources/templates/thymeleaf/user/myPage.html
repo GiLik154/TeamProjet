@@ -4,29 +4,43 @@
     <meta charset="UTF-8">
     <title>My Page</title>
     <link rel="stylesheet" href="/static/css/myPage.css">
+    <!-- jQuery 라이브러리를 로드합니다. -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(function() {
+            // 주문 내역 링크를 클릭하면 이벤트를 처리합니다.
+            $('.sidebar a[href="/order_list/view"]').on('click', function(e) {
+                e.preventDefault(); // 링크의 기본 동작을 취소합니다.
+                // AJAX 요청을 보내어 order-list.html 파일의 내용을 가져옵니다.
+                $.get('/thymeleaf/order/order_list.html', function(data) {
+                    // main-content 요소의 내용을 가져온 파일의 내용으로 교체합니다.
+                    $('.main-content').html(data);
+                });
+            });
+        });
+    </script>
 </head>
 <body>
+
 <header>
     <div id="logo">My Page</div>
     <nav>
-        <a href="#">로그인</a>
-        <a href="#">로그아웃</a>
-        <a href="#">회원가입</a>
-        <a href="#">게시글</a>
+        <a href="@{/logout}">로그아웃</a>
+        <a href="/main">홈화면</a>
     </nav>
 </header>
 <div class="sidebar">
     <ul>
-        <li th:classappend="${activeMenu == '내 정보' ? 'active' : ''}"><a href="#">내 정보</a></li>
+        <li th:classappend="${activeMenu == '내 정보' ? 'active' : ''}"><a href="/user/mypage/myprofile">내 정보</a></li>
         <li th:classappend="${activeMenu == '장바구니' ? 'active' : ''}"><a href="#">장바구니</a></li>
-        <li th:classappend="${activeMenu == '구매 내역' ? 'active' : ''}"><a href="#">구매 내역</a></li>
+        <li th:classappend="${activeMenu == '구매 내역' ? 'active' : ''}"><a href="/order_list/view">구매 내역</a></li>
+        <li th:classappend="${activeMenu == '게시글' ? 'active' : ''}"><a href="/post/list">게시글</a></li>
         <li th:classappend="${activeMenu == '좋아요 목록' ? 'active' : ''}"><a href="#">좋아요 목록</a></li>
-        <li th:classappend="${activeMenu == '내 쿠폰' ? 'active' : ''}"><a href="#">내 쿠폰</a></li>
+        <li th:classappend="${activeMenu == '내 쿠폰' ? 'active' : ''}"><a href="/coupon/my-coupon/unused">내 쿠폰</a></li>
     </ul>
 </div>
 <div class="main-content">
-    <h1>내 정보</h1>
-    <p>여기에 내 정보를 보여주는 내용을 넣으세요.</p>
+    <iframe src="/order_list/view"></iframe>
 </div>
 <footer>
 <div class="row">
@@ -47,13 +61,27 @@
     <div class="col-12">
         <nav class="text-center">
             <ul class="list-inline">
-                <li class="list-inline-item"><a href="#"><i class="fab fa-facebook"></i></a></li>
-                <li class="list-inline-item"><a href="#"><i class="fab fa-twitter"></i></a></li>
-                <li class="list-inline-item"><a href="#"><i class="fab fa-instagram"></i></a></li>
             </ul>
         </nav>
     </div>
 </div>
 </footer>
+<!-- jQuery 라이브러리를 로드합니다. -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<!-- 스크립트를 추가합니다. -->
+<script>
+    $(function() {
+        // 주문 내역 링크를 클릭하면 이벤트를 처리합니다.
+        $('.sidebar a[href="#orderList"]').on('click', function(e) {
+            e.preventDefault(); // 링크의 기본 동작을 취소합니다.
+            // AJAX 요청을 보내어 orderList.html 파일의 내용을 가져옵니다.
+            $.get('/order_list/', function(data) {
+                // main-content 요소의 내용을 가져온 파일의 내용으로 교체합니다.
+                $('.main-content').html(data);
+            });
+        });
+    });
+</script>
 </body>
 </html>
