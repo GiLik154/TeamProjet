@@ -57,9 +57,12 @@
             </td>
             <td th:text="${order.orderToProduct.product.name}"></td>
             <td th:text="${order.orderList.orderDate}"></td>
-            <td th:text="${order.orderList.userAddress.recipientName}"></td>
-            <td th:text="${order.orderList.userAddress.streetAddress + order.orderList.userAddress.detailedAddress}"></td>
-            <td th:text="${order.orderList.userAddress.phone}"></td>
+            <td th:if="${order.orderList.userAddress != null}" th:text="${order.orderList.userAddress.recipientName}"></td>
+            <td th:if="${order.orderList.userAddress != null}" th:text="${order.orderList.userAddress.streetAddress + order.orderList.userAddress.detailedAddress}"></td>
+            <td th:if="${order.orderList.userAddress != null}" th:text="${order.orderList.userAddress.phone}"></td>
+            <td th:if="${order.orderList.userAddress == null}">No recipientName provided</td>
+            <td th:if="${order.orderList.userAddress == null}">No address provided</td>
+            <td th:if="${order.orderList.userAddress == null}">No phone provided</td>
             <td th:text="${order.orderToProduct.quantity}"></td>
             <td th:text="${order.orderToProduct.totalPrice}"></td>
             <td th:text="${order.orderToProduct.status}"></td>

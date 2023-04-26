@@ -58,7 +58,7 @@
                 <button type="button" class="btn btn-secondary btn-sm" disabled>취소 완료</button>
             </td>
             <td th:if="${order_list.paymentsStatus}">
-                <form th:action="@{/order/payment}" method="get">
+                <form th:action="@{/order/payment(orderListId=${order_list.id})}" method="get">
                     <button type="submit" class="btn btn-primary">결제하기</button>
                 </form>
             </td>

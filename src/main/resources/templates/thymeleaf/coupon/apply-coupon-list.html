@@ -14,7 +14,6 @@
             <option value="default">사용 안함</option>
             <option th:each="item : ${list}" th:value="${item.id}"
                     th:text="${item.coupon.name}">
-                <p th:text="${list.id}"></p>
             </option>
         </select>
     </div>

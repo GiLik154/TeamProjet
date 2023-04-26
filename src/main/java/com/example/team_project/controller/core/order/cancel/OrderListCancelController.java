@@ -22,7 +22,7 @@ public class OrderListCancelController {
         return modelAndView;
     }
 
-    @PostMapping()
+    @PostMapping
     public String cancel(@RequestParam Long orderListId) {
         orderListCancelService.cancel(orderListId);
 
