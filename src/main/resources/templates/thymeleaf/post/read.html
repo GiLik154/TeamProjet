@@ -85,7 +85,7 @@
                 </div>
                 <div class="d-flex justify-content-end">
                     <div th:id="'recommend' + ${reviewList.id}" class="mt-3"></div>
-                    <div th:id="recommendInfo"
+                    <div th:if="${session.userId != null}" th:id="recommendInfo"
                          th:hx-get="@{/post/read/{postId}/{reviewId}(postId=${post.id}, reviewId=${reviewList.id})}"
                          hx-trigger="load"
                          th:attr="hx-target=&#39;#recommend&#39; + ${reviewList.id}">

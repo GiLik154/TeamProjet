@@ -22,7 +22,6 @@ public class PostReadController {
 
     @GetMapping("{postId}")
     public String get(@PathVariable Long postId,
-                      @SessionAttribute("userId") Long userId,
                       @RequestParam(value = "reviewLink", defaultValue = "false") Boolean reviewLink,
                       Model model) {
 
@@ -38,7 +37,6 @@ public class PostReadController {
 
     @GetMapping(value = "/{postId}/{reviewId}")
     public String recommendInfo(Model model, @SessionAttribute("userId") Long userId, @PathVariable Long reviewId, @PathVariable Long postId) {
-        System.out.println("여기 오나???++++" + postId);
         model.addAttribute("recommend", "Cancel");
 
         reviewRecommendRepository.findByBaseReview_IdAndUser_Id(reviewId, userId).ifPresent(reviewRecommend -> {
@@ -52,5 +50,4 @@ public class PostReadController {
         model.addAttribute("worstCount",worstCount);
         return "thymeleaf/review/post-recommend";
     }
-
 }

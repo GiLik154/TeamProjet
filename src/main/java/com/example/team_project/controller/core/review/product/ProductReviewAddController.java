@@ -20,12 +20,13 @@ public class ProductReviewAddController {
         model.addAttribute("productId",productId);
         return "thymeleaf/product/product-review";
     }
+
     @PostMapping("")
     public String post(@SessionAttribute("userId") Long userId,
                        ReviewDto dto,
                        MultipartFile file) {
 
             baseReviewAddService.add(userId,dto,file);
-            return "redirect:/main";
+            return "thymeleaf/user/main";
     }
 }
