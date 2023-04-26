@@ -1,10 +1,13 @@
 package com.example.team_project.domain.domain.payment.Service;
 
+import com.example.team_project.domain.domain.address.domain.UserAddress;
 import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
 import com.example.team_project.domain.domain.payment.domain.Payment;
 import com.example.team_project.domain.domain.payment.domain.PaymentRepository;
+import com.example.team_project.domain.domain.payment.dto.PaymentAddServiceDto;
+import com.example.team_project.domain.domain.payment.dto.PaymentUpdateServiceDto;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.PaymentType;
@@ -38,50 +41,42 @@ public class PaymentServiceImpl implements PaymentService {
         return payments;
     }
 
+    /**
+     * userId와 PaymentAddServiceDto가 필요
+     * 유저정보를 가지고와 dto를 통해
+     * Payment 정보를 생성 후 save
+     */
     @Override
-    public void addPayment(Long userId, PaymentType paymentType, String number) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(UserNotFoundException::new);
-
-        Payment payment = new Payment(user, paymentType, number);
+    public void addPayment(Long userId, PaymentAddServiceDto paymentAddServiceDto) {
+        Payment payment = new Payment(getUser(userId), paymentAddServiceDto.getPaymentName(),
+                PaymentType.valueOf(paymentAddServiceDto.getPaymentType()),
+                paymentAddServiceDto.getNumber(), paymentAddServiceDto.getBilling());
         paymentRepository.save(payment);
     }
 
-    @Override
-    public void registerPayment(Long userId, PaymentType paymentType, String number) {
-
+    private User getUser(Long userId) {
+        return userRepository.validateUserId(userId);
     }
 
     @Override
-    public void updatePayment(Long userId, Long paymentId, PaymentType paymentType, String number) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(UserNotFoundException::new);
+    public void updatePayment(Long userId, Long paymentId, PaymentUpdateServiceDto paymentUpdateServiceDto) {
+        {
+            Optional<Payment> optionalPayment = paymentRepository.findByUserIdAndId(userId, paymentId);
 
-        Payment payment = paymentRepository.findById(paymentId)
-                .orElseThrow(PaymentNotFoundException::new);
+            optionalPayment.ifPresent(payment ->
+                    payment.changePayment(paymentUpdateServiceDto.getPaymentName(),
+                            PaymentType.valueOf(paymentUpdateServiceDto.getPaymentType()),
+                            paymentUpdateServiceDto.getNumber(),
+                            paymentUpdateServiceDto.getBilling()));
 
-        if (!user.equals(payment.getUser())) {
-            throw new IllegalArgumentException("Payment does not belong to user.");
         }
-
-        payment.changePayment(user, paymentType, number);
-
-        paymentRepository.save(payment);
     }
 
     @Override
     public void deletePayment(Long userId, Long paymentId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(UserNotFoundException::new);
+        Optional<Payment> optionalPayment = paymentRepository.findByUserIdAndId(userId, paymentId);
 
-        Payment payment = paymentRepository.findById(paymentId)
-                .orElseThrow(PaymentNotFoundException::new);
-
-        if (!user.equals(payment.getUser())) {
-            throw new IllegalArgumentException("Payment does not belong to user.");
-        }
-
-        paymentRepository.delete(payment);
+        optionalPayment.ifPresent(paymentRepository::delete);
     }
 
     @Override

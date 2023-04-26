@@ -33,6 +33,7 @@
     <ul>
         <li th:classappend="${activeMenu == '내 정보' ? 'active' : ''}"><a href="/user/mypage/myprofile">내 정보</a></li>
         <li th:classappend="${activeMenu == '내 주소 보기' ? 'active' : ''}"><a href="/user/address/list">등록 배송지 보기</a></li>
+        <li th:classappend="${activeMenu == '내 결제수단' ? 'active' : ''}"><a href="/payment/list">내 결제수단</a></li>
         <li th:classappend="${activeMenu == '장바구니' ? 'active' : ''}"><a href="#">장바구니</a></li>
         <li th:classappend="${activeMenu == '구매 내역' ? 'active' : ''}"><a href="/order_list/view">구매 내역</a></li>
         <li th:classappend="${activeMenu == '게시글' ? 'active' : ''}"><a href="/post/list">게시글</a></li>
