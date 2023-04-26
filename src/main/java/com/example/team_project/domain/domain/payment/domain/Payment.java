@@ -34,11 +34,6 @@ public class Payment {
         protected Payment() {
         }
 
-        public Payment(User user, PaymentType paymentType, String cardNumber) {
-                this.user = user;
-                this.paymentType = paymentType;
-                this.cardNumber = cardNumber;
-        }
 
         public Payment(User user, PaymentType paymentType, String cardNumber, String accountNumber) {
                 this.user = user;
@@ -47,7 +42,8 @@ public class Payment {
                 this.accountNumber = accountNumber;
         }
 
-        public Payment(PaymentType paymentType, String number) {
+        public Payment(User user, PaymentType paymentType, String number) {
+                this.user = user;
                 this.paymentType = paymentType;
                 switch (paymentType) {
                         case CARD:
@@ -59,17 +55,17 @@ public class Payment {
 
                 this.billing = 0;
         }
-
-        public void changePayment(PaymentType paymentType, String changedNumber) {
-                this.paymentType = paymentType;
-                switch (paymentType) {
-                        case CARD:
-                                this.cardNumber = changedNumber;
-                                break;
-                        case TRANSFER:
-                                this.accountNumber = changedNumber;
-                }
-        }
+//        public void changePayment(Long userId, PaymentType paymentType, String changedNumber) {
+//                this.user =
+//                this.paymentType = paymentType;
+//                switch (paymentType) {
+//                        case CARD:
+//                                this.cardNumber = changedNumber;
+//                                break;
+//                        case TRANSFER:
+//                                this.accountNumber = changedNumber;
+//                }
+//        }
 
         public void addBilling(int cost) {
                 this.billing += cost;
