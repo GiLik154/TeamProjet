@@ -10,8 +10,7 @@ public interface UpdateUserInfoService {
      * @param userId 유저 아이디
      * @param password 유저 패스워드
      * @param userName 유저 이름
-     * @param email 유저 이메일
      * @param PhoneNumber 유저 휴대폰 번호
      */
-    void updateUserInfo(Long userId, String password, String userName, String email, String PhoneNumber);
+    void updateUserInfo(Long userId, String password, String userName, String PhoneNumber);
 }

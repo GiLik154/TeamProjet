@@ -44,6 +44,8 @@
                                 th:href="@{/post/list}">문의 게시판</a></li>
                         <li class="list-inline-item" th:if="${session.sellerId != null}"><a href="/product/seller/list">셀러
                             메인</a></li>
+                        <li class="list-inline-item" th:if="${session.userId != null}"><a href="/product/user/list">유저
+                            리스트</a></li>
                     </ul>
                 </nav>
             </div>
