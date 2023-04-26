@@ -16,11 +16,12 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 
 
-@Transactional
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PaymentServiceImpl implements PaymentService {
 
@@ -28,6 +29,60 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final OrderRepository orderRepository;
     private final OrderListRepository orderListRepository;
+
+    @Override
+    public List<Payment> getPaymentList(Long userId) {
+
+        List<Payment> payments = paymentRepository.findListByUserId(userId);
+
+        return payments;
+    }
+
+    @Override
+    public void addPayment(Long userId, PaymentType paymentType, String number) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+
+        Payment payment = new Payment(user, paymentType, number);
+        paymentRepository.save(payment);
+    }
+
+    @Override
+    public void registerPayment(Long userId, PaymentType paymentType, String number) {
+
+    }
+
+    @Override
+    public void updatePayment(Long userId, Long paymentId, PaymentType paymentType, String number) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+
+        Payment payment = paymentRepository.findById(paymentId)
+                .orElseThrow(PaymentNotFoundException::new);
+
+        if (!user.equals(payment.getUser())) {
+            throw new IllegalArgumentException("Payment does not belong to user.");
+        }
+
+        payment.changePayment(user, paymentType, number);
+
+        paymentRepository.save(payment);
+    }
+
+    @Override
+    public void deletePayment(Long userId, Long paymentId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(UserNotFoundException::new);
+
+        Payment payment = paymentRepository.findById(paymentId)
+                .orElseThrow(PaymentNotFoundException::new);
+
+        if (!user.equals(payment.getUser())) {
+            throw new IllegalArgumentException("Payment does not belong to user.");
+        }
+
+        paymentRepository.delete(payment);
+    }
 
     @Override
     public int pay(Long userId, Long orderListId, Long paymentId) {
@@ -40,7 +95,7 @@ public class PaymentServiceImpl implements PaymentService {
             cost = orders.stream().mapToInt(Order::getTotalPrice).sum();
 
             Payment payment = orderListRepository.findPaymentByIdAndPaymentId(orderListId, paymentId)
-                    .orElseThrow(() -> new PaymentNotFoundException());
+                    .orElseThrow(PaymentNotFoundException::new);
 
             payment.addBilling(cost);
         }
@@ -60,7 +115,7 @@ public class PaymentServiceImpl implements PaymentService {
             cost = orders.stream().mapToInt(Order::getTotalPrice).sum();
 
             Payment payment = orderListRepository.findPaymentByIdAndPaymentId(orderListId, paymentId)
-                    .orElseThrow(() -> new PaymentNotFoundException());
+                    .orElseThrow(PaymentNotFoundException::new);
 
             payment.subtractBilling(cost);
 
@@ -73,34 +128,5 @@ public class PaymentServiceImpl implements PaymentService {
         new OrderNotFoundException();
 
         return cost;
-    }
-
-    @Override
-    public void registerPayment(Long userId, PaymentType paymentType, String number) {
-        User user = userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
-        Payment payment = new Payment(user, paymentType, number);
-        paymentRepository.save(payment);
-    }
-
-    @Override
-    public void updatePayment(Long userId, Long paymentId, PaymentType paymentType, String number) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
-        Payment payment = paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid payment id"));
-
-        payment.changePayment(user, paymentType, number);
-        paymentRepository.save(payment);
-    }
-
-    @Override
-    public void deletePayment(Long userId, Long paymentId) {
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid user id"));
-        Payment payment = paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid payment id"));
-
-        paymentRepository.delete(payment);
-
     }
 }

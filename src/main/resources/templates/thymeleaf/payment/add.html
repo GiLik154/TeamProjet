@@ -2,10 +2,21 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>카드 정보 입력</title>
+    <title>Payment 목록</title>
 </head>
 <body>
-<form method="post" action="/payment/register">
+<h1>Payment 목록</h1>
+<ul>
+    <c:forEach items="${payments}" var="payment">
+        <li>${payment.paymentType} - ${payment.number}
+            <a href="/payment/update/${payment.id}">(수정)</a>
+            <a href="/payment/delete/${payment.id}">(삭제)</a>
+        </li>
+    </c:forEach>
+</ul>
+
+<h2>Payment 추가</h2>
+<form method="post" action="/payment/add">
     <label for="paymentType">결제 수단:</label>
     <select id="paymentType" name="paymentType">
         <option value="CARD">신용카드</option>
@@ -15,7 +26,7 @@
     <label for="number">카드/계좌번호:</label>
     <input type="text" id="number" name="number">
     <br>
-    <input type="submit" value="등록">
+    <input type="submit" value="추가">
 </form>
 </body>
 </html>
