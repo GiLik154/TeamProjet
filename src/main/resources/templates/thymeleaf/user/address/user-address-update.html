@@ -18,14 +18,15 @@
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8 col-lg-6">
-            <form th:action="@{/user/address/add}" method="post">
+            <form th:action="@{/user/address/update/{id}(id=${param.id})}" method="post">
                 <div class="form-group">
                     <label for="name">주소지 이름</label>
                     <input type="text" class="form-control" id="name" name="name" placeholder="주소지 이름">
                 </div>
                 <div class="form-group">
                     <label for="recipientName">받는이 이름</label>
-                    <input type="text" class="form-control" id="recipientName" name="recipientName" placeholder="받는이 이름">
+                    <input type="text" class="form-control" id="recipientName" name="recipientName"
+                           placeholder="받는이 이름">
                 </div>
                 <div class="form-group">
                     <label for="phone">받는이 번호</label>
@@ -46,7 +47,8 @@
                 </div>
                 <div class="form-group">
                     <label for="detailedAddress">상세주소</label>
-                    <input type="text" class="form-control" id="detailedAddress" name="detailedAddress" placeholder="상세주소">
+                    <input type="text" class="form-control" id="detailedAddress" name="detailedAddress"
+                           placeholder="상세주소">
                 </div>
                 <button type="submit">확인</button>
             </form>

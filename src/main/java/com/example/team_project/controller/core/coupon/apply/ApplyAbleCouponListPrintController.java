@@ -1,6 +1,7 @@
 package com.example.team_project.controller.core.coupon.apply;
 
 import com.example.team_project.domain.domain.coupons.coupon.domain.CouponRepository;
+import com.example.team_project.domain.domain.coupons.usercoupon.domain.UserCouponRepository;
 import com.example.team_project.domain.domain.coupons.usercoupon.service.apply.ApplyCouponListGetService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,7 @@ import java.security.SecureRandom;
 @RequestMapping("/coupon/apply-coupon-list")
 public class ApplyAbleCouponListPrintController {
     private final ApplyCouponListGetService applyCouponListGetService;
-    private final CouponRepository couponRepository;
+    private final UserCouponRepository userCouponRepository;
 
     @GetMapping("/{productId}/{quantity}")
     public String get(@SessionAttribute Long userId,
@@ -35,7 +36,7 @@ public class ApplyAbleCouponListPrintController {
     @PostMapping("/{price}/{quantity}")
     public String post(@PathVariable int price,
                        @PathVariable int quantity,
-                       @RequestParam String couponName,
+                       @RequestParam Long userCouponId,
                        HttpServletResponse response,
                        HttpSession session,
                        Model model) {
@@ -46,12 +47,12 @@ public class ApplyAbleCouponListPrintController {
 
         model.addAttribute("totalPrice", price);
 
-        couponRepository.findByName(couponName).ifPresent(coupon -> {
-            model.addAttribute("totalPrice", price * quantity * (100 - coupon.getDiscountRate()) / 100);
-            model.addAttribute("discountRate", coupon.getDiscountRate());
+        userCouponRepository.findById(userCouponId).ifPresent(userCoupon -> {
+            model.addAttribute("totalPrice", price * quantity * (100 - userCoupon.getCoupon().getDiscountRate()) / 100);
+            model.addAttribute("discountRate", userCoupon.getCoupon().getDiscountRate());
         });
 
-        session.setAttribute(result, couponName); // 토큰값을 KEY로 해서 우리가 전달하고 싶은 값을 세션으로 전달
+        session.setAttribute(result, userCouponId); // 토큰값을 KEY로 해서 우리가 전달하고 싶은 값을 세션으로 전달
         Cookie cookie = new Cookie("couponName", result);
         cookie.setPath("/");
         cookie.setMaxAge(60);

@@ -35,7 +35,7 @@
                         <li class="list-inline-item" th:if="${session.userId eq null and session.sellerId eq null}"><a
                                 th:href="@{/user/login}">로그인</a></li>
                         <li class="list-inline-item" th:if="${session.userId ne null or session.sellerId ne null}"><a
-                                th:href="@{/logout}">로그아웃</a></li>
+                                th:href="@{/user/logout}">로그아웃</a></li>
                         <li class="list-inline-item" th:if="${session.userId eq null and session.sellerId eq null}"><a
                                 th:href="@{/user/signup}">회원가입</a></li>
                         <li class="list-inline-item" th:if="${session.userId ne null or session.sellerId ne null}"><a
