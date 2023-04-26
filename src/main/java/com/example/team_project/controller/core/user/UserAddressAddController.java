@@ -1,11 +1,9 @@
 package com.example.team_project.controller.core.user;
 
-import com.example.team_project.controller.core.user.dto.UserAddressControllerDto;
-import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
+import com.example.team_project.controller.core.user.dto.UserAddressAddControllerDto;
 import com.example.team_project.domain.domain.address.service.add.AddressAddService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,8 +24,8 @@ public class UserAddressAddController {
     }
 
     @PostMapping
-    public String post(@SessionAttribute Long userId, @Valid UserAddressControllerDto userAddressControllerDto) {
-        addressAddService.add(userId, userAddressControllerDto.convertServiceDto());
+    public String post(@SessionAttribute Long userId, @Valid UserAddressAddControllerDto userAddressAddControllerDto) {
+        addressAddService.add(userId, userAddressAddControllerDto.convertServiceDto());
 
         return "thymeleaf/user/address/user-address-add";
     }

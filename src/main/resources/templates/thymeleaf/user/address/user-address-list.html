@@ -33,7 +33,7 @@
       <td th:text="${address.getZipCode()}"></td>
       <td><a th:href="@{/user/address/update(id=${address.getId()})}">수정</a></td>
       <td>
-        <form th:action="@{/user/address(id=${address.getId()})}" th:method="delete">
+        <form th:action="@{/user/address/list(id=${address.getId()})}" th:method="delete">
           <button type="submit">삭제</button>
         </form>
     </tr>
