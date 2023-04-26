@@ -43,6 +43,7 @@ public class OrderCancelServiceImpl implements OrderCancelService {
     private Order validateCancelableOrder(Long userId, Long orderId) {
         Order order = orderRepository.validateUserOrder(userId, orderId);
         String orderStatus = order.getOrderToProduct().getStatus().toString();
+
         if (orderStatus.equals("CANCELED") || orderStatus.equals("DELIVERED") || orderStatus.equals("SHIPPED")) {
             throw new CannotCancelOrderException();
         }

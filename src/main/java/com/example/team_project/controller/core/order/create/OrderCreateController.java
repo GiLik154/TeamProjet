@@ -1,7 +1,9 @@
 package com.example.team_project.controller.core.order.create;
 
+import com.example.team_project.domain.domain.address.domain.UserAddress;
 import com.example.team_project.domain.domain.address.domain.UserAddressRepository;
 import com.example.team_project.domain.domain.order.item.service.OrderCreateService;
+import com.example.team_project.domain.domain.payment.domain.Payment;
 import com.example.team_project.domain.domain.payment.domain.PaymentRepository;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
@@ -14,19 +16,17 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
 
+
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/order/create")
 public class OrderCreateController {
 
-    private final UserAddressRepository userAddressRepository;
-    private final PaymentRepository paymentRepository;
     private final ProductRepository productRepository;
     private final OrderCreateService orderCreateService;
 
     @GetMapping("/{productId}")
     public ModelAndView createForm(@PathVariable Long productId,
-                                   @SessionAttribute("userId") Long userId,
                                    @RequestParam("salesCount") int quantity) {
         ModelAndView modelAndView = new ModelAndView("thymeleaf/order/order_create");
         Product product = productRepository.findById(productId).orElseThrow(ProductNotFoundException::new);
@@ -44,6 +44,8 @@ public class OrderCreateController {
                                HttpSession httpSession) {
 
         Long userCouponId = (Long) httpSession.getAttribute(couponName);
+
+        System.out.println(userCouponId + "이게 놀임?");
 
         Long order = orderCreateService.create(userId,
                 orderCreateDto.getProductId(),

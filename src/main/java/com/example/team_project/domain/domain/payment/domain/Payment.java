@@ -27,6 +27,9 @@ public class Payment {
 
         private int billing;
 
+        protected Payment() {
+        }
+
 
         public Payment(User user, PaymentType paymentType, String number) {
                 this.user = user;

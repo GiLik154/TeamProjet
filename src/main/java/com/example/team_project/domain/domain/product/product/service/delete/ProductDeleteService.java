@@ -1,16 +1,10 @@
 package com.example.team_project.domain.domain.product.product.service.delete;
 
-import com.example.team_project.domain.domain.product.category.domain.ProductCategory;
-import com.example.team_project.domain.domain.product.category.domain.ProductCategoryRepository;
-import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
-import com.example.team_project.domain.domain.product.product.service.dto.ProductDto;
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
-import com.example.team_project.enums.ProductCategoryStatus;
 import com.example.team_project.exception.NotPasswordException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

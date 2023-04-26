@@ -24,11 +24,11 @@ public class OrderStatusUpdateForPaymentsServiceImpl implements OrderStatusUpdat
     }
 
     /**
-     * 오더리스트안의 모든 상품들이 결제완료 상태가 되면 오더리스트를 false로 바꾸어 해당 오더리스트는 못쓰게 됨
+     * 오더리스트안의 모든 상품들이 결제완료 상태가 되면 오더리스트 결제상태를 표시함
      **/
     private void updateStatus(Long orderListId, OrderList orderList) {
         if (isAllOrdersPaid(orderListId)) {
-            orderList.updateStatus();
+            orderList.updatePaymentStatus();
         }
     }
 

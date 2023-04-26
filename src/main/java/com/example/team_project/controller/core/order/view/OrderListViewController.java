@@ -4,6 +4,9 @@ import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
 import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
+import com.example.team_project.domain.domain.order.list.service.OrderListUpdateService;
+import com.example.team_project.domain.domain.order.list.service.OrderListUpdateServiceImpl;
+import com.example.team_project.exception.OrderListNotFoundException;
 import com.example.team_project.exception.OrderNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,12 +22,15 @@ public class OrderListViewController {
 
     private final OrderRepository orderRepository;
     private final OrderListRepository orderListRepository;
+    private final OrderListUpdateServiceImpl orderListUpdateServiceImpl;
 
     @GetMapping
     public ModelAndView view(@SessionAttribute("userId") Long userId) {
         ModelAndView modelAndView = new ModelAndView("thymeleaf/order/order_list");
         List<OrderList> orderList = orderListRepository.findByUserIdOrderByStatusDesc(userId);
-        modelAndView.addObject("order_list", orderList);
+        orderListUpdateServiceImpl.existStatusShippedAndDeliveredOrder(userId);
+
+        modelAndView.addObject("orderList", orderList);
 
         return modelAndView;
     }

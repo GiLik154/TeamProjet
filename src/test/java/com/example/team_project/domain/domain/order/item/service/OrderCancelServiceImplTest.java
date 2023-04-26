@@ -31,7 +31,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -102,7 +102,7 @@ class OrderCancelServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
         Long orderListId = orderList.getId();
 
@@ -144,7 +144,7 @@ class OrderCancelServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
         Long orderListId = orderList.getId();
 
@@ -190,7 +190,7 @@ class OrderCancelServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
         Long orderListId = orderList.getId();
 

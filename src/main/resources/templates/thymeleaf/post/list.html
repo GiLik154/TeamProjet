@@ -10,7 +10,7 @@
 
 <body>
 <div class="container mt-5">
-    <h2>Post List Example with Bootstrap</h2>
+    <h2>문의 게시판</h2>
     <div th:each="list:${postList}" class="card mt-3">
         <div class="card-body">
             <a th:href="@{/post/read/{postId}(postId=${list.getId()})}" th:text="${list.getTitle()}"
