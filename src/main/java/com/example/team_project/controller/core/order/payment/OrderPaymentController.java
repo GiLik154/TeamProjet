@@ -34,7 +34,7 @@ public class OrderPaymentController {
         return modelAndView;
     }
 
-    @PostMapping()
+    @PostMapping
     public String post(@SessionAttribute("userId") Long userId,
                        @RequestParam Long userAddressId,
                        @RequestParam Long paymentId,

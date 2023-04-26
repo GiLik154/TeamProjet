@@ -57,8 +57,10 @@
             </td>
             <td th:text="${order.orderToProduct.product.name}"></td>
             <td th:text="${order.orderList.orderDate}"></td>
-            <td th:if="${order.orderList.userAddress != null}" th:text="${order.orderList.userAddress.recipientName}"></td>
-            <td th:if="${order.orderList.userAddress != null}" th:text="${order.orderList.userAddress.streetAddress + order.orderList.userAddress.detailedAddress}"></td>
+            <td th:if="${order.orderList.userAddress != null}"
+                th:text="${order.orderList.userAddress.recipientName}"></td>
+            <td th:if="${order.orderList.userAddress != null}"
+                th:text="${order.orderList.userAddress.streetAddress + order.orderList.userAddress.detailedAddress}"></td>
             <td th:if="${order.orderList.userAddress != null}" th:text="${order.orderList.userAddress.phone}"></td>
             <td th:if="${order.orderList.userAddress == null}">No recipientName provided</td>
             <td th:if="${order.orderList.userAddress == null}">No address provided</td>
@@ -80,10 +82,21 @@
         </tr>
         </tbody>
     </table>
-    <div class="text-center">
-        <a th:href="@{/order_list/view/detail/{orderListId}(orderListId=${orderListId})}"
-           class="btn btn-primary">이전으로</a>
+    <div class="d-flex justify-content-between">
+        <div>
+            <a th:href="@{/order_list/view/detail/{orderListId}(orderListId=${orderListId})}"
+               class="btn btn-primary">이전으로</a>
+        </div>
+        <div>
+            <form th:action="@{/order/payment}" method="get">
+                <button type="submit" class="btn btn-primary">결제하기</button>
+            </form>
+        </div>
     </div>
+    <!--    <div class="text-center">-->
+    <!--        <a th:href="@{/order_list/view/detail/{orderListId}(orderListId=${orderListId})}"-->
+    <!--           class="btn btn-primary">이전으로</a>-->
+    <!--    </div>-->
 </div>
 <div class="pagination-links">
     <a th:if="${page >= 1}"

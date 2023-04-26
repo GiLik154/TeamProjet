@@ -4,6 +4,7 @@ import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
 import com.example.team_project.domain.domain.order.item.domain.OrderToProduct;
 import com.example.team_project.domain.domain.order.list.service.OrderListUpdateService;
+import com.example.team_project.domain.domain.order.list.service.OrderStatusUpdateForPaymentsService;
 import com.example.team_project.enums.OrderStatus;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,13 @@ import javax.transaction.Transactional;
 public class OrderCompletionServiceImpl implements OrderCompletionService {
     private final OrderRepository orderRepository;
     private final OrderListUpdateService orderListUpdateService;
+    private final OrderStatusUpdateForPaymentsService orderStatusUpdateForPaymentsService;
 
     @Override
     public void processOrderPayment(Long userId, Long userAddressId, Long paymentId, Long orderListId) {
-        //todo payservice로 이동
         updateOrderListInfo(userId, orderListId, userAddressId, paymentId);
         updateAllOrdersToPaid(userId, orderListId);
+        orderStatusUpdateForPaymentsService.update(orderListId);
         updateProductSalesAndStock(orderListId);
     }
 
