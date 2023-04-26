@@ -2,27 +2,28 @@ package com.example.team_project.domain.domain.user.service.auth;
 
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
+import com.example.team_project.exception.PasswordNotMatchedException;
+import com.example.team_project.exception.UserNotFoundException;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
-public class UserLoginService implements UserDetailsService {
+public class UserLoginService {
 
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    @Override
-    public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
-        User user = userRepository.findByUserId(userId)
-                .orElseThrow(() -> new UsernameNotFoundException("해당 ID가 존재하지 않습니다."));
+    public Long loadUserByUsername(String userId, String password) throws UsernameNotFoundException {
 
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getUserId())
-                .password(user.getPassword())
-                .roles(user.getRole().name())
-                .build();
+        User user = userRepository.findByUserId(userId).orElseThrow(UserNotFoundException::new);
+
+        if (!user.isValidPassword(password, passwordEncoder)) {
+            throw new PasswordNotMatchedException();
+        }
+        return user.getId();
+
     }
 }
