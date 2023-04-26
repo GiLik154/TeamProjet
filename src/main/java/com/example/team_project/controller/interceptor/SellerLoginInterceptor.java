@@ -19,6 +19,9 @@ public class SellerLoginInterceptor implements HandlerInterceptor {
 
         if (checkUserId.isEmpty()) {
             session.setAttribute("isNotLogin", true);
+
+            System.out.println("셀러");
+
             response.sendRedirect("/main");
             return false;
         }
