@@ -26,6 +26,6 @@ public class ProductReviewAddController {
                        MultipartFile file) {
 
             baseReviewAddService.add(userId,dto,file);
-            return "thymeleaf/user/main";
+            return "redirect:/main";
     }
 }
