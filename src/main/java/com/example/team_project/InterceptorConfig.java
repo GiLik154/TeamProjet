@@ -17,13 +17,16 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/static/js/**")
                 .excludePathPatterns("/*.ico")
                 .excludePathPatterns("/shop/**")
-                .excludePathPatterns("/product/**")
+                .excludePathPatterns("/error/**")
+                .excludePathPatterns("/images/**")
                 .excludePathPatterns("/seller/**")
                 .excludePathPatterns("/main/**")
                 .excludePathPatterns("/seller/sellerEmailInputForm/**")
                 .excludePathPatterns("/seller/sellerPasswordUpdateForm/**")
                 .excludePathPatterns("/seller/join-form/**")
                 .excludePathPatterns("/user/**")
+                .excludePathPatterns("/post/list/**")
+                .excludePathPatterns("/post/read/**")
                 .excludePathPatterns("/order_list/**");
 
 

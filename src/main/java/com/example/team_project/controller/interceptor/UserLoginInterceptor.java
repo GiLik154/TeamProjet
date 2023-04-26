@@ -19,6 +19,9 @@ public class UserLoginInterceptor implements HandlerInterceptor {
 
         if (checkUserId.isEmpty()) {
             session.setAttribute("isNotLogin", true);
+
+            System.out.println(request.getRequestURI());
+            System.out.println("유저");
             response.sendRedirect("/main");
             return false;
         }
