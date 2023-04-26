@@ -38,3 +38,23 @@
 .pagination-links form input[type="text"] {
     width: 30px;
 }
+
+a.btn {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #007bff;
+    border-radius: 5px;
+    border: none;
+}
+
+a.btn:hover {
+    background-color: #0069d9;
+}
+
+a.btn:focus {
+    outline: none;
+}

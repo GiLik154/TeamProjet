@@ -14,5 +14,5 @@ public interface OrderCancelService {
      * @param orderId           : 주문 클래스의 고유 ID
      * @throws OrderNotFoundException: 해당 주문을 찾을 수 없을 때
      **/
-    void cancel(Long orderToProductId, Long orderId, Long orderListId);
+    void cancel(Long userId, Long orderToProductId, Long orderId, Long orderListId);
 }

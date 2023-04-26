@@ -1,21 +1,17 @@
 package com.example.team_project.domain.domain.user.domain;
-
-import com.example.team_project.domain.domain.address.domain.UserAddress;
-import com.example.team_project.domain.domain.order.list.domain.OrderList;
-import com.example.team_project.domain.domain.payment.domain.Payment;
+import com.example.team_project.enums.Role;
+import com.example.team_project.enums.SocialType;
 import com.example.team_project.enums.UserGrade;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
-import java.util.List;
-
 @Entity
 @Getter
+@Builder
 @AllArgsConstructor
-public class User {
+@RequiredArgsConstructor
+public class User extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -29,49 +25,64 @@ public class User {
     @Column(nullable = false)
     private String userName;
 
-    @Column(nullable = false)
+    private String imageUrl;
+
+    @Column(unique = true, nullable = false)
+    private String email;
+
+    @Column(unique = true, nullable = false)
     private String phoneNumber;
-
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Payment> payments;
-
-    @Column(nullable = false)
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<UserAddress> userAddresses;
-
-    @Column(nullable = false)
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<OrderList> orderLists;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private UserGrade userGrade = UserGrade.GOLD;
+    private UserGrade userGrade;
 
-    protected User() {}
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false)
+    private Role role;
+
+    @Enumerated(EnumType.STRING)
+    private SocialType socialType; // KAKAO, NAVER, GOOGLE
+
+    private String socialId; // 로그인한 소셜 타입의 식별자 값 (일반 로그인인 경우 null)
+
+    private String refreshToken; // 리프레시 토큰
+
+    /**
+     *유저 권한 설정 메소드
+     */
+    public void authorizeUser() {
+        this.role = Role.USER;
+    }
+
+    /**
+     * 비밀번호 암호화 메서드
+     */
+    public void passwordEncode(PasswordEncoder passwordEncoder) {
+        this.password = passwordEncoder.encode(this.password);
+    }
+
+    public void updateRefreshToken(String updateRefreshToken) {
+        this.refreshToken = updateRefreshToken;
+    }
 
     /**
      * 회원가입 시 유저의 정보를 담는 생성자
      */
-    public User(String userId, String password, String name, String phoneNumber, UserGrade userGrade) {
-        this.userId = userId;
-        this.password = password;
-        this.userName = name;
-        this.phoneNumber = phoneNumber;
-        this.userGrade = userGrade;
-    }
-
-    /**
-     * 유저 정보 변경 시
-     * 기존의 유저를 삭제하거나, 추가적인 유저를 생성하지 않고
-     * 유저 정보만 변경하기 위한 생성자
-     */
-    public User(Long id, String userId, String password, String userName, String phoneNumber, UserGrade userGrade) {
-        this.id = id;
+    public User(String userId, String password, String userName, String email, String phoneNumber, Role role, UserGrade userGrade) {
         this.userId = userId;
         this.password = password;
         this.userName = userName;
+        this.email = email;
         this.phoneNumber = phoneNumber;
-        this.userGrade = userGrade;
+        this.userGrade = UserGrade.SILVER;
+        this.role = Role.USER;
+    }
+
+    public User(Long id, String password, String phoneNumber) {
+        this.id = id;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
     }
 
     public User(String userId, String password, String userName, String phoneNumber) {
@@ -81,18 +92,23 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
-    public void encodePassword(PasswordEncoder passwordEncoder) {
-        this.password = passwordEncoder.encode(this.password);
+    /**
+     * 입력 받은 비밀번호를 검증하는 메서드
+     */
+    public boolean isValidPassword(String password, PasswordEncoder passwordEncoder) {
+        return passwordEncoder.matches((password), this.password);
     }
 
-    public User(String userId, String password, String userName, String phoneNumber, UserGrade userGrade, PasswordEncoder passwordEncoder) {
-        this.userId = userId;
+    /**
+     * 유저의 정보를 변경하는 메서드들
+     */
+    public void modify(String password, String userName, String email, String PhoneNumber) {
         this.password = password;
         this.userName = userName;
+        this.email = email;
         this.phoneNumber = phoneNumber;
-        this.userGrade = userGrade;
-        encodePassword(passwordEncoder);
     }
+
 
     public void updateUserGrade(UserGrade userGrade) {
         this.userGrade = userGrade;

@@ -8,6 +8,13 @@
 
 .form-check-label {
     margin-left: 20px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.form-check-input {
+    margin-right: 5px;
+    vertical-align: middle;
 }
 
 .btn {
