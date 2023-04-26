@@ -48,17 +48,12 @@ public class OrderListUpdateServiceImpl implements OrderListUpdateService {
                 orderList.update(validateUserAddress(userAddressId), validatePayment(paymentId)));
     }
 
-    /**
-     * 사용가능한 주문리스트에서 배송중이거나 배송완료된 상품이 존재할시 해당 오더리스트 사용못하게 상태변환
-     **/
     public void existStatusShippedAndDeliveredOrder(Long userId) {
-        orderListRepository.findByUserIdAndStatus(userId, true).ifPresent(orderList -> {
-            List<Order> orders = orderRepository.findShippedAndDeliveredOrders(orderList.getId());
-
-            if (!orders.isEmpty()) {
-                orderList.updateStatus();
-            }
-        });
+        OrderList orderList = orderListRepository.findByUserIdAndStatus(userId, true).orElseThrow(OrderListNotFoundException::new);
+        List<Order> orders = orderRepository.findShippedAndDeliveredOrders(orderList.getId());
+        if (!orders.isEmpty()) {
+            orderList.updateStatus();
+        }
     }
 
     /**

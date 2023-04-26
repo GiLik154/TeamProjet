@@ -17,10 +17,11 @@ public class UserLoginInterceptor implements HandlerInterceptor {
 
         Optional<Object> checkUserId = Optional.ofNullable(session.getAttribute("userId"));
 
-        System.out.println("인터셉터 작동은함?");
-
         if (checkUserId.isEmpty()) {
             session.setAttribute("isNotLogin", true);
+
+            System.out.println(request.getRequestURI());
+            System.out.println("유저");
             response.sendRedirect("/main");
             return false;
         }

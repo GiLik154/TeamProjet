@@ -17,12 +17,14 @@ public class UpdateUserInfoServiceImpl implements UpdateUserInfoService {
     private final UserRepository userRepository;
 
     @Override
+
     public void updateUserInfo(Long userId, String password, String userName, String phoneNumber) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new UserNotFoundException("User not found with id: " + userId));
 
         User updatedUser = new User(password, userName, phoneNumber);
         user.modify(updatedUser);
+
 
         userRepository.save(updatedUser);
     }
