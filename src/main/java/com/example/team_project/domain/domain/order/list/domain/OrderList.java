@@ -6,7 +6,9 @@ import com.example.team_project.domain.domain.user.domain.User;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 
 @Entity
 @Getter
@@ -25,21 +27,23 @@ public class OrderList {
     @ManyToOne(fetch = FetchType.LAZY)
     private Payment payment;
 
-    private LocalDateTime orderDate;
+    private LocalDate orderDate;
 
     private boolean status = true;
+
+    private boolean paymentsStatus = true;
 
     protected OrderList() {
     }
 
-    public OrderList(User user, UserAddress userAddress, Payment payment, LocalDateTime orderDate) {
+    public OrderList(User user, UserAddress userAddress, Payment payment, LocalDate orderDate) {
         this.user = user;
         this.userAddress = userAddress;
         this.payment = payment;
         this.orderDate = orderDate;
     }
 
-    public OrderList(User user, LocalDateTime orderDate) {
+    public OrderList(User user, LocalDate orderDate) {
         this.user = user;
         this.orderDate = orderDate;
     }
@@ -60,5 +64,9 @@ public class OrderList {
 
     public void updateStatus() {
         this.status = false;
+    }
+
+    public void updatePaymentStatus() {
+        this.paymentsStatus = false;
     }
 }

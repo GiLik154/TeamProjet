@@ -40,8 +40,7 @@ public class Payment {
                 this.cardNumber = cardNumber;
         }
 
-        public Payment(Long id, User user, PaymentType paymentType, String cardNumber, String accountNumber) {
-                this.id = id;
+        public Payment(User user, PaymentType paymentType, String cardNumber, String accountNumber) {
                 this.user = user;
                 this.paymentType = paymentType;
                 this.cardNumber = cardNumber;
