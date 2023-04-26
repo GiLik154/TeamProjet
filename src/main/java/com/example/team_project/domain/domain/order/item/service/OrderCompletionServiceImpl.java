@@ -16,7 +16,7 @@ public class OrderCompletionServiceImpl implements OrderCompletionService {
     private final OrderListUpdateService orderListUpdateService;
 
     @Override
-    public void processOrderPayment(Long userId, Long userAddressId, Long paymentId, Long orderListId, int quantity) {
+    public void processOrderPayment(Long userId, Long userAddressId, Long paymentId, Long orderListId) {
         //todo payservice로 이동
         updateOrderListInfo(userId, orderListId, userAddressId, paymentId);
         updateAllOrdersToPaid(userId, orderListId);

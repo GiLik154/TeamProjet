@@ -1,9 +1,6 @@
 package com.example.team_project;
 
-import com.example.team_project.domain.domain.shop.seller.service.login.SellerLoginService;
-import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.domain.domain.user.service.auth.UserLoginService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,10 +22,6 @@ import org.springframework.security.web.SecurityFilterChain;
 public class SecurityConfig {
 
     private final UserLoginService userLoginService;
-    private final SellerLoginService sellerLoginService;
-
-    private final UserRepository userRepository;
-    private final ObjectMapper objectMapper;
 
     private final UserDetailsService userDetailsService;
 
