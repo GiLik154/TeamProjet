@@ -29,7 +29,6 @@ public class CouponAddController {
     @PostMapping
     public String post(@SessionAttribute Long userId, @Valid CouponAddControlDto couponAddControlDto) {
         couponAddService.add(userId, couponAddControlDto.convertServiceDto());
-        return "thymeleaf/coupon/add";
+        return "redirect:/main";
     }
-
 }
