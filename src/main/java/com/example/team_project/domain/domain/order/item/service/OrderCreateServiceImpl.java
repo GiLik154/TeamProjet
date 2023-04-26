@@ -8,7 +8,6 @@ import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
 import com.example.team_project.domain.domain.order.list.service.OrderListAddService;
 import com.example.team_project.domain.domain.order.list.service.OrderListAddServiceImpl;
-import com.example.team_project.domain.domain.payment.Service.PaymentService;
 import com.example.team_project.domain.domain.product.product.domain.Product;
 import com.example.team_project.domain.domain.product.product.domain.ProductRepository;
 import com.example.team_project.domain.domain.user.domain.User;
@@ -29,7 +28,6 @@ public class OrderCreateServiceImpl implements OrderCreateService {
     private final OrderListAddService orderListAddService;
     private final UserCouponRepository userCouponRepository;
     private final OrderListAddServiceImpl orderListAddServiceImpl;
-    private final PaymentService paymentService;
 
     @Override
     public Long create(Long userId, Long productId, int quantity, Long couponId) {
