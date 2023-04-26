@@ -79,9 +79,9 @@ public class User extends BaseTimeEntity {
         this.role = Role.USER;
     }
 
-    public User(Long id, String password, String phoneNumber) {
-        this.id = id;
+    public User(String password, String userName, String phoneNumber) {
         this.password = password;
+        this.userName = userName;
         this.phoneNumber = phoneNumber;
     }
 
@@ -102,10 +102,10 @@ public class User extends BaseTimeEntity {
     /**
      * 유저의 정보를 변경하는 메서드들
      */
-    public void modify(String password, String userName, String PhoneNumber) {
-        this.password = password;
-        this.userName = userName;
-        this.phoneNumber = phoneNumber;
+    public void modify(User updatedUser) {
+        this.password = updatedUser.getPassword();
+        this.userName = updatedUser.getUserName();
+        this.phoneNumber = updatedUser.getPhoneNumber();
     }
 
 
