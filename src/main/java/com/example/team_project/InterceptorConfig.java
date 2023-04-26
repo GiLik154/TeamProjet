@@ -37,16 +37,12 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .addPathPatterns("/product/delete/**")
                 .addPathPatterns("/product/registration/**")
                 .addPathPatterns("/product/seller/**")
-
                 .addPathPatterns("/product/update/**")
-
                 .addPathPatterns("/seller/delete/**")
                 .addPathPatterns("/seller/update/**")
-
                 .addPathPatterns("/shop/join/**")
                 .addPathPatterns("/shop/delete/**")
                 .addPathPatterns("/shop/list/**")
                 .addPathPatterns("/shop/update/**");
-
     }
 }
