@@ -1,10 +1,7 @@
 package com.example.team_project.domain.domain.payment.Service;
 
-
-import com.example.team_project.controller.core.payment.add.dto.PaymentAddControllerDto;
 import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
-import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
 import com.example.team_project.domain.domain.payment.domain.Payment;
 import com.example.team_project.domain.domain.payment.domain.PaymentRepository;
