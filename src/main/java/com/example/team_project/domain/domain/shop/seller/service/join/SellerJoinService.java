@@ -18,7 +18,7 @@ import java.util.Optional;
 @Transactional
 public class SellerJoinService {
     private final SellerRepository sellerRepository;
-    private final PasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     //회원가입
     public void sellerJoin(SellerJoinDto sellerJoinDto) {
@@ -46,7 +46,7 @@ public class SellerJoinService {
      * 비밀번호 암호화
      */
     private void checkEncodingPw(Seller seller, String password) {
-        if (!seller.isEncodePassword(bCryptPasswordEncoder, password)) {
+        if (!seller.isEncodePassword(passwordEncoder, password)) {
             throw new PasswordEncodingFailedException();
         }
     }

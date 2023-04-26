@@ -1,13 +1,13 @@
 package com.example.team_project.controller.core.user;
 
-import com.example.team_project.controller.core.user.dto.UserAddressAddControllerDto;
-import com.example.team_project.controller.core.user.dto.UserAddressUpdateControllerDto;
+import com.example.team_project.controller.core.user.dto.UserAddressControllerDto;
 import com.example.team_project.domain.domain.address.service.add.AddressAddService;
-import com.example.team_project.domain.domain.address.service.update.AddressUpdateService;
-import com.example.team_project.domain.domain.address.service.update.dto.AddressUpdateServiceDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import javax.validation.Valid;
 
@@ -16,17 +16,17 @@ import javax.validation.Valid;
 @RequestMapping("/user/address/update")
 public class UserAddressUpdateController {
 
-    private final AddressUpdateService addressUpdateService;
+    private final AddressAddService addressAddService;
 
     @GetMapping
     public String get() {
-        return "thymeleaf/user/address/user-address-update";
+        return "thymeleaf/user/address/user-address-add";
     }
 
-    @PostMapping("{addressId}")
-    public String post(@SessionAttribute Long userId, @PathVariable Long addressId, @Valid UserAddressUpdateControllerDto userAddressUpdateControllerDto) {
-        addressUpdateService.update(userId, addressId, userAddressUpdateControllerDto.convertServiceDto());
+    @PostMapping
+    public String post(@SessionAttribute Long userId, @Valid UserAddressControllerDto userAddressControllerDto) {
+        addressAddService.add(userId, userAddressControllerDto.convertServiceDto());
 
-        return "redirect:/user/address/list";
+        return "thymeleaf/user/address/user-address-add";
     }
 }
