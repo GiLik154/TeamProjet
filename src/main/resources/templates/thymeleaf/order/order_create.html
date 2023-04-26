@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/order_create.css">
 
-</head>\
+</head>
 <body>
 <div class="container">
     <h1 class="my-4">주문하기</h1>
@@ -37,9 +37,14 @@
                                th:value="${product.price * quantity}"
                                readonly>
                     </div>
-                    <!-- 결제페이지로 이동 -->
-                        <button type="submit" class="btn btn-primary">주문하기</button>
-                        <button type="button" class="btn btn-primary" onclick="window.history.back()">취소</button>
+                    <div class="d-flex justify-content-between">
+                        <div>
+                            <button type="submit" class="btn btn-primary mr-2">장바구니</button>
+                        </div>
+                        <div>
+                            <button type="button" onclick="window.history.back()" class="btn btn-primary">취소</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

@@ -18,8 +18,8 @@ public class OrderCompletionServiceImpl implements OrderCompletionService {
     @Override
     public void processOrderPayment(Long userId, Long userAddressId, Long paymentId, Long orderListId, int quantity) {
         //todo payservice로 이동
-        updateAllOrdersToPaid(userId, orderListId);
         updateOrderListInfo(userId, orderListId, userAddressId, paymentId);
+        updateAllOrdersToPaid(userId, orderListId);
 
     }
 
