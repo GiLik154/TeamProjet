@@ -6,7 +6,19 @@
     <link rel="stylesheet" href="/static/css/myPage.css">
     <!-- jQuery 라이브러리를 로드합니다. -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script>
+        $(function() {
+            // 주문 내역 링크를 클릭하면 이벤트를 처리합니다.
+            $('.sidebar a[href="/order_list/view"]').on('click', function(e) {
+                e.preventDefault(); // 링크의 기본 동작을 취소합니다.
+                // AJAX 요청을 보내어 order-list.html 파일의 내용을 가져옵니다.
+                $.get('/thymeleaf/order/order_list.html', function(data) {
+                    // main-content 요소의 내용을 가져온 파일의 내용으로 교체합니다.
+                    $('.main-content').html(data);
+                });
+            });
+        });
+    </script>
 </head>
 <body>
 
@@ -19,11 +31,12 @@
 </header>
 <div class="sidebar">
     <ul>
-        <li th:classappend="${activeMenu == '내 정보' ? 'active' : ''}"><a href="/user/mypage/edit">내 정보</a></li>
-        <li th:classappend="${activeMenu == '장바구니' ? 'active' : ''}"><a href="">장바구니</a></li>
-        <li th:classappend="${activeMenu == '주문 내역' ? 'active' : ''}"><a href="/order_list/view">주문 내역</a></li>
+        <li th:classappend="${activeMenu == '내 정보' ? 'active' : ''}"><a href="/user/mypage/myprofile">내 정보</a></li>
+        <li th:classappend="${activeMenu == '내 주소 보기' ? 'active' : ''}"><a href="/user/address/list">등록 배송지 보기</a></li>
+        <li th:classappend="${activeMenu == '장바구니' ? 'active' : ''}"><a href="#">장바구니</a></li>
+        <li th:classappend="${activeMenu == '구매 내역' ? 'active' : ''}"><a href="/order_list/view">구매 내역</a></li>
         <li th:classappend="${activeMenu == '게시글' ? 'active' : ''}"><a href="/post/list">게시글</a></li>
-        <li th:classappend="${activeMenu == '좋아요 목록' ? 'active' : ''}"><a href="">좋아요 목록</a></li>
+        <li th:classappend="${activeMenu == '좋아요 목록' ? 'active' : ''}"><a href="#">좋아요 목록</a></li>
         <li th:classappend="${activeMenu == '내 쿠폰' ? 'active' : ''}"><a href="/coupon/my-coupon">내 쿠폰</a></li>
     </ul>
 </div>
@@ -40,28 +53,28 @@
     });
 </script>
 <footer>
-<div class="row">
-    <div class="col-6">
-        <p>&copy; 2023 우리 회사명. All rights reserved.</p>
+    <div class="row">
+        <div class="col-6">
+            <p>&copy; 2023 우리 회사명. All rights reserved.</p>
+        </div>
+        <div class="col-6">
+            <nav class="text-right">
+                <ul class="list-inline">
+                    <li class="list-inline-item"><a href="#">이용약관</a></li>
+                    <li class="list-inline-item"><a href="#">개인정보 처리방침</a></li>
+                </ul>
+            </nav>
+        </div>
     </div>
-    <div class="col-6">
-        <nav class="text-right">
-            <ul class="list-inline">
-                <li class="list-inline-item"><a href="#">이용약관</a></li>
-                <li class="list-inline-item"><a href="#">개인정보 처리방침</a></li>
-            </ul>
-        </nav>
-    </div>
-</div>
 
-<div class="row">
-    <div class="col-12">
-        <nav class="text-center">
-            <ul class="list-inline">
-            </ul>
-        </nav>
+    <div class="row">
+        <div class="col-12">
+            <nav class="text-center">
+                <ul class="list-inline">
+                </ul>
+            </nav>
+        </div>
     </div>
-</div>
 </footer>
 
 </body>
