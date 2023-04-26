@@ -6,19 +6,7 @@
     <link rel="stylesheet" href="/static/css/myPage.css">
     <!-- jQuery 라이브러리를 로드합니다. -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(function() {
-            // 주문 내역 링크를 클릭하면 이벤트를 처리합니다.
-            $('.sidebar a[href="/order_list/view"]').on('click', function(e) {
-                e.preventDefault(); // 링크의 기본 동작을 취소합니다.
-                // AJAX 요청을 보내어 order-list.html 파일의 내용을 가져옵니다.
-                $.get('/thymeleaf/order/order_list.html', function(data) {
-                    // main-content 요소의 내용을 가져온 파일의 내용으로 교체합니다.
-                    $('.main-content').html(data);
-                });
-            });
-        });
-    </script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
 <body>
 
@@ -31,17 +19,26 @@
 </header>
 <div class="sidebar">
     <ul>
-        <li th:classappend="${activeMenu == '내 정보' ? 'active' : ''}"><a href="/user/mypage/myprofile">내 정보</a></li>
-        <li th:classappend="${activeMenu == '장바구니' ? 'active' : ''}"><a href="#">장바구니</a></li>
-        <li th:classappend="${activeMenu == '구매 내역' ? 'active' : ''}"><a href="/order_list/view">구매 내역</a></li>
+        <li th:classappend="${activeMenu == '내 정보' ? 'active' : ''}"><a href="/user/mypage/edit">내 정보</a></li>
+        <li th:classappend="${activeMenu == '장바구니' ? 'active' : ''}"><a href="">장바구니</a></li>
+        <li th:classappend="${activeMenu == '주문 내역' ? 'active' : ''}"><a href="/order_list/view">주문 내역</a></li>
         <li th:classappend="${activeMenu == '게시글' ? 'active' : ''}"><a href="/post/list">게시글</a></li>
-        <li th:classappend="${activeMenu == '좋아요 목록' ? 'active' : ''}"><a href="#">좋아요 목록</a></li>
-        <li th:classappend="${activeMenu == '내 쿠폰' ? 'active' : ''}"><a href="/coupon/my-coupon/unused">내 쿠폰</a></li>
+        <li th:classappend="${activeMenu == '좋아요 목록' ? 'active' : ''}"><a href="">좋아요 목록</a></li>
+        <li th:classappend="${activeMenu == '내 쿠폰' ? 'active' : ''}"><a href="/coupon/my-coupon">내 쿠폰</a></li>
     </ul>
 </div>
 <div class="main-content">
-    <iframe src="/order_list/view"></iframe>
+
 </div>
+<script>
+    $(document).ready(function() {
+        $('.sidebar a').on('click', function(event) {
+            event.preventDefault(); // 기본 동작 취소
+            var pageUrl = $(this).attr('href');
+            $('.main-content').load(pageUrl);
+        });
+    });
+</script>
 <footer>
 <div class="row">
     <div class="col-6">
@@ -66,22 +63,6 @@
     </div>
 </div>
 </footer>
-<!-- jQuery 라이브러리를 로드합니다. -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- 스크립트를 추가합니다. -->
-<script>
-    $(function() {
-        // 주문 내역 링크를 클릭하면 이벤트를 처리합니다.
-        $('.sidebar a[href="#orderList"]').on('click', function(e) {
-            e.preventDefault(); // 링크의 기본 동작을 취소합니다.
-            // AJAX 요청을 보내어 orderList.html 파일의 내용을 가져옵니다.
-            $.get('/order_list/', function(data) {
-                // main-content 요소의 내용을 가져온 파일의 내용으로 교체합니다.
-                $('.main-content').html(data);
-            });
-        });
-    });
-</script>
 </body>
 </html>

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/user/address/list")
+@RequestMapping("/user/address")
 public class UserAddressController {
 
     private final UserAddressRepository userAddressRepository;

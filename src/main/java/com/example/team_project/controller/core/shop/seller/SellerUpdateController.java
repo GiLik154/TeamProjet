@@ -6,6 +6,7 @@ import com.example.team_project.domain.domain.shop.seller.service.dto.SellerJoin
 import com.example.team_project.domain.domain.shop.seller.service.update.SellerUpdateService;
 import com.example.team_project.exception.ShopIncorrectUpdatePasswordException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,15 +33,21 @@ public class SellerUpdateController {
                          @RequestParam("ownerName") String ownerName,
                          @RequestParam("phoneNumber") String phoneNumber) {
 
+        System.out.println(sellerId+password+ownerName+phoneNumber);
+
         sellerUpdateService.sellerUpdate(sellerId, password, ownerName, phoneNumber);
-        return "redirect:/";
+
+        return "thymeleaf/main/main";
     }
 
     @PostMapping("{ownerId}")
     public String passwordUpdate(@PathVariable("ownerId") String ownerId, @RequestParam("password") String password) {
         sellerUpdateService.passwordUpdate(ownerId, password);
-        return "redirect:/";
+        return "thymeleaf/main/main";
     }
+
+
+
 
 
 }

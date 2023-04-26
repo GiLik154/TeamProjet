@@ -2,6 +2,8 @@ package com.example.team_project.domain.domain.user.service.user;
 
 import com.example.team_project.domain.domain.user.domain.User;
 
+import java.util.Optional;
+
 public interface UpdateUserInfoService {
 
     /**
@@ -12,5 +14,6 @@ public interface UpdateUserInfoService {
      * @param userName 유저 이름
      * @param PhoneNumber 유저 휴대폰 번호
      */
-    void updateUserInfo(Long userId, String password, String userName, String PhoneNumber);
+    public void updateUserInfo(Long userId, String password, String userName, String PhoneNumber);
+
 }
