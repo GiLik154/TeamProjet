@@ -68,7 +68,7 @@
         <tr th:each="productReview:${productReviewList}">
             <td th:text="${productReview.getTitle()}"></td>
             <td th:text="${productReview.getContent()}"></td>
-            <td><img th:src="${productReview.getImagePath()}"></td>
+            <td><img style="width: 100px;height: 100px" th:src="${productReview.getImagePath()}"></td>
             <td th:text="${productReview.getUser().getUserId()}"></td>
             <td th:text="${productReview.getTime()}" style="font-size: 12px;"></td>
             <td style="text-align: center;">

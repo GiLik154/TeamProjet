@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <!-- 부트스트랩 CSS 링크 추가 -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+        crossorigin="anonymous">
 </head>
 <body>
-<form th:action="@{/product/review/add}" method="post" enctype="multipart/form-data">
+<!-- form 태그에 form-control 클래스 추가 -->
+<form th:action="@{/product/review/add}" method="post" enctype="multipart/form-data" class="form-control">
   <div class="form-group">
     <label for="title">제목</label>
     <input type="text" name="title" id="title" class="form-control">
@@ -20,8 +25,18 @@
   </div>
   <input type="hidden" name="kinds" value="ProductReview">
   <input type="hidden" name="kindsId" th:value="${productId}">
+  <!-- 버튼에 btn 클래스 추가 -->
   <input type="submit" value="작성" class="btn btn-success">
 </form>
-
+<!-- 부트스트랩 JS 링크 추가 -->
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
 </body>
 </html>
