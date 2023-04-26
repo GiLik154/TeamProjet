@@ -83,7 +83,7 @@ class CouponApplyServiceImplTest {
         Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
 
         Coupon coupon = new Coupon("testName", 5, 10000, 1);
@@ -126,7 +126,7 @@ class CouponApplyServiceImplTest {
         Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
 
         Coupon coupon = new Coupon("testName", 5, 10000, 1);
@@ -177,7 +177,7 @@ class CouponApplyServiceImplTest {
         Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
 
         Coupon coupon = new Coupon("testName", 5, 1000000, 1);
@@ -221,7 +221,7 @@ class CouponApplyServiceImplTest {
         Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);
@@ -265,7 +265,7 @@ class CouponApplyServiceImplTest {
         Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);
@@ -309,7 +309,7 @@ class CouponApplyServiceImplTest {
         Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);
@@ -355,7 +355,7 @@ class CouponApplyServiceImplTest {
         Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);

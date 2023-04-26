@@ -4,14 +4,11 @@ import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.domain.domain.user.service.auth.UserLoginService;
 import com.example.team_project.security.handler.AccessDeniedHandlerException;
 import com.example.team_project.security.handler.AuthenticationEntryPointException;
-import com.example.team_project.security.jwt.filter.JwtAuthenticationProcessingFilter;
+
 import com.example.team_project.security.jwt.service.JwtService;
 import com.example.team_project.security.login.filter.CustomJsonUsernamePasswordAuthenticationFilter;
 import com.example.team_project.security.login.handler.LoginFailureHandler;
-import com.example.team_project.security.login.handler.LoginSuccessHandler;
 import com.example.team_project.security.oauth2.handler.OAuth2LoginFailureHandler;
-import com.example.team_project.security.oauth2.handler.OAuth2LoginSuccessHandler;
-import com.example.team_project.security.oauth2.service.CustomOAuth2UserService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

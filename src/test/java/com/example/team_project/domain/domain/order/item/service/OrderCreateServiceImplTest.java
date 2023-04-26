@@ -150,7 +150,7 @@ class OrderCreateServiceImplTest {
         productRepository.save(product);
         Long productId = product.getId();
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+         OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
 
         //when
@@ -243,7 +243,7 @@ class OrderCreateServiceImplTest {
         productRepository.save(product);
         Long productId = product.getId();
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+         OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
 
         OrderToProduct orderToProduct = new OrderToProduct(product, 10);
@@ -292,7 +292,7 @@ class OrderCreateServiceImplTest {
         productRepository.save(product);
         Long productId = product.getId();
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+         OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
 
         //when
@@ -336,7 +336,7 @@ class OrderCreateServiceImplTest {
         productRepository.save(product);
         Long productId = product.getId();
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+         OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
 
         //when

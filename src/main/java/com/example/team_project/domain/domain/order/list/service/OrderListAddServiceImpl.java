@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -29,7 +30,7 @@ public class OrderListAddServiceImpl implements OrderListAddService {
     public OrderList add(Long userId) {
         User user = userRepository.validateUserId(userId);
 
-        OrderList orderList = new OrderList(user, LocalDateTime.now());
+        OrderList orderList = new OrderList(user, LocalDate.now());
         orderListRepository.save(orderList);
 
         return orderList;

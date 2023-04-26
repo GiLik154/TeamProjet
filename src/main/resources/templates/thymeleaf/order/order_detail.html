@@ -33,20 +33,20 @@
 </head>
 <body>
 <div class="container">
-    <h1 class="text-center my-4">주문 상세보기</h1>
-    <h2>주문날짜:<b th:text="${order_list.orderDate}"> </b></h2>
+    <h1 class="text-center my-4"><b>주문 상세보기</b></h1>
     <table class="table table-striped table-hover">
         <thead class="thead-dark">
         <tr>
             <th scope="col">상품이미지</th>
             <th scope="col">상품명</th>
+            <th scope="col">주문날짜</th>
             <th scope="col">수령인</th>
             <th scope="col">배송지</th>
             <th scope="col">전화번호</th>
             <th scope="col">구매개수</th>
             <th scope="col">총상품금액</th>
-            <th scope="col">취소</th>
             <th scope="col">주문상태</th>
+            <th scope="col">취소</th>
         </tr>
         </thead>
         <tbody>
@@ -56,22 +56,30 @@
                      style="max-width: 100px; max-height: 100px;">
             </td>
             <td th:text="${order.orderToProduct.product.name}"></td>
+            <td th:text="${order.orderList.orderDate}"></td>
             <td th:text="${order.orderList.userAddress.recipientName}"></td>
             <td th:text="${order.orderList.userAddress.streetAddress + order.orderList.userAddress.detailedAddress}"></td>
             <td th:text="${order.orderList.userAddress.phone}"></td>
             <td th:text="${order.orderToProduct.quantity}"></td>
             <td th:text="${order.orderToProduct.totalPrice}"></td>
-            <td>
-                <form th:action="@{/order/cancel/{orderId}/{orderListId}(orderId=${order.id}, orderListId=${orderListId})}" method="get">
-                    <button type="submit" class="btn btn-danger" >취소</button>
-                </form>
-            </td>
             <td th:text="${order.orderToProduct.status}"></td>
+            <td th:if="${order.orderToProduct.status}">
+                <div th:if="${order.orderToProduct.status.isEquals('CANCELED')}">
+                    <button type="button" class="btn btn-secondary btn-sm" disabled>취소 완료</button>
+                </div>
+                <div th:if="${not order.orderToProduct.status.isEquals('CANCELED')}">
+                    <form th:action="@{/order/cancel/{orderId}/{orderListId}(orderId=${order.id}, orderListId=${orderListId})}"
+                          method="get">
+                        <button type="submit" class="btn btn-danger">취소</button>
+                    </form>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
     <div class="text-center">
-        <a th:href="@{/order_list/view/detail/{orderListId}(orderListId=${orderListId})}" class="btn btn-primary">이전으로</a>
+        <a th:href="@{/order_list/view/detail/{orderListId}(orderListId=${orderListId})}"
+           class="btn btn-primary">이전으로</a>
     </div>
 </div>
 <div class="pagination-links">

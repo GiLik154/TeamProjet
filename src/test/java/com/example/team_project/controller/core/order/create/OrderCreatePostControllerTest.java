@@ -117,7 +117,7 @@
 //        productRepository.save(product);
 //        Long productId = product.getId();
 //
-//        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+//         OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
 //        orderListRepository.save(orderList);
 //        Long orderListId = orderList.getId();
 //

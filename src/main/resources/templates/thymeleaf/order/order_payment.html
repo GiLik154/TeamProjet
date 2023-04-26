@@ -87,6 +87,7 @@
             <label for="paymentMethod">결제 방법:</label>
             <select class="form-control" id="paymentMethod" name="paymentId" required>
                 <option value="" selected disabled>결제방법을 선택해주세요.</option>
+                <!-- todo payment에 맞춰서 옵션값 선택할 수 있게 -->
                 <option th:each="payment : ${paymentList}" th:value="${payment.id}" th:text="${paymentText}">
                     <span th:if="${payment.paymentType == 'CARD'}" th:with="paymentText=${payment.paymentType + ' ' + payment.cardNumber}"></span>
                     <span th:if="${payment.paymentType == 'TRANSFER'}" th:with="paymentText=${payment.paymentType + ' ' + payment.accountNumber}"></span>
@@ -101,7 +102,6 @@
             </div>
             <div>
                 <button type="submit" class="btn btn-primary">결제하기</button>
-
             </div>
         </div>
     </div>
