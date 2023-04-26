@@ -1,9 +1,12 @@
 package com.example.team_project.controller.core.user.mypage.dto;
 
-import lombok.Getter;
 
-@Getter
+import lombok.Data;
+
+
+@Data
 public class UserFormDto {
+    private Long id;
 
     private String userId;
 
@@ -25,5 +28,12 @@ public class UserFormDto {
 
     public UserFormDto() {
 
+    }
+
+    public UserFormDto(Long id, String password, String userName, String phoneNumber) {
+        this.id = id;
+        this.password = password;
+        this.userName = userName;
+        this.phoneNumber = phoneNumber;
     }
 }
