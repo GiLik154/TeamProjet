@@ -55,7 +55,13 @@
                 <td th:text="${order.orderToProduct.product.name}"></td>
                 <td th:text="${order.orderToProduct.quantity}"></td>
                 <td th:text="${order.orderToProduct.status}"></td>
-                <td th:text="${order.orderToProduct.totalPrice} + 원"></td>
+
+                <div class="form-group" hidden="hidden">
+                    <label for="totalPrice">가격</label>
+                    <input type="text" class="form-control" id="totalPrice" name="totalPrice"
+                           th:value="${order.orderToProduct.totalPrice}"
+                           readonly>
+                </div>
             </tr>
             </tbody>
             <tfoot>
