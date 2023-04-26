@@ -46,14 +46,38 @@
                         </button>
                         <button type="button" class="btn btn-secondary btn-lg float-right mr-2" id="seller-login-button">샐러 로그인
                         </button>
+                        <div class = "form-group">
+                            <input class="form-check-label" type="checkbox" name="remember-me">
+                            <label class="form-check-label">
+                                자동 로그인
+                            </label>
+                        </div>
                         <button type="button" class="btn btn-link btn-lg" id="find-id-button">아이디 찾기</button>
                         <button type="button" class="btn btn-link btn-lg" id="find-password-button">비밀번호 찾기</button>
                     </form>
+                    <div>
+                        <a href="/oauth2/authorization/kakao"><button type="button" class="btn btn-warning btn-large form-control"
+                                                                      id="btn_kakao">KAKAO Login</button></a>
+                    </div>
+                    <div>
+                        <a href="/oauth2/authorization/naver"><button type="button" class="btn btn-success btn-large form-control"
+                                                                      id="btn_naver">NAVER Login</button></a>
+                    </div>
+                    <div>
+                        <a href="/oauth2/authorization/google"><button type="button" class="btn btn-danger btn-large form-control"
+                                                                       id="btn_google">GOOGLE Login</button></a>
+                    </div>
+
+                    <div>
+                        <button type="button" class="btn btn-secondary btn-lg btn-block"
+                                id="btn_joinForm" onclick="location.href='/user/signup';">회원 가입</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 </body>
 
 </html>

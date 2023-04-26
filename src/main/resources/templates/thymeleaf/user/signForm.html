@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/webjars/bootstrap/4.4.1/css/bootstrap.css}">
+    <link rel="stylesheet" type="text/css" href="/css/signup.css">
+</head>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+    }
+
+    .container {
+        width: 90%; /* 조정할 너비를 입력하세요. */
+        margin: 0 auto;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-width: 50%;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    h2 {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+    }
+
+    p {
+        font-size: 1.25rem;
+        margin-bottom: 3rem;
+    }
+
+    form {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 5px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    label {
+        font-weight: bold;
+    }
+
+    input {
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: .25rem;
+        transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="email"] {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        text-align: center;
+    }
+
+    input[type="text"]:focus,
+    input[type="password"]:focus,
+    input[type="email"]:focus {
+        outline: none;
+        border-color: #4dabf5;
+        box-shadow: 0 0 0 0.2rem rgba(77, 171, 245, 0.25);
+    }
+
+    .invalid-feedback {
+        display: none;
+        font-size: 0.875rem;
+        color: #dc3545;
+    }
+
+    .invalid-feedback.show-feedback {
+        display: block;
+    }
+
+    .error-message {
+        color: #f00;
+        font-size: 14px;
+        padding-top: 0;
+        padding-bottom: 5px;
+        margin: 0;
+    }
+
+    button[type="submit"] {
+        font-size: 1.25rem;
+        padding: 0.75rem;
+        border-radius: 0.25rem;
+        background-color: #4dabf5;
+        color: white;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.15s ease-in-out;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #3689cf;
+    }
+
+    col-md-12 order-md-1 {
+        padding: 10px;
+    }
+</style>
+<div class="container">
+    <div class="py-5 text-center">
+        <h2 style="text-align:center; color:#333; font-size:28px; font-weight:bold;">회원가입</h2>
+    </div>
+
+    <div class="col-md-12 order-md-1">
+        <form class="needs-validation" novalidate th:action="@{/user/signup}" th:object="${userSignUpDto}"
+              method="POST">
+            <div class="mb-3">
+                <label for="userId">아이디</label>
+                <input type="text" class="form-control" id="userId" name="userId" placeholder="아이디를 입력해주세요." required>
+                <div th:if="${#fields.hasErrors('userId')}">
+                    <p th:each="err : ${#fields.errors('userId')}" class="error-message">
+                        <span th:text="${err}"></span>
+                    </p>
+                </div>
+                <span th:if="${valid_userId != null}">
+                    <script type="text/javascript">
+                        const text = "[[${valid_userId}]]";
+                        top.alert(text);
+                        location.href = "/signForm";
+                    </script>
+                </span>
+            </div>
+            <div class="mb-3">
+                <label for="password">비밀번호</label>
+                <input type="password" class="form-control" id="password" placeholder="비밀번호를 입력해주세요." value="" required
+                       name="password">
+                <div th:if="${#fields.hasErrors('password')}">
+                    <p th:each="err : ${#fields.errors('password')}" class="error-message">
+                        <span th:text="${err}"></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="userName">이름</label>
+                <input type="text" class="form-control" id="userName" placeholder="예) 김아무개" value="" required
+                       name="userName">
+                <div th:if="${#fields.hasErrors('userName')}">
+                    <p th:each="err : ${#fields.errors('userName')}" class="error-message">
+                        <span th:text="${err}"></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="email">이메일</label>
+                <input type="email" class="form-control" id="email" placeholder="예) you@example.com" name="email">
+                <div th:if="${#fields.hasErrors('email')}">
+                    <p th:each="err : ${#fields.errors('email')}" class="error-message">
+                        <span th:text="${err}"></span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <label for="phoneNumber">전화번호</label>
+                <input type="text" class="form-control" id="phoneNumber" placeholder="예) 123-1234-1234"
+                       name="phoneNumber">
+                <div th:if="${#fields.hasErrors('phoneNumber')}">
+                    <p th:each="err : ${#fields.errors('phoneNumber')}" class="error-message">
+                        <span th:text="${err}"></span>
+                    </p>
+                </div>
+            </div>
+
+            <hr class="mb-4">
+            <button class="btn btn-primary btn-lg btn-block" type="submit">가입하기</button>
+            <hr class="mb-4">
+        </form>
+        <script src="/js/signup.js"></script>
+    </div>
+</div>
+
+</body>
+
+</html>

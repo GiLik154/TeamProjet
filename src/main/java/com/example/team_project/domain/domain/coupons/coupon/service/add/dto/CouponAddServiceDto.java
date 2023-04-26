@@ -5,6 +5,7 @@ import lombok.Getter;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.List;
 
 @Getter
 public class CouponAddServiceDto {
@@ -14,13 +15,15 @@ public class CouponAddServiceDto {
     private final int maxCouponCount;
     private final LocalDate deadline;
     private final Period period;
+    private final List<Long> categoryIdList;
 
-    public CouponAddServiceDto(String name, int discountRate, int minPrice, int maxCouponCount, LocalDate deadline, Period period) {
+    public CouponAddServiceDto(String name, int discountRate, int minPrice, int maxCouponCount, LocalDate deadline, Period period, List<Long> categoryIdList) {
         this.name = name;
         this.discountRate = discountRate;
         this.minPrice = minPrice;
         this.maxCouponCount = maxCouponCount;
         this.deadline = deadline;
         this.period = period;
+        this.categoryIdList = categoryIdList;
     }
 }

@@ -4,6 +4,8 @@ import com.example.team_project.domain.domain.order.item.domain.Order;
 import com.example.team_project.domain.domain.order.item.domain.OrderRepository;
 import com.example.team_project.domain.domain.order.list.domain.OrderList;
 import com.example.team_project.domain.domain.order.list.domain.OrderListRepository;
+import com.example.team_project.domain.domain.user.domain.User;
+import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.OrderStatus;
 import com.example.team_project.exception.CannotCancelOrderException;
 import com.example.team_project.exception.OrderListNotFoundException;
@@ -24,22 +26,22 @@ public class OrderCancelServiceImpl implements OrderCancelService {
     private final OrderListRepository orderListRepository;
 
     @Override
-    public void cancel(Long orderToProductId, Long orderId, Long orderListId) {
+    public void cancel(Long userId, Long orderToProductId, Long orderId, Long orderListId) {
 
-        if (!orderRepository.existsById(orderId)) {
+        if (!orderRepository.existsByUserIdAndId(userId, orderId)) {
             throw new OrderNotFoundException();
         }
 
-        Order order = validateCancelableOrder(orderId);
-        order.getOrderToProduct().cancel(orderToProductId);
+        Order order = validateCancelableOrder(userId, orderId);
+        order.getOrderToProduct().cancel(orderId);
         cancelOrderListOnAllItemsCancelled(orderListId);
     }
 
     /**
      * 취소 가능 상품 검증하기
      **/
-    private Order validateCancelableOrder(Long orderId) {
-        Order order = orderRepository.validateOrderId(orderId);
+    private Order validateCancelableOrder(Long userId, Long orderId) {
+        Order order = orderRepository.validateUserOrder(userId, orderId);
         String orderStatus = order.getOrderToProduct().getStatus().toString();
 
         if (orderStatus.equals("CANCELED") || orderStatus.equals("DELIVERED") || orderStatus.equals("SHIPPED")) {

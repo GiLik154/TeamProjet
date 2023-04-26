@@ -31,6 +31,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @SpringBootTest
@@ -79,7 +80,7 @@ class OrderListCancelServiceImplTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -99,7 +100,7 @@ class OrderListCancelServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+         OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
         Long orderListId = orderList.getId();
 
@@ -125,7 +126,7 @@ class OrderListCancelServiceImplTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -146,7 +147,7 @@ class OrderListCancelServiceImplTest {
         userAddressRepository.save(userAddress);
 
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+         OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
         Long orderListId = orderList.getId();
 
@@ -160,7 +161,6 @@ class OrderListCancelServiceImplTest {
 
         order.getOrderToProduct().updateStatus(OrderStatus.SHIPPED);
         order.getOrderToProduct().updateStatus(OrderStatus.SHIPPED);
-//        order1.getOrderToProduct().updateStatus(OrderStatus.DELIVERED);
 
         //when
         CannotCancelOrderException exception = assertThrows(CannotCancelOrderException.class, () ->

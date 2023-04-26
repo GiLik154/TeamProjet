@@ -17,11 +17,9 @@ public interface OrderCreateService {
      * @param userId        : 사용자 고유 ID
      * @param productId     : 상품 고유 ID
      * @param quantity      : 주문 상품 개수
-     * @param userAddressId : 사용자 주소 고유 Id
-     * @param paymentId     : 결제 방법 고유 Id
      * @throws UserNotFoundException    : 해당 사용자를 찾을 수 없을 때
      * @throws ProductNotFoundException :해당 상품을 찾을 수 없을 때
      * @throws OutOfStockException      : 주문하려는 상품의 재고가 떨어졌거나 부족할 때
      **/
-    Order create(Long userId, Long productId, int quantity, Long userAddressId, Long paymentId);
+    Long create(Long userId, Long productId, int quantity, Long couponId);
 }

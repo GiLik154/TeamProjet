@@ -1,7 +1,23 @@
 package com.example.team_project.domain.domain.user.service.auth;
 
-import com.example.team_project.domain.domain.user.domain.User;
+
+import com.example.team_project.domain.domain.user.dto.UserSignUpDto;
+import org.springframework.validation.Errors;
+
+import java.util.Map;
+
 
 public interface UserSignUpService {
-    User signUpUser(String userId, String password, String userName, String phoneNumber, String zipcode, String streetAddress, String detailedAddress);
+
+    Map<String, String> validateHandler(Errors errors);
+
+    boolean isUserIdDuplicated(String userId);
+
+    boolean isEmailDuplicated(String email);
+
+    boolean isPhoneNumberDuplicated(String phoneNumber);
+
+    void signUp(UserSignUpDto userSignUpDto) throws Exception ;
+
 }
+

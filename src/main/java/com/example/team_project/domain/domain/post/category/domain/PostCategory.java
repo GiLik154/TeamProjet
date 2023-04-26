@@ -13,12 +13,13 @@ public class PostCategory {
      * 카테고리의 종류 이름
      */
     @Id
-    private String name;
+    private PostCategoryStatus name;
 
     protected PostCategory() {
     }
 
-    public PostCategory(String name) {
+    public PostCategory(PostCategoryStatus name) {
         this.name = name;
     }
+
 }

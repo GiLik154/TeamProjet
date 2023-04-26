@@ -3,6 +3,7 @@ package com.example.team_project.domain.domain.post.post.domain;
 import com.example.team_project.domain.domain.image.ImageUpload;
 import com.example.team_project.domain.domain.post.category.domain.PostCategory;
 import com.example.team_project.domain.domain.user.domain.User;
+import com.example.team_project.enums.PostCategoryStatus;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -45,8 +46,8 @@ public class Post implements ImageUpload {
      * 게시글의 존재여부(생성,삭제)등
      */
     private String situation;
-
-    public Post(){}
+    protected Post(){
+    }
     /**
      * 게시글 처음 작성시 컨트롤단의 값을 입력받아 생성
      */

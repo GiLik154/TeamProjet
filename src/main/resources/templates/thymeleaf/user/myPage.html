@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My Page</title>
+    <link rel="stylesheet" href="/static/css/myPage.css">
+</head>
+<body>
+<header>
+    <div id="logo">My Page</div>
+    <nav>
+        <a href="#">로그인</a>
+        <a href="#">로그아웃</a>
+        <a href="#">회원가입</a>
+        <a href="#">게시글</a>
+    </nav>
+</header>
+<div class="sidebar">
+    <ul>
+        <li th:classappend="${activeMenu == '내 정보' ? 'active' : ''}"><a href="#">내 정보</a></li>
+        <li th:classappend="${activeMenu == '장바구니' ? 'active' : ''}"><a href="#">장바구니</a></li>
+        <li th:classappend="${activeMenu == '구매 내역' ? 'active' : ''}"><a href="#">구매 내역</a></li>
+        <li th:classappend="${activeMenu == '좋아요 목록' ? 'active' : ''}"><a href="#">좋아요 목록</a></li>
+        <li th:classappend="${activeMenu == '내 쿠폰' ? 'active' : ''}"><a href="#">내 쿠폰</a></li>
+    </ul>
+</div>
+<div class="main-content">
+    <h1>내 정보</h1>
+    <p>여기에 내 정보를 보여주는 내용을 넣으세요.</p>
+</div>
+<footer>
+<div class="row">
+    <div class="col-6">
+        <p>&copy; 2023 우리 회사명. All rights reserved.</p>
+    </div>
+    <div class="col-6">
+        <nav class="text-right">
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#">이용약관</a></li>
+                <li class="list-inline-item"><a href="#">개인정보 처리방침</a></li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <nav class="text-center">
+            <ul class="list-inline">
+            </ul>
+        </nav>
+    </div>
+</div>
+</footer>
+</body>
+</html>

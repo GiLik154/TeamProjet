@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>주문 상세보기</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <!-- jQuery library 추가 -->
+    <link rel="stylesheet" href="/static/css/order_detail.css">
+    <!-- 부트스트랩 링크 추가 -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+          crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            crossorigin="anonymous"></script>
+
+    <style>
+        h1, h2 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
+        }
+
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+<body>
+<form th:action="@{#}" method="get">
+    <div class="container">
+        <h1 class="text-center my-4">주문 목록 결제하기</h1>
+        <table class="table table-striped table-hover">
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">상품이미지</th>
+                <th scope="col">상품명</th>
+                <th scope="col">구매개수</th>
+                <th scope="col">주문상태</th>
+                <th scope="col">총상품금액</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="order : ${orders}">
+                <td>
+                    <img th:src="@{${order.orderToProduct.product.image}}" alt="상품 이미지" class="img-fluid"
+                         style="max-width: 100px; max-height: 100px;">
+                </td>
+                <td th:text="${order.orderToProduct.product.name}"></td>
+                <td th:text="${order.orderToProduct.quantity}"></td>
+                <td th:text="${order.orderToProduct.status}"></td>
+                <td th:text="${order.orderToProduct.totalPrice} + 원"></td>
+            </tr>
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="3"></td>
+                <th>전체 총합:</th>
+                <td>
+                    <script>
+                        let total = 0;
+                        $("td:nth-child(5)").each(function () {
+                            total += parseInt($(this).text());
+                        });
+                        document.write(total);
+                    </script>
+                    원
+                </td>
+            </tr>
+            </tfoot>
+        </table>
+        <div class="form-group">
+            <label for="address">배송지:</label>
+            <select class="form-control" id="address" name="userAddressId" required>
+                <option value="" selected disabled>배송지를 선택해주세요.</option>
+                <option th:each="address : ${userAddressList}" th:value="${address.id}"
+                        th:text="${address.streetAddress + ' ' + address.detailedAddress}">
+                </option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="paymentMethod">결제 방법:</label>
+            <select class="form-control" id="paymentMethod" name="paymentId" required>
+                <option value="" selected disabled>결제방법을 선택해주세요.</option>
+                <!-- todo payment에 맞춰서 옵션값 선택할 수 있게 -->
+                <option th:each="payment : ${paymentList}" th:value="${payment.id}" th:text="${paymentText}">
+                    <span th:if="${payment.paymentType == 'CARD'}" th:with="paymentText=${payment.paymentType + ' ' + payment.cardNumber}"></span>
+                    <span th:if="${payment.paymentType == 'TRANSFER'}" th:with="paymentText=${payment.paymentType + ' ' + payment.accountNumber}"></span>
+                </option>
+            </select>
+        </div>
+
+
+        <div class="d-flex justify-content-between">
+            <div>
+                <a th:href="@{/main}" class="btn btn-primary mr-2">메인으로</a>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-primary">결제하기</button>
+            </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>

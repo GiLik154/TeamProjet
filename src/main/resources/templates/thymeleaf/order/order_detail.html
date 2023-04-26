@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title>주문 상세보기</title>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" crossorigin="anonymous"></script>
+    <!-- jQuery library 추가 -->
     <link rel="stylesheet" href="/static/css/order_detail.css">
     <!-- 부트스트랩 링크 추가 -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+          crossorigin="anonymous">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            crossorigin="anonymous"></script>
 
     <style>
         h1, h2 {
@@ -14,29 +20,33 @@
         }
 
         table {
-            margin: 0 auto;
+            width: 100%;
+            border-collapse: collapse;
+            text-align: center;
         }
 
-        td {
-            text-align: center;
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
         }
     </style>
 </head>
 <body>
 <div class="container">
-    <h1 class="text-center my-4">주문 상세보기</h1>
-    <h2>주문날짜:<b th:text="${order_list.orderDate}"> </b></h2>
+    <h1 class="text-center my-4"><b>주문 상세보기</b></h1>
     <table class="table table-striped table-hover">
         <thead class="thead-dark">
         <tr>
             <th scope="col">상품이미지</th>
             <th scope="col">상품명</th>
+            <th scope="col">주문날짜</th>
             <th scope="col">수령인</th>
             <th scope="col">배송지</th>
             <th scope="col">전화번호</th>
+            <th scope="col">구매개수</th>
             <th scope="col">총상품금액</th>
-            <th scope="col">취소</th>
             <th scope="col">주문상태</th>
+            <th scope="col">취소</th>
         </tr>
         </thead>
         <tbody>
@@ -46,23 +56,30 @@
                      style="max-width: 100px; max-height: 100px;">
             </td>
             <td th:text="${order.orderToProduct.product.name}"></td>
+            <td th:text="${order.orderList.orderDate}"></td>
             <td th:text="${order.orderList.userAddress.recipientName}"></td>
             <td th:text="${order.orderList.userAddress.streetAddress + order.orderList.userAddress.detailedAddress}"></td>
             <td th:text="${order.orderList.userAddress.phone}"></td>
+            <td th:text="${order.orderToProduct.quantity}"></td>
             <td th:text="${order.orderToProduct.totalPrice}"></td>
-            <td>
-                <form th:action="@{/order/cancel}" method="post">
-                    <input type="hidden" name="orderId" th:value="${order.id}">
-                    <input type="hidden" name="orderListId" th:value="${order.orderList.id}">
-                    <button type="submit" class="btn btn-danger">취소</button>
-                </form>
-            </td>
             <td th:text="${order.orderToProduct.status}"></td>
+            <td th:if="${order.orderToProduct.status}">
+                <div th:if="${order.orderToProduct.status.isEquals('CANCELED')}">
+                    <button type="button" class="btn btn-secondary btn-sm" disabled>취소 완료</button>
+                </div>
+                <div th:if="${not order.orderToProduct.status.isEquals('CANCELED')}">
+                    <form th:action="@{/order/cancel/{orderId}/{orderListId}(orderId=${order.id}, orderListId=${orderListId})}"
+                          method="get">
+                        <button type="submit" class="btn btn-danger">취소</button>
+                    </form>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
     <div class="text-center">
-        <button onclick="history.back()" class="btn btn-secondary">이전 페이지로 돌아가기</button>
+        <a th:href="@{/order_list/view/detail/{orderListId}(orderListId=${orderListId})}"
+           class="btn btn-primary">이전으로</a>
     </div>
 </div>
 <div class="pagination-links">
@@ -78,17 +95,5 @@
     <a th:if="${page < total_page}"
        th:href="@{/order/view/detail/{orderListId}(orderListId=${order_list.id}, page=${page + 1})}">다음</a>
 </div>
-
-
-<!-- 부트스트랩 자바스크립트 및 jQuery 추가 -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-        crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
 </body>
 </html>

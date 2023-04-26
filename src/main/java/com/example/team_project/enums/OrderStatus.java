@@ -38,4 +38,7 @@ public enum OrderStatus {
         this.description = description;
     }
 
+    public boolean isEquals(String status) {
+        return this.name().equals(status);
+    }
 }

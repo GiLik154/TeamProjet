@@ -31,7 +31,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -49,8 +49,8 @@ class OrderCancelServiceImplTest {
     private final ProductRepository productRepository;
     private final OrderListRepository orderListRepository;
     private final ProductCategoryRepository productCategoryRepository;
+    private final OrderCancelService orderCancelService;
     private final OrderListCancelServiceImpl orderListCancelServiceImpl;
-    private final OrderCancelServiceImpl orderCancelServiceImpl;
 
     @Autowired
     OrderCancelServiceImplTest(UserRepository userRepository,
@@ -62,8 +62,8 @@ class OrderCancelServiceImplTest {
                                ProductRepository productRepository,
                                OrderListRepository orderListRepository,
                                ProductCategoryRepository productCategoryRepository,
-                               OrderListCancelServiceImpl orderListCancelServiceImpl,
-                               OrderCancelServiceImpl orderCancelServiceImpl) {
+                               OrderCancelService orderCancelService,
+                               OrderListCancelServiceImpl orderListCancelServiceImpl) {
         this.userRepository = userRepository;
         this.userAddressRepository = userAddressRepository;
         this.paymentRepository = paymentRepository;
@@ -73,8 +73,8 @@ class OrderCancelServiceImplTest {
         this.productRepository = productRepository;
         this.orderListRepository = orderListRepository;
         this.productCategoryRepository = productCategoryRepository;
+        this.orderCancelService = orderCancelService;
         this.orderListCancelServiceImpl = orderListCancelServiceImpl;
-        this.orderCancelServiceImpl = orderCancelServiceImpl;
     }
 
     @Test
@@ -82,8 +82,9 @@ class OrderCancelServiceImplTest {
         //given
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
+        Long userId = user.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -101,7 +102,7 @@ class OrderCancelServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
         Long orderListId = orderList.getId();
 
@@ -113,7 +114,7 @@ class OrderCancelServiceImplTest {
         Long orderToProductId = orderToProduct.getId();
 
         //when
-        orderCancelServiceImpl.cancel(orderToProductId, orderId, orderListId);
+        orderCancelService.cancel(userId, orderToProductId, orderId, orderListId);
 
         //then
         assertEquals("CANCELED", order.getOrderToProduct().getStatus().toString());
@@ -125,7 +126,7 @@ class OrderCancelServiceImplTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -143,7 +144,7 @@ class OrderCancelServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
         Long orderListId = orderList.getId();
 
@@ -169,7 +170,7 @@ class OrderCancelServiceImplTest {
         User user = new User("testId", "testPw", "testNane", "testNumber");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "2222");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -189,7 +190,7 @@ class OrderCancelServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        OrderList orderList = new OrderList(user, userAddress, payment, LocalDateTime.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
         Long orderListId = orderList.getId();
 

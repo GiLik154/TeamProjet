@@ -18,7 +18,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>주문내역</h1>
+    <h1>주문리스트</h1>
     <table class="table table-bordered">
         <thead class="thead-light">
         <tr>
@@ -27,34 +27,50 @@
             <th scope="col">배송지</th>
             <th scope="col">주소 수정</th>
             <th scope="col">취소 여부</th>
+            <th scope="col">결제 여부</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="order_list : ${order_list}">
+        <tr th:each="order_list : ${orderList}">
             <td>
                 <a th:href="@{/order_list/view/detail/{orderListId}(orderListId=${order_list.id})}">
                     <span th:text="${order_list.id}"></span>
                 </a>
             </td>
             <td th:text="${order_list.orderDate}"></td>
-            <td th:text="${order_list.userAddress.streetAddress} + ${order_list.userAddress.detailedAddress}"></td>
-            <td>
-                <form th:action="@{/order_list/update_address}" method="get">
-                    <input type="hidden" name="orderListId" th:value="${order_list.id}">
-                    <button type="submit" class="btn btn-danger btn-sm">수정하기</button>
+            <td th:text="${order_list.userAddress != null ? order_list.userAddress.streetAddress + ' ' + order_list.userAddress.detailedAddress : '주소 없음'}"></td>
+            <td th:if="${order_list.status}">
+                <form th:action="@{/order_list/update_address/{orderListId}(orderListId=${order_list.id})}"
+                      method="get">
+                    <button type="submit" class="btn btn-primary">수정하기</button>
                 </form>
+            </td>
+            <td th:if="${not order_list.status}">
+                <button type="button" class="btn btn-secondary btn-sm" disabled>수정 불가능</button>
             </td>
             <td th:if="${order_list.status}">
                 <form th:action="@{/order_list/cancel/{orderListId}(orderListId=${order_list.id})}"
                       method="get">
-                    <button type="submit" class="btn btn-danger btn-sm">취소</button>
+                    <button type="submit" class="btn btn-primary">취소</button>
                 </form>
             </td>
-            <td th:if="${not order_list.status}">처리완료</td>
+            <td th:if="${not order_list.status}">
+                <button type="button" class="btn btn-secondary btn-sm" disabled>취소 완료</button>
+            </td>
+            <td th:if="${order_list.paymentsStatus}">
+                <form th:action="@{/order/payment}" method="get">
+                    <button type="submit" class="btn btn-primary">결제하기</button>
+                </form>
+            </td>
+            <td th:if="${not order_list.paymentsStatus}">
+                <button type="button" class="btn btn-secondary btn-sm" disabled>결제 완료</button>
+            </td>
         </tr>
         </tbody>
     </table>
+    <a th:href="@{/main}" class="btn btn-primary float-right">메인으로</a>
 </div>
+
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -63,7 +79,7 @@
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
 </body>
 </html>

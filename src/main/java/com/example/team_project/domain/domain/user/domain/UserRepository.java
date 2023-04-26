@@ -13,9 +13,14 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
 
-    Optional<User> findByUserId(String userId);
 
+    Optional<User> findByUserId(String userId);
+    Optional<User> findByEmail(String email);
+    Optional<User> findByPhoneNumber(String phoneNumber);
+    Optional<User> findByRefreshToken(String refreshToken);
     Optional<User> findByUserIdAndPassword(String userId, String password);
+    Optional<User> findByIdAndPassword(Long id, String password);
+
 
     default User validateUserId(Long userId) {
         Optional<User> userOptional = findById(userId);
@@ -23,6 +28,14 @@ public interface UserRepository extends JpaRepository<User, Long> {
             return userOptional.get();
         }
         throw new UserNotFoundException();
+    }
+
+    default void verifyUserId(Long userId) {
+        Optional<User> userOptional = findById(userId);
+
+        if (userOptional.isEmpty()) {
+            throw new UserNotFoundException();
+        }
     }
 
     default boolean checkUserCouponLevel(Long userId) {
