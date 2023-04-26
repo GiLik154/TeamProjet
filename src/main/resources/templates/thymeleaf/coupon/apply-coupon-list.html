@@ -9,11 +9,12 @@
       hx-target="#price">
     <div class="form-group">
         <input type="hidden" name="salesCount" th:value="${quantity}">
-        <label for="couponName">결제 방법:</label>
-        <select class="form-control" id="couponName" name="couponName" onchange="this.form.submit()" required>
+        <label for="userCouponId">결제 방법:</label>
+        <select class="form-control" id="userCouponId" name="userCouponId" onchange="this.form.submit()" required>
             <option value="default">사용 안함</option>
-            <option th:each="item : ${list}" th:value="${item.coupon.name}"
-                    th:text="${item.coupon.name}"></option>
+            <option th:each="item : ${list}" th:value="${item.id}"
+                    th:text="${item.coupon.name}">
+            </option>
         </select>
     </div>
 </form>

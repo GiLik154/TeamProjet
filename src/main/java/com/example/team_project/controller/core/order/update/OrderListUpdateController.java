@@ -39,6 +39,9 @@ public class OrderListUpdateController {
     public ModelAndView update(@SessionAttribute("userId") Long userId, @RequestParam Long orderListId, @RequestParam Long userAddressId) {
         orderListUpdateService.update(userId, orderListId, userAddressId);
 
-        return new ModelAndView("redirect:/order_list/view/");
+        ModelAndView modelAndView = new ModelAndView("redirect:/order_list/view");
+        modelAndView.addObject("orderListId", orderListId);
+
+        return modelAndView;
     }
 }

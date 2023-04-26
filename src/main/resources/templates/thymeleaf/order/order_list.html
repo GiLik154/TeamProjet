@@ -17,7 +17,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>주문내역</h1>
+    <h1>주문리스트</h1>
     <table class="table table-bordered">
         <thead class="thead-light">
         <tr>
@@ -30,33 +30,40 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="orderList : ${order_list}">
+        <tr th:each="order_list : ${orderList}">
             <td>
-                <a th:href="@{/order_list/view/detail/{orderListId}(orderListId=${orderList.id})}">
-                    <span th:text="${orderList.id}"></span>
+                <a th:href="@{/order_list/view/detail/{orderListId}(orderListId=${order_list.id})}">
+                    <span th:text="${order_list.id}"></span>
                 </a>
             </td>
-            <td th:text="${orderList.orderDate}"></td>
-            <td th:text="${orderList.userAddress != null ? orderList.userAddress.streetAddress + ' ' + orderList.userAddress.detailedAddress : '주소 없음'}"></td>
-            <td>
-                <form th:action="@{/order_list/update_address/{orderListId}(orderListId=${orderList.id})}" method="get">
-                    <button type="submit" class="btn btn-danger btn-sm">수정하기</button>
-                </form>
-            </td>
-            <td th:if="${orderList.status}">
-                <form th:action="@{/order_list/cancel/{orderListId}(orderListId=${orderList.id})}"
+            <td th:text="${order_list.orderDate}"></td>
+            <td th:text="${order_list.userAddress != null ? order_list.userAddress.streetAddress + ' ' + order_list.userAddress.detailedAddress : '주소 없음'}"></td>
+            <td th:if="${order_list.status}">
+                <form th:action="@{/order_list/update_address/{orderListId}(orderListId=${order_list.id})}"
                       method="get">
-                    <button type="submit" class="btn btn-danger btn-sm">취소</button>
+                    <button type="submit" class="btn btn-primary">수정하기</button>
                 </form>
             </td>
-            <td th:if="${not orderList.status}">처리완료</td>
-
-            <td th:if="${orderList.status}">
-                <form th:action="@{/order/payment}" method="get">
+            <td th:if="${not order_list.status}">
+                <button type="button" class="btn btn-secondary btn-sm" disabled>수정 불가능</button>
+            </td>
+            <td th:if="${order_list.status}">
+                <form th:action="@{/order_list/cancel/{orderListId}(orderListId=${order_list.id})}"
+                      method="get">
+                    <button type="submit" class="btn btn-primary">취소</button>
+                </form>
+            </td>
+            <td th:if="${not order_list.status}">
+                <button type="button" class="btn btn-secondary btn-sm" disabled>취소 완료</button>
+            </td>
+            <td th:if="${order_list.paymentsStatus}">
+                <form th:action="@{/order/payment(orderListId=${order_list.id})}" method="get">
                     <button type="submit" class="btn btn-primary">결제하기</button>
                 </form>
             </td>
-            <td th:if="${not orderList.status}">처리완료</td>
+            <td th:if="${not order_list.paymentsStatus}">
+                <button type="button" class="btn btn-secondary btn-sm" disabled>결제 완료</button>
+            </td>
         </tr>
         </tbody>
     </table>
