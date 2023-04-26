@@ -1,10 +1,12 @@
 package com.example.team_project;
 
-
+import com.example.team_project.domain.domain.user.service.auth.UserLoginService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.ProviderManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -19,6 +21,9 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 public class SecurityConfig {
 
+    private final UserLoginService userLoginService;
+
+    private final UserDetailsService userDetailsService;
 
 
     @Bean
@@ -63,11 +68,18 @@ public class SecurityConfig {
 
 
         http.logout() // 로그아웃 처리
+                .logoutUrl("/user/logout") // 로그아웃 처리 URL(기본이 post)
                 .logoutSuccessUrl("/main") // 로그아웃 성공 URL
                 .invalidateHttpSession(true) // 세션 무효화
                 .deleteCookies("JSESSIONID") // 로그아웃 성공 시 제거할 쿠키명
         ;
 
+        http.rememberMe() // 사용자 저장
+                .rememberMeParameter("idMaintain") // default 파라미터는 remember-me
+                .tokenValiditySeconds(604800) // 7일로 설정(default 14일)
+                .alwaysRemember(false)
+                .userDetailsService(userDetailsService)
+        ;
 
         http.sessionManagement()
                 .maximumSessions(1) // -1 무제한
@@ -80,12 +92,14 @@ public class SecurityConfig {
         ;
 
 
+
         return http.build();
     }
 
 
     @Bean
     public PasswordEncoder passwordEncoder() {
+
         return PasswordEncoderFactories.createDelegatingPasswordEncoder();
     }
 
@@ -97,7 +111,13 @@ public class SecurityConfig {
      * 또한, FormLogin과 동일하게 AuthenticationManager로는 구현체인 ProviderManager 사용(return ProviderManager)
      *
      */
-
+    @Bean
+    public AuthenticationManager authenticationManager() {
+        DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+        provider.setPasswordEncoder(passwordEncoder());
+        provider.setUserDetailsService(userLoginService);
+        return new ProviderManager(provider);
+    }
 
 
     /**

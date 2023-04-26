@@ -102,10 +102,12 @@ public class User extends BaseTimeEntity {
     /**
      * 유저의 정보를 변경하는 메서드들
      */
+
     public void modify(User updatedUser) {
         this.password = updatedUser.getPassword();
         this.userName = updatedUser.getUserName();
         this.phoneNumber = updatedUser.getPhoneNumber();
+
     }
 
 

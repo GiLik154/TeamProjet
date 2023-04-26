@@ -19,7 +19,7 @@ import java.net.UnknownServiceException;
 public class SellerLoginService {
 
     private final SellerRepository sellerRepository;
-    private final PasswordEncoder bCryptPasswordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
     /**
      * 로그인 id,pw 체크
@@ -31,7 +31,7 @@ public class SellerLoginService {
 
         Seller seller = sellerRepository.validateSeller(ownerId);
 
-        if (!seller.isValidPassword(bCryptPasswordEncoder, password)) {
+        if (!seller.isValidPassword(passwordEncoder, password)) {
             throw new NotPasswordException("비밀번호를 다시 확인해주세요");
         }
         return seller.getOwnerId();
