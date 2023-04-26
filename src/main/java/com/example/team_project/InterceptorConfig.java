@@ -23,30 +23,13 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .excludePathPatterns("/main/**")
                 .excludePathPatterns("/seller/sellerEmailInputForm/**")
                 .excludePathPatterns("/seller/sellerPasswordUpdateForm/**")
-                .excludePathPatterns("/user/login/**")
                 .excludePathPatterns("/seller/join-form/**")
-                .excludePathPatterns("/user/join/**");
+                .excludePathPatterns("/user/**")
+                .excludePathPatterns("/order_list/**");
 
         registry.addInterceptor(new SellerLoginInterceptor())
                 .order(1)
-                .excludePathPatterns("/static/css/**")
-                .excludePathPatterns("/static/js/**")
-                .excludePathPatterns("/*.ico")
-                .excludePathPatterns("/seller/login-form/**")
-                .excludePathPatterns("/seller/searchId/**")
-                .excludePathPatterns("/seller/searchPassword/**")
-                .excludePathPatterns("/seller/join-form/**")
-                .excludePathPatterns("/seller/sellerEmailInputForm/**")
-                .excludePathPatterns("/product/detail/**")
-                .excludePathPatterns("/seller/sellerPasswordUpdateForm/**")
-                .excludePathPatterns("/seller/update/**")
-                .excludePathPatterns("/seller/join-form/**")
-                .excludePathPatterns("/update/like/**")
-                .excludePathPatterns("/shop/join/**")
-                .excludePathPatterns("/main/**")
-                .excludePathPatterns("/user/login/**")
-                .excludePathPatterns("/user/signup/**")
-                .excludePathPatterns("/post/list/**")
-                .excludePathPatterns("/post/read/**");
+                .addPathPatterns("/seller/**");
+
     }
 }
