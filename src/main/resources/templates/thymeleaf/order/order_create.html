@@ -42,7 +42,8 @@
                             <button type="submit" class="btn btn-primary mr-2">장바구니</button>
                         </div>
                         <div>
-                            <button type="button" onclick="window.history.back()" class="btn btn-primary">취소</button>
+                            <a th:href="@{/product/detail/{id}(id=${productId})}"
+                               class="btn btn-primary" style="white-space: nowrap;">취소</a>
                         </div>
                     </div>
                 </div>

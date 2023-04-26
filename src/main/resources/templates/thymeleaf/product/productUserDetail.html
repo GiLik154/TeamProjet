@@ -5,6 +5,7 @@
 
     <meta charset="UTF-8">
     <title>Product User Detail</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/productUserDetail.css">
 </head>
 
@@ -42,6 +43,11 @@
                                    style="width: 35px;height: 35px; border-radius: 9px; border-style: double" value="1">
             <button type="submit">구매하기</button>
         </form>
+
+        <div>
+            <a th:href="@{/main}"
+               class="btn btn-primary" style="white-space: nowrap;">메인으로</a>
+        </div>
 
         <form th:action="@{/update/like}">
             <input type="hidden" name="productId" th:value="${productId}">
@@ -94,7 +100,7 @@
         </tr>
     </table>
 </div>
-<div class=" pagination">
+<div class="pagination">
     <div th:if="${startPage != 1}">
         <a th:href="@{/product/detail/{productId}(productId=${productDetail.id},page=${startPage - limitPage})}">
             이전
