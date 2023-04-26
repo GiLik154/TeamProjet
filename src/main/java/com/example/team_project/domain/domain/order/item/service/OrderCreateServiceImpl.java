@@ -22,12 +22,11 @@ import javax.transaction.Transactional;
 @RequiredArgsConstructor
 public class OrderCreateServiceImpl implements OrderCreateService {
     private final UserRepository userRepository;
+    private final UserCouponRepository userCouponRepository;
     private final ProductRepository productRepository;
     private final OrderRepository orderRepository;
     private final OrderListRepository orderListRepository;
     private final OrderListAddService orderListAddService;
-    private final UserCouponRepository userCouponRepository;
-    private final OrderListAddServiceImpl orderListAddServiceImpl;
 
     @Override
     public Long create(Long userId, Long productId, int quantity, Long couponId) {
@@ -51,11 +50,7 @@ public class OrderCreateServiceImpl implements OrderCreateService {
     private OrderToProduct createOrderToProduct(Long productId, int quantity) {
         Product product = productRepository.validateProductId(productId);
 
-        OrderToProduct orderToProduct = new OrderToProduct(product, quantity);
-
-        product.increaseSalesCountAndDecreaseStock(quantity);
-
-        return orderToProduct;
+        return new OrderToProduct(product, quantity);
     }
 
     private void orderToUpdateApplyCoupon(Long userId, Order order, Long couponId) {

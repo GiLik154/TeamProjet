@@ -17,8 +17,7 @@
   });
 </script>
 
-<form th:action="@{/order_list/cancel}" method="post">
-  <input type="hidden" name="orderListId" th:value="${orderListId}">
+<form th:action="@{/order_list/cancel(orderListId=${orderListId})}" method="post">
 </form>
 
 

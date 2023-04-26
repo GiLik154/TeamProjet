@@ -12,7 +12,7 @@
         <label for="couponName">결제 방법:</label>
         <select class="form-control" id="couponName" name="couponName" onchange="this.form.submit()" required>
             <option value="default">사용 안함</option>
-            <option th:each="item : ${list}" th:value="${item.coupon.name}"
+            <option th:each="item : ${list}" th:value="${item.id}"
                     th:text="${item.coupon.name}"></option>
         </select>
     </div>

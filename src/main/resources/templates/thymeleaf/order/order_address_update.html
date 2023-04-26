@@ -16,10 +16,12 @@
             <input type="hidden" id="orderListId" name="orderListId" th:value="${orderList.id}">
             <select class="form-control" id="address" name="userAddressId" required>
                 <option value="" selected disabled
-                        th:text="${orderList.userAddress.streetAddress} + ${orderList.userAddress.detailedAddress}"></option>
+                        th:text="${orderList.userAddress != null ? orderList.userAddress.streetAddress + ' ' + orderList.userAddress.detailedAddress : '주소 없음'}">
+                </option>
                 <option th:each="address : ${user_address_list}" th:value="${address.id}"
                         th:text="${address.streetAddress+ ' ' + address.detailedAddress}"
-                        th:if="${address.id != orderList.userAddress.id}">
+                        <!-- todo orderList.userAddress null 일경우 처리 -->
+                        th:if="${orderList.userAddress != null && address.id != orderList.userAddress.id}">
                 </option>
             </select>
         </div>
