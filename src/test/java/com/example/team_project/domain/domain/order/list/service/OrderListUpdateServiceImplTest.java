@@ -19,9 +19,7 @@ import com.example.team_project.domain.domain.shop.shop.domain.Shop;
 import com.example.team_project.domain.domain.shop.shop.domain.ShopRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
-import com.example.team_project.enums.OrderStatus;
-import com.example.team_project.enums.PaymentType;
-import com.example.team_project.enums.ProductCategoryStatus;
+import com.example.team_project.enums.*;
 import com.example.team_project.exception.InvalidAddressException;
 import com.example.team_project.exception.NotFoundAddressException;
 import com.example.team_project.exception.OrderListNotFoundException;
@@ -67,11 +65,11 @@ class OrderListUpdateServiceImplTest {
     @Test
     void 주소지변경_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
@@ -80,7 +78,7 @@ class OrderListUpdateServiceImplTest {
         userAddressRepository.save(userAddress1);
         Long userAddress1Id = userAddress1.getId();
 
-         OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
         Long orderListId = orderList.getId();
 
@@ -98,15 +96,16 @@ class OrderListUpdateServiceImplTest {
         assertEquals("익산아파트101호", orderList1.getUserAddress().getDetailedAddress());
         assertEquals("22222", orderList1.getUserAddress().getZipCode());
     }
+
     @Test
     void 주소지_결제_변경_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "");
-        Payment payment1 = new Payment(user, PaymentType.TRANSFER, "2222", "");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment1 = new Payment(user, PaymentType.TRANSFER, "2222");
         paymentRepository.save(payment);
         paymentRepository.save(payment1);
         Long payment1Id = payment1.getId();
@@ -117,7 +116,7 @@ class OrderListUpdateServiceImplTest {
         userAddressRepository.save(userAddress1);
         Long userAddress1Id = userAddress1.getId();
 
-         OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
         Long orderListId = orderList.getId();
 
@@ -134,18 +133,18 @@ class OrderListUpdateServiceImplTest {
         assertEquals("전라북도 익산시", orderList1.getUserAddress().getStreetAddress());
         assertEquals("익산아파트101호", orderList1.getUserAddress().getDetailedAddress());
         assertEquals("TRANSFER", orderList1.getPayment().getPaymentType().name());
-        assertEquals("2222", orderList1.getPayment().getCardNumber());
+        assertEquals("2222", orderList1.getPayment().getAccountNumber());
         assertEquals("22222", orderList1.getUserAddress().getZipCode());
     }
 
     @Test
     void 주소지변경_없는주소지_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
@@ -154,7 +153,7 @@ class OrderListUpdateServiceImplTest {
         userAddressRepository.save(userAddress1);
         Long userAddress1Id = userAddress1.getId();
 
-         OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
         Long orderListId = orderList.getId();
 
@@ -166,14 +165,15 @@ class OrderListUpdateServiceImplTest {
         //then
         assertEquals("Not Found Address", notFoundAddressException.getMessage());
     }
+
     @Test
     void 주소지변경_유저고유번호다름_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
@@ -182,7 +182,7 @@ class OrderListUpdateServiceImplTest {
         userAddressRepository.save(userAddress1);
         Long userAddress1Id = userAddress1.getId();
 
-         OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
         Long orderListId = orderList.getId();
 
@@ -194,14 +194,15 @@ class OrderListUpdateServiceImplTest {
         //then
         assertEquals("This user could not be found", userNotFoundException.getMessage());
     }
+
     @Test
     void 주소지변경_주문리스트고유번호다름_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111", "");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
@@ -210,7 +211,7 @@ class OrderListUpdateServiceImplTest {
         userAddressRepository.save(userAddress1);
         Long userAddress1Id = userAddress1.getId();
 
-         OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
         Long orderListId = orderList.getId();
 

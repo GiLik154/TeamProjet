@@ -56,6 +56,7 @@
                 <td th:text="${order.orderToProduct.product.name}"></td>
                 <td th:text="${order.orderToProduct.quantity}"></td>
                 <td th:text="${order.orderToProduct.status}"></td>
+                <td th:text="${order.orderToProduct.totalPrice}">원</td>
 
                 <div class="form-group"
                      th:hx-get="@{'/coupon/apply-coupon-list/' + ${order.orderToProduct.product.id} + '/' + ${order.orderToProduct.quantity}(price=${order.orderToProduct.totalPrice})}"
@@ -103,12 +104,11 @@
             <label for="paymentMethod">결제 방법:</label>
             <select class="form-control" id="paymentMethod" name="paymentId" required>
                 <option value="" selected disabled>결제방법을 선택해주세요.</option>
-                <!-- todo payment에 맞춰서 옵션값 선택할 수 있게 -->
                 <option th:each="payment : ${paymentList}" th:value="${payment.id}">
                          <span th:if="${payment.paymentType == T(com.example.team_project.enums.PaymentType).CARD}"
-                               th:text="${payment.paymentType + ' ' + payment.cardNumber}"></span>
+                               th:text="${payment.paymentType + ' ' + payment.number}"></span>
                     <span th:if="${payment.paymentType == T(com.example.team_project.enums.PaymentType).TRANSFER}"
-                          th:text="${payment.paymentType + ' ' + payment.accountNumber}"></span>
+                          th:text="${payment.paymentType + ' ' + payment.number}"></span>
                 </option>
             </select>
         </div>

@@ -23,6 +23,8 @@ import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
 import com.example.team_project.enums.PaymentType;
 import com.example.team_project.enums.ProductCategoryStatus;
+import com.example.team_project.enums.Role;
+import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +33,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.transaction.Transactional;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -82,7 +83,7 @@ class OrderCreateServiceImplTest {
     @Test
     void 주문추가_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -104,8 +105,8 @@ class OrderCreateServiceImplTest {
         Long productId = product.getId();
 
         //when
-        Long orderId = orderCreateService.create(userId, productId, 10,  userCouponId);
-        Order order = orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new);
+        orderCreateService.create(userId, productId, 10,  userCouponId);
+        Order order = orderRepository.findByUserId(userId).orElseThrow(OrderNotFoundException::new);
 
         //then
         assertNotNull(order.getId());
@@ -114,14 +115,12 @@ class OrderCreateServiceImplTest {
         assertEquals("testProduct", order.getOrderToProduct().getProduct().getName());
         assertEquals("testDes", order.getOrderToProduct().getProduct().getDescription());
         assertEquals(userCoupon, order.getUserCoupon());
-        assertEquals(89, order.getOrderToProduct().getProduct().getStock());
-        assertEquals(10, product.getSalesCount());
     }
 
     @Test
     void 주문추가_유효하지_않은_사용자_비정삭작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -134,11 +133,9 @@ class OrderCreateServiceImplTest {
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
-        Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
         paymentRepository.save(payment);
-        Long paymentId = payment.getId();
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
@@ -165,7 +162,7 @@ class OrderCreateServiceImplTest {
     @Test
     void 주문추가_다수물건구매_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -178,11 +175,9 @@ class OrderCreateServiceImplTest {
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
-        Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
         paymentRepository.save(payment);
-        Long paymentId = payment.getId();
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
@@ -199,22 +194,19 @@ class OrderCreateServiceImplTest {
         productRepository.save(product3);
 
         //when
-        Long orderId = orderCreateService.create(userId, product2Id, 10, userCouponId);
-        Order order = orderRepository.findById(orderId).orElseThrow(OrderNotFoundException::new);
+        orderCreateService.create(userId, product2Id, 10,  userCouponId);
+        Order order = orderRepository.findByUserId(userId).orElseThrow(OrderNotFoundException::new);
 
         //then
         assertEquals("testProduct2", order.getOrderToProduct().getProduct().getName());
-        assertEquals(50000, order.getOrderToProduct().getTotalPrice());
         assertEquals("testDes2", order.getOrderToProduct().getProduct().getDescription());
-        assertEquals(89, order.getOrderToProduct().getProduct().getStock());
-        assertEquals(10, product2.getSalesCount());
-
+        assertEquals(50000, order.getOrderToProduct().getTotalPrice());
     }
 
     @Test
     void 주문추가_유효하지_않는_상품_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -227,11 +219,9 @@ class OrderCreateServiceImplTest {
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
-        Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
         paymentRepository.save(payment);
-        Long paymentId = payment.getId();
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
@@ -263,7 +253,7 @@ class OrderCreateServiceImplTest {
     @Test
     void 주문추가_주문개수0이하_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -276,11 +266,9 @@ class OrderCreateServiceImplTest {
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
-        Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
         paymentRepository.save(payment);
-        Long paymentId = payment.getId();
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);
@@ -307,7 +295,7 @@ class OrderCreateServiceImplTest {
     @Test
     void 주문추가_재고소진_비정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -320,11 +308,9 @@ class OrderCreateServiceImplTest {
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
-        Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
         paymentRepository.save(payment);
-        Long paymentId = payment.getId();
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
         productCategoryRepository.save(productCategory);

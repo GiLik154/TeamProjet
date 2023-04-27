@@ -21,5 +21,5 @@ public interface OrderCreateService {
      * @throws ProductNotFoundException :해당 상품을 찾을 수 없을 때
      * @throws OutOfStockException      : 주문하려는 상품의 재고가 떨어졌거나 부족할 때
      **/
-    Long create(Long userId, Long productId, int quantity, Long couponId);
+    void create(Long userId, Long productId, int quantity, Long couponId);
 }

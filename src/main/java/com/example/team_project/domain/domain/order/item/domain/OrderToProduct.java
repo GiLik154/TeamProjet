@@ -19,21 +19,12 @@ public class OrderToProduct {
     @ManyToOne(fetch = FetchType.LAZY)
     private Product product;
 
-    /**
-     * 주문 상품의 현재 상태
-     **/
     @Enumerated(EnumType.STRING)
     private OrderStatus status;
 
-    /**
-     * 주문 개수
-     **/
     @Column(nullable = false)
     private int quantity;
 
-    /**
-     * 주문 개수에 따른 총 가격
-     **/
     @Column(nullable = false)
     private int totalPrice;
 
