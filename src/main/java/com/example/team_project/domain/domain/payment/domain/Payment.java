@@ -31,7 +31,7 @@ public class Payment {
         }
 
 
-        public Payment(User user, String paymentName, PaymentType paymentType, String number, int billing) {
+        public Payment(User user, String paymentName, PaymentType paymentType, String number) {
                 this.user = user;
                 this.paymentName = paymentName;
                 this.paymentType = paymentType;
