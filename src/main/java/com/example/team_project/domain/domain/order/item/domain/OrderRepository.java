@@ -57,13 +57,13 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findCancelableOrders(@Param("orderListId") Long orderListId);
 
     @Query("SELECT o FROM Order o WHERE o.orderList.id = :orderListId " +
-            "AND o.orderToProduct.status = 'SHIPPED' " +
-            "or o.orderToProduct.status = 'DELIVERED' ")
+            "AND (o.orderToProduct.status = 'SHIPPED' " +
+            "or o.orderToProduct.status = 'DELIVERED') ")
     List<Order> findNotCancelableOrders(@Param("orderListId") Long orderListId);
 
     @Query("SELECT o FROM Order o WHERE o.orderList.id = :orderListId " +
-            "AND o.orderToProduct.status = 'SHIPPED' " +
-            "or o.orderToProduct.status = 'DELIVERED' ")
+            "AND (o.orderToProduct.status = 'SHIPPED' " +
+            "or o.orderToProduct.status = 'DELIVERED') ")
     List<Order> findShippedAndDeliveredOrders(@Param("orderListId") Long orderListId);
 
     /**

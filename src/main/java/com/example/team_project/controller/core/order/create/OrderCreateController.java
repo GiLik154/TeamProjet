@@ -45,7 +45,7 @@ public class OrderCreateController {
 
         Long userCouponId = (Long) httpSession.getAttribute(couponName);
 
-        Long order = orderCreateService.create(userId,
+        orderCreateService.create(userId,
                 orderCreateDto.getProductId(),
                 orderCreateDto.getQuantity(),
                 userCouponId);

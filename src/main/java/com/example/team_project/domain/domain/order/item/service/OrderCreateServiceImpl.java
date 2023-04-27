@@ -27,10 +27,9 @@ public class OrderCreateServiceImpl implements OrderCreateService {
     private final OrderListRepository orderListRepository;
     private final OrderListAddService orderListAddService;
     private final UserCouponRepository userCouponRepository;
-    private final OrderListAddServiceImpl orderListAddServiceImpl;
 
     @Override
-    public Long create(Long userId, Long productId, int quantity, Long couponId) {
+    public void create(Long userId, Long productId, int quantity, Long couponId) {
         User user = userRepository.validateUserId(userId);
         OrderList orderList = findAvailableOrderList(userId);
 
@@ -38,8 +37,6 @@ public class OrderCreateServiceImpl implements OrderCreateService {
         orderRepository.save(order);
 
         orderToUpdateApplyCoupon(userId, order, couponId);
-
-        return order.getId();
     }
 
     private OrderList findAvailableOrderList(Long userId) {
@@ -51,11 +48,7 @@ public class OrderCreateServiceImpl implements OrderCreateService {
     private OrderToProduct createOrderToProduct(Long productId, int quantity) {
         Product product = productRepository.validateProductId(productId);
 
-        OrderToProduct orderToProduct = new OrderToProduct(product, quantity);
-
-        product.increaseSalesCountAndDecreaseStock(quantity);
-
-        return orderToProduct;
+        return new OrderToProduct(product, quantity);
     }
 
     private void orderToUpdateApplyCoupon(Long userId, Order order, Long couponId) {

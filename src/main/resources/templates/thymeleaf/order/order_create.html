@@ -18,9 +18,9 @@
                     <img id="productImage" th:src="${product.image}" alt="상품 이미지" class="img-fluid">
                 </div>
                 <div class="col-md-8">
-                    <label for="productId">상품명:</label>
-                    <input type="text" class="form-control" id="productId" name="productId" th:value="${product.id}"
-                           readonly>
+                    <label for="productId">상품명: </label>
+                    <input type="text" class="form-control" th:value="${product.name}" readonly>
+                    <input type="hidden" id="productId" name="productId" th:value="${product.id}">
                     <div class="form-group">
                         <label for="quantity">주문 수량:</label>
                         <input type="number" class="form-control" id="quantity" name="quantity" th:value="${quantity}"

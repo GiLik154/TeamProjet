@@ -19,9 +19,7 @@ import com.example.team_project.domain.domain.shop.shop.domain.Shop;
 import com.example.team_project.domain.domain.shop.shop.domain.ShopRepository;
 import com.example.team_project.domain.domain.user.domain.User;
 import com.example.team_project.domain.domain.user.domain.UserRepository;
-import com.example.team_project.enums.OrderStatus;
-import com.example.team_project.enums.PaymentType;
-import com.example.team_project.enums.ProductCategoryStatus;
+import com.example.team_project.enums.*;
 import com.example.team_project.exception.CannotCancelOrderException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,10 +75,10 @@ class OrderListCancelServiceImplTest {
     @Test
     void 주문리스트_취소_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -100,7 +98,7 @@ class OrderListCancelServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-         OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
         Long orderListId = orderList.getId();
 
@@ -123,10 +121,10 @@ class OrderListCancelServiceImplTest {
     @Test
     void 주문리스트_취소불가_정상작동() {
         //given
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111","");
+        Payment payment = new Payment(user, PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -146,8 +144,7 @@ class OrderListCancelServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-
-         OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
+        OrderList orderList = new OrderList(user, userAddress, payment, LocalDate.now());
         orderListRepository.save(orderList);
         Long orderListId = orderList.getId();
 
