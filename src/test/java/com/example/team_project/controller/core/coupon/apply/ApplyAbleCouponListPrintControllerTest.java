@@ -75,7 +75,7 @@ class ApplyAbleCouponListPrintControllerTest {
 
     @Test
     void Get_사용_가능_쿠폰_출력_정상작동() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -115,7 +115,7 @@ class ApplyAbleCouponListPrintControllerTest {
 
     @Test
     void Get_사용_가능_쿠폰_출력_물건_고유번호_다름() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -147,7 +147,7 @@ class ApplyAbleCouponListPrintControllerTest {
 
         mockMvc.perform(builder)
                 .andExpect(status().isOk())
-                .andExpect(forwardedUrl("thymeleaf/seller/error-page"))
+                .andExpect(forwardedUrl("thymeleaf/error/error-page"))
                 .andExpect(model().attributeDoesNotExist("list"))
                 .andExpect(model().attribute("errorMessage", "This product does not exist"));
     }

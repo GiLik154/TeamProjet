@@ -58,7 +58,7 @@ class CouponIssuePostControllerTest {
 
     @Test
     void 쿠폰_발급_정상_작동() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -88,7 +88,7 @@ class CouponIssuePostControllerTest {
 
     @Test
     void 쿠폰_발급_발급_횟수_정상() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -121,7 +121,7 @@ class CouponIssuePostControllerTest {
 
     @Test
     void 쿠폰_발급_기한_만료_쿠폰() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -147,7 +147,7 @@ class CouponIssuePostControllerTest {
 
     @Test
     void 쿠폰_발급_발급_횟수_초과() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -175,7 +175,7 @@ class CouponIssuePostControllerTest {
 
     @Test
     void 쿠폰_발급_유저_고유번호_다름() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 

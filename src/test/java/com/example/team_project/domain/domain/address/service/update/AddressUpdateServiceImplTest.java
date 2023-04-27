@@ -31,7 +31,7 @@ class AddressUpdateServiceImplTest {
 
     @Test
     void 주소_업데이트_정상작동() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -68,7 +68,7 @@ class AddressUpdateServiceImplTest {
 
     @Test
     void 주소_업데이트_유저_고유번호다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -104,7 +104,7 @@ class AddressUpdateServiceImplTest {
 
     @Test
     void 주소_업데이트_주소_고유번호_다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 

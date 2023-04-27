@@ -55,41 +55,41 @@ class BaseReviewUpdateServiceTest {
     }
 
     @Test
-    void 베이스_게시물_리뷰_업데이트_정상작동(){
+    void 베이스_게시물_리뷰_업데이트_정상작동() {
         byte[] imageBytes = "test-image".getBytes();
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId1", "testPw1", "testNane", "testNumber");
+        User user = new User("testId1", "testPw1", "testNane", "testEmail", "testNumber");
         userRepository.save(user);
 
         PostCategoryStatus status = PostCategoryStatus.valueOf("PRODUCT_INQUIRY");
 
-        Post post = new Post("postTitle","postContent", "postTime", user,new PostCategory(status));
+        Post post = new Post("postTitle", "postContent", "postTime", user, new PostCategory(status));
         postRepository.save(post);
 
-        BaseReview baseReview = new BaseReview(user,"reviewTitle","reviewContent","reviewTime", new ReviewToKinds(new PostReview()));
+        BaseReview baseReview = new BaseReview(user, "reviewTitle", "reviewContent", "reviewTime", new ReviewToKinds(new PostReview()));
         baseReviewRepository.save(baseReview);
 
         ReviewDto reviewDto = new ReviewDto("reviewTitle2", "reviewContent2", "PostReview", post.getId());
 
-        baseReviewUpdateService.update(baseReview.getId(), user.getId(),reviewDto,file);
+        baseReviewUpdateService.update(baseReview.getId(), user.getId(), reviewDto, file);
         BaseReview testBaseReview = baseReviewRepository.findById(baseReview.getId()).get();
 
-        assertEquals(user,testBaseReview.getUser());
+        assertEquals(user, testBaseReview.getUser());
         assertNull(testBaseReview.getReviewToKinds().getProductReview());
-        assertEquals("reviewTitle2",testBaseReview.getTitle());
-        assertEquals("reviewContent2",testBaseReview.getContent());
+        assertEquals("reviewTitle2", testBaseReview.getTitle());
+        assertEquals("reviewContent2", testBaseReview.getContent());
         assertNotNull(testBaseReview.getImagePath());
     }
 
     @Test
-    void 베이스_상품_리뷰_업데이트_정상작동(){
+    void 베이스_상품_리뷰_업데이트_정상작동() {
         byte[] imageBytes = "test-image".getBytes();
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId1", "testPw1", "testNane", "testNumber");
+        User user = new User("testId1", "testPw1", "testNane", "testEmail", "testNumber");
         userRepository.save(user);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -101,49 +101,49 @@ class BaseReviewUpdateServiceTest {
         Product product = new Product("productTest", null, "imageTest", 1, 10, null);
         productRepository.save(product);
 
-        BaseReview baseReview = new BaseReview(user,"title","content","time", new ReviewToKinds(new ProductReview()));
+        BaseReview baseReview = new BaseReview(user, "title", "content", "time", new ReviewToKinds(new ProductReview()));
         baseReviewRepository.save(baseReview);
 
-        ReviewDto reviewDto = new ReviewDto("title2","content2", "ProductReview", product.getId());
+        ReviewDto reviewDto = new ReviewDto("title2", "content2", "ProductReview", product.getId());
 
-        baseReviewUpdateService.update(baseReview.getId(), user.getId(),reviewDto,file);
+        baseReviewUpdateService.update(baseReview.getId(), user.getId(), reviewDto, file);
         BaseReview testBaseReview = baseReviewRepository.findById(baseReview.getId()).get();
 
-        assertEquals(user,testBaseReview.getUser());
+        assertEquals(user, testBaseReview.getUser());
         assertNull(testBaseReview.getReviewToKinds().getPostReview());
-        assertEquals("title2",testBaseReview.getTitle());
-        assertEquals("content2",testBaseReview.getContent());
+        assertEquals("title2", testBaseReview.getTitle());
+        assertEquals("content2", testBaseReview.getContent());
         assertNotNull(testBaseReview.getImagePath());
     }
 
     @Test
-    void 베이스_리뷰_업데이트_유저다름(){
+    void 베이스_리뷰_업데이트_유저다름() {
         byte[] imageBytes = "test-image".getBytes();
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId1", "testPw1", "testNane", "testNumber");
+        User user = new User("testId1", "testPw1", "testNane", "testEmail1", "testNumber1");
         userRepository.save(user);
-        User user2 =new User("testId2", "testPw2", "testNane", "testNumber");
+        User user2 = new User("testId2", "testPw2", "testNane", "testEmail2", "testNumber2");
         userRepository.save(user2);
 
         PostCategoryStatus status = PostCategoryStatus.valueOf("PRODUCT_INQUIRY");
 
-        Post post = new Post("postTitle","postContent", "postTime", user, new PostCategory(status));
+        Post post = new Post("postTitle", "postContent", "postTime", user, new PostCategory(status));
         postRepository.save(post);
 
-        BaseReview baseReview = new BaseReview(user,"title","content","time", new ReviewToKinds(new PostReview()));
+        BaseReview baseReview = new BaseReview(user, "title", "content", "time", new ReviewToKinds(new PostReview()));
         baseReviewRepository.save(baseReview);
 
-        ReviewDto reviewDto = new ReviewDto("title","content2", "PostReview", post.getId());
+        ReviewDto reviewDto = new ReviewDto("title", "content2", "PostReview", post.getId());
 
-        baseReviewUpdateService.update(baseReview.getId(), user2.getId(),reviewDto,file);
+        baseReviewUpdateService.update(baseReview.getId(), user2.getId(), reviewDto, file);
         BaseReview testBaseReview = baseReviewRepository.findById(baseReview.getId()).get();
 
-        assertNotEquals(user2,testBaseReview.getUser());
+        assertNotEquals(user2, testBaseReview.getUser());
         assertNull(testBaseReview.getReviewToKinds().getProductReview());
-        assertNotEquals("content2",testBaseReview.getContent());
-        assertNotEquals("image2",testBaseReview.getImagePath());
+        assertNotEquals("content2", testBaseReview.getContent());
+        assertNotEquals("image2", testBaseReview.getImagePath());
         assertNull(testBaseReview.getImagePath());
     }
 }

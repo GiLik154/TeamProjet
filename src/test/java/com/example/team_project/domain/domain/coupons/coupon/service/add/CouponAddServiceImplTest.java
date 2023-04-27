@@ -49,7 +49,7 @@ class CouponAddServiceImplTest {
 
     @Test
     void 쿠폰_종류_생성_정상작동_할인율1() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 
@@ -65,7 +65,7 @@ class CouponAddServiceImplTest {
 
     @Test
     void 쿠폰_종류_생성_정상작동_할인율99() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 
@@ -81,7 +81,7 @@ class CouponAddServiceImplTest {
 
     @Test
     void 쿠폰_종류_생성_정상작동_최소구매1() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 
@@ -97,7 +97,7 @@ class CouponAddServiceImplTest {
 
     @Test
     void 쿠폰_종류_생성_할인율_0이하() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
         Long userId = user.getId();
@@ -112,7 +112,7 @@ class CouponAddServiceImplTest {
 
     @Test
     void 쿠폰_종류_생성_정상작동_데드라인_설정() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 
@@ -129,7 +129,7 @@ class CouponAddServiceImplTest {
 
     @Test
     void 쿠폰_종류_생성_정상작동_기간_설정() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 
@@ -146,7 +146,7 @@ class CouponAddServiceImplTest {
 
     @Test
     void 쿠폰_종류_생성_정상작동_기간And데드라인_설정() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 
@@ -165,7 +165,7 @@ class CouponAddServiceImplTest {
 
     @Test
     void 쿠폰_종류_생성_정상작동_카테고리_생성() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 
@@ -190,7 +190,7 @@ class CouponAddServiceImplTest {
 
     @Test
     void 쿠폰_종류_생성_정상작동_카테고리_생성_여러개() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 
@@ -221,7 +221,7 @@ class CouponAddServiceImplTest {
 
     @Test
     void 쿠폰_종류_생성_할인율_100이상() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
         Long userId = user.getId();
@@ -237,7 +237,7 @@ class CouponAddServiceImplTest {
 
     @Test
     void 쿠폰_종류_생성_최소구매_0미만() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
         Long userId = user.getId();
@@ -253,7 +253,7 @@ class CouponAddServiceImplTest {
 
     @Test
     void 쿠폰_종류_생성_유저_고유키_다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -267,7 +267,7 @@ class CouponAddServiceImplTest {
 
     @Test
     void 쿠폰_종류_생성_유저_등급_다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();

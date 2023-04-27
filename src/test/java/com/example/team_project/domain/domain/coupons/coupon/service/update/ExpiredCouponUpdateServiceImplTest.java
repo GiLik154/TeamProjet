@@ -37,7 +37,7 @@ class ExpiredCouponUpdateServiceImplTest {
 
     @Test
     void 기간_만료_쿠폰_정상작동() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);
@@ -54,7 +54,7 @@ class ExpiredCouponUpdateServiceImplTest {
 
     @Test
     void 기간_만료_쿠폰_정상_만료쿠폰_없음() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);
@@ -72,7 +72,7 @@ class ExpiredCouponUpdateServiceImplTest {
 
     @Test
     void 기간_만료_쿠폰_정상_섞여있음() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);
@@ -94,7 +94,7 @@ class ExpiredCouponUpdateServiceImplTest {
 
     @Test
     void 기간_만료_쿠폰_정상_여러개() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);

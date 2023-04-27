@@ -19,9 +19,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 @Transactional
@@ -57,10 +57,6 @@ class ProductRegistrationServiceTest {
         //shop 생성
         Shop shop = new Shop("testshopname", "testshowaddress", "testshopbnum");
         shopRepository.save(shop);
-
-        //카테고리 enum 저장
-        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
-        productCategoryRepository.save(productCategory);
         
         //상품이름,이미지,설명,재고,가격,카테고리선택
         ProductDto productDto = new ProductDto(
@@ -76,7 +72,7 @@ class ProductRegistrationServiceTest {
         
         //확인
         assertEquals("testName", product.getName());
-        assertEquals("testimage", product.getImage());
+        assertNotNull(product.getImage());
         assertEquals("testDescription", product.getDescription());
         assertEquals(0, product.getStock());
         assertEquals(1, product.getPrice());

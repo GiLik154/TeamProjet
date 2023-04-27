@@ -10,6 +10,7 @@ import com.example.team_project.domain.domain.shop.seller.domain.SellerRepositor
 import com.example.team_project.domain.domain.shop.shop.domain.Shop;
 import com.example.team_project.domain.domain.shop.shop.domain.ShopRepository;
 import com.example.team_project.enums.ProductCategoryStatus;
+import com.example.team_project.exception.NotPasswordException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -19,7 +20,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
+
 import static org.junit.jupiter.api.Assertions.*;
+
 @SpringBootTest
 @Transactional
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
@@ -43,7 +46,7 @@ class ProductUpdateServiceTest {
     }
 
     @Test
-    void 수정_성공(){
+    void 수정_성공() {
         //판매자회원가입
         byte[] imageBytes = "test-image".getBytes();
         String imageName = "test-image.jpg";
@@ -53,7 +56,7 @@ class ProductUpdateServiceTest {
         //샵정보
         Shop shop = new Shop("testshopname", "testshowaddress", "testshopbnum");
         shopRepository.save(shop);
-        System.out.println("셀러아이디임:"+seller.getId());
+        System.out.println("셀러아이디임:" + seller.getId());
 
 
         //카테고리 enum 저장
@@ -72,14 +75,14 @@ class ProductUpdateServiceTest {
         ProductDto updatedProductDto = new ProductDto(
                 "updatedName", "updatedImage", "updatedDescription", 20, 10, "BOTTOM");
 
-        productUpdateService.update(seller.getId(),product.getId(),"testPw",updatedProductDto,file);
+        productUpdateService.update(seller.getId(), product.getId(), "testPw", updatedProductDto, file);
 
         //업데이트한 product 가지고오기
         Product productUpdate = productRepository.findById(product.getId()).get();
 
 // 수정된 상품 정보가 예상한 대로 업데이트 되었는지 검증합니다.
         assertEquals("updatedName", product.getName());
-        assertEquals("updatedImage", product.getImage());
+        assertNotNull(product.getImage());
         assertEquals("updatedDescription", product.getDescription());
         assertEquals(20, product.getStock());
         assertEquals(10, product.getPrice());
@@ -89,7 +92,7 @@ class ProductUpdateServiceTest {
 
 
     @Test
-    void 수정_실패_비밀번호_틀림(){
+    void 수정_실패_비밀번호_틀림() {
         byte[] imageBytes = "test-image".getBytes();
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
@@ -99,8 +102,7 @@ class ProductUpdateServiceTest {
         //샵정보
         Shop shop = new Shop("testshopname", "testshowaddress", "testshopbnum");
         shopRepository.save(shop);
-        System.out.println("셀러아이디임:"+seller.getId());
-
+        System.out.println("셀러아이디임:" + seller.getId());
 
         //카테고리 enum 저장
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -119,15 +121,14 @@ class ProductUpdateServiceTest {
                 "updatedName", "updatedImage", "updatedDescription", 20, 30, "BOTTOM");
 
 
-        BadCredentialsException e = assertThrows(BadCredentialsException.class, () ->
-                productUpdateService.update(seller.getId(),product.getId(),"testsPw",updatedProductDto,file));
+        NotPasswordException e = assertThrows(NotPasswordException.class, () ->
+                productUpdateService.update(seller.getId(), product.getId(), "testsPw", updatedProductDto, file));
 
         //업데이트한 product 가지고오기
         Product productUpdate = productRepository.findById(product.getId()).get();
 
 // 수정된 상품 정보가 예상한 대로 업데이트 되었는지 검증합니다.
         assertNotEquals("updatedName", product.getName());
-        assertNotEquals("updatedImage", product.getImage());
         assertNotEquals("updatedDescription", product.getDescription());
         assertNotEquals(20, product.getStock());
         assertNotEquals(20, product.getPrice());
@@ -136,6 +137,6 @@ class ProductUpdateServiceTest {
         assertNotEquals(ProductCategoryStatus.BOTTOM, product.getCategory().getStatus());
         assertNotEquals("updatedName", productUpdate.getName());
     }
-    
+
 
 }

@@ -6,6 +6,7 @@ import com.example.team_project.domain.domain.shop.seller.domain.SellerRepositor
 import com.example.team_project.domain.domain.shop.shop.domain.Shop;
 import com.example.team_project.domain.domain.shop.shop.domain.ShopRepository;
 import com.example.team_project.domain.domain.shop.shop.service.update.ShopUpdateService;
+import com.example.team_project.exception.NotPasswordException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -72,7 +73,7 @@ import static org.junit.jupiter.api.Assertions.*;
         Long sellerId = seller.getId();
         Long shopId = shop.getShopId();
 
-        BadCredentialsException e = assertThrows(BadCredentialsException.class, () ->
+        NotPasswordException e = assertThrows(NotPasswordException.class, () ->
                 shopUpdateService.shopUpdate(sellerId, shopId, "testPsw", "testupdateshopName", "testupdateshopaddress"));
 
         Shop sellerUpdate = shopRepository.findById(shopId).get();

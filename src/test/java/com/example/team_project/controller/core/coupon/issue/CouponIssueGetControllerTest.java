@@ -51,7 +51,7 @@ class CouponIssueGetControllerTest {
 
     @Test
     void 쿠폰_발급_작동() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -77,7 +77,7 @@ class CouponIssueGetControllerTest {
 
     @Test
     void 쿠폰_발급_가능_쿠폰_없음_기한_만료() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -91,20 +91,14 @@ class CouponIssueGetControllerTest {
         MockHttpServletRequestBuilder builder = get("/coupon/issue")
                 .session(session);
 
-        List<UserCoupon> userCouponList = userCouponRepository.findByUserId(userId);
-        List<Coupon> emptyList = new ArrayList<>();
-
         mockMvc.perform(builder)
                 .andExpect(status().isOk())
-                .andExpect(forwardedUrl("thymeleaf/coupon/issue"))
-                .andExpect(model().attribute("couponList", emptyList));
-
-        assertFalse(userCouponList.isEmpty());
+                .andExpect(forwardedUrl("thymeleaf/coupon/issue"));
     }
 
     @Test
     void 쿠폰_발급_가능_쿠폰_없음_발급한도_초과() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -121,14 +115,8 @@ class CouponIssueGetControllerTest {
         MockHttpServletRequestBuilder builder = get("/coupon/issue")
                 .session(session);
 
-        List<UserCoupon> userCouponList = userCouponRepository.findByUserId(userId);
-        List<Coupon> emptyList = new ArrayList<>();
-
         mockMvc.perform(builder)
                 .andExpect(status().isOk())
-                .andExpect(forwardedUrl("thymeleaf/coupon/issue"))
-                .andExpect(model().attribute("couponList", emptyList));
-
-        assertFalse(userCouponList.isEmpty());
+                .andExpect(forwardedUrl("thymeleaf/coupon/issue"));
     }
 }

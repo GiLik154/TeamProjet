@@ -4,6 +4,8 @@ package com.example.team_project.domain.domain.shop.shop.service.login;
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.domain.domain.shop.seller.service.login.SellerLoginService;
+import com.example.team_project.exception.NotPasswordException;
+import com.example.team_project.exception.SellerNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -51,11 +53,11 @@ import static org.junit.jupiter.api.Assertions.*;
         sellerRepository.save(seller);
 
         // 존재하지 않는 판매자 ID로 로그인 시도
-        UsernameNotFoundException e = assertThrows(UsernameNotFoundException.class, () ->
+        SellerNotFoundException e = assertThrows(SellerNotFoundException.class, () ->
                 sellerLoginService.sellerLogin("test123", "test")
         );
 
-        assertEquals("Invalid seller", e.getMessage());
+        assertEquals("아이디가 존재 하지않습니다.", e.getMessage());
     }
 
     @Test
@@ -65,11 +67,11 @@ import static org.junit.jupiter.api.Assertions.*;
         sellerRepository.save(seller);
 
         // 존재하지 않는 판매자 Password 로그인 시도
-        BadCredentialsException e = assertThrows(BadCredentialsException.class, () ->
+        NotPasswordException e = assertThrows(NotPasswordException.class, () ->
                 sellerLoginService.sellerLogin("testId", "test123")
         );
 
-        assertEquals("Invalid password", e.getMessage());
+        assertEquals("비밀번호를 다시 확인해주세요", e.getMessage());
 
     }
 
@@ -80,11 +82,11 @@ import static org.junit.jupiter.api.Assertions.*;
         sellerRepository.save(seller);
 
         // 존재하지 않는 판매자 Id,Password 로그인 시도
-        UsernameNotFoundException e = assertThrows(UsernameNotFoundException.class, () ->
+        SellerNotFoundException e = assertThrows(SellerNotFoundException.class, () ->
                 sellerLoginService.sellerLogin("testsId", "test123")
         );
 
-        assertEquals("Invalid seller", e.getMessage());
+        assertEquals("아이디가 존재 하지않습니다.", e.getMessage());
 
     }
 
