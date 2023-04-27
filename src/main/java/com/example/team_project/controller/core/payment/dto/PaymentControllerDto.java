@@ -15,22 +15,20 @@ public class PaymentControllerDto {
     /**
      * 카드/계좌번호
      */
-    private final String Number;
+    private final String number;
     /**
      * 청구금액
      */
-    private final int billing;
 
 
-    public PaymentControllerDto(String paymentName, String paymentType, String Number, int billing) {
+    public PaymentControllerDto(String paymentName, String paymentType, String number) {
         this.paymentName = paymentName;
         this.paymentType = paymentType;
-        this.Number = Number;
-        this.billing = billing;
+        this.number = number;
 
     }
 
     public PaymentAddServiceDto convertServiceDto() {
-        return new PaymentAddServiceDto(this.paymentName, this.paymentType, this.Number, this.billing);
+        return new PaymentAddServiceDto(this.paymentName, this.paymentType, this.number);
     }
 }

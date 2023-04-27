@@ -50,7 +50,7 @@ public class PaymentServiceImpl implements PaymentService {
     public void addPayment(Long userId, PaymentAddServiceDto paymentAddServiceDto) {
         Payment payment = new Payment(getUser(userId), paymentAddServiceDto.getPaymentName(),
                 PaymentType.valueOf(paymentAddServiceDto.getPaymentType()),
-                paymentAddServiceDto.getNumber(), paymentAddServiceDto.getBilling());
+                paymentAddServiceDto.getNumber());
         paymentRepository.save(payment);
     }
 
