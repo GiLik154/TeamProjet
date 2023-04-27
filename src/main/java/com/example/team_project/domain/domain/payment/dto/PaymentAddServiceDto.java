@@ -12,13 +12,11 @@ public class PaymentAddServiceDto {
     /** 카드/계좌번호 */
     private final String Number;
     /** 청구금액 */
-    private final int billing;
 
 
-    public PaymentAddServiceDto(String paymentName, String paymentType, String Number, int billing) {
+    public PaymentAddServiceDto(String paymentName, String paymentType, String Number) {
         this.paymentName = paymentName;
         this.paymentType = paymentType;
         this.Number = Number;
-        this.billing = billing;
     }
 }
