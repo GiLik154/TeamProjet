@@ -16,14 +16,10 @@ import java.util.List;
 @RequiredArgsConstructor
 @RequestMapping("/coupon/my-coupon")
 public class UserCouponGetController {
-    private final UserRepository userRepository;
     private final UserCouponRepository userCouponRepository;
 
     @GetMapping
-    public String get(@SessionAttribute Long userId, Model model) {
-        userRepository.findById(userId).ifPresent(user ->
-                model.addAttribute("userGrade", user.getUserGrade()));
-
+    public String get() {
         return "thymeleaf/coupon/select";
     }
 

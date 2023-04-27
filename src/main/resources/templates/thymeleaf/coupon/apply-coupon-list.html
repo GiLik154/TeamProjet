@@ -6,12 +6,12 @@
 <form id="form" name="form" method="get" target="iframe1"
       th:hx-post="@{/coupon/apply-coupon-list/{price}/{quantity}(price=${param.price}, quantity=${quantity})}"
       hx-trigger="load, change"
-      hx-target="#price">
+      th:attr="hx-target=&#39;#price&#39; + ${productId}">
     <div class="form-group">
         <input type="hidden" name="salesCount" th:value="${quantity}">
-        <label for="userCouponId">결제 방법:</label>
+        <label for="userCouponId">적용할 쿠폰:</label>
         <select class="form-control" id="userCouponId" name="userCouponId" onchange="this.form.submit()" required>
-            <option value="default">사용 안함</option>
+            <option value="0">사용 안함</option>
             <option th:each="item : ${list}" th:value="${item.id}"
                     th:text="${item.coupon.name}">
             </option>
@@ -19,7 +19,7 @@
     </div>
 </form>
 
-<div id="price" class="form-group">
+<div th:id="'price' + ${productId}" class="form-group">
 </div>
 
 <script src="https://unpkg.com/htmx.org@1.8.6"></script>

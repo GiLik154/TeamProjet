@@ -26,7 +26,7 @@
         <div class="row align-items-center">
             <div class="col-6">
                 <a href="/main" style="text-decoration: none; color: white;">
-                    <h1>우리 회사명</h1>
+                    <h1>해치웠나?</h1>
                 </a>
             </div>
             <div class="col-6">
@@ -35,7 +35,7 @@
                         <li class="list-inline-item" th:if="${session.userId eq null and session.sellerId eq null}"><a
                                 th:href="@{/user/login}">로그인</a></li>
                         <li class="list-inline-item" th:if="${session.userId ne null or session.sellerId ne null}"><a
-                                th:href="@{/user/logout}">로그아웃</a></li>
+                                th:href="@{/logout}">로그아웃</a></li>
                         <li class="list-inline-item" th:if="${session.userId eq null and session.sellerId eq null}"><a
                                 th:href="@{/user/signup}">회원가입</a></li>
                         <li class="list-inline-item" th:if="${session.userId ne null or session.sellerId ne null}"><a
@@ -113,7 +113,7 @@
         </div>
         <div class="row">
             <div class="col-6">
-                <p>&copy; 2023 우리 회사명. All rights reserved.</p>
+                <p>&copy; 2023 해치웠나?. All rights reserved.</p>
             </div>
             <div class="col-6">
                 <nav class="text-right">

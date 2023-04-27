@@ -50,7 +50,6 @@ public class OrderCreateController {
                 orderCreateDto.getQuantity(),
                 userCouponId);
 
-
         return new ModelAndView("redirect:/order_list/view");
     }
 }

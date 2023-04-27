@@ -56,6 +56,9 @@
 </head>
 <body>
 <div class="container">
+    <div th:classappend="${userGrade.name() == 'VIP' ? 'active' : ''}">
+        <button type="button" class="btn btn-primary" id="coupon-add" th:if="${userGrade.name() == 'VIP'}">쿠폰 추가하기</button>
+    </div>
     <h1 class="my-4">Coupon List</h1>
     <table class="table table-striped table-bordered table-hover text-center " id="couponTable">
         <thead>
@@ -85,6 +88,12 @@
         </tbody>
     </table>
 </div>
+<script>
+    const button = document.getElementById("coupon-add");
+    button.addEventListener("click", function() {
+        window.open("/coupon/add","couponAddPop", 'width=500,height=800')
+    });
+</script>
 <!-- 부트스트랩 JS -->
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
         crossorigin="anonymous"></script>

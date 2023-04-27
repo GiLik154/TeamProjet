@@ -4,21 +4,6 @@
     <meta charset="UTF-8">
     <title>My Page</title>
     <link rel="stylesheet" href="/static/css/myPage.css">
-    <!-- jQuery 라이브러리를 로드합니다. -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script>
-        $(function() {
-            // 주문 내역 링크를 클릭하면 이벤트를 처리합니다.
-            $('.sidebar a[href="/order_list/view"]').on('click', function(e) {
-                e.preventDefault(); // 링크의 기본 동작을 취소합니다.
-                // AJAX 요청을 보내어 order-list.html 파일의 내용을 가져옵니다.
-                $.get('/thymeleaf/order/order_list.html', function(data) {
-                    // main-content 요소의 내용을 가져온 파일의 내용으로 교체합니다.
-                    $('.main-content').html(data);
-                });
-            });
-        });
-    </script>
 </head>
 <body>
 
@@ -43,15 +28,6 @@
 <div class="main-content">
 
 </div>
-<script>
-    $(document).ready(function() {
-        $('.sidebar a').on('click', function(event) {
-            event.preventDefault(); // 기본 동작 취소
-            var pageUrl = $(this).attr('href');
-            $('.main-content').load(pageUrl);
-        });
-    });
-</script>
 <footer>
     <div class="row">
         <div class="col-6">
@@ -76,6 +52,33 @@
         </div>
     </div>
 </footer>
+
+<!-- jQuery 라이브러리를 로드합니다. -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(function() {
+        // 주문 내역 링크를 클릭하면 이벤트를 처리합니다.
+        $('.sidebar a[href="/order_list/view"]').on('click', function(e) {
+            e.preventDefault(); // 링크의 기본 동작을 취소합니다.
+            // AJAX 요청을 보내어 order-list.html 파일의 내용을 가져옵니다.
+            $.get('/thymeleaf/order/order_list.html', function(data) {
+                // main-content 요소의 내용을 가져온 파일의 내용으로 교체합니다.
+                $('.main-content').html(data);
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $('.sidebar a').on('click', function(event) {
+            event.preventDefault(); // 기본 동작 취소
+            var pageUrl = $(this).attr('href');
+            $('.main-content').load(pageUrl);
+        });
+    });
+</script>
 
 </body>
 </html>
