@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <title>결제 수단</title>
+    <!-- 부트스트랩 CSS 추가 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          crossorigin="anonymous">
+
+    <style>
+        .form-group {
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <form th:action="@{/payment/add}" method="post">
+                <div class="form-group">
+                    <label for="paymentName">카드/은행명</label>
+                    <input type="text" class="form-control" id="paymentName" name="paymentName" placeholder="카드/은행명">
+                </div>
+                <div class="form-group">
+                    <label for="paymentType">결제 수단</label>
+                    <select id="paymentType" name="paymentType">
+                    <option value="CARD">카드</option>
+                    <option value="TRANSFER">계좌이체</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="number">카드/계좌번호</label>
+                    <input type="text" class="form-control" id="number" name="number" placeholder="카드/계좌번호">
+                </div>
+                <button type="submit">확인</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- 부트스트랩 JavaScript 추가 -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        crossorigin="anonymous"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script th:src="@{/static/js/address.js}"></script>
+</body>
+</html>
