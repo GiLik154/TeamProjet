@@ -75,10 +75,10 @@ class OrderListCancelServiceImplTest {
     @Test
     void 주문리스트_취소_정상작동() {
         //given
-        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -121,10 +121,10 @@ class OrderListCancelServiceImplTest {
     @Test
     void 주문리스트_취소불가_정상작동() {
         //given
-        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();

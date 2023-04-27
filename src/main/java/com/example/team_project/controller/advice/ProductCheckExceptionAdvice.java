@@ -47,4 +47,12 @@ public class ProductCheckExceptionAdvice {
         modelAndView.addObject("errorMessage", errorMessage);
         return modelAndView;
     }
+
+    @ExceptionHandler({ProductNotFoundException.class})
+    public ModelAndView product(ProductNotFoundException ex) {
+        String errorMessage = ex.getMessage();
+        ModelAndView modelAndView = new ModelAndView("thymeleaf/error/error-page");
+        modelAndView.addObject("errorMessage", errorMessage);
+        return modelAndView;
+    }
 }

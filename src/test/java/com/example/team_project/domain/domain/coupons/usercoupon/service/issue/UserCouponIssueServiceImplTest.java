@@ -40,7 +40,7 @@ class UserCouponIssueServiceImplTest {
 
     @Test
     void 쿠폰_발급_정상작동() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -59,7 +59,7 @@ class UserCouponIssueServiceImplTest {
 
     @Test
     void 쿠폰_발급_최대_발급횟수_초과() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -78,7 +78,7 @@ class UserCouponIssueServiceImplTest {
 
     @Test
     void 쿠폰_발급_잘못된_쿠폰_이름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -95,7 +95,7 @@ class UserCouponIssueServiceImplTest {
 
     @Test
     void 쿠폰_발급_유저_고유변호_다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 

@@ -58,7 +58,7 @@ class CouponAddPostControllerTest {
 
     @Test
     void Get_쿠폰_추가_정상작동() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 
@@ -92,7 +92,7 @@ class CouponAddPostControllerTest {
 
     @Test
     void Get_쿠폰_추가_정상작동_유저고유번호_다름() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId() + 1L;
 

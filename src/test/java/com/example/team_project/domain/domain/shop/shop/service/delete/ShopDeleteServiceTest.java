@@ -5,6 +5,8 @@ import com.example.team_project.domain.domain.shop.seller.domain.SellerRepositor
 import com.example.team_project.domain.domain.shop.seller.service.delete.SellerDeleteService;
 import com.example.team_project.domain.domain.shop.shop.domain.Shop;
 import com.example.team_project.domain.domain.shop.shop.domain.ShopRepository;
+import com.example.team_project.exception.NotPasswordException;
+import com.example.team_project.exception.SellerNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -70,7 +72,7 @@ class ShopDeleteServiceTest {
         Long shopId = shop.getShopId();
 
 
-        UsernameNotFoundException e = assertThrows(UsernameNotFoundException.class, () ->
+        SellerNotFoundException e = assertThrows(SellerNotFoundException.class, () ->
                 shopDeleteService.delete(shopId,"testids","testPw")
                      );
 
@@ -93,7 +95,7 @@ class ShopDeleteServiceTest {
         Long shopId = shop.getShopId();
 
 
-        BadCredentialsException e = assertThrows(BadCredentialsException.class, () ->
+        NotPasswordException e = assertThrows(NotPasswordException.class, () ->
                 shopDeleteService.delete(shopId,ownerId,"testPws")
         );
 
@@ -117,7 +119,7 @@ class ShopDeleteServiceTest {
         Long shopId = shop.getShopId();
 
 
-        UsernameNotFoundException e = assertThrows(UsernameNotFoundException.class, () ->
+        SellerNotFoundException e = assertThrows(SellerNotFoundException.class, () ->
                 shopDeleteService.delete(shopId,"testids","testPws")
         );
 

@@ -54,7 +54,7 @@ class ApplyCouponListGetServiceImplTest {
 
     @Test
     void 적용가능_쿠폰_출력_정상작동() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -84,7 +84,7 @@ class ApplyCouponListGetServiceImplTest {
 
     @Test
     void 적용가능_쿠폰_출력_최저가격_미달() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -114,7 +114,7 @@ class ApplyCouponListGetServiceImplTest {
 
     @Test
     void 적용가능_쿠폰_출력_카테고리_다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -147,7 +147,7 @@ class ApplyCouponListGetServiceImplTest {
 
     @Test
     void 적용가능_쿠폰_출력_사용된_쿠폰() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -178,7 +178,7 @@ class ApplyCouponListGetServiceImplTest {
 
     @Test
     void 적용가능_쿠폰_출력_만료된_쿠폰() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -209,7 +209,7 @@ class ApplyCouponListGetServiceImplTest {
 
     @Test
     void 적용가능_쿠폰_쿠폰_자체_만료() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 

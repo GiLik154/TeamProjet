@@ -31,9 +31,7 @@ public class UserSignUpServiceImpl implements UserSignUpService {
                 userSignUpDto.getPassword(),
                 userSignUpDto.getUserName(),
                 userSignUpDto.getEmail(),
-                userSignUpDto.getPhoneNumber(),
-                Role.USER,
-                UserGrade.SILVER);
+                userSignUpDto.getPhoneNumber());
 
         user.passwordEncode(passwordEncoder);
         userRepository.save(user);

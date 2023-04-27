@@ -6,6 +6,7 @@ import com.example.team_project.domain.domain.shop.seller.domain.SellerRepositor
 import com.example.team_project.domain.domain.shop.seller.service.delete.SellerDeleteService;
 import com.example.team_project.domain.domain.shop.shop.domain.Shop;
 import com.example.team_project.domain.domain.shop.shop.domain.ShopRepository;
+import com.example.team_project.exception.SellerNotFoundException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -64,7 +65,7 @@ class SellerDeleteServiceTest {
         shopRepository.save(shop);
 
         //아이디가 다를때
-        UsernameNotFoundException e = assertThrows(UsernameNotFoundException.class, () ->
+        SellerNotFoundException e = assertThrows(SellerNotFoundException.class, () ->
                 sellerDeleteService.delete(sellerId, "test123", "testPw")
         );
 
@@ -103,7 +104,7 @@ class SellerDeleteServiceTest {
 
 
         //아이디, 비밀번호 둘다 다를때
-        UsernameNotFoundException e = assertThrows(UsernameNotFoundException.class, () ->
+        SellerNotFoundException e = assertThrows(SellerNotFoundException.class, () ->
                 sellerDeleteService.delete(sellerId, "testId123", "s")
         );
 

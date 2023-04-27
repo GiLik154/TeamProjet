@@ -50,7 +50,7 @@ class CouponDeleteServiceImplTest {
 
     @Test
     void 쿠폰_종류_삭제_정상작동() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
         Long userId = user.getId();
@@ -80,7 +80,7 @@ class CouponDeleteServiceImplTest {
 
     @Test
     void 쿠폰_종류_삭제_쿠폰종류_이름다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
         Long userId = user.getId();
@@ -110,7 +110,7 @@ class CouponDeleteServiceImplTest {
 
     @Test
     void 쿠폰_종류_삭제_유저_고유번호_다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
         Long userId = user.getId();
@@ -139,7 +139,7 @@ class CouponDeleteServiceImplTest {
 
     @Test
     void 쿠폰_종류_삭제_유저_등급_다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.SILVER);
         userRepository.save(user);
         Long userId = user.getId();

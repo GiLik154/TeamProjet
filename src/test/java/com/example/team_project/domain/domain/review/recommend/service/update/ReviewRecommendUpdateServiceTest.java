@@ -39,7 +39,7 @@ class ReviewRecommendUpdateServiceTest {
 
     @Test
     void 추천_업데이트_정상작동(){
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
 
         BaseReview baseReview = new BaseReview(user,"content","time","image",new ReviewToKinds(new PostReview()));

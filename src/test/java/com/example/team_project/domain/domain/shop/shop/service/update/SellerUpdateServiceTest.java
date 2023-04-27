@@ -4,6 +4,7 @@ package com.example.team_project.domain.domain.shop.shop.service.update;
 import com.example.team_project.domain.domain.shop.seller.domain.Seller;
 import com.example.team_project.domain.domain.shop.seller.domain.SellerRepository;
 import com.example.team_project.domain.domain.shop.seller.service.update.SellerUpdateService;
+import com.example.team_project.exception.NotPasswordException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -67,7 +68,7 @@ import static org.junit.jupiter.api.Assertions.*;
        
 
         //비밀번호가 다를때 메시지 출력하는 코드
-        BadCredentialsException e = assertThrows(BadCredentialsException.class, () ->
+        NotPasswordException e = assertThrows(NotPasswordException.class, () ->
                 sellerUpdateService.sellerUpdate(seller.getId(),"testPws","testupdatename","testupdatephone"));
 
         //오너아이디이용해서 검색 가지고오기

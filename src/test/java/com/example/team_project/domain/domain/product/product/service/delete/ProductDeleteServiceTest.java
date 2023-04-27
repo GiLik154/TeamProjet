@@ -10,6 +10,7 @@ import com.example.team_project.domain.domain.shop.shop.domain.Shop;
 import com.example.team_project.domain.domain.shop.shop.domain.ShopRepository;
 import com.example.team_project.domain.domain.shop.shop.service.delete.ShopDeleteService;
 import com.example.team_project.enums.ProductCategoryStatus;
+import com.example.team_project.exception.NotPasswordException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -84,7 +85,7 @@ class ProductDeleteServiceTest {
                 "asd", shop.getSeller(), "zxczxc", 1, 10, productCategory);
 
         productRepository.save(product);
-        BadCredentialsException e = assertThrows(BadCredentialsException.class, () ->
+        NotPasswordException e = assertThrows(NotPasswordException.class, () ->
                 productDeleteService.delete(seller.getId(),product.getId(),"tesstPw")
                 );
 
