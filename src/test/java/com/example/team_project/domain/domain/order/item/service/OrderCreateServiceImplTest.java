@@ -134,7 +134,7 @@ class OrderCreateServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -176,7 +176,7 @@ class OrderCreateServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -220,7 +220,7 @@ class OrderCreateServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -267,7 +267,7 @@ class OrderCreateServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
@@ -309,7 +309,7 @@ class OrderCreateServiceImplTest {
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
         userAddressRepository.save(userAddress);
 
-        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);

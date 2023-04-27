@@ -25,6 +25,7 @@ import com.example.team_project.enums.PaymentType;
 import com.example.team_project.enums.ProductCategoryStatus;
 import com.example.team_project.enums.Role;
 import com.example.team_project.enums.UserGrade;
+import com.example.team_project.exception.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -94,7 +95,7 @@ class OrderCompletionServiceImplTest {
         userAddressRepository.save(userAddress);
         Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
         Long paymentId = payment.getId();
 
@@ -125,5 +126,192 @@ class OrderCompletionServiceImplTest {
         assertEquals(40000, order.getOrderToProduct().getTotalPrice());
         assertEquals(89, order.getOrderToProduct().getProduct().getStock());
         assertEquals(10, product.getSalesCount());
+    }
+    @Test
+    void 주문결제_유저고유번호다름_비정상작동() {
+        //given
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
+        userRepository.save(user);
+        Long userId = user.getId();
+
+        Coupon coupon = new Coupon("testName", 50, 10000, 1);
+        couponRepository.save(coupon);
+
+        UserCoupon userCoupon = new UserCoupon(user, coupon, LocalDate.now());
+        userCouponRepository.save(userCoupon);
+
+        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
+        userAddressRepository.save(userAddress);
+        Long userAddressId = userAddress.getId();
+
+        Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+        Long paymentId = payment.getId();
+
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
+        productCategoryRepository.save(productCategory);
+
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct1", seller, "testDes1", 99, 4000, productCategory);
+        productRepository.save(product);
+
+        OrderList orderList = new OrderList(user, LocalDate.now());
+        orderListRepository.save(orderList);
+        Long orderListId = orderList.getId();
+
+        OrderToProduct orderToProduct = new OrderToProduct(product, 10);
+        Order order = new Order(user, orderList, orderToProduct);
+        orderRepository.save(order);
+
+        //when
+        UserNotFoundException userNotFoundException = assertThrows(UserNotFoundException.class, () ->
+                orderCompletionService.processOrderPayment(userId + 1L, userAddressId, paymentId, orderListId)
+        );
+
+        //then
+        assertEquals("This user could not be found", userNotFoundException.getMessage());
+    }
+
+    @Test
+    void 주문결제_주소고유번호다름_비정상작동() {
+        //given
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
+        userRepository.save(user);
+        Long userId = user.getId();
+
+        Coupon coupon = new Coupon("testName", 50, 10000, 1);
+        couponRepository.save(coupon);
+
+        UserCoupon userCoupon = new UserCoupon(user, coupon, LocalDate.now());
+        userCouponRepository.save(userCoupon);
+
+        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
+        userAddressRepository.save(userAddress);
+        Long userAddressId = userAddress.getId();
+
+        Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+        Long paymentId = payment.getId();
+
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
+        productCategoryRepository.save(productCategory);
+
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct1", seller, "testDes1", 99, 4000, productCategory);
+        productRepository.save(product);
+
+        OrderList orderList = new OrderList(user, LocalDate.now());
+        orderListRepository.save(orderList);
+        Long orderListId = orderList.getId();
+
+        OrderToProduct orderToProduct = new OrderToProduct(product, 10);
+        Order order = new Order(user, orderList, orderToProduct);
+        orderRepository.save(order);
+
+        //when
+        NotFoundAddressException notFoundAddressException = assertThrows(NotFoundAddressException.class, () ->
+                orderCompletionService.processOrderPayment(userId, userAddressId + 1L, paymentId, orderListId)
+        );
+
+        //then
+        assertEquals("Not Found Address", notFoundAddressException.getMessage());
+    }
+
+    @Test
+    void 주문결제_결제고유번호다름_비정상작동() {
+        //given
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
+        userRepository.save(user);
+        Long userId = user.getId();
+
+        Coupon coupon = new Coupon("testName", 50, 10000, 1);
+        couponRepository.save(coupon);
+
+        UserCoupon userCoupon = new UserCoupon(user, coupon, LocalDate.now());
+        userCouponRepository.save(userCoupon);
+
+        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
+        userAddressRepository.save(userAddress);
+        Long userAddressId = userAddress.getId();
+
+        Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+        Long paymentId = payment.getId();
+
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
+        productCategoryRepository.save(productCategory);
+
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct1", seller, "testDes1", 99, 4000, productCategory);
+        productRepository.save(product);
+
+        OrderList orderList = new OrderList(user, LocalDate.now());
+        orderListRepository.save(orderList);
+        Long orderListId = orderList.getId();
+
+        OrderToProduct orderToProduct = new OrderToProduct(product, 10);
+        Order order = new Order(user, orderList, orderToProduct);
+        orderRepository.save(order);
+
+        //when
+        InvalidPaymentMethodException invalidPaymentMethodException = assertThrows(InvalidPaymentMethodException.class, () ->
+                orderCompletionService.processOrderPayment(userId, userAddressId, paymentId + 1L, orderListId)
+        );
+
+        //then
+        assertEquals("This payment method is not valid", invalidPaymentMethodException.getMessage());
+    }
+
+    @Test
+    void 주문결제_주문리스트고유번호다름_비정상작동() {
+        //given
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
+        userRepository.save(user);
+        Long userId = user.getId();
+
+        Coupon coupon = new Coupon("testName", 50, 10000, 1);
+        couponRepository.save(coupon);
+
+        UserCoupon userCoupon = new UserCoupon(user, coupon, LocalDate.now());
+        userCouponRepository.save(userCoupon);
+
+        UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
+        userAddressRepository.save(userAddress);
+        Long userAddressId = userAddress.getId();
+
+        Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
+        paymentRepository.save(payment);
+        Long paymentId = payment.getId();
+
+        ProductCategory productCategory = new ProductCategory(ProductCategoryStatus.TOP);
+        productCategoryRepository.save(productCategory);
+
+        Seller seller = new Seller("testSellerName", "testSellerPw");
+        sellerRepository.save(seller);
+
+        Product product = new Product("testProduct1", seller, "testDes1", 99, 4000, productCategory);
+        productRepository.save(product);
+
+        OrderList orderList = new OrderList(user, LocalDate.now());
+        orderListRepository.save(orderList);
+        Long orderListId = orderList.getId();
+
+        OrderToProduct orderToProduct = new OrderToProduct(product, 10);
+        Order order = new Order(user, orderList, orderToProduct);
+        orderRepository.save(order);
+
+        //when
+        OrderListNotFoundException orderListNotFoundException = assertThrows(OrderListNotFoundException.class, () ->
+                orderCompletionService.processOrderPayment(userId, userAddressId, paymentId, orderListId + 1L)
+        );
+
+        //then
+        assertEquals("This order list does not exist", orderListNotFoundException.getMessage());
     }
 }

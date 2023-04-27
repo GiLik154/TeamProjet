@@ -28,6 +28,6 @@ public class myPageViewController {
     @PostMapping
     public String post(Model model) {
         model.addAttribute("userSignUpDto", new UserSignUpDto());
-        return "thymeleaf/user/signUp";
+        return "redirect:/main";
     }
 }

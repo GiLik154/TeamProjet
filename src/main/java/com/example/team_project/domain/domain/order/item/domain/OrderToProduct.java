@@ -74,6 +74,10 @@ public class OrderToProduct {
         this.status = OrderStatus.valueOf(status.name());
     }
 
+    public void updateQuantity(int quantity) {
+        this.quantity += quantity;
+    }
+
     /**
      * 주문 상품 상태 취소로 변환
      **/

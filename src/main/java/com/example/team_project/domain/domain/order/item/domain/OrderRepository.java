@@ -106,6 +106,9 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
 
     List<Order> findByUserIdAndOrderListId(Long userId, Long orderListId);
 
-    Page<Order> findByOrderListId(Long orderListId, PageRequest id);//todo 페이징처리
+    Page<Order> findByOrderListId(Long orderListId, PageRequest id);
+
+//    @Query()
+//    Optional<Order> findByOrderToProductProductId(@Param("userId") Long userId, @Param("productId") Long productId);
 
 }

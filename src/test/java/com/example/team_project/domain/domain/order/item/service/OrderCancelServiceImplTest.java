@@ -82,7 +82,7 @@ class OrderCancelServiceImplTest {
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
+        Payment payment = new Payment(user,"신한", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -123,7 +123,7 @@ class OrderCancelServiceImplTest {
         User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
+        Payment payment = new Payment(user,"신한", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();
@@ -166,7 +166,7 @@ class OrderCancelServiceImplTest {
         User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
         userRepository.save(user);
 
-        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         Shop shop = new Shop();

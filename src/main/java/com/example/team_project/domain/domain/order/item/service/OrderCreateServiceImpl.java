@@ -16,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -33,10 +35,20 @@ public class OrderCreateServiceImpl implements OrderCreateService {
         User user = userRepository.validateUserId(userId);
         OrderList orderList = findAvailableOrderList(userId);
 
-        Order order = new Order(user, orderList, createOrderToProduct(productId, quantity));
-        orderRepository.save(order);
+        Optional<Order> orderToUpdate = orderRepository.findByStatusOrderedAndUserId(userId)
+                .stream()
+                .filter(o -> o.getOrderToProduct().getProduct().getId().equals(productId))
+                .findFirst();
 
-        orderToUpdateApplyCoupon(userId, order, couponId);
+        if (orderToUpdate.isPresent()) {
+            Order order = orderToUpdate.get();
+            order.getOrderToProduct().updateQuantity(quantity);
+            orderToUpdateApplyCoupon(userId, order, couponId);
+        } else {
+            Order newOrder = new Order(user, orderList, createOrderToProduct(productId, quantity));
+            orderRepository.save(newOrder);
+            orderToUpdateApplyCoupon(userId, newOrder, couponId);
+        }
     }
 
     private OrderList findAvailableOrderList(Long userId) {
@@ -54,5 +66,6 @@ public class OrderCreateServiceImpl implements OrderCreateService {
     private void orderToUpdateApplyCoupon(Long userId, Order order, Long couponId) {
         userCouponRepository.findByUserIdAndIdAndStatusUnused(userId, couponId).ifPresent(order::couponUpdate);
     }
+
 
 }

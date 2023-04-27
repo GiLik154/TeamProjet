@@ -65,11 +65,13 @@ class OrderListUpdateServiceImplTest {
     @Test
     void 주소지변경_정상작동() {
         //given
-        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
+                 User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
+
+
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
+             Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
@@ -100,12 +102,14 @@ class OrderListUpdateServiceImplTest {
     @Test
     void 주소지_결제_변경_정상작동() {
         //given
-        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
+                 User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
+
+
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
-        Payment payment1 = new Payment(user,"paymentName", PaymentType.TRANSFER, "2222");
+             Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
+        Payment payment1 = new Payment(user, "기업", PaymentType.TRANSFER, "2222");
         paymentRepository.save(payment);
         paymentRepository.save(payment1);
         Long payment1Id = payment1.getId();
@@ -132,6 +136,7 @@ class OrderListUpdateServiceImplTest {
         assertEquals("010-1111-1111", orderList1.getUserAddress().getPhone());
         assertEquals("전라북도 익산시", orderList1.getUserAddress().getStreetAddress());
         assertEquals("익산아파트101호", orderList1.getUserAddress().getDetailedAddress());
+        assertEquals("기업", orderList1.getPayment().getPaymentName());
         assertEquals("TRANSFER", orderList1.getPayment().getPaymentType().name());
         assertEquals("2222", orderList1.getPayment().getNumber());
         assertEquals("22222", orderList1.getUserAddress().getZipCode());
@@ -140,11 +145,13 @@ class OrderListUpdateServiceImplTest {
     @Test
     void 주소지변경_없는주소지_비정상작동() {
         //given
-        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
+                 User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
+
+
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
+             Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
@@ -169,11 +176,13 @@ class OrderListUpdateServiceImplTest {
     @Test
     void 주소지변경_유저고유번호다름_비정상작동() {
         //given
-        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
+                 User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
+
+
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
+             Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
@@ -198,11 +207,13 @@ class OrderListUpdateServiceImplTest {
     @Test
     void 주소지변경_주문리스트고유번호다름_비정상작동() {
         //given
-        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
+                 User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
+
+
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
+             Payment payment = new Payment(user, "신한", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
