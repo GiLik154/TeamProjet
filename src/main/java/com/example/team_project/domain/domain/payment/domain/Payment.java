@@ -18,12 +18,12 @@ public class Payment {
         @ManyToOne(fetch = FetchType.LAZY)
         private User user;
 
+        private String paymentName;
+
         @Enumerated(EnumType.STRING)
         private PaymentType paymentType;
 
-        private String cardNumber;
-
-        private String accountNumber;
+        private String number;
 
         private int billing;
 
@@ -31,29 +31,19 @@ public class Payment {
         }
 
 
-        public Payment(User user, PaymentType paymentType, String number) {
+        public Payment(User user, String paymentName, PaymentType paymentType, String number, int billing) {
                 this.user = user;
+                this.paymentName = paymentName;
                 this.paymentType = paymentType;
-                switch (paymentType) {
-                        case CARD:
-                                this.cardNumber = number;
-                                break;
-                        case TRANSFER:
-                                this.accountNumber = number;
-                }
+                this.number = number;
 
                 this.billing = 0;
         }
-        public void changePayment(User user, PaymentType paymentType, String changedNumber) {
-                this.user = user;
+        public void changePayment(String paymentName, PaymentType paymentType, String number, int billing) {
+                this.paymentName = paymentName;
                 this.paymentType = paymentType;
-                switch (paymentType) {
-                        case CARD:
-                                this.cardNumber = changedNumber;
-                                break;
-                        case TRANSFER:
-                                this.accountNumber = changedNumber;
-                }
+                this.number = number;
+                this.billing = billing;
         }
 
         public void addBilling(int cost) {

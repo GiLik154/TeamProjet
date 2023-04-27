@@ -13,6 +13,7 @@
             crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
             crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/static/css/order_payment.css">
 
     <style>
         h1, h2 {
@@ -56,6 +57,14 @@
                 <td th:text="${order.orderToProduct.quantity}"></td>
                 <td th:text="${order.orderToProduct.status}"></td>
                 <td th:text="${order.orderToProduct.totalPrice}">원</td>
+
+                <div class="form-group"
+                     th:hx-get="@{'/coupon/apply-coupon-list/' + ${order.orderToProduct.product.id} + '/' + ${order.orderToProduct.quantity}(price=${order.orderToProduct.totalPrice})}"
+                     hx-trigger="load"
+                     th:attr="hx-target=&#39;#coupon&#39; + ${order.id}">
+                </div>
+
+                <td th:id="'coupon' + ${order.id}"></td>
 
                 <div class="form-group" hidden="hidden">
                     <label for="totalPrice">가격</label>
@@ -116,5 +125,6 @@
         </div>
     </div>
 </form>
+<script src="https://unpkg.com/htmx.org@1.8.6"></script>
 </body>
 </html>

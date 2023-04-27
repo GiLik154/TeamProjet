@@ -1,0 +1,29 @@
+.product {
+    display: flex;
+    align-items: center;
+}
+
+.price-wrapper {
+    border: 2px solid black;
+    padding: 5px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.original-price {
+    text-decoration: line-through;
+    margin-right: 5px;
+    color: gray;
+}
+
+.discounted-price {
+    font-weight: bold;
+    font-size: 1.5em;
+    color: #f5a623;
+}
+
+.discount {
+    margin-left: 5px;
+    color: green;
+    font-weight: bold;
+}

@@ -1,6 +1,7 @@
 package com.example.team_project.domain.domain.user.domain;
 
 import com.example.team_project.domain.domain.address.domain.UserAddress;
+import com.example.team_project.domain.domain.payment.domain.Payment;
 import com.example.team_project.enums.UserGrade;
 import com.example.team_project.exception.UserNotFoundException;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -20,6 +21,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByRefreshToken(String refreshToken);
     Optional<User> findByUserIdAndPassword(String userId, String password);
     Optional<User> findByIdAndPassword(Long id, String password);
+
+
 
 
     default User validateUserId(Long userId) {

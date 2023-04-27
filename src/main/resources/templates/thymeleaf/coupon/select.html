@@ -14,9 +14,6 @@
 </head>
 
 <body>
-<div th:classappend="${userGrade.name() == 'VIP' ? 'active' : ''}">
-    <button type="button" class="btn btn-primary" id="coupon-add" th:if="${userGrade.name() == 'VIP'}">쿠폰 추가하기</button>
-</div>
 <div class="container mt-5">
     <h1 class="mb-3">My Coupons</h1>
     <div class="mb-3">
@@ -204,8 +201,4 @@
         });
     }
 
-    const button = document.getElementById("coupon-add");
-    button.addEventListener("click", function() {
-        window.location.href = "/coupon/add";
-    });
 </script>
