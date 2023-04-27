@@ -66,7 +66,7 @@ class PostAddPostControllerTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 
@@ -98,7 +98,7 @@ class PostAddPostControllerTest {
         String imageName = "test-image.jpg";
         MockMultipartFile file = new MockMultipartFile("file", imageName, "image/jpeg", imageBytes);
 
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 

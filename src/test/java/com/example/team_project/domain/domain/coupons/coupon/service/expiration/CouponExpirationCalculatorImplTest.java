@@ -35,7 +35,7 @@ class CouponExpirationCalculatorImplTest {
 
     @Test
     void 쿠폰_추가_정상작동_기간_설정() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);
@@ -49,7 +49,7 @@ class CouponExpirationCalculatorImplTest {
 
     @Test
     void 쿠폰_추가_정상작동_만료일_기간_설정_만료일이_더_김() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);
@@ -63,7 +63,7 @@ class CouponExpirationCalculatorImplTest {
 
     @Test
     void 쿠폰_추가_정상작동_만료일_기간_설정_기간이_더_김() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);
@@ -77,7 +77,7 @@ class CouponExpirationCalculatorImplTest {
 
     @Test
     void 쿠폰_추가_정상작동_만료일_기간_같음() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);
@@ -91,7 +91,7 @@ class CouponExpirationCalculatorImplTest {
 
     @Test
     void 쿠폰_추가_정상작동_만료일_지났음() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
 
         Coupon coupon = new Coupon("testName", 50, 10000, 1);

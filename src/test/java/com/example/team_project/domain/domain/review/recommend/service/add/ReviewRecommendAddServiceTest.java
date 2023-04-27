@@ -39,7 +39,7 @@ class ReviewRecommendAddServiceTest {
 
     @Test
     void 리뷰_추천_정상작동(){
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
 
         BaseReview baseReview = new BaseReview(user,"content","time","image",new ReviewToKinds(new PostReview()));
@@ -57,7 +57,7 @@ class ReviewRecommendAddServiceTest {
 
     @Test
     void 리뷰_추천_유저중복(){
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
 
         BaseReview baseReview = new BaseReview(user,"content","time","image",new ReviewToKinds(new PostReview()));
@@ -78,7 +78,7 @@ class ReviewRecommendAddServiceTest {
 
     @Test
     void 리뷰_추천_유저객체_1개확인(){
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
 
         BaseReview baseReview = new BaseReview(user,"content","time","image",new ReviewToKinds(new PostReview()));

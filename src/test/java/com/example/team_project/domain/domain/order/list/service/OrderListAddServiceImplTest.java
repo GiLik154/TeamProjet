@@ -46,11 +46,11 @@ class OrderListAddServiceImplTest {
     @Test
     void 주문리스트_생성_정상작동() {
         //given
-        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");
@@ -69,11 +69,11 @@ class OrderListAddServiceImplTest {
     @Test
     void 주문리스트_생성_유저아이디없음_비정상작동() {
         //given
-        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
         userRepository.save(user);
         Long userId = user.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
 
         UserAddress userAddress = new UserAddress(user, "최지혁", "받는이", "010-0000-0000", "서울특별시 강남구", "강남아파드101호", "11111");

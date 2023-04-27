@@ -49,7 +49,7 @@ class CouponDeletePostControllerTest {
 
     @Test
     void Post_쿠폰_삭제_정상출력() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
         Long userId = user.getId();

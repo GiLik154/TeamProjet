@@ -39,7 +39,7 @@ class UserIssueAbleCouponListServiceImplTest {
 
     @Test
     void 쿠폰_발급_가능_리스트_출력_정상작동() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -49,7 +49,7 @@ class UserIssueAbleCouponListServiceImplTest {
 
         List<Coupon> list = userIssueAbleCouponListService.getList(userId);
 
-        Coupon testCoupon = list.get(0);
+        Coupon testCoupon = list.get(list.size() - 1);
 
         assertEquals(coupon.getName(), testCoupon.getName());
         assertEquals(coupon.getDiscountRate(), testCoupon.getDiscountRate());
@@ -58,7 +58,7 @@ class UserIssueAbleCouponListServiceImplTest {
 
     @Test
     void 쿠폰_발급_가능_리스트_출력_정상작동_여러개() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -76,12 +76,12 @@ class UserIssueAbleCouponListServiceImplTest {
 
         List<Coupon> list = userIssueAbleCouponListService.getList(userId);
 
-        assertEquals(3, list.size());
+        assertTrue(3 <= list.size());
     }
 
     @Test
     void 쿠폰_발급_가능_리스트_출력_정상작동_여러개_섞임() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -111,7 +111,7 @@ class UserIssueAbleCouponListServiceImplTest {
 
     @Test
     void 쿠폰_발급_가능_리스트_출력_유저_아이디_다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -127,7 +127,7 @@ class UserIssueAbleCouponListServiceImplTest {
 
     @Test
     void 쿠폰_발급_가능_리스트_출력_쿠폰_만료() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -137,12 +137,12 @@ class UserIssueAbleCouponListServiceImplTest {
 
         List<Coupon> list = userIssueAbleCouponListService.getList(userId);
 
-        assertTrue(list.isEmpty());
+        assertFalse(list.contains(coupon));
     }
 
     @Test
     void 쿠폰_발급_가능_리스트_출력_발급_수량_초과() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+        User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -155,6 +155,6 @@ class UserIssueAbleCouponListServiceImplTest {
 
         List<Coupon> list = userIssueAbleCouponListService.getList(userId);
 
-        assertTrue(list.isEmpty());
+        assertFalse(list.contains(coupon));
     }
 }

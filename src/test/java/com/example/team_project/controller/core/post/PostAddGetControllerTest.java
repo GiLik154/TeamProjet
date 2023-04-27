@@ -44,7 +44,7 @@ class PostAddGetControllerTest {
     }
     @Test
     void Get_게시물_생성_페이지_정상작동() throws Exception {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         user.updateUserGrade(UserGrade.VIP);
         userRepository.save(user);
 

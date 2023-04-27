@@ -47,7 +47,7 @@ class PostReviewAddServiceTest {
     private final String KINDS = "PostReview";
     @Test
     void 게시물_리뷰_객체_반환() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
 
         PostCategory postCategory = new PostCategory(PostCategoryStatus.PRODUCT_INQUIRY);

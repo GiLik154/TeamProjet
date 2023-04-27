@@ -32,7 +32,7 @@ class AddressDeleteServiceImplTest {
 
     @Test
     void 주소_삭제_정상작동() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -56,7 +56,7 @@ class AddressDeleteServiceImplTest {
 
     @Test
     void 주소_삭제_유저_고유번호_다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -80,7 +80,7 @@ class AddressDeleteServiceImplTest {
 
     @Test
     void 주소_삭제_주소_고유번호_다름() {
-        User user = new User("testId", "testPw", "testNane", "testNumber");
+User user = new User("testId", "testPw", "testNane", "testPhone", "testNumber");
         userRepository.save(user);
         Long userId = user.getId();
 

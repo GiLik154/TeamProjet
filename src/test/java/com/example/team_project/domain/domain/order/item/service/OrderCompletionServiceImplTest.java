@@ -80,7 +80,7 @@ class OrderCompletionServiceImplTest {
     @Test
     void 주문결제_정상작동() {
         //given
-        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone", Role.USER, UserGrade.SILVER);
+        User user = new User("testId", "testPassword", "testName", "testEmail", "testPhone");
         userRepository.save(user);
         Long userId = user.getId();
 
@@ -94,7 +94,7 @@ class OrderCompletionServiceImplTest {
         userAddressRepository.save(userAddress);
         Long userAddressId = userAddress.getId();
 
-        Payment payment = new Payment(user, PaymentType.CARD, "1111");
+        Payment payment = new Payment(user, "paymentName", PaymentType.CARD, "1111");
         paymentRepository.save(payment);
         Long paymentId = payment.getId();
 

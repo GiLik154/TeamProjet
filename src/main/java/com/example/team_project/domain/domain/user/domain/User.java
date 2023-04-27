@@ -69,7 +69,7 @@ public class User extends BaseTimeEntity {
     /**
      * 회원가입 시 유저의 정보를 담는 생성자
      */
-    public User(String userId, String password, String userName, String email, String phoneNumber, Role role, UserGrade userGrade) {
+    public User(String userId, String password, String userName, String email, String phoneNumber) {
         this.userId = userId;
         this.password = password;
         this.userName = userName;
